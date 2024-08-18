@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            
+
             $table->float('score');
             $table->integer('number_correct');
             $table->integer('number_incorrect');
