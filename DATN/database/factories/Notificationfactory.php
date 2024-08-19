@@ -6,12 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
-=======
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
->>>>>>> Dev/dang
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notification>
  */
-class OrderFactory extends Factory
+class NotificationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,7 +18,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'title' => $this->faker->sentence(),
+            'description' => $this->faker->paragraph(),
             'user_id' => User::inRandomOrder()->first()->id,
         ];
     }
