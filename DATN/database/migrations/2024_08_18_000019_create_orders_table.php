@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('results', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->int('score');
-            $table->int('correct_amount');
-            $table->int('incorrect_amount');
-            $table->foreignId('test_id')->nullable()->constrained('tests')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+
+            $table->float('price');
+            $table->integer('payment_status')->default(0);
+            $table->integer('payment_method')->nullable();
+            $table->integer('status')->default(0);
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
 
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('results');
+        Schema::dropIfExists('orders');
     }
 };

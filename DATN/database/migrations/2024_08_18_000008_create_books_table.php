@@ -21,13 +21,11 @@ return new class extends Migration
             $table->text('description');
             $table->integer('quantity');
             $table->integer('book_activate_id');
-            $table->timestamps('activated_at');
+            $table->timestamp('activated_at')->nullable();
             $table->integer('activated_by')->nullable();
             $table->boolean('book_active');
             $table->foreignId('category_books_id')->nullable()->constrained('category_books')->onDelete('set null');
             $table->string('image', 255)->nullable();
-
-
 
             $table->timestamps();
         });
