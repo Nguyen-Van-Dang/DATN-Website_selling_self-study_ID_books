@@ -1,6 +1,4 @@
 /* Import Google font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
 :root {
   --dark: #34495E;
   --light: #ffffff;
@@ -22,17 +20,17 @@
   align-items: center;
 }
 
-.notifications .toast {
-  width: 400px;
+.toast {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  color: #000000;
+  font-size: 16px;
   position: relative;
-  overflow: hidden;
-  list-style: none;
-  border-radius: 4px;
-  padding: 16px 17px;
-  margin-bottom: 10px;
-  background: var(--light);
-  justify-content: space-between;
-  animation: show_toast 0.3s ease forwards;
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 @keyframes show_toast {
