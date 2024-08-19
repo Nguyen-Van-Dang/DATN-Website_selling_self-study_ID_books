@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->int('score');
-            $table->int('correct_amount');
-            $table->int('incorrect_amount');
+            $table->integer('score');
+            $table->integer('correct_amount');
+            $table->integer('incorrect_amount');
             $table->foreignId('test_id')->nullable()->constrained('tests')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
 

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('cart_details', function (Blueprint $table) {
             $table->id();
+
             $table->integer('quantity');
-            $table->foreignId('cart_id')->constrained()->onDelete('cascade');
-            $table->foreignId('book_id')->constrained()->onDelete('cascade');
             $table->foreignId('cart_id')->nullable()->constrained('carts')->onDelete('set null');
             $table->foreignId('book_id')->nullable()->constrained('books')->onDelete('set null');
 
