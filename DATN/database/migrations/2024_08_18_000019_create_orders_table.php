@@ -17,7 +17,6 @@ return new class extends Migration
             $table->float('price');
             $table->integer('payment_status')->default(0);
             $table->integer('payment_method')->nullable();
-            $table->integer('status')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
 
             $table->timestamps();
