@@ -1,18 +1,36 @@
+<style>
+    .custom-hide {
+        display: none;
+    }
+
+    @media (max-width: 1023px) {
+        .custom-hide {
+            display: block;
+        }
+    }
+</style>
 <div class="iq-sidebar-logo d-flex justify-content-between">
-    <a href="index.html" class="header-logo">
+    <a href="{{ route('homeClient') }}" class="header-logo">
         <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
         <div class="logo-title">
             <span class="text-primary text-uppercase">NHASACHTV</span>
         </div>
     </a>
+    <div class="custom-hide">
+        <div class="iq-menu-bt align-self-center">
+            <div class="wrapper-menu">
+                <div class="main-circle"><i class="las la-bars"></i></div>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="sidebar-scrollbar">
     <nav class="iq-sidebar-menu">
         <ul id="iq-sidebar-toggle" class="iq-menu">
             <li class="active active-menu">
-                <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
+                <a href="homeClient" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
                         class="ripple rippleEffect"></span><i class="las la-home iq-arrow-left"></i><span>Trang
-                        Chủ</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        Chủ</span></a>
                 <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 </ul>
             </li>
@@ -43,29 +61,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="#pages" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
-                        class="las la-file-alt iq-arrow-left"></i><span>Admin Dashboard</span><i
-                        class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                <ul id="pages" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                    <li><a href="admin-dashboard.html"><i class="ri-question-answer-line"></i>Dashboard</a></li>
-
-                    <li>
-                        <a href="#extra-pages" class="iq-waves-effect collapsed" data-toggle="collapse"
-                            aria-expanded="false"><i class="ri-pantone-line"></i><span>Extra Pages</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="extra-pages" class="iq-submenu collapse" data-parent="#pages">
-                            <li><a href="pages-invoice.html"><i class="ri-question-answer-line"></i>Invoice</a></li>
-                            <li><a href="pages-comingsoon.html"><i class="ri-mastercard-line"></i>Login</a></li>
-                            <li><a href="pages-faq.html"><i class="ri-compasses-line"></i>Register</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="book-page.html"><i class="ri-book-line"></i>Yêu Thích</a></li>
-            <li><a href="book-pdf.html"><i class="ri-book-line"></i>Sách PDF</a></li>
-            <li><a href="sign-in.html"><i class="ri-book-line"></i>Logout</a></li>
-
         </ul>
     </nav>
 </div>
+<hr>
