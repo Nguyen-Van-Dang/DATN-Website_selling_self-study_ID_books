@@ -3,18 +3,22 @@
 
 <head>
     <title>@yield('title', 'TRANG CHỦ')</title>
-
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+
     <script src="{{ asset('assets/js/toast.js') }}" defer></script>
 </head>
 
@@ -30,12 +34,10 @@
         <div id="content-page" class="content-page">
             @yield('content')
         </div>
-
-        <footer class="iq-footer">
-            <x-client.footer></x-client.footer>
-        </footer>
     </div>
-
+    <footer class="iq-footer">
+        <x-client.footer></x-client.footer>
+    </footer>
     {{-- script here --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
