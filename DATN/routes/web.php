@@ -28,3 +28,8 @@ Route::get('/book-detail', function () {
 Route::get('/book-list', function () {
     return view('client.book.bookList');
 })->name('bookList');
+
+//đăng nhập
+Route::get('/login', function () {
+    return view('client.user.login');
+})->name('login');
