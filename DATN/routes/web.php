@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
     return view('client.home');
@@ -29,7 +30,14 @@ Route::get('/book-list', function () {
     return view('client.book.bookList');
 })->name('bookList');
 
+<<<<<<< HEAD
 //đăng nhập
 Route::get('/login', function () {
     return view('client.user.login');
 })->name('login');
+=======
+
+// mail
+Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
+
+>>>>>>> origin/origin/Dev/Huy
