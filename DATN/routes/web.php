@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
     return view('client.home');
@@ -28,3 +29,8 @@ Route::get('/book-detail', function () {
 Route::get('/book-list', function () {
     return view('client.book.bookList');
 })->name('bookList');
+
+
+// mail
+Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
+
