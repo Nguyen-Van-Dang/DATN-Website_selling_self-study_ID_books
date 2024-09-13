@@ -1,0 +1,318 @@
+.controlss {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-info:hover .controlss {
+    opacity: 1;
+}
+
+
+.control-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+
+.control-button:hover {
+    color: #f0f0f0;
+}
+
+
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #333;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+}
+
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.ml-2 {
+    margin-left: 0.5rem;
+}
+
+.space-x-2>*+* {
+    margin-left: 0.5rem;
+}
+
+.bx-plus::before {
+    content: '+';
+}
+
+.bx-check::before {
+    content: '✔';
+}
+
+
+.user-info h5,
+.user-info p {
+    transition: transform 0.3s ease;
+}
+
+.video-info:hover .user-info h5,
+.video-info:hover .user-info p {
+    transform: translateY(-40px);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+}
+
+.volume-slider {
+    width: 100px;
+    margin-left: 10px;
+}
+
+
+.videos {
+    left: 15%;
+    top: 15%;
+    width: 85%;
+    height: 100vh;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.videos .video {
+    height: 100vh;
+    scroll-snap-align: center;
+    display: flex;
+}
+
+.videos .video .video-box {
+    height: 80%;
+    width: 50%;
+    display: flex;
+    gap: 8px;
+    position: relative;
+}
+
+.videos .video .video-box .video-info {
+    height: auto;
+    width: 100%;
+    position: relative;
+}
+
+.videos .video .video-box .video-info .video-section {
+    position: relative;
+}
+
+.videos .video .video-box .video-info .video-section video {
+    height: 80vh;
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.videos .video .video-box .video-info .video-section .video-play-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.videos .video .video-box .video-info .video-section .video-play-icon i {
+    font-size: 50px;
+    color: #fff;
+    opacity: 0;
+}
+
+.videos .video .video-box .video-info .video-section .video-play-icon.show i {
+    opacity: 1;
+}
+
+.videos .video .video-box .video-info .user-info {
+    position: absolute;
+    bottom: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0 10px;
+    width: 100%;
+    background: transparent;
+    transition: background .3s ease-in-out;
+}
+
+.videos .video .video-box .video-info .user-info:hover {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0.01));
+}
+
+.videos .video .video-box .video-info .video-section:hover~.user-info {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0.01));
+}
+
+.videos .video .video-box .video-info .user-info h5 {
+    color: #fff;
+    font-size: 13px;
+}
+
+.videos .video .video-box .video-info .user-info p {
+    color: #fff;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* User profile and description styles */
+.videos .video .video-box .video-desc {
+    margin-top: auto;
+    margin-bottom: 30px;
+}
+
+.videos .video .video-box .video-desc .user-profile {
+    position: relative;
+    cursor: pointer;
+}
+
+.videos .video .video-box .video-desc .user-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.videos .video .video-box .video-desc .user-profile .follow {
+    top: 40px;
+    position: absolute;
+    left: 15px;
+    bottom: 0;
+    background: rgb(255, 59, 92);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.videos .video .video-box .video-desc .user-profile .follow i {
+    color: #fff;
+}
+
+.videos .video .video-box .video-desc ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.videos .video .video-box .video-desc ul li span:first-child {
+    height: 50px;
+    width: 50px;
+    background: rgba(255, 255, 255, 0.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.1);
+}
+
+.videos .video .video-box .video-desc ul li .like.love i {
+    color: rgb(255, 59, 92);
+}
+
+#commentIcon.active {
+    color: rgb(255, 59, 92);
+}
+.like.love i{
+    color: rgb(255, 59, 92);
+}
+
+#commentIcon {
+    color: initial;
+}
+
+.videos .video .video-box .video-desc ul li span:first-child i {
+    color: #000;
+    font-size: 30px;
+}
+
+.videos .video .video-box .video-desc ul li span:last-child {
+    font-size: 12px;
+    color: #000;
+}
+
+/* Ensure responsiveness */
+@media (max-width: 900px) {
+    .videos {
+        width: 100%;
+        left: 0;
+    }
+
+    .videos .video .video-box {
+        margin: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .videos .video .video-box .video-desc {
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+    }
+
+    .videos .video .video-box .video-desc ul li span:first-child {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    #commentIcon {
+        color: white;
+    }
+
+    .videos .video .video-box .video-desc ul li span:first-child i {
+        color: white;
+        font-size: 30px;
+    }
+
+    .videos .video .video-box .video-desc ul li span:last-child {
+        font-size: 12px;
+        color: white;
+    }
+}

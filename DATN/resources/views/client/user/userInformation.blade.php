@@ -50,7 +50,7 @@
                                <div class="form-group row align-items-center">
                                   <div class="col-md-12">
                                      <div class="profile-img-edit">
-                                        <img class="profile-pic" src="{{ asset('assets/images/user/1.jpg') }}" alt="profile-pic">
+                                        <img class="profile-pic" src="{{ asset('assets/images/book/user/1.jpg') }}" alt="profile-pic">
                                         <div class="p-image">
                                            <i class="ri-pencil-line upload-button"></i>
                                            <input class="file-upload" type="file" accept="image/*"/>
@@ -60,87 +60,44 @@
                                </div>
                                <div class=" row align-items-center">
                                   <div class="form-group col-sm-6">
-                                     <label for="fname">First Name:</label>
+                                     <label for="fname">Họ và tên:</label>
                                      <input type="text" class="form-control" id="fname" value="Ông">
                                   </div>
                                   <div class="form-group col-sm-6">
-                                     <label for="lname">Last Name:</label>
+                                     <label for="lname">Số điện thoại:</label>
                                      <input type="text" class="form-control" id="lname" value="Trần Thuận">
                                   </div>
                                   <div class="form-group col-sm-6">
-                                     <label for="uname">Tên tài khoản:</label>
+                                     <label for="uname">Email:</label>
                                      <input type="text" class="form-control" id="uname" value="Thuangiaosu">
                                   </div>
                                   <div class="form-group col-sm-6">
-                                     <label for="cname">Công ty:</label>
-                                     <input type="text" class="form-control" id="cname" value="TV Team">
+                                     <label for="cname">Ngày sinh:</label>
+                                     <input type="date" class="form-control" id="cname" value="TV Team">
                                   </div>
                                   <div class="form-group col-sm-6">
-                                     <label class="d-block">Giới tính:</label>
-                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio6" name="customRadio1" class="custom-control-input" checked="">
-                                        <label class="custom-control-label" for="customRadio6"> Nam </label>
-                                     </div>
-                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio7" name="customRadio1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio7"> Nữ </label>
-                                     </div>
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                     <label for="dob">Ngày sinh:</label>
+                                     <label for="dob">Tỉnh thành:</label>
                                      <input  class="form-control" id="dob" value="1984-01-24">
                                   </div>
                                   <div class="form-group col-sm-6">
-                                     <label>Tình trạng hôn nhân:</label>
-                                     <select class="form-control" id="exampleFormControlSelect1">
-                                        <option selected="">Độc thân</option>
-                                        <option>Đã kết hôn</option>
-                                        <option>Góa</option>
-                                        <option>Đã ly hôn</option>
-                                        <option>Ly thân </option>
-                                     </select>
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                     <label>Tuổi:</label>
-                                     <select class="form-control" id="exampleFormControlSelect2">
-                                        <option>12-18</option>
-                                        <option>19-32</option>
-                                        <option selected="">33-45</option>
-                                        <option>46-62</option>
-                                        <option>63 > </option>
-                                     </select>
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                     <label>Quốc gia:</label>
-                                     <select class="form-control" id="exampleFormControlSelect3">
-                                        <option>Laos</option>
-                                        <option>China</option>
-                                        <option selected="">Viet Nam</option>
-                                        <option>Indo</option>
-                                        <option>USA</option>
-                                     </select>
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                     <label>Tỉnh/Thành phố:</label>
-                                     <select class="form-control" id="exampleFormControlSelect4">
-                                        <option></option>
-                                        <option>Hà Nội</option>
-                                        <option selected="">Đà Nẵng</option>
-                                        <option>HCM</option>
-                                        <option>Buôn Ma Thuột</option>
-                                     </select>
-                                  </div>
+                                    <label for="dob">Quận:</label>
+                                    <input  class="form-control" id="dob" value="1984-01-24">
+                                 </div>
+                                 <div class="form-group col-sm-6">
+                                    <label for="dob">Huyện:</label>
+                                    <input  class="form-control" id="dob" value="1984-01-24">
+                                 </div>
+                                 <div class="form-group col-sm-6">
+                                    <label for="dob">Xã:</label>
+                                    <input  class="form-control" id="dob" value="1984-01-24">
+                                 </div>
                                   <div class="form-group col-sm-12">
-                                     <label>Địa chỉ:</label>
-                                     <textarea class="form-control" name="address" rows="5" style="line-height: 22px;">
-                                        06 Nam Thành
-                                        Đà Nãng, VA 23803
-                                        Viet Nam
-                                        Zip Code: 40001
+                                     <label>Ghi chú thêm địa chỉ:</label>
+                                     <textarea class="form-control" name="address" rows="5" style="line-height: 22px;">06 Nam Thành Đà Nãng, VA 23803 Viet Nam Zip Code: 40001
                                      </textarea>
                                   </div>
                                </div>
-                               <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                               <button type="submit" class="btn btn-primary mr-2">Xác nhận</button>
                                <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
                             </form>
                          </div>

@@ -1,18 +1,5 @@
 <div class="iq-navbar-custom">
     <nav class="navbar navbar-expand-lg navbar-light p-0">
-       <div class="iq-menu-bt d-flex align-items-center">
-          <div class="wrapper-menu">
-             <div class="main-circle"><i class="las la-bars"></i></div>
-          </div>
-          <div class="iq-navbar-logo d-flex justify-content-between">
-             <a href="{{route('homeAdmin')}}" class="header-logo">
-                <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
-                <div class="logo-title">
-                   <span class="text-primary text-uppercase">NhasachTV</span>
-                </div>
-             </a>
-          </div>
-       </div>
        <div class="navbar-breadcrumb">
           <h5 class="mb-0">Dashboard</h5>
        </div>
@@ -50,7 +37,7 @@
                          <a href="#" class="iq-sub-card" >
                             <div class="media align-items-center">
                                <div class="">
-                                  <img class="avatar-40 rounded" src="images/user/01.jpg" alt="">
+                                  <img class="avatar-40 rounded" src="{{ asset('assets/images/book/user/01.jpg') }}" alt="">
                                </div>
                                <div class="media-body ml-3">
                                   <h6 class="mb-0 ">Đơn hàng giao thành công</h6>
@@ -77,7 +64,7 @@
                          <a href="#" class="iq-sub-card">
                             <div class="media align-items-center">
                                <div class="">
-                                  <img class="avatar-40 rounded" src="{{ asset('assets/images/user/01.jpg') }}" alt="">
+                                  <img class="avatar-40 rounded" src="{{ asset('assets/images/book/user/01.jpg') }}" alt="">
                                </div>
                                <div class="media-body ml-3">
                                   <h6 class="mb-0 ">QT Shop</h6>
@@ -91,7 +78,7 @@
              </li>
              <li class="line-height pt-3">
                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                   <img src="{{ asset('assets/images/user/1.jpg') }}" class="img-fluid rounded-circle mr-3" alt="user">
+                   <img src="{{ asset('assets/images/book/user/1.jpg') }}" class="img-fluid rounded-circle mr-3" alt="user">
                    <div class="caption">
                       <h6 class="mb-1 line-height">Ông Trần Thuận</h6>
                       <p class="mb-0 text-primary">Tài Khoản</p>
@@ -134,3 +121,34 @@
        </div>
     </nav>
  </div>
+ <!-- color-customizer -->
+<div class="iq-colorbox color-fix">
+   <div class="buy-button"> <a class="color-full" href="#" style="z-index: 1;"><i class="fa fa-spinner fa-spin"></i></a> </div>
+   <div class="clearfix color-picker text-center">
+       <h3 class="iq-font-black">Màu sắc tuyệt vời</h3>
+       <p>Combo màu này có sẵn bên trong toàn bộ mẫu. Bạn có thể thay đổi theo mong muốn của mình, Thậm chí bạn có thể tự tạo ra khả năng vô hạn!</p>
+       <ul class="iq-colorselect clearfix">
+           <li class="color-1 iq-colormark" data-style="color-1"></li>
+           <li class="color-2" data-style="iq-color-2"></li>
+           <li class="color-3" data-style="iq-color-3"></li>
+           <li class="color-4" data-style="iq-color-4"></li>
+           <li class="color-5" data-style="iq-color-5"></li>
+           <li class="color-6" data-style="iq-color-6"></li>
+           <li class="color-7" data-style="iq-color-7"></li>
+           <li class="color-8" data-style="iq-color-8"></li>
+           <li class="color-9" data-style="iq-color-9"></li>
+           <li class="color-10" data-style="iq-color-10"></li>
+           <li class="color-11" data-style="iq-color-11"></li>
+           <li class="color-12" data-style="iq-color-12"></li>
+           <li class="color-13" data-style="iq-color-13"></li>
+           <li class="color-14" data-style="iq-color-14"></li>
+           <li class="color-15" data-style="iq-color-15"></li>
+           <li class="color-16" data-style="iq-color-16"></li>
+           <li class="color-17" data-style="iq-color-17"></li>
+           <li class="color-18" data-style="iq-color-18"></li>
+           <li class="color-19" data-style="iq-color-19"></li>
+           <li class="color-20" data-style="iq-color-20"></li>
+       </ul>
+       <a class="btn btn-primary d-block mt-3" href="">Mua Ngay</a>
+   </div>
+</div>

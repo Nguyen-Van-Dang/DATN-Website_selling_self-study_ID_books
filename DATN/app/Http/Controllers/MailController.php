@@ -8,6 +8,7 @@ use App\Mail\OrderMail;
 use App\Mail\ContactMail;
 
 class MailController extends Controller
+
 {
     public function SendEmail()
     {

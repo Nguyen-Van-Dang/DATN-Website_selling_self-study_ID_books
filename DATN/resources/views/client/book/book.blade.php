@@ -8,7 +8,7 @@
             <div class="col-lg-12">
                <div class="iq-card-transparent mb-0">
                   <div class="d-block text-center">
-                     <h2 class="mb-3">Tìm Kiếm Sách</h2>    
+                     <h2 class="mb-3">Tìm kiếm tên sách</h2>    
                      <div class="w-100 iq-search-filter">
                         <ul class="list-inline p-0 m-0 row justify-content-center search-menu-options">
                            <li class="search-menu-opt">
@@ -72,8 +72,9 @@
                            </li>
                            <li class="search-menu-opt">
                               <div class="iq-search-bar search-book d-flex align-items-center">
-                                 <form action="#" class="searchbox">
-                                    <input type="text" class="text search-input" placeholder="Tìm kiếm ở đây...">
+                                 <form action="#" class="searchbox" style="box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);">
+                                    <input type="text" class="text search-input" placeholder="Tìm kiếm ở đây..." 
+                                    style="width: 300px; margin-left: -70px;">
                                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                                  </form>
                                  <button type="submit" class="btn btn-primary search-data ml-2">Tìm kiếm</button>
@@ -91,9 +92,9 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/01.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/01.jpg') }}" alt=""></a>
                                        <div class="view-book">
-                                          <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
+                                          <a href="{{route('bookDetail')}}" class="btn btn-sm btn-white">View Book</a>
                                        </div>
                                     </div>
                                     <div class="col-6">
@@ -128,7 +129,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/02.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/02.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -165,7 +166,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/03.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/03.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -202,7 +203,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/04.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/04.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -238,7 +239,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/05.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/05.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -275,7 +276,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/06.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/06.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -312,7 +313,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/07.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/07.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -349,7 +350,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/08.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/08.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -386,7 +387,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/09.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/09.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -423,7 +424,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/10.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/10.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -460,7 +461,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/11.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/11.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -497,7 +498,7 @@
                               <div class="iq-card-body p-0">
                                  <div class="d-flex align-items-center">
                                     <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/search-book/12.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/12.jpg') }}" alt=""></a>
                                        <div class="view-book">
                                           <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                        </div>
@@ -533,6 +534,7 @@
                   </div>
                </div>
             </div>
+
             <div class="col-lg-12">
                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                   <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
@@ -548,7 +550,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/01.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/01.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -581,7 +583,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/02.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/02.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -614,7 +616,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/03.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/03.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -647,7 +649,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/04.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/04.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -680,7 +682,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/05.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/05.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -713,7 +715,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/06.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/06.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -746,6 +748,7 @@
                   </div>
                </div>
             </div>
+
             <div class="col-lg-12">
                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                   <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 trendy-detail">
@@ -761,7 +764,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/01.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/01.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -794,7 +797,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/02.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/02.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -827,7 +830,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/03.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/03.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -860,7 +863,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/04.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/04.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -893,7 +896,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/05.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/05.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -926,7 +929,7 @@
                         <li class="col-md-3">
                            <div class="d-flex align-items-center">
                               <div class="col-5 p-0 position-relative image-overlap-shadow">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/06.jpg') }}" alt=""></a>
+                                 <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/book/book/06.jpg') }}" alt=""></a>
                                  <div class="view-book">
                                     <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
                                  </div>
@@ -960,6 +963,7 @@
                   </div>
                </div>
             </div>
+            
             <div class="col-lg-12">
                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                   <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
@@ -976,7 +980,7 @@
                            <div class="d-flex justify-content-between align-items-center">
                               <div class="col-5 p-0 position-relative">
                                  <a href="javascript:void();">
-                                    <img src="{{ asset('assets/images/favorite/05.jpg') }}" class="img-fluid rounded w-100" alt="">
+                                    <img src="{{ asset('assets/images/book/book/05.jpg') }}" class="img-fluid rounded w-100" alt="">
                                  </a>                                
                               </div>
                               <div class="col-7">
@@ -999,7 +1003,7 @@
                            <div class="d-flex justify-content-between align-items-center">
                               <div class="col-5 p-0 position-relative">
                                  <a href="javascript:void();">
-                                    <img src="{{ asset('assets/images/favorite/06.jpg') }}" class="img-fluid rounded w-100" alt="">
+                                    <img src="{{ asset('assets/images/book/book/06.jpg') }}" class="img-fluid rounded w-100" alt="">
                                  </a>                                
                               </div>
                               <div class="col-7">
@@ -1022,7 +1026,7 @@
                            <div class="d-flex justify-content-between align-items-center">
                               <div class="col-5 p-0 position-relative">
                                  <a href="javascript:void();">
-                                    <img src="{{ asset('assets/images/favorite/07.jpg') }}" class="img-fluid rounded w-100" alt="">
+                                    <img src="{{ asset('assets/images/book/book/07.jpg') }}" class="img-fluid rounded w-100" alt="">
                                  </a>                                
                               </div>
                               <div class="col-7">
@@ -1045,7 +1049,7 @@
                            <div class="d-flex justify-content-between align-items-center">
                               <div class="col-5 p-0 position-relative">
                                  <a href="javascript:void();">
-                                    <img src="{{ asset('assets/images/favorite/08.jpg') }}" class="img-fluid rounded w-100" alt="">
+                                    <img src="{{ asset('assets/images/book/book/08.jpg') }}" class="img-fluid rounded w-100" alt="">
                                  </a>                                
                               </div>
                               <div class="col-7">

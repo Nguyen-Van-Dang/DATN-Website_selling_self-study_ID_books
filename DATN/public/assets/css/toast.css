@@ -2,6 +2,8 @@
 :root {
   --dark: #34495E;
   --light: #ffffff;
+  --success_follow: #0ABF30;
+  --success_save: #0ABF30;
   --success: #0ABF30;
   --error: #E24D4C;
   --warning: #E9BD0C;
@@ -88,6 +90,14 @@
     width: 0%;
   }
 }
+.toast.success_follow::before,
+.btn#success_follow {
+  background: var(--success_follow);
+}
+.toast.success_save::before,
+.btn#success_save {
+  background: var(--success_save);
+}
 
 .toast.success::before,
 .btn#success {
@@ -111,6 +121,13 @@
 
 .toast .column i {
   font-size: 1.75rem;
+}
+
+.toast.success_follow .column i {
+  color: var(--success_follow);
+}
+.toast.success_save .column i {
+  color: var(--success_save);
 }
 
 .toast.success .column i {
@@ -156,7 +173,7 @@
 
 @media screen and (max-width: 530px) {
   .notifications {
-    width: 95%;
+    width: 60%;
   }
 
   .notifications .toast {
