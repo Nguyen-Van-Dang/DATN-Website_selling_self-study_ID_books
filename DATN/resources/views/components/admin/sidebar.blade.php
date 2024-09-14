@@ -22,23 +22,23 @@
          <li class="{{ request()->routeIs('listUser') ? 'active' : '' }}">
             <a href="{{route('listUser')}}"><i class="ri-user-line"></i> Tài Khoản</a>
          </li>
-         <li>
-            <a href="#"><i class="ri-folders-line"></i> Danh Mục Khóa Học</a>
+         <li class="{{ request()->routeIs('listCaterogyCourse') ? 'active' : '' }}">
+            <a href="{{route('listCaterogyCourse')}}"><i class="ri-folders-line"></i> Danh Mục Khóa Học</a>
          </li>
-         <li>
-            <a href="#"><i class="ri-book-line"></i> Khóa Học</a>
+         <li class="{{ request()->routeIs('listCourse') ? 'active' : '' }}">
+            <a href="{{route('listCourse')}}"><i class="ri-book-line"></i> Khóa Học</a>
          </li>
-         <li>
-            <a href="#"><i class="ri-bookmark-line"></i> Danh Mục Sách</a>
+         <li class="{{ request()->routeIs('listCaterogyBook') ? 'active' : '' }}">
+            <a href="{{route('listCaterogyBook')}}"><i class="ri-bookmark-line"></i> Danh Mục Sách</a>
          </li>
-         <li>
-            <a href="#"><i class="ri-book-2-line"></i> Sách</a>
+         <li class="{{ request()->routeIs('listBook') ? 'active' : '' }}">
+            <a href="{{route('listBook')}}"><i class="ri-book-2-line"></i> Sách</a>
          </li>
          <li>
             <a href="#"><i class="ri-file-list-line"></i> Bài Tập</a>
          </li>
-         <li>
-            <a href="#"><i class="ri-shopping-cart-line"></i> Đơn Hàng</a>
+         <li class="{{ request()->routeIs('listOrder') ? 'active' : '' }}">
+            <a href="{{route('listOrder')}}"><i class="ri-shopping-cart-line"></i> Đơn Hàng</a>
          </li>
          <li>
             <a href="#"><i class="ri-notification-3-line"></i> Thông Báo</a>

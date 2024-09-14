@@ -45,21 +45,72 @@ Route::get('/maintenance', function () {
 Route::get('/user-list', function () {
     return view('admin.user.listUser');
 })->name('listUser');
+
 Route::get('/user-add', function () {
     return view('admin.user.addUser');
 })->name('addUser');
 
-//course
+Route::get('/user-update', function () {
+    return view('admin.user.updateUser');
+})->name('updateUser');
 
+//course
+Route::get('/list-CaterogyCourse', function () {
+    return view('admin.course.listCaterogyCourse');
+})->name('listCaterogyCourse');
+
+Route::get('/list-Course', function () {
+    return view('admin.course.listCourse');
+})->name('listCourse');
+
+Route::get('/add-CaterogyCourse', function () {
+    return view('admin.course.addCaterogyCourse');
+})->name('addCaterogyCourse');
+
+Route::get('/add-Course', function () {
+    return view('admin.course.addCourse');
+})->name('addCourse');
+
+Route::get('/update-Course', function () {
+    return view('admin.course.updateCourse');
+})->name('updateCourse');
 
 //book
+Route::get('/list-CaterogyBook', function () {
+    return view('admin.book.listCaterogyBook');
+})->name('listCaterogyBook');
 
+Route::get('/list-Book', function () {
+    return view('admin.book.listBook');
+})->name('listBook');
+
+Route::get('/add-CaterogyBook', function () {
+    return view('admin.book.addCaterogyBook');
+})->name('addCaterogyBook');
+
+Route::get('/add-Book', function () {
+    return view('admin.book.addBook');
+})->name('addBook');
+
+Route::get('/update-Book', function () {
+    return view('admin.book.updateBook');
+})->name('updateBook');
 
 //lecsson
 
 
 //order
+Route::get('/list-Order', function () {
+    return view('admin.order.listOrder');
+})->name('listOrder');
 
+Route::get('/detail-Order', function () {
+    return view('admin.order.detailOrder');
+})->name('detailOrder');
+
+Route::get('/update-Order', function () {
+    return view('admin.order.updateOrder');
+})->name('updateOrder');
 
 //notification
 

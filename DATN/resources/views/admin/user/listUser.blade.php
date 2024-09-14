@@ -33,7 +33,7 @@
                          <tr>
                             <td>1</td>
                             <td class="text-center">
-                               <img src="{{ asset('assets/images/user/1.jpg') }}" class="img-fluid avatar-50 rounded" alt="">
+                               <img src="{{ asset('assets/images/book/user/1.jpg') }}" class="img-fluid avatar-50 rounded" alt="">
                             </td>
                             <td class="mb-0">Nam Cao</td>
                             <td>
@@ -45,7 +45,7 @@
                             <td>
                                <div class="flex align-items-center list-user-action">
                                     <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="Xem chi tiết" href="#"><i class="ri-eye-line"></i></a>
-                                    <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="admin-add-category.html"><i class="ri-pencil-line"></i></a>
+                                    <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{route('updateUser')}}"><i class="ri-pencil-line"></i></a>
                                     <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xoá" href="#"><i class="ri-delete-bin-line"></i></a>
                                </div>
                             </td>
