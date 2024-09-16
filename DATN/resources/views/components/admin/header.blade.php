@@ -80,7 +80,7 @@
                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                    <img src="{{ asset('assets/images/book/user/1.jpg') }}" class="img-fluid rounded-circle mr-3" alt="user">
                    <div class="caption">
-                      <h6 class="mb-1 line-height">Ông Trần Thuận</h6>
+                      <h6 class="mb-1 line-height">{{ auth()->user()->name }}</h6>
                       <p class="mb-0 text-primary">Tài Khoản</p>
                    </div>
                 </a>
@@ -88,28 +88,41 @@
                    <div class="iq-card shadow-none m-0">
                       <div class="iq-card-body p-0 ">
                          <div class="bg-primary p-3">
-                            <h5 class="mb-0 text-white line-height">Xin Chào Ông Trần Thuận</h5>
+                            <h5 class="mb-0 text-white line-height">Xin Chào {{ auth()->user()->name }}</h5>
                          </div>
-                         <a href="#" class="iq-sub-card iq-bg-primary-hover">
-                            <div class="media align-items-center">
-                               <div class="rounded iq-card-icon iq-bg-primary">
-                                  <i class="ri-file-user-line"></i>
-                               </div>
-                               <div class="media-body ml-3">
-                                  <h6 class="mb-0 ">Tài khoản của tôi</h6>
-                               </div>
-                            </div>
-                         </a>
-                         <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
-                            <div class="media align-items-center">
-                               <div class="rounded iq-card-icon iq-bg-primary">
-                                  <i class="ri-account-box-line"></i>
-                               </div>
-                               <div class="media-body ml-3">
-                                  <h6 class="mb-0 ">Đơn hàng của tôi</h6>
-                               </div>
-                            </div>
-                         </a>
+                         @if (Auth::user()->role_id == 1)
+                           <a href="{{route('userInfo')}}" class="iq-sub-card iq-bg-primary-hover">
+                              <div class="media align-items-center">
+                                 <div class="rounded iq-card-icon iq-bg-primary">
+                                    <i class="ri-file-user-line"></i>
+                                 </div>
+                                 <div class="media-body ml-3">
+                                    <h6 class="mb-0 ">Tài khoản của tôi</h6>
+                                 </div>
+                              </div>
+                           </a>
+                         @else
+                           <a href="{{route('userInfo')}}" class="iq-sub-card iq-bg-primary-hover">
+                              <div class="media align-items-center">
+                                 <div class="rounded iq-card-icon iq-bg-primary">
+                                    <i class="ri-file-user-line"></i>
+                                 </div>
+                                 <div class="media-body ml-3">
+                                    <h6 class="mb-0 ">Tài khoản của tôi</h6>
+                                 </div>
+                              </div>
+                           </a>
+                           <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                              <div class="media align-items-center">
+                                 <div class="rounded iq-card-icon iq-bg-primary">
+                                    <i class="ri-account-box-line"></i>
+                                 </div>
+                                 <div class="media-body ml-3">
+                                    <h6 class="mb-0 ">Đơn hàng của tôi</h6>
+                                 </div>
+                              </div>
+                           </a>
+                         @endif
                          <div class="d-inline-block w-100 text-center p-3">
                             <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
                          </div>

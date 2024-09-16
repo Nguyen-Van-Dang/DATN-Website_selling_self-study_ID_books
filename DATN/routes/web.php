@@ -54,18 +54,34 @@ Route::get('/user-update', function () {
     return view('admin.user.updateUser');
 })->name('updateUser');
 
+Route::get('/user-detail', function () {
+    return view('admin.user.detailUser');
+})->name('detailUser');
+
+Route::get('/user-info', function () {
+    return view('admin.user.userInfo');
+})->name('userInfo');
+
 //course
-Route::get('/list-CaterogyCourse', function () {
-    return view('admin.course.listCaterogyCourse');
-})->name('listCaterogyCourse');
+Route::get('/list-CategoryCourse', function () {
+    return view('admin.categoryCourse.listCategoryCourse');
+})->name('listCategoryCourse');
+
+Route::get('/add-CategoryCourse', function () {
+    return view('admin.categoryCourse.addCategoryCourse');
+})->name('addCategoryCourse');
+
+Route::get('/detail-CategoryCourse', function () {
+    return view('admin.categoryCourse.detailCategoryCourse');
+})->name('detailCategoryCourse');
+
+Route::get('/update-CategoryCourse', function () {
+    return view('admin.categoryCourse.updateCategoryCourse');
+})->name('updateCategoryCourse');
 
 Route::get('/list-Course', function () {
     return view('admin.course.listCourse');
 })->name('listCourse');
-
-Route::get('/add-CaterogyCourse', function () {
-    return view('admin.course.addCaterogyCourse');
-})->name('addCaterogyCourse');
 
 Route::get('/add-Course', function () {
     return view('admin.course.addCourse');
@@ -75,18 +91,30 @@ Route::get('/update-Course', function () {
     return view('admin.course.updateCourse');
 })->name('updateCourse');
 
+Route::get('/detail-Course', function () {
+    return view('admin.course.updateCourse');
+})->name('detailCourse');
+
 //book
-Route::get('/list-CaterogyBook', function () {
-    return view('admin.book.listCaterogyBook');
-})->name('listCaterogyBook');
+Route::get('/list-CategoryBook', function () {
+    return view('admin.categoryBook.listCategoryBook');
+})->name('listCategoryBook');
+
+Route::get('/add-CategoryBook', function () {
+    return view('admin.categoryBook.addCategoryBook');
+})->name('addCategoryBook');
+
+Route::get('/detail-CategoryBook', function () {
+    return view('admin.categoryBook.detailCategoryBook');
+})->name('detailCategoryBook');
+
+Route::get('/update-CategoryBook', function () {
+    return view('admin.categoryBook.updateCategoryBook');
+})->name('updateCategoryBook');
 
 Route::get('/list-Book', function () {
     return view('admin.book.listBook');
 })->name('listBook');
-
-Route::get('/add-CaterogyBook', function () {
-    return view('admin.book.addCaterogyBook');
-})->name('addCaterogyBook');
 
 Route::get('/add-Book', function () {
     return view('admin.book.addBook');
@@ -96,8 +124,15 @@ Route::get('/update-Book', function () {
     return view('admin.book.updateBook');
 })->name('updateBook');
 
-//lecsson
+Route::get('/detail-Book', function () {
+    return view('admin.book.detailBook');
+})->name('detailBook');
 
+//lecture
+
+//exeture
+
+//document
 
 //order
 Route::get('/list-Order', function () {
@@ -113,9 +148,30 @@ Route::get('/update-Order', function () {
 })->name('updateOrder');
 
 //notification
+Route::get('/list-Notification', function () {
+    return view('admin.notification.listNotification');
+})->name('listNotification');
 
+Route::get('/detail-Notification', function () {
+    return view('admin.notification.detailNotification');
+})->name('detailNotification');
+
+Route::get('/add-Notification', function () {
+    return view('admin.notification.addNotification');
+})->name('addNotification');
 
 //contact
+Route::get('/list-Contact', function () {
+    return view('admin.contact.listContact');
+})->name('listContact');
+
+Route::get('/detail-Contact', function () {
+    return view('admin.contact.detailContact');
+})->name('detailContact');
+
+Route::get('/add-Contact', function () {
+    return view('admin.contact.addContact');
+})->name('addContact');
 
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 // thông tin người dùng
@@ -158,14 +214,12 @@ Route::get('/course-detail', function () {
     return view('client.course.courseDetail');
 })->name('courseDetail');
 
-//reals
+//reels
 Route::get('/reels', function () {
     return view('client.reels.reels');
 })->name('reals');
 
 //chat
-
-//reals
 Route::get('/chat', function () {
     return view('client.chat.chat');
 })->name('chat');

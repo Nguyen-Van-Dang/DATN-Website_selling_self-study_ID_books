@@ -172,7 +172,7 @@
                                 class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption"
                                 @php
-$userName = Auth::user()->name;
+                                    $userName = Auth::user()->name;
                                     $displayName = Str::limit($userName, 10, '...'); @endphp>
                                 <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                 <p class="mb-0 text-primary">Tài Khoản</p>

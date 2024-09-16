@@ -163,6 +163,16 @@
     </nav>
 </div>
 <style>
+    .iq-menu-bt {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .iq-menu-bt {
+        display: block;
+    }
+}
+
     .custom-hide {
         display: none;
     }

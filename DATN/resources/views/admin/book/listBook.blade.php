@@ -47,7 +47,7 @@
                              <td>
                                 <div class="flex align-items-center list-user-action">
                                     <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="Xem chi tiết" href="#"><i class="ri-eye-line"></i></a>
-                                  <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{route('updateBook')}}"><i class="ri-pencil-line"></i></a>
+                                  <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa" href="{{route('updateBook')}}"><i class="ri-pencil-line"></i></a>
                                   <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xoá" href="#"><i class="ri-delete-bin-line"></i></a>
                                </div>
                              </td>
@@ -66,8 +66,8 @@
                              <td>
                                 <div class="flex align-items-center list-user-action">
                                     <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="Xem chi tiết" href="#"><i class="ri-eye-line"></i></a>
-                                  <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{route('updateBook')}}"><i class="ri-pencil-line"></i></a>
-                                  <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#"><i class="ri-delete-bin-line"></i></a>
+                                  <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sửa" href="{{route('updateBook')}}"><i class="ri-pencil-line"></i></a>
+                                  <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xóa" href="#"><i class="ri-delete-bin-line"></i></a>
                                </div>
                              </td>
                          </tr>

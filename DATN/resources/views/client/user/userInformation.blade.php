@@ -141,58 +141,7 @@
                             </div>
                          </div>
                          <div class="iq-card-body">
-                            <form>
-                               <div class="form-group row align-items-center">
-                                  <label class="col-8 col-md-3" for="emailnotification">Thông báo tới Email :</label>
-                                  <div class="col-4 col-md-9 custom-control custom-switch">
-                                     <input type="checkbox" class="custom-control-input" id="emailnotification" checked="">
-                                     <label class="custom-control-label" for="emailnotification"></label>
-                                  </div>
-                               </div>
-                               <div class="form-group row align-items-center">
-                                  <label class="col-8 col-md-3" for="smsnotification">Thông báo tới SMS:</label>
-                                  <div class="col-4 col-md-9 custom-control custom-switch">
-                                     <input type="checkbox" class="custom-control-input" id="smsnotification" checked="">
-                                     <label class="custom-control-label" for="smsnotification"></label>
-                                  </div>
-                               </div>
-                               <div class="form-group row align-items-center">
-                                  <label class="col-md-3" for="npass">Khi nào gửi Email</label>
-                                  <div class="col-md-9">
-                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="email01">
-                                        <label class="custom-control-label" for="email01">Bạn có thông báo mới.</label>
-                                     </div>
-                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="email02">
-                                        <label class="custom-control-label" for="email02">Bạn đã gửi một tin nhắn trực tiếp</label>
-                                     </div>
-                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="email03" checked="">
-                                        <label class="custom-control-label" for="email03">Ai đó thêm bạn làm kết nối</label>
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="form-group row align-items-center">
-                                  <label class="col-md-3" for="npass">Khi nào cần báo email</label>
-                                  <div class="col-md-9">
-                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="email04">
-                                        <label class="custom-control-label" for="email04"> Theo đơn đặt hàng mới.</label>
-                                     </div>
-                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="email05">
-                                        <label class="custom-control-label" for="email05"> Phê duyệt thành viên mới</label>
-                                     </div>
-                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="email06" checked="">
-                                        <label class="custom-control-label" for="email06"> Đăng ký thành viên</label>
-                                     </div>
-                                  </div>
-                               </div>
-                               <button type="submit" class="btn btn-primary mr-2">Gửi</button>
-                               <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
-                            </form>
+                            
                          </div>
                       </div>
                    </div>
@@ -205,22 +154,7 @@
                             </div>
                          </div>
                          <div class="iq-card-body">
-                            <form>
-                               <div class="form-group">
-                                  <label for="cno">Số liên lạc:</label>
-                                  <input type="text" class="form-control" id="cno" value="089">
-                               </div>
-                               <div class="form-group">
-                                  <label for="email">Email:</label>
-                                  <input type="text" class="form-control" id="email" value="tvtean@ttnm.com">
-                               </div>
-                               <div class="form-group">
-                                  <label for="url">Url:</label>
-                                  <input type="text" class="form-control" id="url" value="https://nhasachtv.com">
-                               </div>
-                               <button type="submit" class="btn btn-primary mr-2">Gửi</button>
-                               <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
-                            </form>
+                           
                          </div>
                       </div>
                    </div>
