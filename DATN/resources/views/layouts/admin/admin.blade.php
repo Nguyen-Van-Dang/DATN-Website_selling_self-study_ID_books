@@ -3,11 +3,10 @@
 
 <head>
     <title>@yield('title', 'TRANG CHỦ ADMIN')</title>
-
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
@@ -31,7 +30,6 @@
             <x-admin.footer></x-admin.footer>
         </footer>
     </div>
-
     {{-- script here --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>

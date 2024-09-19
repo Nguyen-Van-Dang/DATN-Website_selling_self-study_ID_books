@@ -86,6 +86,10 @@ dl dd:last-child {
 /* Table */
 th {}
 
+a {
+  text-decoration: none;
+}
+
 a:hover {
   text-decoration: none;
 }
@@ -788,7 +792,7 @@ a:hover {
 -----------------------------------------------------------------------*/
 .iq-sidebar {
   position: fixed;
-  z-index: 99;
+  /* z-index: 2; */
   top: 0;
   width: 300px;
   height: 100%;
@@ -985,7 +989,7 @@ body.sidebar-main .iq-sidebar .iq-menu li a[aria-expanded="false"].collapsed {
 
 .iq-sidebar-menu .iq-menu li a i.iq-arrow-left,
 .iq-sidebar-menu .iq-menu li>a>i.iq-arrow-left {
-  /*background: transparent; color: var(--iq-body-text); text-align: center; border-radius: 5px; font-size: 16px;*/
+  background: transparent; color: var(--iq-body-text); text-align: center; border-radius: 5px; font-size: 16px;
 }
 
 .iq-sidebar-menu .iq-menu li a[aria-expanded="true"] i.iq-arrow-left,
@@ -1089,7 +1093,7 @@ body.sidebar-main .iq-sidebar .iq-menu li a[aria-expanded="false"].collapsed {
   right: 0;
   width: calc(100% - 300px);
   display: inline-block;
-  z-index: 99;
+  z-index: 1;
   background: var(--iq-body-bg);
   border-bottom: 1px solid var(--iq-border);
   margin: 0;
@@ -1511,8 +1515,6 @@ div#lottie-fullscreen svg path {
   margin: 0 0 0 20px;
 }
 
-.iq-menu-bt {}
-
 .wrapper-menu {
   font-size: 30px;
   text-align: center;
@@ -1915,6 +1917,12 @@ body.sidebar-main .content-page {
 .iq-product-action {
   font-size: 20px;
   line-height: 20px;
+}
+
+.view-book .btn {
+  background-color: white;
+  cursor: pointer;
+  color: #20c997;
 }
 
 .view-book .btn-white:hover {
@@ -3871,6 +3879,7 @@ Map Profile
 ::-webkit-scrollbar-thumb {
   background: var(--iq-secondary);
   border-radius: 5px;
+  background-color: #20c997;
 }
 
 /* Handle on hover */

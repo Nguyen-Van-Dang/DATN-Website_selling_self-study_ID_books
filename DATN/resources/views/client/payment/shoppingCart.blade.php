@@ -20,7 +20,7 @@
                                  <div class="row align-items-center">
                                     <div class="col-sm-2">
                                        <span class="checkout-product-img">
-                                       <a href="javascript:void();"><img class="img-fluid rounded" src="{{ asset('assets/images/checkout/01.jpg') }}" alt=""></a>
+                                       <a href="javascript:void();"><img class="img-fluid rounded" src="{{ asset('assets/images/book/book/01.jpg') }}" alt=""></a>
                                        </span>
                                     </div>
                                     <div class="col-sm-4">
@@ -140,12 +140,6 @@
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group"> 
-                                       <label>Địa chỉ: *</label> 
-                                       <input type="text" class="form-control" name="houseno" required="">
-                                    </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group"> 
                                        <label>Tỉnh/thành phố: *</label> 
                                        <input type="text" class="form-control" name="city" required="">
                                     </div>
@@ -157,12 +151,24 @@
                                     </div>
                                  </div>
                                  <div class="col-md-6">
+                                    <div class="form-group"> 
+                                       <label>Địa chỉ: *</label> 
+                                       <input type="text" class="form-control" name="houseno" required="">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="addtype">Loại địa chỉ</label>
                                        <select class="form-control" id="addtype">
                                           <option>Nhà riêng</option>
                                           <option>Công ty</option>
                                        </select>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group"> 
+                                       <label>Ghi chú: *</label> 
+                                       <textarea class="form-control" name="address" rows="5" style="line-height: 22px;"></textarea>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
@@ -176,11 +182,11 @@
                   <div class="col-lg-4">
                      <div class="iq-card">
                         <div class="iq-card-body">
-                           <h4 class="mb-2">Ông Trần Thuận</h4>
+                           <h4 class="mb-2">Tên: Ông Trần Thuận</h4>
                            <div class="shipping-address">
-                              <p class="mb-0">11 Thành Thái</p>
-                              <p>Thành phố Đà Nẵng</p>
-                              <p>0789-999-999</p>
+                              <p class="mb-0">Số điện thoại: 0123456789 </p>
+                              <p>Địa chỉ:</p>
+                              <p>Ghi chú: </p>
                            </div>
                            <hr>
                            <a id="deliver-address" href="javascript:void();" class="btn btn-primary d-block mt-1 next">Tiếp tục</a>
@@ -213,19 +219,23 @@
                               <div class="form-group">
                                  <div class="custom-control custom-radio">
                                     <input type="radio" id="credit" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="credit"> Thẻ Tín dụng / Ghi nợ / ATM</label>
+                                    <label class="custom-control-label" for="credit">Thẻ Tín dụng</label>
                                  </div>
                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="netbaking" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="netbaking"> Momo/ZaloPay</label>
+                                    <input type="radio" id="momo" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="momo">MoMo</label>
                                  </div>
                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="emi" name="emi" class="custom-control-input">
-                                    <label class="custom-control-label" for="emi"> Trả góp</label>
+                                    <input type="radio" id="zalopay" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="zalopay">ZaloPay</label>
                                  </div>
                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="cod" name="cod" class="custom-control-input">
-                                    <label class="custom-control-label" for="cod"> Thanh toán khi giao hàng                                          </label>
+                                    <input type="radio" id="vnpay" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="vnpay">VnPay</label>
+                                 </div>
+                                 <div class="custom-control custom-radio">
+                                    <input type="radio" id="free" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="free">Thanh toán khi giao hàng</label>
                                  </div>
                               </div>
                            </div>
