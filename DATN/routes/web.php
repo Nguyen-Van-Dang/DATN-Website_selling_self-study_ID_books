@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\Admin\AbcController;
 use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
@@ -172,6 +173,12 @@ Route::get('/detail-Contact', function () {
 Route::get('/add-Contact', function () {
     return view('admin.contact.addContact');
 })->name('addContact');
+
+//Abc
+Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
+
+Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
+Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
 
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 // thông tin người dùng
