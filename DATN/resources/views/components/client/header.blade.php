@@ -36,7 +36,7 @@
             </a>
         </div>
         <div class="navbar-breadcrumb">
-            <a href="" class="iq-waves-effect  rounded">
+            <a href="{{ route('chat') }}" class="iq-waves-effect  rounded">
                 <h6 class="mb-0">Tin nhắn</h6>
             </a>
         </div>
@@ -172,7 +172,7 @@
                                 class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption"
                                 @php
-                                    $userName = Auth::user()->name;
+$userName = Auth::user()->name;
                                     $displayName = Str::limit($userName, 10, '...'); @endphp>
                                 <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                 <p class="mb-0 text-primary">Tài Khoản</p>
@@ -280,7 +280,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="{{route('bookID')}}" class="iq-sub-card iq-bg-primary-hover">
+                                        <a href="{{ route('bookID') }}" class="iq-sub-card iq-bg-primary-hover">
                                             <div class="media align-items-center">
                                                 <div class="rounded iq-card-icon iq-bg-primary">
                                                     <i class="ri-key-2-line"></i>
