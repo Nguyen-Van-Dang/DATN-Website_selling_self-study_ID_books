@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>@yield('title', 'TRANG CHỦ')</title>
+    <title>@yield('title', 'Tin Nhắn')</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -53,7 +53,7 @@
         </div>
         <div id="content-page" class="content-page">
             <div class="row">
-                <div class="col-8">
+                <div class="col-8 pr-0">
                     @livewire('chat.center')
                 </div>
                 <div class="col-4">
