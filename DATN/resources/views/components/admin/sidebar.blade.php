@@ -46,6 +46,9 @@
          <li class="{{ request()->routeIs('listContact') ? 'active' : '' }}">
             <a href="{{route('listContact')}}"><i class="ri-mail-line"></i> Liên Hệ</a>
          </li>
+         <li class="{{ request()->routeIs('getAllAbc') ? 'active' : '' }}">
+            <a href="{{route('getAllAbc')}}"> - Abc</a>
+         </li>
       </ul>
     </nav>
     <div id="sidebar-bottom" class="p-3 position-relative">
