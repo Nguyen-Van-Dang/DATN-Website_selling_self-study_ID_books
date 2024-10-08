@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Client\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\Admin\AbcController;
 use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
@@ -174,6 +176,12 @@ Route::get('/add-Contact', function () {
     return view('admin.contact.addContact');
 })->name('addContact');
 
+//Abc
+Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
+
+Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
+Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
+
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 // thông tin người dùng
 Route::get('/user-information', function () {
@@ -221,9 +229,13 @@ Route::get('/reels', function () {
 })->name('reals');
 
 //chat
-Route::get('/chat', function () {
-    return view('client.chat.chat');
-})->name('chat');
+Route::prefix('chat')->name('chat')->group(function () {
+    Route::controller(ChatController::class)->group(function () {
+        Route::get('/', 'index');
+        // Route::get('/orders/{id}', 'show');
+        // Route::post('/orders', 'store');
+    });
+});
 
 //course 
 // mail
