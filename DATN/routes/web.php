@@ -97,6 +97,7 @@ Route::get('/detail-Course', function () {
     return view('admin.course.updateCourse');
 })->name('detailCourse');
 
+
 //book
 Route::get('/list-CategoryBook', function () {
     return view('admin.categoryBook.listCategoryBook');
@@ -236,5 +237,6 @@ Route::prefix('chat')->name('chat')->group(function () {
     });
 });
 
+//course 
 // mail
 Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
