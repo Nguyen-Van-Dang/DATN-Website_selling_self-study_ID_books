@@ -1,6 +1,6 @@
 {{-- {{dd(Auth::id());}} --}}
 <div class="iq-navbar-custom">
-    <nav class="navbar navbar-expand-lg navbar-light p-0">
+    <nav class="navbar navbar-expand-lg navbar-light p-0 ">
         <div class="iq-menu-bt d-flex align-items-center">
             <div class="wrapper-menu">
                 <div class="main-circle"><i class="las la-bars"></i></div>
@@ -15,50 +15,55 @@
                 </a>
             </div>
         </div>
-        <div class="navbar-breadcrumb">
-            <a href="{{ route('homeClient') }}" class="iq-waves-effect text-gray rounded">
-                <h6 class="mb-0">Trang Chủ</h6>
-            </a>
+        <div class="d-flex nav-menu">
+            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('/') ? 'active' : '' }}">
+                <a href="{{ route('homeClient') }}" class="iq-waves-effect text-gray rounded">
+                    <h6 class="mb-0">Trang Chủ</h6>
+                </a>
+            </div>
+            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('book-list') ? 'active' : '' }}">
+                <a href="{{ route('bookList') }}" class="iq-waves-effect rounded">
+                    <h6 class="mb-0">Sách</h6>
+                </a>
+            </div>
+            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
+                <a href="{{ route('khoa-hoc') }}" class="iq-waves-effect rounded">
+                    <h6 class="mb-0">Khóa học</h6>
+                </a>
+            </div>
+            <div class="navbar-breadcrumb mr-2 px-3 ">
+                <a href="" class="iq-waves-effect  rounded">
+                    <h6 class="mb-0">Học tập</h6>
+                </a>
+            </div>
+            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('chat') ? 'active' : '' }}">
+                <a href="{{ route('chat') }}" class="iq-waves-effect  rounded">
+                    <h6 class="mb-0">Tin nhắn</h6>
+                </a>
+            </div>
+            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('reels') ? 'active' : '' }}">
+                <a href="{{ route('reals') }}" class="iq-waves-effect  rounded">
+                    <h6 class="mb-0">Reels</h6>
+                </a>
+            </div>
+            <div class="navbar-breadcrumb mr-2 px-3">
+                <a href="#" class="iq-waves-effect  rounded">
+                    <h6 class="mb-0">Đề thi</h6>
+                </a>
+            </div>
         </div>
-        <div class="navbar-breadcrumb">
-            <a href="{{ route('bookList') }}" class="iq-waves-effect rounded">
-                <h6 class="mb-0">Sách</h6>
-            </a>
+
+        <div class="nav-button mr-5" style="margin-left: auto">
+            <a href="" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách !</b></a>
         </div>
-        <div class="navbar-breadcrumb">
-            <a href="" class="iq-waves-effect rounded">
-                <h6 class="mb-0">Khóa học</h6>
-            </a>
-        </div>
-        <div class="navbar-breadcrumb">
-            <a href="" class="iq-waves-effect  rounded">
-                <h6 class="mb-0">Học tập</h6>
-            </a>
-        </div>
-        <div class="navbar-breadcrumb">
-            <a href="{{ route('chat') }}" class="iq-waves-effect  rounded">
-                <h6 class="mb-0">Tin nhắn</h6>
-            </a>
-        </div>
-        <div class="navbar-breadcrumb">
-            <a href="{{ route('reals') }}" class="iq-waves-effect  rounded">
-                <h6 class="mb-0">Reels</h6>
-            </a>
-        </div>
-        <div class="iq-search-bar">
-            <form action="#" class="searchbox">
-                <input type="text" class="text search-input" placeholder="Tìm kiếm sản phẩm..."
-                    style="width: 300px; box-shadow: inset 0px 0px 50px 5px rgba(44, 101, 144, 0.1); margin-left: -70px;">
-                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-            </form>
-        </div>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
             <i class="ri-menu-3-line"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto navbar-list">
-                <li class="nav-item nav-icon search-content">
+                {{-- <li class="nav-item nav-icon search-content">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                         <i class="ri-search-line"></i>
                     </a>
@@ -66,7 +71,8 @@
                         <input type="text" class="text search-input" placeholder="Type here to search...">
                         <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                     </form>
-                </li>
+                </li> --}}
+
                 {{-- notification --}}
                 <li class="nav-item nav-icon">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
@@ -527,5 +533,42 @@ $userName = Auth::user()->name;
         color: var(--iq-primary);
         transition: 1s;
         text-decoration: none;
+    }
+
+    .iq-top-navbar .iq-navbar-custom .active h6 {
+        color: #49f0d3;
+        font-weight: bold
+    }
+
+    .nav-button .btn {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: scale(1);
+        }
+
+        40% {
+            transform: scale(1.05);
+        }
+
+        60% {
+            transform: scale(1.03);
+        }
+    }
+
+    .nav-button .btn {
+        animation: bounce 2s infinite;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .nav-button .btn:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 </style>
