@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->integer('social_id')->nullable();
             $table->string('name', length: 255)->nullable();
             $table->string('image_url', length: 255)->nullable();
             $table->string('phone', length: 10)->nullable();
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->integer('loginType')->default(1)->nullable();
             $table->string('token', length: 10)->nullable();
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('cascade');
-
+            $table->rememberToken();
             $table->timestamps();
         });
     }

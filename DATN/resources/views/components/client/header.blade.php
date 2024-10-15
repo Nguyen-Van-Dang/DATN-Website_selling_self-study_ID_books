@@ -164,6 +164,13 @@
                         </div>
                     </div>
                 </li>
+                {{-- reels --}}
+                <li class="nav-item nav-icon dropdown">
+                    <a href="{{ route('reelsUpload') }}" class="text-gray rounded">
+                        <i class="ri-upload-cloud-line"></i>
+                        {{-- <span class="badge badge-danger count-cart rounded-circle">2</span> --}}
+                    </a>
+                </li>
                 {{-- user --}}
                 @if (auth()->check())
                     <li class="line-height pt-3">
@@ -224,7 +231,7 @@ $userName = Auth::user()->name;
                                                     <i class="ri-profile-line"></i>
                                                 </div>
                                                 <div class="media-body ml-3">
-                                                    <h6 class="mb-0">Sổ địa chỉ</h6>
+                                                    <h6 class="mb-0">Sửa thông tin</h6>
                                                 </div>
                                             </div>
                                         </a>
@@ -365,7 +372,7 @@ $userName = Auth::user()->name;
                                                 <p class="social-text" style="margin-left: 50px">Hoặc các mạng xã hội
                                                     khác</p>
                                                 <div class="social-media">
-                                                    <a href="#" class="social-icon">
+                                                    <a href="{{ route('login-by-facebook') }}" class="social-icon">
                                                         <i class="fab fa-facebook-f"></i>
                                                     </a>
                                                     <a href="#" class="social-icon">

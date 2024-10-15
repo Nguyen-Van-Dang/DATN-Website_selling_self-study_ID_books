@@ -3,6 +3,7 @@
 use App\Http\Controllers\Client\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\Client\ReelsController;
 use App\Http\Controllers\Admin\AbcController;
 use App\Http\Controllers\MailController;
 
@@ -21,9 +22,13 @@ Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback
 // Login Zalo
 
 // Login FaceBook
+Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');
+Route::get('auth/facebook/callback', [UserController::class, 'handleFacebookCallback']);
 
 // Login Phone
 Route::post('/', [UserController::class, 'handleLogin'])->name('handleLogin');
+
+// Register Phone
 
 //Log Out
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
@@ -131,8 +136,38 @@ Route::get('/detail-Book', function () {
 })->name('detailBook');
 
 //lecture
+Route::get('/list-Lecture', function () {
+    return view('admin.lecture.listLecture');
+})->name('listLecture');
 
-//exeture
+Route::get('/add-Lecture', function () {
+    return view('admin.lecture.addLecture');
+})->name('addLecture');
+
+Route::get('/update-Lecture', function () {
+    return view('admin.lecture.updateLecture');
+})->name('updateLecture');
+
+Route::get('/detail-Lecture', function () {
+    return view('admin.lecture.detailLecture');
+})->name('detailLecture');
+
+//exercise
+Route::get('/list-Exercise', function () {
+    return view('admin.exercise.listExercise');
+})->name('listExercise');
+
+Route::get('/add-Exercise', function () {
+    return view('admin.exercise.addExercise');
+})->name('addExercise');
+
+Route::get('/update-Exercise', function () {
+    return view('admin.exercise.updateExercise');
+})->name('updateExercise');
+
+Route::get('/detail-Exercise', function () {
+    return view('admin.exercise.detailExercise');
+})->name('detailExercise');
 
 //document
 
@@ -182,6 +217,7 @@ Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('Creat
 Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
 
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
+
 // thông tin người dùng
 Route::get('/user-information', function () {
     return view('client.user.userInformation');
@@ -223,6 +259,14 @@ Route::get('/course-detail', function () {
 })->name('courseDetail');
 
 //reels
+Route::post('/reelsUpload', [ReelsController::class, 'upload'])->name('reelsUpload');
+Route::get('/reelsUpload1', [ReelsController::class, 'showVideo'])->name('reelsUpload1');
+
+
+Route::get('/reelsUpload', function () {
+    return view('client.reels.reelsUpload');
+})->name('reelsUpload');
+
 Route::get('/reels', function () {
     return view('client.reels.reels');
 })->name('reals');

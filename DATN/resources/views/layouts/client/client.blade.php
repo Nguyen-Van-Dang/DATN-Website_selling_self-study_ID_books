@@ -71,6 +71,18 @@
     <script src="{{ asset('assets/js/style-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/chart-custom.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+	{{-- <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+    <!-- firebase-conf -->
+	<script type="text/javascript" src="{{ asset('resources/js/firebase-conf.js') }}"></script>
+	<!-- facebook provider -->
+	<script type="text/javascript" src="{{ asset('resources/js/facebook.js') }}"></script> --}}
 </body>
 
 </html>

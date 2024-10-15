@@ -32,4 +32,13 @@ class UserController extends Controller
     {
         return $this->userRepository->handleGoogleCallback($request);
     }
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+    // public function handleFacebookCallback(Request $request)
+    // {
+    //     return $this->userRepository->handleFacebookCallback($request);
+    // }
+
 }
