@@ -11,4 +11,9 @@ class CourseController extends Controller
     {
         return view('client.course.courses');
     }
+
+    public function show($id)
+    {
+        return view('client.course.courseDetail', compact('id'));
+    }
 }

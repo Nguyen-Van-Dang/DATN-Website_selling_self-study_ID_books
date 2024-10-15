@@ -72,6 +72,9 @@
     <script src="{{ asset('assets/js/chart-custom.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 	{{-- <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
 	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
