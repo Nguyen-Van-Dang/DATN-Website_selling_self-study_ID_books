@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Client\ReelsController;
 use App\Http\Controllers\Admin\AbcController;
+use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
@@ -101,6 +102,7 @@ Route::get('/update-Course', function () {
 Route::get('/detail-Course', function () {
     return view('admin.course.updateCourse');
 })->name('detailCourse');
+
 
 //book
 Route::get('/list-CategoryBook', function () {
@@ -249,9 +251,13 @@ Route::get('/book-id', function () {
 })->name('bookID');
 
 //danh sách khóa học
-Route::get('/course-list', function () {
-    return view('client.course.course');
-})->name('courseList');
+Route::prefix('khoa-hoc')->name('khoa-hoc')->group(function () {
+    Route::controller(CourseController::class)->group(function () {
+        Route::get('/', 'index');
+        // Route::get('/orders/{id}', 'show');
+        // Route::post('/orders', 'store');
+    });
+});
 
 //chi tiết khóa học
 Route::get('/course-detail', function () {
@@ -280,5 +286,6 @@ Route::prefix('chat')->name('chat')->group(function () {
     });
 });
 
+//course 
 // mail
 Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
