@@ -19,7 +19,7 @@
                    <div class="form-group">
                       <label>Ảnh test:</label>
                       <div class="custom-file">
-                         <input type="file" class="custom-file-input" id="customFile" name="thumbnail" value="{{old('thumbnail')}}">
+                         <input type="file" class="custom-file-input" id="customFile" name="thumbnail" required>
                          <label class="custom-file-label" for="customFile" >Chọn tập tin</label>
                       </div>
                    </div>

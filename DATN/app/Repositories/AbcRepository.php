@@ -25,46 +25,27 @@ class AbcRepository
     }
     public function handleImage($data)
     {
-        if ($data->hasFile('thumbnail')) {
-            $file = $data->file('thumbnail');
-            $path = $file->store('public/thumbnails');
-            $filePath = str_replace('public/', '', $path);
-        } else {
-            $filePath = null;
-        }
-        $abc = new Abc();
-        $abc->thumbnail = $filePath;
-        $abc->save();
-        $path = $file->store('public/thumbnail');
-        // dd($data);
-        $allAbc = Abc::getAll();
-        return view('admin/abc/addAbc', ['allAbc' => $allAbc]);
-    }
+        $file = $data->file('thumbnail');
+        $fileName = $file->getClientOriginalName();
+        $directory = 'Books';
 
-    // public function handleImage($data)
-    // {
-    //     // Kiểm tra xem tệp có được tải lên hay không
-    //     $file = $data->file('url');
+        $disk = Storage::disk('google');
+        
+        if (!$disk->exists($directory)) {
+            $disk->makeDirectory($directory);
+        }
     
-    //     $fileName = $file->getClientOriginalName();
-    //     $directory = 'Book';
-    //     $disk = Storage::disk('google');
+        $filePath = $directory . '/' . $fileName;
+        $disk->put($filePath, file_get_contents($file));
         
-    //     if (!$disk->exists($directory)) {
-    //         $disk->makeDirectory($directory);
-    //     }
-        
-    //     $filePath = $directory . '/' . $fileName;
-    //     $disk->put($filePath, file_get_contents($file));
-    //     $meta = $disk->getAdapter()->getMetadata($filePath)->extraMetadata()['id'];
+        $meta = $disk->getAdapter()->getMetadata($filePath)->extraMetadata()['id'];
     
-    //     $abc = new Abc();
-    //     // $abc->name = $data->name;
-    //     $abc->url = 'https://drive.google.com/file/d/' . $meta . '/preview';
-    //     $abc->thumbnail = $filePath;
-    //     $abc->save();
-        
-    //     return redirect()->back()->with('success', 'abc created successfully');
-    // }
+        $abc = new Abc();
+        $abc->thumbnail = $data->file('thumbnail');
+        $abc->thumbnail = 'https://drive.google.com/file/d/' . $meta . '/preview';
+        $abc->save();
+    
+        return redirect()->back();
+    }
     
 }

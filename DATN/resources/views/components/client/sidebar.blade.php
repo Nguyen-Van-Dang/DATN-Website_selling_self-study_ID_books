@@ -30,7 +30,7 @@
                 <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 </ul>
             </li>
-            <li>
+            {{-- <li>
                 <a href="homeClient" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false">
                     <span class="ripple rippleEffect"></span>
                     <img class="sidebar-icon me-2" src="{{ asset('assets/images/book/icon/play_icon.png') }}" alt="">
@@ -38,6 +38,82 @@
                 </a>
                 <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 </ul>
+            </li> --}}
+            <hr class="custom">
+            <li>
+                <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
+                    <span class="ripple rippleEffect"></span>
+                    <img class="sidebar-icon me-2" src="{{ asset('assets/images/book/icon/play_icon.png') }}" alt="">
+                        <span class="px-2">Khoá học</span>
+                    <i class="ri-arrow-right-s-line iq-arrow-right"></i>
+                </a>
+                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                    <li class="elements">
+                        <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
+                            aria-expanded="true">
+                            <div class="d-flex align-items-center">
+                                <div class="numberCircle">B</div>
+                                <span class="px-2">KHÓA IELTS CẤP TỐC 1-1</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                    <li class="elements">
+                        <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
+                            aria-expanded="true">
+                            <div class="d-flex align-items-center">
+                                <div class="numberCircle">B</div>
+                                <span class="px-2">KHÓA IELTS MẤT GỐC</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                    <li class="elements">
+                        <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
+                            aria-expanded="true">
+                            <div class="d-flex align-items-center">
+                                <div class="numberCircle">B</div>
+                                <span class="px-2">KHÓA IELTS ONLINE</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                    <li class="elements">
+                        <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
+                            aria-expanded="true">
+                            <div class="d-flex align-items-center">
+                                <div class="numberCircle">B</div>
+                                <span class="px-2">KHÓA IELTS 5.0 - 5.5</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                    <li class="elements">
+                        <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
+                            aria-expanded="true">
+                            <div class="d-flex align-items-center">
+                                <div class="numberCircle">B</div>
+                                <span class="px-2">KHÓA IELTS 6.0 - 6.5</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                    <li class="elements">
+                        <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
+                            aria-expanded="true">
+                            <div class="d-flex align-items-center">
+                                <div class="numberCircle">B</div>
+                                <span class="px-2">KHÓA IELTS 7.0+</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+       
             </li>
             <hr class="custom">
             <li>
