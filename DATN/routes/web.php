@@ -218,7 +218,7 @@ Route::get('/book-id', function () {
 Route::prefix('khoa-hoc')->name('khoa-hoc')->group(function () {
     Route::controller(CourseController::class)->group(function () {
         Route::get('/', 'index');
-        // Route::get('/orders/{id}', 'show');
+        Route::get('/{id?}', 'show')->name('khoa-hoc.show');
         // Route::post('/orders', 'store');
     });
 });

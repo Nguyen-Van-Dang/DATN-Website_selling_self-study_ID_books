@@ -3,560 +3,350 @@
 @section('title', 'Chi Tiết khóa học')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12">
-           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-              <div class="iq-card-header d-flex justify-content-between align-items-center">
-                 <h4 class="card-title mb-0">Thông tin</h4>
-              </div>
-              <div class="iq-card-body pb-0">
-                 <div class="description-contens align-items-top row">
-                    <div class="col-md-6">
-                       <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
-                          <div class="iq-card-body p-0">
-                             <div class="row align-items-center">
-                                <div class="col-3">
-                                   <ul id="description-slider-nav" class="list-inline p-0 m-0  d-flex align-items-center">
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/01.jpg') }}" class="img-fluid rounded w-100" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/02.jpg') }}" class="img-fluid rounded w-100" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/03.jpg') }}" class="img-fluid rounded w-100" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/04.jpg') }}" class="img-fluid rounded w-100" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/05.jpg') }}" class="img-fluid rounded w-100" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/06.jpg') }}" class="img-fluid rounded w-100" alt="">
-                                         </a>
-                                      </li>
-                                   </ul>
-                                </div>
-                                <div class="col-9">
-                                   <ul id="description-slider" class="list-inline p-0 m-0  d-flex align-items-center">
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/new_realeases/img01.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/02.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/03.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/04.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/05.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                         </a>
-                                      </li>
-                                      <li>
-                                         <a href="javascript:void(0);">
-                                         <img src="{{ asset('assets/images/book-dec/06.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                         </a>
-                                      </li>
-                                   </ul>
-                                </div>
-                             </div>
-                          </div>
-                       </div>
+    <div class="container-fluid">
+        <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-3">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-4 order-1 order-md-1">
+                    <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                        class="img-fluid rounded" alt="Course Image" style="object-fit: cover;aspect-ratio: 2/1">
+                </div>
+                <div class="col-12 col-md-8 order-2 order-md-2">
+                    <h4 class="mb-2 fw-bold">Live C - Luyện thi TN THPT 2025 môn Ngữ văn</h4>
+                    <p class="text-muted mb-1">Thầy Phạm Minh Nhật</p>
+                    <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
+                        <span class="text-danger font-weight-bold">500.000đ</span>
+                        <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span>
                     </div>
-                    <div class="col-md-6">
-                       <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
-                          <div class="iq-card-body p-0">
-                             <h3 class="mb-3">Payback Time - Ngày Đòi Nợ</h3>
-                             <div class="price d-flex align-items-center font-weight-500 mb-2">
-                                <span class="font-size-20 pr-2 old-price">350.000 ₫</span>
-                                <span class="font-size-24 text-dark">299.000 ₫</span>
-                             </div>
-                             <div class="mb-3 d-block">
-                                <span class="font-size-20 text-warning">
-                                <i class="fa fa-star mr-1"></i>
-                                <i class="fa fa-star mr-1"></i>
-                                <i class="fa fa-star mr-1"></i>
-                                <i class="fa fa-star mr-1"></i>
-                                <i class="fa fa-star"></i>
-                                </span>
-                             </div>
-                             <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">"Trong chứng khoán và thị trường tài chính, dám tham gia đầu tư cũng là một thành công tâm lý ban đầu. Dù vậy, 95% nhà đầu tư Việt Nam thuộc nhóm nhà đầu tư nhỏ lẻ với vốn kiến thức tài chính vô cùng hạn chế. Họ tham gia vào thị trường chứng khoán với 100% ý chí và sự quyết tâm chiến thắng thị trường, nhưng thật không may mắn kết cục cuối cùng của họ luôn là sự thất bại và mất tiền.</span>
-                             <div class="text-primary mb-4">Tác giả: <span class="text-body">HappyLive</span></div>
-                             <div class="mb-4 d-flex align-items-center">                                       
-                                <a href="checkout.html" class="btn btn-primary view-more mr-2">Thêm vào giỏ hàng</a>
-                                <a href="book-pdf.html" class="btn btn-primary view-more mr-2">Mua ngay</a>
-                             </div>
-                             <div class="mb-3">
-                                <a href="#" class="text-body text-center"><span class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i class="ri-heart-fill"></i></span><span>Thêm vào danh sách yêu thích</span></a>
-                             </div>
-                             <div class="iq-social d-flex align-items-center">
-                                <h5 class="mr-2">Chia sẻ:</h5>
-                                <ul class="list-inline d-flex p-0 mb-0 align-items-center">
-                                   <li>
-                                      <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                   </li>
-                                   <li>
-                                      <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                   </li>
-                                   <li>
-                                      <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
-                                   </li>
-                                   <li >
-                                      <a href="#" class="avatar-40 rounded-circle bg-primary pinterest"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                                   </li>
-                                </ul>
-                             </div>
-                          </div>
-                       </div>
+                    <p class="mb-2">
+                        <span class="d-block"><i class="bi bi-collection-play"></i> Số bài: 88</span>
+                        <a href="#" class="text-primary d-block mt-1"><i class="bi bi-people"></i> Nhóm Mooners</a>
+                    </p>
+                    <div class="d-flex">
+                        <button class="btn btn-danger btn-lg mr-2">Mua ngay</button>
+                        <button class="btn btn-secondary btn-lg">Kích hoạt</button>
                     </div>
-                 </div>
-              </div>
-           </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-12">
-           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-              <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
-                 <div class="iq-header-title">
-                    <h4 class="card-title mb-0">Sản phẩm tương tự</h4>
-                 </div>
-                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                    <a href="category.html" class="btn btn-sm btn-primary view-more">Xem thêm</a>
-                 </div>
-              </div>
-              <div class="iq-card-body single-similar-contens">
-                 <ul id="single-similar-slider" class="list-inline p-0 mb-0 row">
-                    <li class="col-md-3">
-                       <div class="row align-items-center">
-                          <div class="col-5">
-                             <div class="position-relative image-overlap-shadow">
-                                <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/01.jpg') }}" alt=""></a>
-                                <div class="view-book">
-                                   <a href="book-page.html" class="btn btn-sm btn-white">Xem thêm</a>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-7 pl-0">
-                             <h6 class="mb-2">Nhà Đầu Tư Thông Minh...</h6>
-                             <p class="text-body">Dịch giả : Lê Quốc Phương</p>
-                             <a href="#" class="text-dark" tabindex="-1">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="row align-items-center">
-                          <div class="col-5">
-                             <div class="position-relative image-overlap-shadow">
-                                <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/02.jpg') }}" alt=""></a>
-                                <div class="view-book">
-                                   <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-7 pl-0">
-                             <h6 class="mb-2">Nhà Lãnh Đạo Không Chức Danh</h6>
-                             <p class="text-body">Tác giả : NXB Trẻ</p>
-                             <a href="#" class="text-dark" tabindex="-1">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="row align-items-center">
-                          <div class="col-5">
-                             <div class="position-relative image-overlap-shadow">
-                                <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/03.jpg') }}" alt=""></a>
-                                <div class="view-book">
-                                   <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-7 pl-0">
-                             <h6 class="mb-2">Nghệ Thuật đầu tư Dhandho...</h6>
-                             <p class="text-body">Tác giả : Bill Emia</p>
-                             <a href="#" class="text-dark" tabindex="-1">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="row align-items-center">
-                          <div class="col-5">
-                             <div class="position-relative image-overlap-shadow">
-                                <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/04.jpg') }}" alt=""></a>
-                                <div class="view-book">
-                                   <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-7 pl-0">
-                             <h6 class="mb-2">Từ Tốt Đến Vĩ Đại.</h6>
-                             <p class="text-body">Tác giả : Hal Appeno</p>
-                             <a href="#" class="text-dark" tabindex="-1">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="row align-items-center">
-                          <div class="col-5">
-                             <div class="position-relative image-overlap-shadow">
-                                <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/similar-books/05.jpg') }}" alt=""></a>
-                                <div class="view-book">
-                                   <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-7 pl-0">
-                             <h6 class="mb-2">D. Trump - Đừng Bao Giờ Bỏ Cuộc..</h6>
-                             <p class="text-body">Tác giả : Zack Lee</p>
-                             <a href="#" class="text-dark" tabindex="-1">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                 </ul>
-              </div>
-           </div>
-        </div>
-        <div class="col-lg-12">
-           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-              <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 trendy-detail">
-                 <div class="iq-header-title">
-                    <h4 class="card-title mb-0">Thịnh hành</h4>
-                 </div>
-                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                    <a href="category.html" class="btn btn-sm btn-primary view-more">Xem thêm</a>
-                 </div>
-              </div>
-              <div class="iq-card-body trendy-contens">
-                 <ul id="trendy-slider" class="list-inline p-0 mb-0 row">
-                    <li class="col-md-3">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative image-overlap-shadow">
-                             <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/01.jpg') }}" alt=""></a>
-                             <div class="view-book">
-                                <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                             </div>
-                          </div>
-                          <div class="col-7">
-                             <div class="mb-2">
-                                <h6 class="mb-1">Sinh Ra Để Trở Thành ..</h6>
-                                <p class="font-size-13 line-height mb-1">Paul Molive</p>
-                                <div class="d-block">
-                                   <span class="font-size-13 text-warning">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   </span>
-                                </div>
-                             </div>
-                             <div class="price d-flex align-items-center">
-                                <h6><b>107.900 ₫</b></h6>
-                             </div>
-                             <div class="iq-product-action">
-                                <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative image-overlap-shadow">
-                             <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/02.jpg') }}" alt=""></a>
-                             <div class="view-book">
-                                <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                             </div>
-                          </div>
-                          <div class="col-7">
-                             <div class="mb-2">
-                                <h6 class="mb-1">Năng Lực Tìm Kiếm</h6>
-                                <p class="font-size-13 line-height mb-1">Anna Sthesia</p>
-                                <div class="d-block">
-                                   <span class="font-size-13 text-warning">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   </span>
-                                </div>
-                             </div>
-                             <div class="price d-flex align-items-center">
-                                <h6><b>45.500 ₫</b></h6>
-                             </div>
-                             <div class="iq-product-action">
-                                <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative image-overlap-shadow">
-                             <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/03.jpg') }}" alt=""></a>
-                             <div class="view-book">
-                                <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                             </div>
-                          </div>
-                          <div class="col-7">
-                             <div class="mb-2">
-                                <h6 class="mb-1">Phân Tích Thị Trường...</h6>
-                                <p class="font-size-13 line-height mb-1">Monty Carlo</p>
-                                <div class="d-block">
-                                   <span class="font-size-13 text-warning">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   </span>
-                                </div>
-                             </div>
-                             <div class="price d-flex align-items-center">
-                                <h6><b>105.900 ₫</b></h6>
-                             </div>
-                             <div class="iq-product-action">
-                                <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative image-overlap-shadow">
-                             <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/04.jpg') }}" alt=""></a>
-                             <div class="view-book">
-                                <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                             </div>
-                          </div>
-                          <div class="col-7">
-                             <div class="mb-2">
-                                <h6 class="mb-1">Siêu Cò – How To Be A Power...</h6>
-                                <p class="font-size-13 line-height mb-1">Smith goal</p>
-                                <div class="d-block">
-                                   <span class="font-size-13 text-warning">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   </span>
-                                </div>
-                             </div>
-                             <div class="price d-flex align-items-center">
-                                <h6><b>249.000 ₫</b></h6>
-                             </div>
-                             <div class="iq-product-action">
-                                <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative image-overlap-shadow">
-                             <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/05.jpg') }}" alt=""></a>
-                             <div class="view-book">
-                                <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                             </div>
-                          </div>
-                          <div class="col-7">
-                             <div class="mb-2">
-                                <h6 class="mb-1">7 Thói Quen Của Bạn Trẻ... </h6>
-                                <p class="font-size-13 line-height mb-1">Paige Turner</p>
-                                <div class="d-block">
-                                   <span class="font-size-13 text-warning">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   </span>
-                                </div>
-                             </div>
-                             <div class="price d-flex align-items-center">
-                                <h6><b>95.900 ₫</b></h6>
-                             </div>
-                             <div class="iq-product-action">
-                                <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-3">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative image-overlap-shadow">
-                             <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{ asset('assets/images/trendy-books/06.jpg') }}" alt=""></a>
-                             <div class="view-book">
-                                <a href="book-page.html" class="btn btn-sm btn-white">Xem sách</a>
-                             </div>
-                          </div>
-                          <div class="col-7">
-                             <div class="mb-2">
-                                <h6 class="mb-1">Jeff Bezos Và Kỷ ..</h6>
-                                <p class="font-size-13 line-height mb-1">Barb Ackue</p>
-                                <div class="d-block">
-                                   <span class="font-size-13 text-warning">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   </span>
-                                </div>
-                             </div>
-                             <div class="price d-flex align-items-center">
-                                <h6><b>76.800 ₫</b></h6>
-                             </div>
-                             <div class="iq-product-action">
-                                <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                 </ul>
-              </div>
-           </div>
-        </div>
-        <div class="col-lg-12">
-           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-              <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
-                 <div class="iq-header-title">
-                    <h4 class="card-title mb-0">Sách yêu thích</h4>
-                 </div>
-                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                    <a href="category.html" class="btn btn-sm btn-primary view-more">Xem thêm</a>
-                 </div>
-              </div>                         
-              <div class="iq-card-body favorites-contens">
-                 <ul id="favorites-slider" class="list-inline p-0 mb-0 row">
-                    <li class="col-md-4">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative">
-                             <a href="javascript:void();">
-                                <img src="{{ asset('assets/images/favorite/01.jpg') }}" class="img-fluid rounded w-100" alt="">
-                             </a>                                
-                          </div>
-                          <div class="col-7">
-                             <h5 class="mb-2">D. Trump - Nghệ Thuật Đàm Phán</h5>
-                             <p class="mb-2">Tác giả : Pedro Araez</p>                                          
-                             <div class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                <span>Đã bán</span>
-                                <span class="mr-4">65</span>
-                             </div>
-                             <div class="iq-progress-bar-linear d-inline-block w-100">
-                                <div class="iq-progress-bar iq-bg-primary">
-                                   <span class="bg-primary" data-percent="65"></span>
-                                </div>
-                             </div>
-                             <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-4">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative">
-                             <a href="javascript:void();">
-                                <img src="{{ asset('assets/images/favorite/02.jpg') }}" class="img-fluid rounded w-100" alt="">
-                             </a>                                
-                          </div>
-                          <div class="col-7">
-                             <h5 class="mb-2">Một Đời Quản Trị</h5>
-                             <p class="mb-2">Tác giả : Michael klock</p>                                          
-                             <div class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                <span>Đã bán</span>
-                                <span class="mr-4">45</span>
-                             </div>
-                             <div class="iq-progress-bar-linear d-inline-block w-100">
-                                <div class="iq-progress-bar iq-bg-danger">
-                                   <span class="bg-danger" data-percent="45"></span>
-                                </div>
-                             </div>
-                             <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-4">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative">
-                             <a href="javascript:void();">
-                                <img src="{{ asset('assets/images/favorite/03.jpg') }}" class="img-fluid rounded w-100" alt="">
-                             </a>                                
-                          </div>
-                          <div class="col-7">
-                             <h5 class="mb-2">Người Bán Hàng Vĩ Đại Nhất Thế Giới</h5>
-                             <p class="mb-2">Tác giả : Daniel Ace</p>                                          
-                             <div class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                <span>Đã bán</span>
-                                <span class="mr-4">78</span>
-                             </div>
-                             <div class="iq-progress-bar-linear d-inline-block w-100">
-                                <div class="iq-progress-bar iq-bg-info">
-                                   <span class="bg-info" data-percent="78"></span>
-                                </div>
-                             </div>
-                             <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                    <li class="col-md-4">
-                       <div class="d-flex align-items-center">
-                          <div class="col-5 p-0 position-relative">
-                             <a href="javascript:void();">
-                                <img src="{{asset('assets/images/favorite/04.jpg') }}" class="img-fluid rounded w-100" alt="">
-                             </a>                                
-                          </div>
-                          <div class="col-7">
-                             <h5 class="mb-2">Economix- Các Nền Kinh Tế Vận Hành</h5>
-                             <p class="mb-2">Tác giả : Luka Afton</p>                                          
-                             <div class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                <span>Đã bán</span>
-                                <span class="mr-4">90</span>
-                             </div>
-                             <div class="iq-progress-bar-linear d-inline-block w-100">
-                                <div class="iq-progress-bar iq-bg-success">
-                                   <span class="bg-success" data-percent="90"></span>
-                                </div>
-                             </div>
-                             <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                          </div>
-                       </div>
-                    </li>
-                 </ul>
-              </div>
-           </div>
-        </div>
-     </div>
-</div>
 
 
-@endsection
+        <div class="row mt-4">
+            <div class="col-lg-8">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-3">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item mr-2">
+                            <button class="nav-link active" id="bai-giang-tab" data-bs-toggle="tab"
+                                data-bs-target="#bai-giang" type="button" role="tab" aria-controls="bai-giang"
+                                aria-selected="true">
+                                Bài giảng
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="bai-kiem-tra-tab" data-bs-toggle="tab"
+                                data-bs-target="#bai-kiem-tra" type="button" role="tab" aria-controls="bai-kiem-tra"
+                                aria-selected="false">
+                                Bài kiểm tra
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="bai-giang" role="tabpanel"
+                            aria-labelledby="bai-giang-tab">
+
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="course-panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h6 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                                                class="collapsed">
+                                                Chương 1
+                                            </a>
+                                            <span class="badge bg-danger rounded-pill position-absolute"
+                                                style="right: 0; top: 0;">14</span>
+                                        </h6>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="course-panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h6 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse"
+                                                data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo">
+                                                Chương 2
+                                            </a>
+                                            <span class="badge bg-danger rounded-pill position-absolute"
+                                                style="right: 0; top: 0;">24</span>
+                                        </h6>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="course-panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                        <h6 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse"
+                                                data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                                aria-controls="collapseThree">
+                                                Chương 3
+                                            </a>
+                                            <span class="badge bg-danger rounded-pill position-absolute"
+                                                style="right: 0; top: 0;">14</span>
+                                        </h6>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingThree">
+                                        <div class="panel-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="bai-kiem-tra" role="tabpanel" aria-labelledby="bai-kiem-tra-tab">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="course-panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h6 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                                                class="collapsed">
+                                                Kiểm tra chương 1
+                                            </a>
+                                            <span class="badge bg-danger rounded-pill position-absolute"
+                                                style="right: 0; top: 0;">14</span>
+                                        </h6>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="course-panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h6 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse"
+                                                data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo">
+                                                Kiểm tra chương 2
+                                            </a>
+                                            <span class="badge bg-danger rounded-pill position-absolute"
+                                                style="right: 0; top: 0;">24</span>
+                                        </h6>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingTwo">
+                                        <div class="panel-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="course-panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                        <h6 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse"
+                                                data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                                aria-controls="collapseThree">
+                                                Kiểm tra chương 3
+                                            </a>
+                                            <span class="badge bg-danger rounded-pill position-absolute"
+                                                style="right: 0; top: 0;">14</span>
+                                        </h6>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingThree">
+                                        <div class="panel-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
+                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-3">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="Giảng viên"
+                                    class="rounded-circle me-3" style="width: 100px; height: 100px;">
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <h5 class="mb-0">Thầy Bùi Văn Công <i class="bi bi-check-circle-fill text-success"></i>
+                                </h5>
+                            </div>
+                            <div class="d-flex justify-content-between border-top pt-2 pb-3">
+                                <div class="text-center">
+                                    <h6 class="mb-0">162K</h6>
+                                    <small class="text-muted">Views</small>
+                                </div>
+                                <div class="text-center">
+                                    <h6 class="mb-0">672</h6>
+                                    <small class="text-muted">Likes</small>
+                                </div>
+                                <div class="text-center">
+                                    <h6 class="mb-0">594</h6>
+                                    <small class="text-muted">Followers</small>
+                                </div>
+                                <div class="text-center border-left pl-3">
+                                    <h6 class="mb-0">594 Thành viên</h6>
+                                    <small class="text-muted"><a href="#">Truy cập nhóm chat</a></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p>
+                            - Hơn 15 năm kinh nghiệm giảng dạy và luyện thi: 10 năm luyện thi THPT và 5 năm luyện thi ĐGNL
+                            ĐHQG TP.HCM<br>
+                            - Thạc sĩ ngành Di truyền học, Cử nhân ngành Công nghệ Sinh học, trường Đại học KHTN, ĐHQG
+                            TP.HCM<br>
+                            - Tham gia học văn bằng 2 ngành Ngôn ngữ Anh, trường Đại học KHXH&NV, ĐHQG TP.HCM
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #accordion .course-panel {
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                margin-bottom: 25px;
+                position: relative;
+            }
+
+            #accordion .course-panel:before {
+                content: "";
+                width: 1px;
+                height: 100%;
+                border: 1px dashed #6e8898;
+                position: absolute;
+                top: 25px;
+                left: 18px;
+            }
+
+            #accordion .course-panel:last-child:before {
+                display: none;
+            }
+
+            #accordion .panel-heading {
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                position: relative;
+            }
+
+            #accordion .panel-title a {
+                padding: 10px 30px 10px 60px;
+                margin: 3px;
+                background: #fff;
+                letter-spacing: 1px;
+                color: #1d3557;
+                border-radius: 0;
+                position: relative;
+            }
+
+            #accordion .panel-title a:before,
+            #accordion .panel-title a.collapsed:before {
+                content: "\f107";
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                width: 40px;
+                height: 100%;
+                line-height: 40px;
+                background: #8a8ac3;
+                border: 1px solid #8a8ac3;
+                border-radius: 3px;
+                font-size: 17px;
+                color: #fff;
+                text-align: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: all 0.3s ease 0s;
+            }
+
+            #accordion .panel-title a.collapsed:before {
+                content: "\f105";
+                background: #fff;
+                border: 1px solid #6e8898;
+                color: #000;
+            }
+
+            #accordion .panel-body {
+                padding: 10px 30px 10px 30px;
+                margin-left: 40px;
+                background: #fff;
+                border-top: none;
+                font-size: 15px;
+                color: #6f6f6f;
+                line-height: 28px;
+                letter-spacing: 1px;
+            }
+        </style>
+
+
+    @endsection
