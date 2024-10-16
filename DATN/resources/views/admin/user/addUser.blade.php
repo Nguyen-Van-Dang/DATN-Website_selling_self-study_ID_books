@@ -17,7 +17,7 @@
                 <form action="admin-author.html">
                    <div class="form-group">
                       <label>Tên tài khoản:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" placeholder="Nhập tên tài khoản...">
                    </div>
                    <div class="form-group">
                       <label>Ảnh tài khoản:</label>
@@ -28,7 +28,7 @@
                    </div>
                    <div class="form-group">
                       <label>Email:</label>
-                      <input type="email" class="form-control">
+                      <input type="email" class="form-control" placeholder="Nhập email...">
                    </div>
                    <div class="form-group">
                       <label>Vai trò:</label>

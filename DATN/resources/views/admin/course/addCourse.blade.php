@@ -17,7 +17,7 @@
                 <form action="admin-books.html">
                    <div class="form-group">
                       <label>Tên khóa học:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" placeholder="Nhập tên khóa học...">
                    </div>
                    <div class="form-group">
                       <label>Danh mục khóa học:</label>
@@ -67,11 +67,11 @@
                    </div>
                    <div class="form-group">
                       <label>Giá khóa học:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" placeholder="Nhập giá khóa học...">
                    </div>
                    <div class="form-group">
                       <label>Nội dung:</label>
-                      <textarea class="form-control" rows="4"></textarea>
+                      <textarea class="form-control" rows="4" placeholder="Nhập nội dung..."></textarea>
                    </div>
                    <button type="submit" class="btn btn-primary">Gửi</button>
                    <button type="reset" class="btn btn-danger">Trở lại</button>

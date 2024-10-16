@@ -152,7 +152,7 @@ return [
          * Custom Service Providers...
          */
         App\Providers\GoogleDriveServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
-    App\Providers\RepositoryServiceProvider::class,
 ];

@@ -28,14 +28,17 @@
          <li class="{{ request()->routeIs('listCourse') ? 'active' : '' }}">
             <a href="{{route('listCourse')}}"><i class="ri-book-line"></i> Khóa Học</a>
          </li>
+         <li class="{{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="{{route('listLecture')}}"><i class="ri-slideshow-line"></i> Bài Giảng</a>
+         </li>         
          <li class="{{ request()->routeIs('listCategoryBook') ? 'active' : '' }}">
             <a href="{{route('listCategoryBook')}}"><i class="ri-bookmark-line"></i> Danh Mục Sách</a>
          </li>
          <li class="{{ request()->routeIs('listBook') ? 'active' : '' }}">
             <a href="{{route('listBook')}}"><i class="ri-book-2-line"></i> Sách</a>
          </li>
-         <li>
-            <a href="#"><i class="ri-file-list-line"></i> Bài Tập</a>
+         <li class="{{ request()->routeIs('listExercise') ? 'active' : '' }}">
+            <a href="{{route('listExercise')}}"><i class="ri-file-list-line"></i> Bài Tập</a>
          </li>
          <li class="{{ request()->routeIs('listOrder') ? 'active' : '' }}">
             <a href="{{route('listOrder')}}"><i class="ri-shopping-cart-line"></i> Đơn Hàng</a>
@@ -46,9 +49,9 @@
          <li class="{{ request()->routeIs('listContact') ? 'active' : '' }}">
             <a href="{{route('listContact')}}"><i class="ri-mail-line"></i> Liên Hệ</a>
          </li>
-         <li class="{{ request()->routeIs('getAllAbc') ? 'active' : '' }}">
+         {{-- <li class="{{ request()->routeIs('getAllAbc') ? 'active' : '' }}">
             <a href="{{route('getAllAbc')}}"> - Abc</a>
-         </li>
+         </li> --}}
       </ul>
     </nav>
     <div id="sidebar-bottom" class="p-3 position-relative">

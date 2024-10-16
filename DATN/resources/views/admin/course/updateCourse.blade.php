@@ -17,7 +17,7 @@
                 <form action="admin-books.html">
                    <div class="form-group">
                       <label>Tên khóa học:</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" placeholder="Tên khóa học">
                    </div>
                    <div class="form-group">
                       <label>Danh mục khóa học:</label>
