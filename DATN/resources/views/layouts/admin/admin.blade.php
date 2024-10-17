@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    <livewire:styles />
 </head>
 
 <body>
@@ -24,7 +25,7 @@
         </div>
         <div id="content-page" class="content-page">
             @yield('content')
-
+            <livewire:scripts />
         </div>
         <footer class="iq-footer">
             <x-admin.footer></x-admin.footer>

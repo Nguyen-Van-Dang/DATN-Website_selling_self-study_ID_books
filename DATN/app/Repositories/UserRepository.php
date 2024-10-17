@@ -23,7 +23,22 @@ class UserRepository
     {
         //
     }
-//đăng xuất
+
+    public function getAllUser() {
+        $User = User::getAll();
+        return view('admin.user.listUser', ['User' => $User]);
+    }
+
+    public function softDelete($id) {
+        $user = User::findOrFail($id);
+        return $user->delete();
+    }
+
+    public function getDeletedUser() {
+        return view('admin.user.deletedUser');
+    }
+
+    //đăng xuất
     public function logout(\Illuminate\Http\Request $request)
     {
         Auth::logout();
@@ -31,74 +46,74 @@ class UserRepository
         $request->session()->regenerateToken();
         return redirect('/');
     }
-//đăng nhập bằng gg
-public function handleGoogleCallback(\Illuminate\Http\Request $request)
-{
-    try {
-        $user = Socialite::driver('google')->user();
-        $finduser = User::where('id', $user->id)->first();
+    //đăng nhập bằng gg
+    public function handleGoogleCallback(\Illuminate\Http\Request $request)
+    {
+        try {
+            $user = Socialite::driver('google')->user();
+            $finduser = User::where('id', $user->id)->first();
 
-        if ($finduser) {
-            $newUser = User::updateOrCreate(
-                ['email' => $user->email
-            ],
-                [
-                    'name' => $user->name,
-                    'google_id' => $user->id,
-                    'password' => encrypt('123456789'),
-                    'loginType' => 2,
-                    'role_id' => 3
-                ]
-            );
-            Auth::login($newUser);
-            return redirect()->intended('/');
-        } else {
-            $newUser = User::updateOrCreate(
-                ['email' => $user->email],
-                [
-                    'name' => $user->name,
-                    'google_id' => $user->id,
-                    'role_id' => 3,
-                    'password' => encrypt('123456789'),
-                    'loginType' => 2
+            if ($finduser) {
+                $newUser = User::updateOrCreate(
+                    [
+                        'email' => $user->email
+                    ],
+                    [
+                        'name' => $user->name,
+                        'google_id' => $user->id,
+                        'password' => encrypt('123456789'),
+                        'loginType' => 2,
+                        'role_id' => 3
+                    ]
+                );
+                Auth::login($newUser);
+                return redirect()->intended('/');
+            } else {
+                $newUser = User::updateOrCreate(
+                    ['email' => $user->email],
+                    [
+                        'name' => $user->name,
+                        'google_id' => $user->id,
+                        'role_id' => 3,
+                        'password' => encrypt('123456789'),
+                        'loginType' => 2
 
-                ]
-            );
-            Auth::login($newUser);
-            return redirect()->intended('/');
+                    ]
+                );
+                Auth::login($newUser);
+                return redirect()->intended('/');
+            }
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
-    } catch (Exception $e) {
-        dd($e->getMessage());
     }
-}
-/*-------------------------------------------------------Admin---------------------------------------------------------*/
+    /*-------------------------------------------------------Admin---------------------------------------------------------*/
 
-/*-------------------------------------------------------Client---------------------------------------------------------*/
-public function loginUser($data)
-{
-    $messages = [
-        'phone.required' => 'Xin vui lòng nhập số điện thoại',
-        'phone.regex' => 'Xin vui lòng nhập số điện thoại hợp lệ (10 số)',
-        'password.required' => 'Xin vui lòng nhập mật khẩu',
-    ];
+    /*-------------------------------------------------------Client---------------------------------------------------------*/
+    public function loginUser($data)
+    {
+        $messages = [
+            'phone.required' => 'Xin vui lòng nhập số điện thoại',
+            'phone.regex' => 'Xin vui lòng nhập số điện thoại hợp lệ (10 số)',
+            'password.required' => 'Xin vui lòng nhập mật khẩu',
+        ];
 
-    $validator = Validator::make($data->all(), [
-        'phone' => ['required', 'regex:/^([0-9]{10})$/'],
-        'password' => 'required',
-    ], $messages);
+        $validator = Validator::make($data->all(), [
+            'phone' => ['required', 'regex:/^([0-9]{10})$/'],
+            'password' => 'required',
+        ], $messages);
 
-    if ($validator->fails()) {
-        return back()->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
+
+        // if (!$user || !password_verify($data->password, $user->password)) {
+        //     return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
+        // }
+
+        Auth::login($user);
+        return redirect()->intended('/');
     }
-
-    $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
-
-    // if (!$user || !password_verify($data->password, $user->password)) {
-    //     return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
-    // }
-
-    Auth::login($user);
-    return redirect()->intended('/');
-}
-
 }

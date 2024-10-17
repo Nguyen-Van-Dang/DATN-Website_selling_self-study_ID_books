@@ -4,7 +4,13 @@ use App\Http\Controllers\Client\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Admin\AbcController;
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Client\BookCateController;
+use App\Http\Controllers\Client\BookController;
+use App\Http\Controllers\Client\ContactController;
+use App\Http\Controllers\Client\CourseCateController;
 use App\Http\Controllers\Client\CourseController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
@@ -45,9 +51,9 @@ Route::get('/maintenance', function () {
 /*-------------------------------------------------ADMIN--------------------------------------------------*/
 
 //user
-Route::get('/user-list', function () {
-    return view('admin.user.listUser');
-})->name('listUser');
+Route::resource('nguoi-dung', controller: UserController::class)->names('nguoi-dung');
+
+Route::get('user-list', [UserController::class, 'index'])->name('listUser');
 
 Route::get('/user-add', function () {
     return view('admin.user.addUser');
@@ -65,10 +71,11 @@ Route::get('/user-info', function () {
     return view('admin.user.userInfo');
 })->name('userInfo');
 
+// Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
+Route::get('user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
+
 //course
-Route::get('/list-CategoryCourse', function () {
-    return view('admin.categoryCourse.listCategoryCourse');
-})->name('listCategoryCourse');
+Route::get('list-CategoryCourse', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
 
 Route::get('/add-CategoryCourse', function () {
     return view('admin.categoryCourse.addCategoryCourse');
@@ -82,9 +89,12 @@ Route::get('/update-CategoryCourse', function () {
     return view('admin.categoryCourse.updateCategoryCourse');
 })->name('updateCategoryCourse');
 
-Route::get('/list-Course', function () {
-    return view('admin.course.listCourse');
-})->name('listCourse');
+// Route::get('/list-Course', function () {
+//     return view('admin.course.listCourse');
+// })->name('listCourse');
+
+Route::get('list-Course', [CourseController::class, 'getAllCourse'])->name('listCourse');
+
 
 Route::get('/add-Course', function () {
     return view('admin.course.addCourse');
@@ -100,9 +110,8 @@ Route::get('/detail-Course', function () {
 
 
 //book
-Route::get('/list-CategoryBook', function () {
-    return view('admin.categoryBook.listCategoryBook');
-})->name('listCategoryBook');
+Route::get('list-CategoryBook', [BookCateController::class, 'getAllBookCate'])->name('listCategoryBook');
+
 
 Route::get('/add-CategoryBook', function () {
     return view('admin.categoryBook.addCategoryBook');
@@ -116,9 +125,7 @@ Route::get('/update-CategoryBook', function () {
     return view('admin.categoryBook.updateCategoryBook');
 })->name('updateCategoryBook');
 
-Route::get('/list-Book', function () {
-    return view('admin.book.listBook');
-})->name('listBook');
+Route::get('list-book', [BookController::class, 'getAllBook'])->name('listBook');
 
 Route::get('/add-Book', function () {
     return view('admin.book.addBook');
@@ -139,9 +146,9 @@ Route::get('/detail-Book', function () {
 //document
 
 //order
-Route::get('/list-Order', function () {
-    return view('admin.order.listOrder');
-})->name('listOrder');
+
+Route::get('order-list', [OrderController::class, 'getAllOrder'])->name('listOrder');
+
 
 Route::get('/detail-Order', function () {
     return view('admin.order.detailOrder');
@@ -152,9 +159,8 @@ Route::get('/update-Order', function () {
 })->name('updateOrder');
 
 //notification
-Route::get('/list-Notification', function () {
-    return view('admin.notification.listNotification');
-})->name('listNotification');
+
+Route::get('list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotification');
 
 Route::get('/detail-Notification', function () {
     return view('admin.notification.detailNotification');
@@ -165,9 +171,7 @@ Route::get('/add-Notification', function () {
 })->name('addNotification');
 
 //contact
-Route::get('/list-Contact', function () {
-    return view('admin.contact.listContact');
-})->name('listContact');
+Route::get('Contact-list', [ContactController::class, 'getAllContact'])->name('listContact');
 
 Route::get('/detail-Contact', function () {
     return view('admin.contact.detailContact');

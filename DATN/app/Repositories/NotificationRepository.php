@@ -2,6 +2,8 @@
 
 namespace App\repositories;
 
+use App\Models\Notification;
+
 class NotificationRepository
 {
     /**
@@ -10,5 +12,10 @@ class NotificationRepository
     public function __construct()
     {
         //
+    }
+
+    public function getAllNotification() {
+        $Notification = Notification::getAll();
+        return view('admin.notification.listNotification', ['Notification' => $Notification]);
     }
 }
