@@ -15,15 +15,15 @@
                     </h4>
                 </div>
                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                    <a href="#" class="btn btn-sm btn-primary view-more">
-                        <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="1em"
-                            height="1em">
+                    <a href="#" class="btn btn-sm btn-primary view-more" onclick="document.getElementById('videoInput').click()">
+                        <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
                             <path
                                 d="M24 8c4.06 0 7.76 1.5 10.58 4H29a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v4.8A20 20 0 0 0 4.14 26.34c.06.55.58.92 1.12.83l1.98-.34c.54-.09.9-.6.85-1.15A16 16 0 0 1 24 8Zm16 16c0-.57-.03-1.13-.09-1.68-.05-.55.31-1.06.85-1.15l1.98-.34a.96.96 0 0 1 1.12.83A20 20 0 0 1 11 39.2V44a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V33a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-5.58A16 16 0 0 0 40 24Z">
                             </path>
                         </svg>
                         Thay thế
                     </a>
+                    <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleVideoChange(event)">
                 </div>
             </div>
             <div class="iq-card-body" style="border-bottom: 1px solid var(--iq-border-light);">
@@ -136,10 +136,31 @@
             }
         }
     </script>
+<script>
+    function handleVideoChange(event) {
+        const file = event.target.files[0];
+        if (file) {
+            // Hiển thị tên video
+            document.getElementById('videoName').querySelector('b').innerText = file.name;
 
-    <script src="{{ asset('assets/js/key.js') }}"></script>
-    <script src="{{ asset('assets/js/popup.js') }}"></script>
-    <script src="{{ asset('assets/js/image.js') }}"></script>
+            // Hiển thị dung lượng video (chuyển từ bytes sang MB)
+            const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+            document.getElementById('videoSize').querySelector('b').innerText = sizeInMB + ' MB';
+
+            // Tính và hiển thị thời lượng video
+            const video = document.createElement('video');
+            video.src = URL.createObjectURL(file);
+            video.addEventListener('loadedmetadata', function () {
+                const durationInSeconds = Math.floor(video.duration);
+                document.getElementById('videoDuration').querySelector('b').innerText = durationInSeconds + ' seconds';
+
+                // Cập nhật preview video
+                const videoFrame = document.getElementById('videoFrame');
+                videoFrame.src = URL.createObjectURL(file);
+            });
+        }
+    }
+</script>
     <style>
         #videoFrame {
             border-radius: 15px; /* Điều chỉnh giá trị theo ý muốn */
