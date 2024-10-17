@@ -23,7 +23,7 @@ class UserRepository
     {
         //
     }
-//đăng xuất
+    //đăng xuất
     public function logout(\Illuminate\Http\Request $request)
     {
         Auth::logout();
@@ -63,16 +63,30 @@ class UserRepository
                         'password' => encrypt('123456789'),
                         'loginType' => 2
 
-                ]
-            );
-            Auth::login($newUser);
-            return redirect()->intended('/');
+                    ]
+                );
+                Auth::login($newUser);
+                return redirect()->intended('/');
+            }
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
-    } catch (Exception $e) {
-        dd($e->getMessage());
     }
-}
-/*-------------------------------------------------------Admin---------------------------------------------------------*/
+    public function getAllUser()
+    {
+        $User = User::getAll();
+        return view('admin.user.listUser', ['User' => $User]);
+    }
+    public function softDelete($id)
+    {
+        $user = User::findOrFail($id);
+        return $user->delete();
+    }
+    public function getDeletedUser()
+    {
+        return view('admin.user.deletedUser');
+    }
+    /*-------------------------------------------------------Admin---------------------------------------------------------*/
 
     /*-------------------------------------------------------Client---------------------------------------------------------*/
     public function loginUser($data)

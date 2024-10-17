@@ -57,7 +57,6 @@ class UserController extends Controller
     {
         return $this->userRepository->handleGoogleCallback($request);
     }
-<<<<<<< HEAD
     public function redirectToFacebook()
     {
         return Socialite::driver('facebook')->redirect();
@@ -66,8 +65,6 @@ class UserController extends Controller
     // {
     //     return $this->userRepository->handleFacebookCallback($request);
     // }
-
-=======
 
     public function destroy($id)
     {
@@ -79,5 +76,4 @@ class UserController extends Controller
     {
         return $this->userRepository->getDeletedUser();
     }
->>>>>>> origin/dev/Tu
 }

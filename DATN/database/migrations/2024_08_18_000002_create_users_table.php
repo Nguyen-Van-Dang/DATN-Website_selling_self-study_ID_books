@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('loginType')->default(1)->nullable();
             $table->string('token', length: 10)->nullable();
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('cascade');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
