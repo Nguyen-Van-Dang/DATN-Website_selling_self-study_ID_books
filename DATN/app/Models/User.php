@@ -5,12 +5,13 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'loginType',
         'role_id',
         'token',
+        'delete_at',
     ];
 
     public function Role(): BelongsTo
@@ -33,12 +35,12 @@ class User extends Authenticatable
     }
     public function Order(): BelongsTo
     {
-        return $this->BelongsTo(Role::class);
+        return $this->BelongsTo(Order::class);
     }
 
     public function Notification(): BelongsTo
     {
-        return $this->BelongsTo(Role::class);
+        return $this->BelongsTo(Notification::class);
     }
 
     /**
@@ -62,5 +64,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    
+    public static function getAll(){
+        return self::all();
     }
 }

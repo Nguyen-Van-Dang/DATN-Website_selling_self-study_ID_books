@@ -23,7 +23,7 @@ class UserRepository
     {
         //
     }
-    //đăng xuất
+//đăng xuất
     public function logout(\Illuminate\Http\Request $request)
     {
         Auth::logout();
@@ -63,86 +63,16 @@ class UserRepository
                         'password' => encrypt('123456789'),
                         'loginType' => 2
 
-                    ]
-                );
-                Auth::login($newUser);
-                return redirect()->intended('/');
-            }
-        } catch (Exception $e) {
-            dd($e->getMessage());
+                ]
+            );
+            Auth::login($newUser);
+            return redirect()->intended('/');
         }
+    } catch (Exception $e) {
+        dd($e->getMessage());
     }
-    //đăng nhập bằng fb
-    // public function handleFacebookCallback()
-    // {
-    //     try {
-    //         $user = Socialite::driver('facebook')->user();
-    //         $findUser = User::where('social_id', $user->id)->first();
-
-    //         if ($findUser) {
-    //             // Người dùng đã tồn tại, cập nhật thông tin
-    //             $findUser->update([
-    //                 'name' => $user->name,
-    //                 'email' => $user->email,
-    //                 'image' => $user->image,
-    //                 'loginType' => 'facebook',
-    //             ]);
-
-    //             // Đăng nhập người dùng đã tồn tại
-    //             Auth::login($findUser);
-    //             return redirect()->intended('/');
-    //         } else {
-    //             // Tạo người dùng mới
-    //             $newUser = User::create([
-    //                 'name' => $user->name,
-    //                 'email' => $user->email,
-    //                 'social_id' => $user->id,
-    //                 'image' => $user->image,
-    //                 'loginType' => 'facebook',
-    //                 'password' => encrypt('123456789'),
-    //             ]);
-
-    //             // Đăng nhập người dùng mới tạo
-    //             Auth::login($newUser);
-    //             return redirect()->intended('/');
-    //         }
-    //     } catch (Exception $e) {
-    //         return redirect('/login')->withErrors(['msg' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
-    //     }
-    // }
-////
-    // public function handleFacebookCallback(\Illuminate\Http\Request $request)
-    // {
-    //     $checkUser = User::where('social_id', $request->uid)->first();
-
-    //     if ($checkUser) {
-    //         $checkUser->social_id = $request->uid;
-    //         $checkUser->name = $request->displayName;
-    //         $checkUser->image = $request->photoURL;
-    //         $checkUser->email = $request->email;
-    //         $checkUser->mobile_number = $request->phoneNumber;
-    //         $checkUser->save();
-    //         Auth::loginUsingId($checkUser->id, true);
-    //         return response()->json([
-    //             "status" => "success"
-    //         ]);
-    //     } else {
-    //         $user = new User;
-    //         $user->social_id = $request->uid;
-    //         $user->name = $request->displayName;
-    //         $user->image = $request->photoURL;
-    //         $user->email = $request->email;
-    //         $user->mobile_number = $request->phoneNumber;
-    //         $user->user_type = "facebook";
-    //         $user->save();
-    //         Auth::loginUsingId($user->id, true);
-    //         return response()->json([
-    //             "status" => "success"
-    //         ]);
-    //     }
-    // }
-
-    /*-------------------------------------------------------Admin---------------------------------------------------------*/
+}
+/*-------------------------------------------------------Admin---------------------------------------------------------*/
 
     /*-------------------------------------------------------Client---------------------------------------------------------*/
     public function loginUser($data)

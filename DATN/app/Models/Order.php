@@ -11,12 +11,24 @@ class Order extends Model
 {
     use HasFactory;
 
-    public  function Users() : HasMany{
-        return $this->hasMany(User::class);
-    }
-
+    public function User()
+{
+    return $this->belongsTo(User::class);
+}
+    
     public function Payment(): BelongsTo
     {
-        return $this->BelongsTo(Role::class);
+        return $this->BelongsTo(Payment::class);
+    }
+
+    protected $fillable = [
+        'price',
+        'payment_status',
+        'payment_method',
+        'user_id'
+    ];
+
+    public static function getAll(){
+        return self::all();
     }
 }

@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => Hash::make('password'),
+            'phone' => '0' . $this->faker->numberBetween(100000000, 999999999),
             'role_id' => Role::inRandomOrder()->first()->id,
         ];
         

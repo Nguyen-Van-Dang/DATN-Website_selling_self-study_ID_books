@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\CourseRepository;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function index()
+    private CourseRepository $courseRepository;
+
+    public function __construct(CourseRepository $courseRepository)
     {
-        return view('client.course.courses');
+        $this->courseRepository = $courseRepository;
+    }
+
+    public function getAllCourse()
+    {
+        return $this->courseRepository->getAllCourse();
     }
 
     public function show($id)
