@@ -5,8 +5,10 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="iq-card iq-card-block iq-card-stretch iq-card-height" style="padding: 30px">
+        <!-- Vùng kéo và thả tệp -->
         <label for="fileUpload"
-            style="display: flex; flex-direction: column; align-items: center; cursor: pointer; border: 2px dashed #ccc; padding: 100px 0;">
+            style="display: flex; flex-direction: column; align-items: center; cursor: pointer; border: 2px dashed #ccc; padding: 100px 0;"
+            id="dropZone">
             <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="10%" height="10%">
                 <path
                     d="M25.84 37h8.66a9.5 9.5 0 0 0 1.35-18.9A12 12 0 0 0 12 20v.01A8.5 8.5 0 0 0 12.5 37h10.34V25.6l-1.72 1.74a1 1 0 0 1-1.42 0l-.7-.7a1 1 0 0 1 0-1.41l4.4-4.4c.68-.76 1.22-.77 2 .08l4.28 4.32a1 1 0 0 1 0 1.4l-.7.72a1 1 0 0 1-1.42 0l-1.72-1.75V37Z">
@@ -14,13 +16,13 @@
             </svg>
             <div style="font-size: 18px; font-weight: bold;">Chọn video để tải lên</div>
             <div style="color: #777; margin-top: 5px;">Hoặc kéo và thả vào đây</div>
-            <input type="file" id="fileUpload" style="display: none;" accept="video/*">
+            <input type="file" id="fileUpload" style="display: none;" accept="video/*" onchange="validateFileType()">
             <label for="fileUpload"
                 style="background-color: #ff4d6d; color: white; border: none; padding: 10px 20px; font-size: 14px; border-radius: 5px; cursor: pointer;">
                 Chọn tệp
             </label>
         </label>
-
+        <!-- Phần icon -->
         <div style="display: flex; justify-content: space-around; margin-top: 20px; font-size: 14px; color: #444;">
             <div class="row">
                 <div class="col-3">
@@ -66,16 +68,66 @@
             </div>
         </div>
     </div>
+    <!-- Thông báo lỗi -->
+    <div id="errorMsg" class="error-msg">Chỉ cho phép tải video lên!!!</div>
+
+    <!-- Overlay loading icon -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-message"
+            style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-radius: 50%; border-top: 5px solid #3498db; animation: spin 1s linear infinite;">
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(106, 106, 106, 0.618);
+            /* Màu nền nhạt */
+            border: 2px solid rgba(200, 200, 200, 0.5);
+            /* Viền màu nhạt */
+            z-index: 9999;
+            /* Để overlay luôn ở trên cùng */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            /* Ngăn chặn tương tác với overlay */
+        }
+
+        .loading-message {
+            font-size: 20px;
+            color: #333;
+            pointer-events: auto;
+            /* Cho phép tương tác với văn bản bên trong */
+        }
+    </style>
 
     <script>
         document.getElementById('fileUpload').addEventListener('change', async function() {
             const file = this.files[0];
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        
+
             if (file) {
+                // Hiện overlay loading
+                document.getElementById('loadingOverlay').style.display = 'flex';
+
                 const formData = new FormData();
                 formData.append('video', file);
-        
+
                 try {
                     const response = await fetch('/reelsUpload', {
                         method: 'POST',
@@ -84,33 +136,33 @@
                         },
                         body: formData,
                     });
-        
+
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-        
+
                     const data = await response.json();
-        
+
                     if (data.videoURL) {
                         // Lưu thông tin video vào sessionStorage
                         sessionStorage.setItem('videoURL', data.videoURL);
                         sessionStorage.setItem('videoName', file.name); // Lưu tên video
                         sessionStorage.setItem('videoSize', file.size); // Lưu dung lượng video
-    
+
                         // Tạo URL tạm thời cho video đã tải lên
                         const tempVideoURL = URL.createObjectURL(file);
                         const videoElement = document.createElement('video');
                         videoElement.src = tempVideoURL;
-    
+
                         // Lắng nghe sự kiện loadedmetadata để lấy độ dài video
                         videoElement.addEventListener('loadedmetadata', function() {
                             const duration = Math.floor(this.duration); // Lấy độ dài video
                             sessionStorage.setItem('videoDuration', duration); // Lưu vào sessionStorage
-    
+
                             // Chuyển hướng đến trang reelsUpload1
                             window.location.href = 'http://127.0.0.1:8000/reelsUpload1';
                         });
-    
+
                         // Kích hoạt video để lấy metadata
                         videoElement.play();
                     } else {
@@ -118,11 +170,80 @@
                     }
                 } catch (error) {
                     console.error('Error uploading video:', error);
+                } finally {
+                    // Ẩn overlay loading sau khi tải lên hoàn tất (thành công hoặc thất bại)
+                    document.getElementById('loadingOverlay').style.display = 'none';
                 }
             } else {
                 console.error('No file selected for upload');
             }
         });
     </script>
-    
+
+    <script>
+        const dropZone = document.getElementById("dropZone");
+        const errorMsg = document.getElementById("errorMsg");
+        // Ngăn hành vi mặc định khi kéo và thả vào khu vực tải lên
+        dropZone.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            dropZone.style.borderColor = "#00aaff"; // Đổi màu viền khi kéo vào
+        });
+
+        dropZone.addEventListener("dragleave", () => {
+            dropZone.style.borderColor = "#ccc"; // Trả lại màu viền ban đầu khi rời đi
+        });
+
+        dropZone.addEventListener("drop", (event) => {
+            event.preventDefault(); // Ngăn mở tệp trong tab mới
+
+            const file = event.dataTransfer.files[0];
+            if (file && !file.type.startsWith("video/")) {
+                showErrorMsg(); // Hiển thị thông báo lỗi nếu không phải video
+            } else {
+                document.getElementById("fileUpload").files = event.dataTransfer
+                    .files; // Gán tệp cho input nếu là video
+                validateFileType();
+            }
+        });
+
+        function validateFileType() {
+            const fileInput = document.getElementById("fileUpload");
+            const file = fileInput.files[0];
+
+            if (file && !file.type.startsWith("video/")) {
+                showErrorMsg(); // Hiển thị thông báo lỗi
+                fileInput.value = ""; // Xóa tệp nếu không phải là video
+            }
+        }
+
+        function showErrorMsg() {
+            errorMsg.style.display = 'block';
+            errorMsg.style.top = '10px';
+            errorMsg.style.opacity = '1';
+
+            // Tự động ẩn thông báo sau 3 giây
+            setTimeout(() => {
+                errorMsg.style.opacity = '0'; // Giảm độ mờ
+                errorMsg.style.top = '-50px'; // Trượt lên ngoài màn hình
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 500); // Thời gian ẩn sau khi độ mờ giảm
+            }, 3000); // Thời gian hiển thị thông báo
+        }
+    </script>
+    <style>
+        .error-msg {
+            position: fixed;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, -1, 0, 0.65);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            transition: top 0.5s ease, opacity 0.5s;
+            opacity: 0;
+        }
+    </style>
 @endsection

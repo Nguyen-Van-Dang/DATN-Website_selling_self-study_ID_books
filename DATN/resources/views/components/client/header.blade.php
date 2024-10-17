@@ -16,44 +16,44 @@
             </div>
         </div>
         <div class="d-flex nav-menu">
-            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('/') ? 'active' : '' }}">
+            <div class="navbar-breadcrumb px-3 {{ Request::is('/') ? 'active' : '' }}">
                 <a href="{{ route('homeClient') }}" class="iq-waves-effect text-gray rounded">
                     <h6 class="mb-0">Trang Chủ</h6>
                 </a>
             </div>
-            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('book-list') ? 'active' : '' }}">
+            <div class="navbar-breadcrumb px-3 {{ Request::is('book-list') ? 'active' : '' }}">
                 <a href="{{ route('bookList') }}" class="iq-waves-effect rounded">
                     <h6 class="mb-0">Sách</h6>
                 </a>
             </div>
-            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
+            <div class="navbar-breadcrumb px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
                 <a href="{{ route('khoa-hoc') }}" class="iq-waves-effect rounded">
                     <h6 class="mb-0">Khóa học</h6>
                 </a>
             </div>
-            <div class="navbar-breadcrumb mr-2 px-3 ">
+            <div class="navbar-breadcrumb px-3 ">
                 <a href="" class="iq-waves-effect  rounded">
                     <h6 class="mb-0">Học tập</h6>
                 </a>
             </div>
-            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('chat') ? 'active' : '' }}">
+            <div class="navbar-breadcrumb px-3 {{ Request::is('chat') ? 'active' : '' }}">
                 <a href="{{ route('chat') }}" class="iq-waves-effect  rounded">
                     <h6 class="mb-0">Tin nhắn</h6>
                 </a>
             </div>
-            <div class="navbar-breadcrumb mr-2 px-3 {{ Request::is('reels') ? 'active' : '' }}">
+            <div class="navbar-breadcrumb px-3 {{ Request::is('reels') ? 'active' : '' }}">
                 <a href="{{ route('reals') }}" class="iq-waves-effect  rounded">
                     <h6 class="mb-0">Reels</h6>
                 </a>
             </div>
-            <div class="navbar-breadcrumb mr-2 px-3">
+            <div class="navbar-breadcrumb px-3">
                 <a href="#" class="iq-waves-effect  rounded">
                     <h6 class="mb-0">Đề thi</h6>
                 </a>
             </div>
         </div>
 
-        <div class="nav-button mr-5" style="margin-left: auto">
+        <div class="nav-button">
             <a href="" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách !</b></a>
         </div>
 
@@ -173,8 +173,8 @@
                                                 class="ri-close-fill"></i></div>
                                     </div>
                                 </a>
-                                <div class="d-flex align-items-center text-center p-3">
-                                    <a class="btn btn-primary mr-2 iq-sign-btn" href="{{ route('shoppingCart') }}"
+                                <div class="align-items-center text-center p-3">
+                                    <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
                                         role="button">Giỏ Hàng</a>
                                     <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
                                         role="button">Thanh
@@ -185,12 +185,14 @@
                     </div>
                 </li>
                 {{-- reels --}}
+                @if (auth()->check() && in_array(Auth::user()->role_id, [1, 2]))
                 <li class="nav-item nav-icon dropdown">
                     <a href="{{ route('reelsUpload') }}" class="text-gray rounded">
                         <i class="ri-upload-cloud-line"></i>
                         {{-- <span class="badge badge-danger count-cart rounded-circle">2</span> --}}
                     </a>
                 </li>
+            @endif            
                 {{-- user --}}
                 @if (auth()->check())
                     <li class="line-height pt-3">

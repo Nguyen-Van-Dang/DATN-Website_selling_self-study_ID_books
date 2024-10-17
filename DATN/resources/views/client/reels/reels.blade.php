@@ -9,7 +9,8 @@
             height: 100px;
             overflow: hidden;
         }
-        .iq-footer{
+
+        .iq-footer {
             margin-left: 0;
         }
     </style>
@@ -188,85 +189,87 @@
                 style="display: none; box-shadow: 0px 20px 20px 0px rgba(44, 101, 144, 0.1); height: 570px;">
                 <div class="content-box">
                     <h4 class="text-center">Bình luận</h3>
-                    <div class="video-container">
-                        <div class="post">
-                            <div class="post-comments open">
-                                <div class="post-comments-area">
-                                    <div class="post-comment">
-                                        <div class="post-comment-user verified">
-                                            <img class="post-comment-user-img"
-                                                src="{{ asset('assets/images/book/user/13.jpg') }}">
+                        <div class="video-container">
+                            <div class="post">
+                                <div class="post-comments open">
+                                    <div class="post-comments-area">
+                                        <div class="post-comment">
+                                            <div class="post-comment-user verified">
+                                                <img class="post-comment-user-img"
+                                                    src="{{ asset('assets/images/book/user/13.jpg') }}">
+                                            </div>
+                                            <div class="post-comment-content">
+                                                <div class="post-comment-user-name verified"><a href="#">Nguyễn Văn
+                                                        A</a></div>
+                                                <div class="post-comment-user-msg">commnent1</div>
+                                                <p>
+                                                    <a href="" class="hours">18 giờ</a>
+                                                    <a href="" class="likes">Thích</a>
+                                                    <a href="" class="feedback">Phản hồi</a>
+                                                </p>
+                                            </div>
+                                            <div class="post-comment-like-btn like"><i class="bx bxs-heart"></i>
+                                                <p class="post-comment-like-number">9</p>
+                                            </div>
                                         </div>
-                                        <div class="post-comment-content">
-                                            <div class="post-comment-user-name verified"><a
-                                                    href="#">Nguyễn Văn A</a></div>
-                                            <div class="post-comment-user-msg">commnent1</div>
-                                            <p>
-                                                <a href="" class="hours">18 giờ</a>
-                                                <a href="" class="likes">Thích</a>
-                                                <a href="" class="feedback">Phản hồi</a>
-                                            </p>
+                                        <p>{{-- feedback --}}</p>
+                                        <div class="post-comment" id="comment-feedback">
+                                            <div class="post-comment-user verified">
+                                                <img class="post-comment-user-img"
+                                                    src="{{ asset('assets/images/book/user/13.jpg') }}">
+                                            </div>
+                                            <div class="post-comment-content">
+                                                <div class="post-comment-user-name verified"><a href="#">Nguyễn Văn
+                                                        B</a></div>
+                                                <div class="post-comment-user-msg">Feedback</div>
+                                                <p>
+                                                    <a href="" class="hours">18 giờ</a>
+                                                    <a href="" class="likes">Thích</a>
+                                                    <a href="" class="feedback">Phản hồi</a>
+                                                </p>
+                                            </div>
+                                            <div class="post-comment-like-btn like"><i class="bx bxs-heart"></i>
+                                                <p class="post-comment-like-number">9</p>
+                                            </div>
                                         </div>
-                                        <div class="post-comment-like-btn like"><i class="bx bxs-heart"></i>
-                                            <p class="post-comment-like-number">9</p>
-                                        </div>
-                                    </div>
-                                    <p>{{-- feedback --}}</p>
-                                    <div class="post-comment" id="comment-feedback">
-                                        <div class="post-comment-user verified">
-                                            <img class="post-comment-user-img"
-                                                src="{{ asset('assets/images/book/user/13.jpg') }}">
-                                        </div>
-                                        <div class="post-comment-content">
-                                            <div class="post-comment-user-name verified"><a
-                                                    href="#">Nguyễn Văn B</a></div>
-                                            <div class="post-comment-user-msg">Feedback</div>
-                                            <p>
-                                                <a href="" class="hours">18 giờ</a>
-                                                <a href="" class="likes">Thích</a>
-                                                <a href="" class="feedback">Phản hồi</a>
-                                            </p>
-                                        </div>
-                                        <div class="post-comment-like-btn like"><i class="bx bxs-heart"></i>
-                                            <p class="post-comment-like-number">9</p>
-                                        </div>
-                                    </div>
 
-                                    <div class="post-comment">
-                                        <div class="post-comment-user verified">
-                                            <img class="post-comment-user-img"
-                                                src="{{ asset('assets/images/book/user/13.jpg') }}">
+                                        <div class="post-comment">
+                                            <div class="post-comment-user verified">
+                                                <img class="post-comment-user-img"
+                                                    src="{{ asset('assets/images/book/user/13.jpg') }}">
+                                            </div>
+                                            
+                                            <div class="post-comment-content">
+                                                <div class="post-comment-user-name verified"><a href="#">Nguyễn Văn
+                                                        C</a></div>
+                                                <div class="post-comment-user-msg">Commnent 2</div>
+                                                <p>
+                                                    <a href="" class="hours">18 giờ</a>
+                                                    <a href="" class="likes">Thích</a>
+                                                    <a href="" class="feedback">Phản hồi</a>
+                                                </p>
+                                            </div>
+                                            <div class="post-comment-like-btn like"><i class="bx bxs-heart"></i>
+                                                <p class="post-comment-like-number">9</p>
+                                            </div>
                                         </div>
-                                        <div class="post-comment-content">
-                                            <div class="post-comment-user-name verified"><a
-                                                    href="#">Nguyễn Văn C</a></div>
-                                            <div class="post-comment-user-msg">Commnent 2</div>
-                                            <p>
-                                                <a href="" class="hours">18 giờ</a>
-                                                <a href="" class="likes">Thích</a>
-                                                <a href="" class="feedback">Phản hồi</a>
-                                            </p>
+                                        <div class="post-comment-input">
+                                            <input type="text" name="" class="post-comment-text"
+                                                placeholder="Nhập nội dung....">
+                                            <button class="post-comment-send"><i class="fa fa-send send-btn"></i></button>
                                         </div>
-                                        <div class="post-comment-like-btn like"><i class="bx bxs-heart"></i>
-                                            <p class="post-comment-like-number">9</p>
-                                        </div>
-                                    </div>
-                                    <div class="post-comment-input">
-                                        <input type="text" name="" class="post-comment-text"
-                                            placeholder="Nhập nội dung....">
-                                        <button class="post-comment-send"><i class="fa fa-send send-btn"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
 
                 <style>
-                    #comment-feedback{
+                    #comment-feedback {
                         padding: 0 0 0 40px;
                         margin-top: -35px;
                     }
+
                     .likes {
                         padding: 0 10px;
                         color: #333;
@@ -441,5 +444,4 @@
                         object-fit: cover;
                     }
                 </style>
-
             @endsection

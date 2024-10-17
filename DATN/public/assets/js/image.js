@@ -17,7 +17,7 @@ fileInput.addEventListener('change', function(event) {
         const imgPreview = document.createElement('img');
         imgPreview.src = URL.createObjectURL(file);
         imgPreview.style.maxWidth = '100%';
-        imgPreview.style.maxHeight = '200px';
+        imgPreview.style.maxHeight = '350px';
         imgPreview.style.borderRadius = '5px';
         imgPreview.style.cursor = 'pointer';
         imgPreview.style.display = 'inline-block'; // Đảm bảo ảnh hiển thị cùng với dấu "X"
