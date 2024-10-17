@@ -23,26 +23,6 @@
 </head>
 
 <body>
-    {{-- <div class="wrapper">
-        <div class="iq-top-navbar">
-            <x-client.header></x-client.header>
-        </div>
-        <div id="content-page" class="content-page">
-            <div class="row">
-                <div class="col-3">
-
-                </div>
-                <div class="col-6">
-                    @livewire('chat.center')
-                </div>
-                <div class="col-3">
-                    @livewire('chat.right')
-                </div>
-            </div>
-
-        </div>
-    </div> --}}
-
 
     <div class="wrapper">
         <div class="iq-sidebar">

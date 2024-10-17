@@ -32,7 +32,7 @@
                 </a>
             </div>
             <div class="navbar-breadcrumb mr-2 px-3 ">
-                <a href="" class="iq-waves-effect  rounded">
+                <a href="{{ route('hoc-tap') }}" class="iq-waves-effect  rounded">
                     <h6 class="mb-0">Học tập</h6>
                 </a>
             </div>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="nav-button mr-5" style="margin-left: auto">
-            <a href="" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách !</b></a>
+            <a href="{{ route('bookID') }}" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách !</b></a>
         </div>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

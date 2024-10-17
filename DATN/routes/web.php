@@ -245,3 +245,8 @@ Route::prefix('chat')->name('chat')->group(function () {
 //course 
 // mail
 Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
+
+//học tập
+Route::get('/hoc-tap', function () {
+    return view('client.course.myCourses');
+})->name('hoc-tap');
