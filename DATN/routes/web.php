@@ -240,6 +240,13 @@ Route::get('/book-list', function () {
     return view('client.book.book');
 })->name('bookList');
 
+// tất cả thông báo
+Route::get('/notification-list', function () {
+    return view('client.notification.notification');
+})->name('notificationList');
+
+
+
 //chi tiết sách
 Route::get('/book-detail', function () {
     return view('client.book.bookDetail');

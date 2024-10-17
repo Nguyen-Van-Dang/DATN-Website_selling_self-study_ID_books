@@ -75,7 +75,7 @@
 
                 {{-- notification --}}
                 <li class="nav-item nav-icon">
-                    <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
+                    <a href="notification-list" class="search-toggle iq-waves-effect text-gray rounded">
                         <i class="ri-notification-2-line"></i>
                         <span class="bg-primary dots"></span>
                     </a>
@@ -96,9 +96,17 @@
                                             <h6 class="mb-0">Đơn hàng giao thành công</h6>
                                             <small class="float-right font-size-12">Ngay bây giờ</small>
                                             <p class="mb-0">95.000đ</p>
+
                                         </div>
+
                                     </div>
                                 </a>
+                                <div class="text-center ">
+                                    <p>
+                                        <a href="{{ route('notificationList') }}">Tất cả thông báo</a>
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -109,28 +117,34 @@
                         <i class="ri-mail-line"></i>
                         <span class="bg-primary dots"></span>
                     </a>
-                    <div class="iq-sub-dropdown">
-                        <div class="iq-card shadow-none m-0">
-                            <div class="iq-card-body p-0 ">
-                                <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white">Tin Nhắn<small
-                                            class="badge  badge-light float-right pt-1">5</small></h5>
-                                </div>
-                                <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                        <div class="">
-                                            <img class="avatar-40 rounded"
-                                                src="{{ asset('assets/images/book/user/4.jpg') }}" alt="">
-                                        </div>
-                                        <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">QT Shop</h6>
-                                            <small class="float-left font-size-12">9/9/2024</small>
-                                        </div>
+                        <div class="iq-sub-dropdown">
+                            <div class="iq-card shadow-none m-0">
+                                <div class="iq-card-body p-0 ">
+                                    <div class="bg-primary p-3">
+                                        <h5 class="mb-0 text-white">Tin Nhắn<small
+                                                class="badge  badge-light float-right pt-1">5</small></h5>
                                     </div>
-                                </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="{{ asset('assets/images/book/user/4.jpg') }}" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">QT Shop</h6>
+                                                <small class="float-left font-size-12">9/9/2024</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="text-center ">
+                                        <p>
+                                            {{-- <a href="{{ route('messageList') }}">Tất cả tin nhắn</a> --}}
+                                            <a href="">Tất cả tin nhắn</a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </li>
                 {{-- cart --}}
                 <li class="nav-item nav-icon dropdown">

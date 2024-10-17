@@ -19,6 +19,33 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/reals.css') }}">
+    <style>
+        body {
+            margin-top: 20px;
+            background-color: #f0f2f5;
+        }
+
+        .dropdown-list-image {
+            position: relative;
+            height: 2.5rem;
+            width: 2.5rem;
+        }
+
+        .dropdown-list-image img {
+            height: 2.5rem;
+            width: 2.5rem;
+        }
+
+        .btn-light {
+            color: #2cdd9b;
+            background-color: #e5f7f0;
+            border-color: #d8f7eb;
+        }
+        .overflow-scroll {
+            overflow: scroll;
+        }
+    </style>
+
 
 </head>
 
@@ -75,7 +102,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-	{{-- <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+
+
+
+    {{-- <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
 	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
 	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
