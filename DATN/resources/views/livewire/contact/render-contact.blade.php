@@ -16,7 +16,7 @@
                             <th  style="width: 5%;">Tên</th>
                             <th  style="width: 5%;">Email</th>
                             <th  style="width: 25%;">Nội dung</th>
-                            <th  style="width: 5%;">Hoạt động</th>
+                            <th  style="width: 10%;">Hoạt động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +24,7 @@
                             <tr>
                                 <td class="text-center">{{ $item->name }}</td>
                                 <td class="text-center">{{ $item->email }}</td>
-                                <td>{{ $item->emailMessage }}</td>
+                                <td class="text-center">{{ \Illuminate\Support\Str::limit($item->emailMessage, 70, '...') }}</td>
                                 <td class="text-center">
                                     <div class="flex align-items-center list-user-action">
                                         <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"

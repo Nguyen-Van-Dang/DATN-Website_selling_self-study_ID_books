@@ -19,7 +19,10 @@ class CourseController extends Controller
     {
         return $this->courseRepository->getAllCourse();
     }
-
+    public function index()
+    {
+        return view('client.course.courses');
+    }
     public function show($id)
     {
         return view('client.course.courseDetail', compact('id'));

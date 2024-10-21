@@ -19,7 +19,7 @@
                             <th style="width: 8%;">Só lượng bài giảng</th>
                             <th style="width: 15%;">Mô tả khóa học</th>
                             <th style="width: 5%;">Giá</th>
-                            <th style="width: 7%;">Hoạt động</th>
+                            <th style="width: 10%;">Hoạt động</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
