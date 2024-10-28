@@ -10,14 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class RenderCourseCate extends Component
 {
     use WithPagination;
-    public $name;
-
-    public $nameAdd;
+    public $name, $nameAdd, $description, $descriptionAdd, $editingId, $search = '';
     public $isAddPopupOpen = false;
     public $isEditPopupOpen = false;
-    public $editingId;
     protected $paginationTheme = 'bootstrap';
-    public $search = '';
 
     public function updatingSearch()
     {
@@ -25,13 +21,19 @@ class RenderCourseCate extends Component
     }
     public function render()
     {
-        if (Auth::user()->role_id == 1) {
+        if (strlen($this->search) >= 1) {
             $courseCate = CourseCategories::where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('id', $this->search)
+                ->orWhereHas('user', function($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                })
                 ->paginate(10);
         } else {
-            $courseCate = CourseCategories::where('user_id', Auth::id())
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->paginate(10);
+            if (Auth::user()->role_id == 1) {
+                $courseCate = CourseCategories::paginate(10);
+            } else {
+                $courseCate = CourseCategories::where('user_id', Auth::id())->paginate(10);
+            }
         }
 
         return view('livewire.courseCate.render-courseCate', [
@@ -48,6 +50,7 @@ class RenderCourseCate extends Component
             $this->editingId = $id;
             $courseCate = CourseCategories::find($id);
             $this->name = $courseCate->name;
+            $this->description = $courseCate->description;
             $this->isEditPopupOpen = true;
         }
     }
@@ -57,6 +60,7 @@ class RenderCourseCate extends Component
         $this->isAddPopupOpen = false;
         $this->isEditPopupOpen = false;
     }
+
     public function updated($fields)
     {
         $this->validateOnly($fields, [
@@ -67,33 +71,43 @@ class RenderCourseCate extends Component
     {
         $this->validate([
             'nameAdd' => 'required|unique:course_categories,name',
+            'descriptionAdd' => 'required|unique:course_categories,descriptionAdd',
         ]);
 
         $courseCate = new CourseCategories();
         $courseCate->name = $this->nameAdd;
+        $courseCate->description = $this->descriptionAdd;
         $courseCate->user_id = auth()->id();
         $courseCate->save();
+
         session()->flash('message', 'Thêm thành công');
         $this->nameAdd = '';
+        $this->descriptionAdd = '';
         $this->isAddPopupOpen = false;
     }
 
     public function updateCourseCate()
     {
         $this->validate([
-            'name' => 'required|unique:course_categories,name'
+            'name' => 'required|unique:course_categories,name',
+            'description' => 'required|unique:course_categories,description',
         ]);
 
         $courseCate = CourseCategories::find($this->editingId);
         $courseCate->name = $this->name;
+        if (isset($this->description)) {
+            $courseCate->description = $this->description;
+        }
+        $courseCate->description = $this->description;
         $courseCate->user_id = auth()->id();
         $courseCate->save();
         $this->isEditPopupOpen = false;
+
         session()->flash('message', 'Danh mục khóa học đã được cập nhật thành công.');
         $this->name = '';
+        $this->description = '';
         $this->editingId = null;
     }
-
     public function delete($id)
     {
         $courseCate = CourseCategories::where('id', $id)->first();

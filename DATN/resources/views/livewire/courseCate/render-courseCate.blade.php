@@ -9,7 +9,7 @@
             </div>
             <div class="iq-search-bar" style="margin-left: 30%;">
                 <form class="searchbox" style="width: 150%;">
-                   <input type="text" class="text search-input" placeholder="Tìm kiếm sản phẩm..." wire:model="search">
+                   <input type="text" class="text search-input" placeholder="Tìm kiếm sản phẩm..." wire:model.live.debounce.100ms="search">
                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                 </form>
              </div>
@@ -30,6 +30,7 @@
                             <th style="width: 11%;">Hoạt động</th>
                         </tr>
                     </thead>
+                    @if (sizeof($courseCate)>0)
                     <tbody class="text-center">
                         @foreach ($courseCate as $item)
                             <tr>
@@ -58,6 +59,7 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    @endif
                 </table>
             </div>
             <div class="text-end">
@@ -84,6 +86,13 @@
                                 <input wire:model="nameAdd" type="text" class="form-control"
                                     placeholder="Nhập tên danh mục khóa học...">
                                 @error('nameAdd')
+                                    <span class="text-danger">{{ $message }}<br/></span>
+                                @enderror
+
+                                <label>Mô tả khóa học:</label>
+                                <input wire:model="descriptionAdd" type="text" class="form-control"
+                                    placeholder="Nhập mô tả danh mục khóa học...">
+                                @error('descriptionAdd')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -114,6 +123,13 @@
                                 <input wire:model="name" type="text" class="form-control"
                                     placeholder="Nhập tên danh mục khóa học...">
                                 @error('name')
+                                    <span class="text-danger">{{ $message }}<br/></span>
+                                @enderror
+
+                                <label>Mô tả khóa học:</label>
+                                <input wire:model="description" type="text" class="form-control"
+                                    placeholder="Nhập mô tả danh mục khóa học...">
+                                @error('description')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
