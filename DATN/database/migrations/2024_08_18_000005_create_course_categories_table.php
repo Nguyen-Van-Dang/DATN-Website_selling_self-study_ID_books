@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('name', 255);
             $table->foreignId('parent_id')->nullable()->constrained('course_categories')->onDelete('set null');
 
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

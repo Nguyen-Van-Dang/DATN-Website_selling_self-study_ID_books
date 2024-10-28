@@ -5,6 +5,7 @@ namespace App\Livewire\CourseCate;
 use App\Models\CourseCategories;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class RenderCourseCate extends Component
 {
@@ -20,10 +21,16 @@ public $isEditPopupOpen = false;
 
     public function render()
     {
-        $courseCate = CourseCategories::paginate(10);
+
+        if (Auth::user()->role_id == 1) {
+            $courseCate = CourseCategories::paginate(10);
+        } else {
+            $courseCate = CourseCategories::where('user_id', Auth::id())->paginate(10);
+        }
         return view('livewire.courseCate.render-courseCate', [
             'courseCate' => $courseCate,
         ]);
+
     }
 
     public function openPopup($type, $id = null)

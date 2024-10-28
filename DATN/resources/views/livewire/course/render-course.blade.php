@@ -16,10 +16,11 @@
                             <th style="width: 3%;">STT</th>
                             <th style="width: 10%;">Hình ảnh</th>
                             <th style="width: 15%;">Tên khóa học</th>
-                            <th style="width: 8%;">Só lượng bài giảng</th>
+                            <th style="width: 10%;">Só lượng bài giảng</th>
                             <th style="width: 15%;">Mô tả khóa học</th>
                             <th style="width: 5%;">Giá</th>
-                            <th style="width: 10%;">Hoạt động</th>
+                            <th style="width: 15%;">Người tạo</th>
+                            <th style="width: 7%;">Hoạt động</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -34,6 +35,10 @@
                                     <p class="mb-0">{{ $item->description }}</p>
                                 </td>
                                 <td>{{ $item->price }}</td>
+                                @php
+                                    $user = $item->user;
+                                @endphp
+                                    <td>{{ $user ? optional($item->user)->name : 'Không có người tạo' }}</td>
                                 <td>
                                     <div class="flex align-items-center list-user-action">
                                         <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"

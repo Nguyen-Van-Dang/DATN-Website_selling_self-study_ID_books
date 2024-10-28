@@ -21,6 +21,7 @@
                         <tr>
                             <th style="width: 5%;">STT</th>
                             <th style="width: 22.5%;">Tên danh mục</th>
+                            <th style="width: 22.5%;">Người tạo</th>
                             <th style="width: 11%;">Hoạt động</th>
                         </tr>
                     </thead>
@@ -29,6 +30,10 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td class="mb-0">{{ $item->name }}</td>
+                                @php
+                                    $user = $item->user;
+                                @endphp
+                                <td>{{ $user ? optional($item->user)->name : 'Không có người dùng' }}</td>
                                 <td>
                                     <div class="flex align-items-center list-user-action">
                                         <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"

@@ -19,9 +19,11 @@
          <li class="{{ request()->routeIs('homeAdmin') ? 'active' : '' }}">
             <a href="{{route('homeAdmin')}}"><i class="ri-dashboard-line"></i> Bảng Điều Khiển</a>
          </li>
-         <li class="{{ request()->routeIs('listUser') ? 'active' : '' }}">
-            <a href="{{route('listUser')}}"><i class="ri-user-line"></i> Tài Khoản</a>
-         </li>
+        @if (Auth::user()->role_id != 2)
+            <li class="{{ request()->routeIs('listUser') ? 'active' : '' }}">
+                <a href="{{route('listUser')}}"><i class="ri-user-line"></i> Tài Khoản</a>
+            </li>
+        @endif
          <li class="{{ request()->routeIs('listCategoryCourse') ? 'active' : '' }}">
             <a href="{{route('listCategoryCourse')}}"><i class="ri-folders-line"></i> Danh Mục Khóa Học</a>
          </li>
@@ -46,9 +48,11 @@
          <li class="{{ request()->routeIs('listNotification') ? 'active' : '' }}">
             <a href="{{route('listNotification')}}"><i class="ri-notification-3-line"></i> Thông Báo</a>
          </li>
-         <li class="{{ request()->routeIs('listContact') ? 'active' : '' }}">
-            <a href="{{route('listContact')}}"><i class="ri-mail-line"></i> Liên Hệ</a>
-         </li>
+         @if (Auth::user()->role_id != 2)
+            <li class="{{ request()->routeIs('listContact') ? 'active' : '' }}">
+               <a href="{{route('listContact')}}"><i class="ri-mail-line"></i> Liên Hệ</a>
+            </li>
+         @endif
          {{-- <li class="{{ request()->routeIs('getAllAbc') ? 'active' : '' }}">
             <a href="{{route('getAllAbc')}}"> - Abc</a>
          </li> --}}

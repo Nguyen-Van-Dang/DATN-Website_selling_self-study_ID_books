@@ -24,6 +24,7 @@
                             <th style="width: 5%;">Mã kích hoạt</th>
                             <th style="width: 5%;">Kích hoạt</th>
                             <th style="width: 2%;">Danh Mục</th>
+                            <th style="width: 5%;">Người Tạo</th>
                             <th style="width: 5%;">Hoạt động</th>
                         </tr>
                     </thead>
@@ -38,8 +39,9 @@
                                  @php
                                     $course = $item->course;
                                     $bookCate = $item->CategoryBook;
+                                    $user = $item->user;
                                  @endphp
-                                 <td>{{ $course->name }}</td>
+                                 <td>{{ $course ? optional($item->course)->name : 'Không có bài giảng' }}</td>
                                  <td>
                                     <p class="mb-0">{{ $item->description }}</p>
                                 </td>
@@ -47,7 +49,8 @@
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->book_activate_id }}</td>
                                 <td>{{ $item->book_active }}</td>
-                                <td>{{ $bookCate->name }}</td>
+                                <td>{{ $bookCate ? optional($item->CategoryBook)->name : 'Không có danh mục' }}</td>
+                                <td>{{ $user ? optional($item->user)->name : 'Không có người tạo' }}</td>
                                 <td>
                                     <div class="flex align-items-center list-user-action">
                                         <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"

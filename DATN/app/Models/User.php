@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,6 +38,7 @@ class User extends Authenticatable
     {
         return $this->BelongsTo(Order::class);
     }
+
     public function reels()
     {
         return $this->hasMany(Reels::class);
@@ -45,6 +47,30 @@ class User extends Authenticatable
     {
         return $this->hasMany(ReelComment::class);
     }
+
+
+    public  function Book() : HasMany{
+        return $this->hasMany(Book::class);
+    }
+
+    public  function Course() : HasMany{
+        return $this->hasMany(Course::class);
+    }
+
+    public  function Lecture() : HasMany{
+        return $this->hasMany(Lecture::class);
+    }
+
+    public function CategoryCourse(): HasMany
+    {
+        return $this->hasMany(CourseCategories::class);
+    }
+
+    public function CategoryBook(): HasMany
+    {
+        return $this->hasMany(CategoryBook::class);
+    }
+
     public function Notification(): BelongsTo
     {
         return $this->BelongsTo(Notification::class);

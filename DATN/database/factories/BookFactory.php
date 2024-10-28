@@ -23,6 +23,7 @@ class BookFactory extends Factory
             'book_active' => $this->faker->boolean() ? 1 : 0,
             'category_books_id' => CategoryBook::inRandomOrder()->first()->id,
             'image' => $this->faker->imageUrl(),
+            'user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }

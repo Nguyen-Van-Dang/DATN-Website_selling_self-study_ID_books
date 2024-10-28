@@ -26,7 +26,8 @@ return new class extends Migration
             $table->boolean('book_active');
             $table->foreignId('category_books_id')->nullable()->constrained('category_books')->onDelete('set null');
             $table->string('image', 255)->nullable();
-
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

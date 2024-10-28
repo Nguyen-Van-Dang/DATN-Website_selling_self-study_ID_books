@@ -4,26 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CategoryBook extends Model
+class Lecture extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
+        'course_id',
+        'user_id',
     ];
-
-    public  function Book() : HasMany{
-        return $this->hasMany(Book::class);
-    }
 
     public function User()
     {
         return $this->belongsTo(User::class);
     }
 
-    public static function getAll(){
-        return self::all();
+    public function Course()
+    {
+        return $this->belongsTo(Course::class);
     }
 }
