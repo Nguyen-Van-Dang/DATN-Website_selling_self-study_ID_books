@@ -122,7 +122,7 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-    
+
     'providers' => [
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -153,6 +153,7 @@ return [
          */
         App\Providers\GoogleDriveServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
     ],
 
 ];

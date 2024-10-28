@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Repositories\ChatRepository;
 use Illuminate\Http\Request;
+use App\Models\ChatGroup;
+use Illuminate\Support\Facades\Auth;
+use app\Events\NewMessageSent;
 
 class ChatController extends Controller
 {
@@ -15,6 +18,6 @@ class ChatController extends Controller
     }
     public function index()
     {
-        return view('layouts/client/chat');
+        return view('client.chat.chatpage');
     }
 }
