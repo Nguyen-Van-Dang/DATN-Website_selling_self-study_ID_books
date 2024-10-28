@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>@yield('title', 'Tin Nhắn')</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
+    <title>@yield('title', 'Tin nhắn')</title>
+    {{-- <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}"> --}}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
@@ -19,30 +20,21 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/reals.css') }}">
-
+    @livewireStyles
 </head>
 
 <body>
-
+    @livewireStyles
     <div class="wrapper">
-        <div class="iq-sidebar">
-            @livewire('chat.left')
-        </div>
         <div class="iq-top-navbar">
             <x-client.header></x-client.header>
         </div>
-        <div id="content-page" class="content-page">
-            <div class="row">
-                <div class="col-8 pr-0">
-                    @livewire('chat.center')
-                </div>
-                <div class="col-4">
-                    @livewire('chat.right')
-                </div>
-            </div>
 
-        </div>
+        @yield('content')
+
     </div>
+    @livewireScripts
+    <script src="/js/app.js"></script>
     {{-- script here --}}
     <script src="{{ asset('assets/js/reals.js') }}"></script>
     <script src="{{ asset('assets/js/login.js') }}"></script>

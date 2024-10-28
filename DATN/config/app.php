@@ -155,6 +155,7 @@ return [
         App\Providers\GoogleDriveServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         // App\Providers\ReelsServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
     ],
 
 ];

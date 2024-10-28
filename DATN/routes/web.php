@@ -211,11 +211,9 @@ Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow'])->name
 Route::post('/reels/view/{reelId}', [ReelsController::class, 'incrementViewCount']);
 
 //chat
-Route::prefix('chat')->name('chat')->group(function () {
+Route::prefix('chat')->name('chat')->middleware('auth')->group(function () {
     Route::controller(ChatController::class)->group(function () {
         Route::get('/', 'index');
-        // Route::get('/orders/{id}', 'show');
-        // Route::post('/orders', 'store');
     });
 });
 
@@ -227,3 +225,7 @@ Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail')
 Route::get('/hoc-tap', function () {
     return view('client.course.myCourses');
 })->name('hoc-tap');
+
+Route::get('/test', function () {
+    return view('welcome');
+});
