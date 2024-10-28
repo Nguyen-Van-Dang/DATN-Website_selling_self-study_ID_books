@@ -46,7 +46,6 @@
         }
     </style>
 
-
 </head>
 
 <body>
@@ -70,7 +69,7 @@
     <script src="{{ asset('assets/js/key.js') }}"></script>
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/image.js') }}"></script>
-
+    
     <script src="{{ asset('assets/js/reals.js') }}"></script>
     <script src="{{ asset('assets/js/login.js') }}"></script>
     <script src="{{ asset('assets/js/toast.js') }}" defer></script>

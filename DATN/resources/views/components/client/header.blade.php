@@ -200,7 +200,7 @@
                                 class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption"
                                 @php
-$userName = Auth::user()->name;
+                                    $userName = Auth::user()->name;
                                     $displayName = Str::limit($userName, 10, '...'); @endphp>
                                 <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                 <p class="mb-0 text-primary">Tài Khoản</p>
@@ -273,16 +273,6 @@ $userName = Auth::user()->name;
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0">Đơn hàng của tôi</h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card iq-bg-primary-hover">
-                                            <div class="media align-items-center">
-                                                <div class="rounded iq-card-icon iq-bg-primary">
-                                                    <i class="ri-heart-line"></i>
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0">Yêu Thích</h6>
                                                 </div>
                                             </div>
                                         </a>

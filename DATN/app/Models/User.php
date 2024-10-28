@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\ReelComment;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
@@ -37,10 +37,26 @@ class User extends Authenticatable
     {
         return $this->BelongsTo(Order::class);
     }
-
+    public function reels()
+    {
+        return $this->hasMany(Reels::class);
+    }
+    public function reelComments()
+    {
+        return $this->hasMany(ReelComment::class);
+    }
     public function Notification(): BelongsTo
     {
         return $this->BelongsTo(Notification::class);
+    }
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    }
+    
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
     }
 
     /**

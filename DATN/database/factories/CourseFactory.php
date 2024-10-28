@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\CategoryCourse;
+use App\Models\CourseCategories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph(3),
             'image_url' => $this->faker->imageUrl(),
             'user_id' => User::inRandomOrder()->first()->id,
-            'category_course_id' => CategoryCourse::inRandomOrder()->first()->id,
+            'course_categories_id' => CourseCategories::inRandomOrder()->first()->id,
         ];
     }
 }

@@ -5,449 +5,297 @@
 @section('content')
 
     <div class="container-fluid">
-       <div class="row profile-content">
-          <div class="col-12 col-md-12 col-lg-4">
-             <div class="iq-card">
-                <div class="iq-card-body profile-page">
-                   <div class="profile-header">
-                      <div class="cover-container text-center">
-                         <img src="{{ asset('assets/images/book/user/01.jpg') }}" alt="profile-bg" class="rounded-circle img-fluid">
-                         <div class="profile-detail mt-3">
-                            <h3>Barry Tech</h3>
-                            <p class="text-primary">Web designer</p>
-                            <p>Phasellus faucibus mollis pharetra. Proin blandit ac massa.Morbi nulla dolor, ornare at commodo non, feugiat non nisi.</p>
-                         </div>
-                         <div class="iq-social d-inline-block align-items-center">
-                            <ul class="list-inline d-flex p-0 mb-0 align-items-center">
-                               <li>
-                                  <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                               </li>
-                               <li>
-                                  <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                               </li>
-                               <li>
-                                  <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
-                               </li>
-                               <li >
-                                  <a href="#" class="avatar-40 rounded-circle bg-primary pinterest"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                               </li>
-                            </ul>
-                         </div>
-                      </div>
-                   </div>
+        <div class="row profile-content">
+            <div class="col-12">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container">
+                                <div class="row">
+                                    <div class="col-3 text-center">
+                                        <img src="{{ asset('assets/images/book/user/1.jpg') }}" alt="profile-bg"
+                                            class="rounded-circle img-fluid"
+                                            style="width: 60%;box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.50);">
+                                        <div class="iq-social d-inline-block align-items-center pt-5">
+                                            <ul class="list-inline d-flex p-0 mb-0 align-items-center">
+                                                <li>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="Facebook"
+                                                        class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i
+                                                            class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="Zalo"
+                                                        class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i
+                                                            class="fa fa-twitter" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="Youtube"
+                                                        class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i
+                                                            class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="TikTok"
+                                                        class="avatar-40 rounded-circle bg-primary pinterest"><i
+                                                            class="fa fa-pinterest-p" aria-hidden="true"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="profile-detail mt-3">
+                                            <h3>{{ auth()->user()->name }}</h3>
+                                            <p class="text-primary">chuyên môn: Toán </p>
+                                            <p>-Giáo viên với 15 năm kinh nghiệm giảng dạy online và offline môn Toán. <br>
+                                                -Tác giả của hơn 30 đầu sách ID luyện thi THPT. <br>
+                                                - Phương pháp giảng dạy hay, lạ, độc đáo giúp học sinh tiếp cận các bài toán
+                                                nhanh, dễ hiểu.
+                                            </p>
+                                            <div class="pt-3" style="font-size: 14px; color: #444; margin-left: 1rem">
+                                                <div class="row">
+                                                    <div class="text-center" style="padding-right: 3rem">
+                                                        <h3 style="font-weight: bold;">6.5M</h3>
+                                                        <div style="color: #777; margin-top: -10px;">Views</div>
+                                                    </div>
+                                                    <div class="text-center" style="padding-right: 3rem">
+                                                        <h3 style="font-weight: bold;">15.7K</h3>
+                                                        <div style="color: #777; margin-top: -10px;">Likes</div>
+                                                    </div>
+                                                    <div class="text-center" style="padding-right: 3rem">
+                                                        <h3 style="font-weight: bold;">1.5M</h3>
+                                                        <div style="color: #777; margin-top: -10px;">Followers</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-4">
+                                            <button id="yesButton" type="submit"
+                                                style="background-color: #ff4d6d; color: white; border: none; padding: 10px 45px; font-size: 14px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Theo
+                                                dõi</button>
+                                            <b class="px-2"></b>
+                                            <button id="noButton"
+                                                style="background-color: #00000035; color: rgb(0, 0, 0); border: none; padding: 10px 35px; font-size: 14px; border-radius: 5px; cursor: pointer; font-weight: 500"><i
+                                                    class="ri-chat-3-line"></i> Nhắn tin</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-             </div>
-             <div class="iq-card">
-                <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                   <div class="iq-header-title">
-                      <h4 class="card-title mb-0">Personal Details</h4>
-                   </div>
-                </div> 
-                <div class="iq-card-body">
-                   <ul class="list-inline p-0 mb-0">
-                      <li>
-                         <div class="row align-items-center justify-content-between mb-3">
-                            <div class="col-sm-6">
-                               <h6>Birthday</h6>                                       
-                            </div>
-                            <div class="col-sm-6">
-                               <p class="mb-0">3rd March</p>                                       
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="row align-items-center justify-content-between mb-3">
-                            <div class="col-sm-6">
-                               <h6>Address</h6>                                       
-                            </div>
-                            <div class="col-sm-6">
-                               <p class="mb-0">Landon</p>                                       
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="row align-items-center justify-content-between mb-3">
-                            <div class="col-sm-6">
-                               <h6>Phone</h6>                                       
-                            </div>
-                            <div class="col-sm-6">
-                               <p class="mb-0">(010)987 543 201</p>                                       
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="row align-items-center justify-content-between mb-3">
-                            <div class="col-sm-6">
-                               <h6>Email</h6>                                       
-                            </div>
-                            <div class="col-sm-6">
-                               <p class="mb-0">Barry@example.com</p>                                       
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="row align-items-center justify-content-between mb-3">
-                            <div class="col-sm-6">
-                               <h6>Twitter</h6>                                       
-                            </div>
-                            <div class="col-sm-6">
-                               <p class="mb-0">@Barry</p>                                       
-                            </div>
-                         </div>
-                      </li>                              
-                      <li>
-                         <div class="row align-items-center justify-content-between mb-3">
-                            <div class="col-sm-6">
-                               <h6>Facebook</h6>                                       
-                            </div>
-                            <div class="col-sm-6">
-                               <p class="mb-0">@Barry_Tech</p>                                       
-                            </div>
-                         </div>
-                      </li>
-                   </ul>
-                </div>
-             </div>
-             <div class="iq-card">
-                <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                   <div class="iq-header-title">
-                      <h4 class="card-title mb-0">Skill Progress</h4>
-                   </div>
-                </div> 
-                <div class="iq-card-body">
-                   <ul class="list-inline p-0 mb-0">
-                      <li>
-                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h6>Biography</h6>
-                            <div class="iq-progress-bar-linear d-inline-block mt-1 w-50">
-                               <div class="iq-progress-bar iq-bg-primary">
-                                  <span class="bg-primary" data-percent="70"></span>
-                               </div>
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h6>Horror</h6>
-                            <div class="iq-progress-bar-linear d-inline-block mt-1 w-50">
-                               <div class="iq-progress-bar iq-bg-danger">
-                                  <span class="bg-danger" data-percent="50"></span>
-                               </div>
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h6>Comic Book</h6>
-                            <div class="iq-progress-bar-linear d-inline-block mt-1 w-50">
-                               <div class="iq-progress-bar iq-bg-info">
-                                  <span class="bg-info" data-percent="65"></span>
-                               </div>
-                            </div>
-                         </div>
-                      </li>
-                      <li>
-                         <div class="d-flex align-items-center justify-content-between">
-                            <h6>Adventure</h6>
-                            <div class="iq-progress-bar-linear d-inline-block mt-1 w-50">
-                               <div class="iq-progress-bar iq-bg-success">
-                                  <span class="bg-success" data-percent="85"></span>
-                               </div>
-                            </div>
-                         </div>
-                      </li>
-                   </ul>
-                </div>
-             </div>
-          </div>
-          <div class="col-12 col-md-12 col-lg-8">
-             <div class="row">
-                <div class="col-md-6">
-                   <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                      <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                         <div class="iq-header-title">
-                            <h4 class="card-title mb-0">Latest Uploads</h4>
-                         </div>
-                      </div> 
-                      <div class="iq-card-body">
-                         <ul class="list-inline p-0 mb-0">
-                            <li class="d-flex mb-4 align-items-center">
-                               <div class="profile-icon bg-secondary"><span><i class="ri-file-3-fill"></i></span></div>
-                               <div class="media-support-info ml-3">
-                                  <h6>Documentation</h6>
-                                  <p class="mb-0">48kb</p>
-                               </div>
-                               <div class="iq-card-toolbar">
-                                  <div class="dropdown">
-                                     <span class="font-size-24" id="dropdownMenuButton01" data-toggle="dropdown" aria-expanded="false">
-                                     <i class="ri-more-line"></i>
-                                     </span>
-                                     <div class="dropdown-menu dropdown-menu-right p-0" style="">
-                                        <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>Share</a>
-                                        <a class="dropdown-item" href="#"><i class="ri-close-circle-line mr-2"></i>Delete</a>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                            <li class="d-flex mb-4 align-items-center">
-                               <div class="profile-icon bg-secondary"><span><i class="ri-image-fill"></i></span></div>
-                               <div class="media-support-info ml-3">
-                                  <h6>Images</h6>
-                                  <p class="mb-0">204kb</p>
-                               </div>
-                               <div class="iq-card-toolbar">
-                                  <div class="dropdown">
-                                     <span class="font-size-24" id="dropdownMenuButton02" data-toggle="dropdown" aria-expanded="false">
-                                     <i class="ri-more-line"></i>
-                                     </span>
-                                     <div class="dropdown-menu dropdown-menu-right p-0" style="">
-                                        <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>Share</a>
-                                        <a class="dropdown-item" href="#"><i class="ri-close-circle-line mr-2"></i>Delete</a>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                            <li class="d-flex mb-4 align-items-center">
-                               <div class="profile-icon bg-secondary"><span><i class="ri-video-fill"></i></span></div>
-                               <div class="media-support-info ml-3">
-                                  <h6>Videos</h6>
-                                  <p class="mb-0">509kb</p>
-                               </div>
-                               <div class="iq-card-toolbar">
-                                  <div class="dropdown">
-                                     <span class="font-size-24" id="dropdownMenuButton03" data-toggle="dropdown" aria-expanded="false">
-                                     <i class="ri-more-line"></i>
-                                     </span>
-                                     <div class="dropdown-menu dropdown-menu-right p-0" style="">
-                                        <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>Share</a>
-                                        <a class="dropdown-item" href="#"><i class="ri-close-circle-line mr-2"></i>Delete</a>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                            <li class="d-flex mb-4 align-items-center">
-                               <div class="profile-icon bg-secondary"><span><i class="ri-file-3-fill"></i></span></div>
-                               <div class="media-support-info ml-3">
-                                  <h6>Resources</h6>
-                                  <p class="mb-0">48kb</p>
-                               </div>
-                               <div class="iq-card-toolbar">
-                                  <div class="dropdown">
-                                     <span class="font-size-24" id="dropdownMenuButton04" data-toggle="dropdown" aria-expanded="false">
-                                     <i class="ri-more-line"></i>
-                                     </span>
-                                     <div class="dropdown-menu dropdown-menu-right p-0" style="">
-                                        <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>Share</a>
-                                        <a class="dropdown-item" href="#"><i class="ri-close-circle-line mr-2"></i>Delete</a>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                            <li class="d-flex align-items-center">
-                               <div class="profile-icon bg-secondary"><span><i class="ri-refresh-line"></i></span></div>
-                               <div class="media-support-info ml-3">
-                                  <h6>Celine Dion</h6>
-                                  <p class="mb-0">204kb</p>
-                               </div>
-                               <div class="iq-card-toolbar">
-                                  <div class="dropdown">
-                                     <span class="font-size-24" id="dropdownMenuButton05" data-toggle="dropdown" aria-expanded="false">
-                                     <i class="ri-more-line"></i>
-                                     </span>
-                                     <div class="dropdown-menu dropdown-menu-right p-0" style="">
-                                        <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>Share</a>
-                                        <a class="dropdown-item" href="#"><i class="ri-close-circle-line mr-2"></i>Delete</a>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                      <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                         <div class="iq-header-title">
-                            <h4 class="card-title mb-0">Top Books</h4>
-                         </div>
-                      </div>
-                      <div class="iq-card-body">
-                         <ul class="list-inline p-0 mb-0">
-                            <li>
-                               <div class="iq-details mb-2">
-                                  <span class="title">Adventure</span>
-                                  <div class="percentage float-right text-primary">95 <span>%</span></div>
-                                  <div class="iq-progress-bar-linear d-inline-block w-100">
-                                     <div class="iq-progress-bar">
-                                        <span class="bg-primary" data-percent="95"></span>
-                                     </div>
-                                  </div>
-                               </div>                                       
-                            </li>
-                            <li>
-                               <div class="iq-details mb-2">
-                                  <span class="title">Horror</span>
-                                  <div class="percentage float-right text-warning">72 <span>%</span></div>
-                                  <div class="iq-progress-bar-linear d-inline-block w-100">
-                                     <div class="iq-progress-bar">
-                                        <span class="bg-warning" data-percent="72"></span>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                            <li>
-                              <div class="iq-details mb-2">
-                                  <span class="title">Comic Book</span>
-                                  <div class="percentage float-right text-info">75 <span>%</span></div>
-                                  <div class="iq-progress-bar-linear d-inline-block w-100">
-                                     <div class="iq-progress-bar">
-                                        <span class="bg-info" data-percent="75"></span>
-                                     </div>
-                                  </div>
-                               </div> 
-                            </li>
-                            <li>
-                               <div class="iq-details mb-2">
-                                  <span class="title">Biography</span>
-                                  <div class="percentage float-right text-danger">70 <span>%</span></div>
-                                  <div class="iq-progress-bar-linear d-inline-block w-100">
-                                     <div class="iq-progress-bar">
-                                        <span class="bg-danger" data-percent="70"></span>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                            <li>
-                               <div class="iq-details">
-                                  <span class="title">Mystery</span>
-                                  <div class="percentage float-right text-success">80 <span>%</span></div>
-                                  <div class="iq-progress-bar-linear d-inline-block w-100">
-                                     <div class="iq-progress-bar">
-                                        <span class="bg-success" data-percent="80"></span>
-                                     </div>
-                                  </div>
-                               </div>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-             </div>
-             <div class="iq-card">
-                <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                   <div class="iq-header-title">
-                      <h4 class="card-title mb-0">Daily Sales</h4>
-                   </div>
-                   <div class="iq-card-header-toolbar d-flex align-items-center">
-                      <div class="dropdown">
-                         <span class="dropdown-toggle text-primary" id="dropdownMenuButton05" data-toggle="dropdown">
-                         <i class="ri-more-fill"></i>
-                         </span>
-                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton05">
-                            <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
-                            <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
-                            <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
-                            <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
-                            <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="iq-card-body">
-                  <ul class="perfomer-lists m-0 p-0">
-                      <li class="d-flex mb-4 align-items-center">
-                         <div class="user-img img-fluid"><img class="img-fluid avatar-50 rounded-circle" src="images/user/06.jpg" alt=""></div>
-                         <div class="media-support-info ml-3">
-                            <h5>Reading on the World</h5>
-                            <p class="mb-0">Lorem Ipsum is simply dummy test</p>
-                         </div>
-                         <div class="iq-card-header-toolbar d-flex align-items-center">
-                            <span class="text-dark"><b>+$82</b></span>
-                         </div>
-                      </li>
-                      <li class="d-flex mb-4 align-items-center">
-                         <div class="user-img img-fluid"><img class="img-fluid avatar-50 rounded-circle" src="images/user/07.jpg" alt=""></div>
-                         <div class="media-support-info ml-3">
-                            <h5>Little Black Book</h5>
-                            <p class="mb-0">Lorem Ipsum is simply dummy test</p>
-                         </div>
-                         <div class="iq-card-header-toolbar d-flex align-items-center">
-                            <span class="text-dark"><b>+$90</b></span>
-                         </div>
-                      </li>
-                      <li class="d-flex align-items-center">
-                         <div class="user-img img-fluid"><img class="img-fluid avatar-50 rounded-circle" src="images/user/08.jpg" alt=""></div>
-                         <div class="media-support-info ml-3">
-                            <h5>See the More Story</h5>
-                            <p class="mb-0">Lorem Ipsum is simply dummy test</p>
-                         </div>
-                         <div class="iq-card-header-toolbar d-flex align-items-cener">
-                            <span class="text-dark"><b>+$85</b></span>
-                         </div>
-                      </li>
-                   </ul>
-                </div>
-             </div>
-             <div class="iq-card">
-                <div class="iq-card-header d-flex justify-content-between align-items-center mb-0">
-                   <div class="iq-header-title">
-                      <h4 class="card-title mb-0">Top Products</h4>
-                   </div>
-                   <div class="iq-card-header-toolbar d-flex align-items-center">
-                      <div class="dropdown">
-                         <span class="dropdown-toggle text-primary" id="dropdownMenuButton05" data-toggle="dropdown">
-                         <i class="ri-more-fill"></i>
-                         </span>
-                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton05">
-                            <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
-                            <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
-                            <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
-                            <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
-                            <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="iq-card-body">
-                  <ul class="perfomer-lists m-0 p-0">
-                      <li class="row mb-3 align-items-center justify-content-between">
-                         <div class="col-md-8">
-                            <h5>Find The Wave Book</h5>
-                            <p class="mb-0">General Book</p>
-                         </div>
-                         <div class="col-md-4 text-right">
-                            <div class="iq-card-header-toolbar d-flex align-items-center">
-                               <span class="text-primary mr-3"><b>+$92</b></span>
-                               <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
-                                  <div class="iq-progress-bar iq-bg-primary">
-                                     <span class="bg-primary" data-percent="92"></span>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="row align-items-center justify-content-between">
-                         <div class="col-md-8">
-                            <h5>A man with those Faces</h5>
-                            <p class="mb-0">Biography Book</p>
-                         </div>
-                         <div class="col-md-4 text-right">
-                            <div class="iq-card-header-toolbar d-flex align-items-center">
-                               <span class="text-danger mr-3"><b>+$85</b></span>
-                               <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
-                                  <div class="iq-progress-bar iq-bg-primary">
-                                     <span class="bg-danger" data-percent="85"></span>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                      </li>                       
-                   </ul>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
+            </div>
 
+            <div class="col-12">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container">
+                                <h4 class="pb-4">Khóa Học</h4>
+                                <div class="row">
+                                    <div class="col-6 pb-1">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <img src="{{ asset('assets/images/book/user/4.jpg') }}" alt="profile-bg"
+                                                    class="w-100"
+                                                    style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
+                                            </div>
+                                            <div class="col-6">
+                                                <span style="font-weight: bold; display: block;">Tổng ôn tập - HSG Toán học
+                                                    và Xử lý số liệu</span>
+                                                <p>Số bài: 160</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pb-1">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
+                                                    class="w-100"
+                                                    style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
+                                            </div>
+                                            <div class="col-6">
+                                                <span style="font-weight: bold; display: block;">Tổng ôn tập - HSG Toán học
+                                                    và Xử lý số liệu</span>
+                                                <p>Số bài: 160</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center pt-5" style="color: black">
+                                    <a href=""><span style="font-size: 20px"><i
+                                                class="ri-arrow-down-s-line"></i></span> Xem thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container">
+                                <h4 class="pb-4">Sách ID</h4>
+                                <div class="row px-2">
+                                    <div class="col-3 pb-1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
+                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
+                                                        alt="profile-bg" class="w-100" style="height: 300px;">
+                                                    <div class="px-3 pb-4 pt-3">
+                                                        <span style="font-weight: 600;">
+                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
+                                                        </span>
+                                                        <br>
+                                                        <div class="pb-1">
+                                                            <button id="yesButton" type="submit"
+                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
+                                                            <button id="noButton"
+                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
+                                                        </div>
+                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
+                                                            <b class="px-2"></b><del
+                                                                style="font-size: 12px;">150.000đ</del></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 pb-1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
+                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
+                                                        alt="profile-bg" class="w-100" style="height: 300px;">
+                                                    <div class="px-3 pb-4 pt-3">
+                                                        <span style="font-weight: 600;">
+                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
+                                                        </span>
+                                                        <br>
+                                                        <div class="pb-1">
+                                                            <button id="yesButton" type="submit"
+                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
+                                                            <button id="noButton"
+                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
+                                                        </div>
+                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
+                                                            <b class="px-2"></b><del
+                                                                style="font-size: 12px;">150.000đ</del></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 pb-1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
+                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
+                                                        alt="profile-bg" class="w-100" style="height: 300px;">
+                                                    <div class="px-3 pb-4 pt-3">
+                                                        <span style="font-weight: 600;">
+                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
+                                                        </span>
+                                                        <br>
+                                                        <div class="pb-1">
+                                                            <button id="yesButton" type="submit"
+                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
+                                                            <button id="noButton"
+                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
+                                                        </div>
+                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
+                                                            <b class="px-2"></b><del
+                                                                style="font-size: 12px;">150.000đ</del></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 pb-1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
+                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
+                                                        alt="profile-bg" class="w-100" style="height: 300px;">
+                                                    <div class="px-3 pb-4 pt-3">
+                                                        <span style="font-weight: 600;">
+                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
+                                                        </span>
+                                                        <br>
+                                                        <div class="pb-1">
+                                                            <button id="yesButton" type="submit"
+                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
+                                                            <button id="noButton"
+                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
+                                                        </div>
+                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
+                                                            <b class="px-2"></b><del
+                                                                style="font-size: 12px;">150.000đ</del></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center pt-5" style="color: black">
+                                    <a href=""><span style="font-size: 20px">
+                                            <i class="ri-arrow-down-s-line"></i></span> Xem thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container">
+                                <h4 class="pb-4">Sách ID</h4>
+                                <div class="row px-2">
+                                    <div class="col-3 pb-1">
+                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
+                                            class="w-100" style="height: 400px; border-radius: 10px">
+                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
+                                                class="ri-play-fill"></i> 1.25K View</span>
+                                    </div>
+
+                                    <div class="col-3 pb-1">
+                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
+                                            class="w-100" style="height: 400px; border-radius: 10px">
+                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
+                                                class="ri-play-fill"></i> 1.25K View</span>
+                                    </div>
+
+                                    <div class="col-3 pb-1">
+                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
+                                            class="w-100" style="height: 400px; border-radius: 10px">
+                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
+                                                class="ri-play-fill"></i> 1.25K View</span>
+                                    </div>
+
+                                    <div class="col-3 pb-1">
+                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
+                                            class="w-100" style="height: 400px; border-radius: 10px">
+                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
+                                                class="ri-play-fill"></i> 1.25K View</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

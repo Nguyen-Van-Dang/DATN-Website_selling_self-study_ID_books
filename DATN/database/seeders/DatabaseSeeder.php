@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\CategoryBook;
-use App\Models\CategoryCourse;
+use App\Models\CourseCategories;
 use App\Models\Contact;
 use App\Models\Course;
 use App\Models\Order;
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('ALTER TABLE payments AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE notifications AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE contacts AUTO_INCREMENT = 1;');
-        DB::statement('ALTER TABLE category_courses AUTO_INCREMENT = 1;');
+        DB::statement('ALTER TABLE course_categories AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE courses AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE category_books AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE books AUTO_INCREMENT = 1;');
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         Order::factory(5)->create();
         Payment::factory(5)->create();
         Notification::factory(5)->create();
-        CategoryCourse::factory(5)->create();
+        CourseCategories::factory(5)->create();
         Course::factory(5)->create();
         CategoryBook::factory(5)->create();
         Book::factory(5)->create();

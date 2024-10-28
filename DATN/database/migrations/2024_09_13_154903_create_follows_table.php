@@ -13,10 +13,18 @@ return new class extends Migration
     {
         Schema::create('follows', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('follower_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('followed_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('follower_id'); // Người theo dõi
+            $table->unsignedBigInteger('following_id'); // Người được theo dõi
             $table->timestamps();
+            
+            // Thiết lập khóa ngoại
+            $table->foreign('follower_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('following_id')->references('id')->on('users')->onDelete('cascade');
+            
+            // Đảm bảo một người chỉ follow người khác một lần
+            $table->unique(['follower_id', 'following_id']);
         });
+        
     }
     
     public function down()

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\CategoryCourse;
+use App\Models\CourseCategories;
 
 class CourseCateRepository
 {
@@ -12,7 +12,7 @@ class CourseCateRepository
     }
 
     public function getAllCourseCate() {
-        $courseCate = CategoryCourse::getAll();
+        $courseCate = CourseCategories::getAll();
         return view('admin.categoryCourse.listCategoryCourse', ['courseCate' => $courseCate]);
     }
 }

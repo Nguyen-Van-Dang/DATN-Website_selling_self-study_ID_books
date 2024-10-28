@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image_url', 255);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('category_course_id')->nullable()->constrained('category_courses')->onDelete('set null');
+            $table->foreignId('course_categories_id')->nullable()->constrained('course_categories')->onDelete('set null');
 
             $table->timestamps();
         });

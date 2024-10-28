@@ -1,11 +1,17 @@
 <div class="col-sm-12">
+    @if (session()->has('message'))
+        <div class="">{{ session('message') }}</div>
+    @endif
     <div class="iq-card">
         <div class="iq-card-header d-flex justify-content-between">
             <div class="iq-header-title">
                 <h4 class="card-title">Danh mục khóa học</h4>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
-                <a href="{{ route('addCategoryCourse') }}" class="btn btn-primary">Thêm danh mục khóa học</a>
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="openPopup('add')">
+                    Thêm danh mục khóa học
+                </a>
+
             </div>
         </div>
         <div class="iq-card-body">
@@ -28,17 +34,16 @@
                                         <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"
                                             href="#"><i class="ri-eye-line"></i></a>
                                         <a class="bg-primary" data-toggle="tooltip" title="Chỉnh sửa"
-                                            href="{{ route('nguoi-dung.edit', $item->id) }}"><i
-                                                class="ri-pencil-line"></i></a>
-                                        <a id="deleteButton-{{ $item->id }}" class="bg-primary text-white"
-                                            href="" data-toggle="tooltip" title="Xóa"><i
-                                                class="ri-delete-bin-line"></i></a>
+                                            wire:click="openPopup('edit', {{ $item->id }})">
+                                            <i class="ri-pencil-line"></i>
+                                        </a>
+                                        <a class="bg-primary text-white" href="javascript:void(0);"
+                                            data-toggle="tooltip" title="Xóa"
+                                            wire:click="delete({{ $item->id }})"
+                                            onclick="confirmDelete({{ $item->id }})">
+                                            <i class="ri-delete-bin-line"></i>
+                                        </a>
                                     </div>
-                                    <form action="{{ route('nguoi-dung.destroy', $item->id) }}" method="POST"
-                                        id="delete-form-{{ $item->id }}" style="display:none">
-                                        @method('DELETE')
-                                        @csrf
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -49,48 +54,65 @@
                 {{ $courseCate->links() }}
             </div>
         </div>
-
     </div>
-    <!-- Popup xác nhận -->
-    <div id="confirmPopup"
-        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
-        <p>Bạn có chắc chắn muốn xóa thông báo này không?</p>
-        <div class="text-center">
-            <button id="yesButton"
-                style="width: 90px; height: 35px; border: none; color: white; background: #11e1c2; border-radius: 5px;">
-                Xác nhận
-            </button>
-            <button id="noButton"
-                style="width: 90px; height: 35px; border: none; color: black; background-color: #0000000e; border-radius: 5px;">
-                Trở về
-            </button>
+
+    <!-- Popup thêm danh mục -->
+    <div class="modal {{ $isAddPopupOpen ? 'is-open' : '' }}" id="addCourseCateModal" onclick="closePopup()">
+        <div class="modal-content" wire:click.stop>
+            <span class="close" onclick="closePopup()">&times;</span>
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Thêm danh mục khóa học</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form wire:submit.prevent="storeCourseCate">
+                            <div class="form-group">
+                                <label>Tên danh mục khóa học:</label>
+                                <input wire:model="name" type="text" class="form-control"
+                                    placeholder="Nhập tên danh mục khóa học...">
+                                @error('name')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="reset" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Màn che -->
-    <div id="overlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;">
+
+    <!-- Popup sửa danh mục -->
+    <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="editCourseCateModal" onclick="closePopup()">
+        <div class="modal-content" wire:click.stop>
+            <span class="close" onclick="closePopup()">&times;</span>
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Sửa danh mục khóa học</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form wire:submit.prevent="updateCourseCate">
+                            <div class="form-group">
+                                <label>Tên danh mục khóa học:</label>
+                                <input wire:model="name" type="text" class="form-control"
+                                    placeholder="Nhập tên danh mục khóa học...">
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <button type="reset" class="btn btn-danger" onclick="closePopup()">Hủy</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<script>
-    document.querySelectorAll('[id^=deleteButton-]').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            // Lấy ID tài khoản từ nút xóa
-            const notificationId = this.id.split('-')[1];
-            // Hiển thị popup và màn che
-            document.getElementById('confirmPopup').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-            // Gán sự kiện cho nút Xác nhận
-            document.getElementById('yesButton').onclick = function() {
-                // Gửi form xóa tài khoản
-                document.getElementById(`delete-form-${notificationId}`).submit();
-            };
-        });
-    });
-    // Ẩn popup khi nhấn nút "Trở về"
-    document.getElementById('noButton').addEventListener('click', function() {
-        document.getElementById('confirmPopup').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    });
-</script>

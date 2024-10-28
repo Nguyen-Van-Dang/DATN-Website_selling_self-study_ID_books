@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\CourseCateController;
 use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\Client\FollowController;
 
 Route::get('/', function () {
     return view('client.home');
@@ -79,25 +80,9 @@ Route::get('/user-info', function () {
 // Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
 Route::get('user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
 
-//course
+//courseCate
 Route::get('list-CategoryCourse', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
-
-Route::get('/add-CategoryCourse', function () {
-    return view('admin.categoryCourse.addCategoryCourse');
-})->name('addCategoryCourse');
-
-Route::get('/detail-CategoryCourse', function () {
-    return view('admin.categoryCourse.detailCategoryCourse');
-})->name('detailCategoryCourse');
-
-Route::get('/update-CategoryCourse', function () {
-    return view('admin.categoryCourse.updateCategoryCourse');
-})->name('updateCategoryCourse');
-
-// Route::get('/list-Course', function () {
-//     return view('admin.course.listCourse');
-// })->name('listCourse');
-
+//course
 Route::get('list-Course', [CourseController::class, 'getAllCourse'])->name('listCourse');
 
 
@@ -218,7 +203,6 @@ Route::get('/add-Contact', function () {
 
 //Abc
 Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
-
 Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
 Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
 
@@ -249,8 +233,6 @@ Route::get('/notification-list', function () {
     return view('client.notification.notification');
 })->name('notificationList');
 
-
-
 //chi tiết sách
 Route::get('/book-detail', function () {
     return view('client.book.bookDetail');
@@ -278,15 +260,18 @@ Route::get('/course-detail', function () {
 //reels
 Route::post('/reelsUpload', [ReelsController::class, 'upload'])->name('reelsUpload');
 Route::get('/reelsUpload1', [ReelsController::class, 'showVideo'])->name('reelsUpload1');
-
-
-Route::get('/reelsUpload', function () {
-    return view('client.reels.reelsUpload');
-})->name('reelsUpload');
+Route::post('/reelsUpload1', [ReelsController::class, 'reelsUpload1'])->name('reelsUpload1');
+Route::get('/reelsUpload', function () {return view('client.reels.reelsUpload');})->name('reelsUpload');
 
 Route::get('/reels', function () {
     return view('client.reels.reels');
 })->name('reals');
+
+//follow
+Route::post('/follow/{userId}', [FollowController::class, 'follow'])->name('follow');
+Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow'])->name('unfollow');
+//view
+Route::post('/reels/view/{reelId}', [ReelsController::class, 'incrementViewCount']);
 
 //chat
 Route::prefix('chat')->name('chat')->group(function () {
