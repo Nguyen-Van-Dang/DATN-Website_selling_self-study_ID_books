@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_books', function (Blueprint $table) {
+        Schema::create('notification_users', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->nullable();
-            $table->foreignId('parent_id')->nullable()->constrained('category_books')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->softDeletes();
+            $table->foreignId('notification_id')->nullable()->constrained('notifications')->onDelete('set null');
+            $table->integer('status')->default(0);
+
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_books');
+        Schema::dropIfExists('notification_users');
     }
 };

@@ -7,26 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Order extends Model
+class BookCategories extends Model
 {
     use HasFactory;
 
-    public function User()
-{
-    return $this->belongsTo(User::class);
-}
-    
-    public function PaymentMethods(): BelongsTo
-    {
-        return $this->BelongsTo(PaymentMethods::class);
+    protected $fillable = [
+        'name',
+        'parent_id',
+        'user_id',
+        'description',
+        'deleted_at',
+    ];
+
+    public  function Book() : HasMany{
+        return $this->hasMany(Book::class);
     }
 
-    protected $fillable = [
-        'price',
-        'payment_status',
-        'payment_method',
-        'user_id'
-    ];
+    public function User(): BelongsTo 
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public static function getAll(){
         return self::all();

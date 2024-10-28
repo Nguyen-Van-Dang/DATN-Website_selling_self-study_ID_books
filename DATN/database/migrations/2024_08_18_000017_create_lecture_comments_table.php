@@ -11,17 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('lecture_comments', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name', 255);
-            $table->float('price');
-            $table->integer('amount_lecture');
-            $table->text('description');
-            $table->string('image_url', 255);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('course_categories_id')->nullable()->constrained('course_categories')->onDelete('set null');
-
+            $table->foreignId('lecture_id')->nullable()->constrained('lectures')->onDelete('set null');
+            $table->foreignId('parent_id')->nullable()->constrained('lecture_comments')->onDelete('set null');
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('lecture_comments');
     }
 };

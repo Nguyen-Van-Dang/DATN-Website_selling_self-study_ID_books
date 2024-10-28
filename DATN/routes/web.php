@@ -14,6 +14,7 @@ use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Client\FollowController;
+use App\Http\Controllers\Client\NotificationUserController;
 use App\Http\Middleware\CheckRole;
 
 Route::get('/', function () {
@@ -121,7 +122,8 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 
 /* --------------- NOTIFICATION GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotification');
+    Route::get('/admin/list-Notification', [NotificationUserController::class, 'getAllNotificationUser'])->name('listNotificationUser');
+    Route::get('/admin/list-Notification-Detail/{id}', [NotificationController::class, 'getNotificationById'])->name('listNotification');
     Route::get('/admin/detail-Notification', function () { return view('admin.notification.detailNotification');})->name('detailNotification');
     Route::get('/admin/add-Notification', function () { return view('admin.notification.addNotification');})->name('addNotification');
 });

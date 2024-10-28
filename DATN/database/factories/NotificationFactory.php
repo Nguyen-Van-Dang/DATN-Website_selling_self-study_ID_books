@@ -19,8 +19,8 @@ class NotificationFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph(),
-            'user_id' => User::inRandomOrder()->first()->id,
+            'is_number' => $this->faker->numberBetween(0, 1),
+            'content' => $this->faker->paragraph(),
         ];
     }
 }

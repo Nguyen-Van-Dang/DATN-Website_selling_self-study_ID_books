@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\PaymentMethods;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class OrderFactory extends Factory
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BookCategories>
+ */
+class BookCategoriesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,9 +18,9 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'name' => $this->faker->name(),
             'user_id' => User::inRandomOrder()->first()->id,
-            'payment_methods_id' => PaymentMethods::inRandomOrder()->first()->id,
+            'description' => $this->faker->paragraph(),
         ];
     }
 }

@@ -16,7 +16,10 @@ class NotificationController extends Controller
         $this->notificationRepository = $notificationRepository;
     }
 
-    public function getAllNotification(){
-        return $this->notificationRepository->getAllNotification();
+    public function getNotificationById($id)
+    {
+        $notification = $this->notificationRepository->getNotificationById($id);
+        
+        return view('admin.notification.detailNotification', ['Notification' => $notification]);
     }
 }

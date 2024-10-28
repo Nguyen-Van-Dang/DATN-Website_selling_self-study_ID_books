@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('book_categories', function (Blueprint $table) {
             $table->id();
-
             $table->string('name', 255)->nullable();
-            $table->text('description')->nullable();
-            $table->timestamp('payment_date')->nullable();
-            $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('set null');
-
+            $table->foreignId('parent_id')->nullable()->constrained('book_categories')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->text('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('book_categories');
     }
 };

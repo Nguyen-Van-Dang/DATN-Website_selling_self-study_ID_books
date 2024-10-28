@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', length: 255)->nullable();
             $table->string('email', length: 255)->unique();
             $table->text('emailMessage');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

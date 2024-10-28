@@ -16,23 +16,16 @@ class Notification extends Model
         'user_id'
     ];
 
-    public function User(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
     public static function getAll()
     {
         return self::all();
     }
-    // public static function getAll1()
-    // {
-    //     return self::all();
-    // }0
 
     public static function getNotificationById($id)
     {
-        return self::find($id);
+        return self::findOrFail($id);
     }
+
 
     public static function deleteById($id)
     {

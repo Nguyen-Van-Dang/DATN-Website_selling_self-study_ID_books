@@ -14,8 +14,8 @@ class NotificationRepository
         //
     }
 
-    public function getAllNotification() {
-        $Notification = Notification::getAll();
-        return view('admin.notification.listNotification', ['Notification' => $Notification]);
+    public function getNotificationById($id)
+    {
+        return Notification::getNotificationById($id);
     }
 }

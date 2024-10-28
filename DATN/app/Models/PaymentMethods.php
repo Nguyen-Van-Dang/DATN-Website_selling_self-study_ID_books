@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Payment extends Model
+class PaymentMethods extends Model
 {
     use HasFactory;
 
-    public  function Payment() : HasMany{
-        return $this->hasMany(User::class);
+    public  function Order() : HasMany{
+        return $this->hasMany(Order::class);
     }
 }

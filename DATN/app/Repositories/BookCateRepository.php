@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\BookCategories;
 use App\Models\CategoryBook;
 
 class BookCateRepository
@@ -12,7 +13,7 @@ class BookCateRepository
     }
 
     public function getAllBookCate() {
-        $bookCate = CategoryBook::getAll();
+        $bookCate = BookCategories::getAll();
         return view('admin.categoryBook.listCategoryBook', ['bookCate' => $bookCate]);
     }
 }

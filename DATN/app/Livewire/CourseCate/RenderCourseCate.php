@@ -13,6 +13,9 @@ class RenderCourseCate extends Component
 
 
     public $name;
+
+    public $nameAdd;
+
     // public $isPopupOpen = false;
     public $isAddPopupOpen = false;
 public $isEditPopupOpen = false;
@@ -36,7 +39,7 @@ public $isEditPopupOpen = false;
     public function openPopup($type, $id = null)
     {
         if ($type === 'add') {
-            $this->resetInput();
+            // $this->resetInput();
             $this->isAddPopupOpen = true;
         } elseif ($type === 'edit' && $id) {
             $this->editingId = $id;
@@ -61,14 +64,15 @@ public $isEditPopupOpen = false;
     public function storeCourseCate()
     {
         $this->validate([
-            'name' => 'required|unique:course_categories,name',
+            'nameAdd' => 'required|unique:course_categories,name',
         ]);
 
         $courseCate = new CourseCategories();
-        $courseCate->name = $this->name;
+        $courseCate->name = $this->nameAdd;
+        $courseCate->user_id = auth()->id();
         $courseCate->save();
         session()->flash('message', 'Thêm thành công');
-        $this->name = '';
+        $this->nameAdd = '';
         $this->isAddPopupOpen = false;
     }
 
@@ -80,6 +84,7 @@ public $isEditPopupOpen = false;
 
         $courseCate = CourseCategories::find($this->editingId);
         $courseCate->name = $this->name;
+        $courseCate->user_id = auth()->id();
         $courseCate->save();
         $this->isEditPopupOpen = false;
         session()->flash('message', 'Danh mục khóa học đã được cập nhật thành công.');

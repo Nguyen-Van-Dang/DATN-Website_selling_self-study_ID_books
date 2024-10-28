@@ -8,7 +8,7 @@
                 <h4 class="card-title">Danh mục khóa học</h4>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
-                <a href="javascript:void(0);" class="btn btn-primary" onclick="openPopup('add')">
+                <a class="btn btn-primary text-white" wire:click="openPopup('add')">
                     Thêm danh mục khóa học
                 </a>
 
@@ -45,7 +45,7 @@
                                         <a class="bg-primary text-white" href="javascript:void(0);"
                                             data-toggle="tooltip" title="Xóa"
                                             wire:click="delete({{ $item->id }})"
-                                            onclick="confirmDelete({{ $item->id }})">
+                                            wire:click="confirmDelete({{ $item->id }})">
                                             <i class="ri-delete-bin-line"></i>
                                         </a>
                                     </div>
@@ -62,9 +62,9 @@
     </div>
 
     <!-- Popup thêm danh mục -->
-    <div class="modal {{ $isAddPopupOpen ? 'is-open' : '' }}" id="addCourseCateModal" onclick="closePopup()">
+    <div class="modal {{ $isAddPopupOpen ? 'is-open' : '' }}" id="addCourseCateModal" wire:click="closePopup()">
         <div class="modal-content" wire:click.stop>
-            <span class="close" onclick="closePopup()">&times;</span>
+            <span class="close" wire:click="closePopup()">&times;</span>
             <div class="col-sm-12">
                 <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
@@ -76,14 +76,14 @@
                         <form wire:submit.prevent="storeCourseCate">
                             <div class="form-group">
                                 <label>Tên danh mục khóa học:</label>
-                                <input wire:model="name" type="text" class="form-control"
+                                <input wire:model="nameAdd" type="text" class="form-control"
                                     placeholder="Nhập tên danh mục khóa học...">
-                                @error('name')
-                                    <span class="error">{{ $message }}</span>
+                                @error('nameAdd')
+                                    <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Thêm</button>
-                            <button type="reset" class="btn btn-danger">Xóa</button>
+                            <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
                         </form>
                     </div>
                 </div>
@@ -92,9 +92,9 @@
     </div>
 
     <!-- Popup sửa danh mục -->
-    <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="editCourseCateModal" onclick="closePopup()">
+    <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="editCourseCateModal" wire:click="closePopup()">
         <div class="modal-content" wire:click.stop>
-            <span class="close" onclick="closePopup()">&times;</span>
+            <span class="close" wire:click="closePopup()">&times;</span>
             <div class="col-sm-12">
                 <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
@@ -113,7 +113,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <button type="reset" class="btn btn-danger" onclick="closePopup()">Hủy</button>
+                            <button type="reset" class="btn btn-danger" wire:click="closePopup()">Xóa</button>
                         </form>
                     </div>
                 </div>
