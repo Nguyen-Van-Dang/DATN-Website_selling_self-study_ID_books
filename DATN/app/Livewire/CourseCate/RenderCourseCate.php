@@ -10,27 +10,31 @@ use Illuminate\Support\Facades\Auth;
 class RenderCourseCate extends Component
 {
     use WithPagination;
-
-
     public $name;
-    // public $isPopupOpen = false;
     public $isAddPopupOpen = false;
-public $isEditPopupOpen = false;
+    public $isEditPopupOpen = false;
     public $editingId;
     protected $paginationTheme = 'bootstrap';
+    public $search = '';
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
     public function render()
     {
-
         if (Auth::user()->role_id == 1) {
-            $courseCate = CourseCategories::paginate(10);
+            $courseCate = CourseCategories::where('name', 'like', '%' . $this->search . '%')
+                ->paginate(10);
         } else {
-            $courseCate = CourseCategories::where('user_id', Auth::id())->paginate(10);
+            $courseCate = CourseCategories::where('user_id', Auth::id())
+                ->where('name', 'like', '%' . $this->search . '%')
+                ->paginate(10);
         }
+
         return view('livewire.courseCate.render-courseCate', [
             'courseCate' => $courseCate,
         ]);
-
     }
 
     public function openPopup($type, $id = null)
@@ -50,7 +54,6 @@ public $isEditPopupOpen = false;
     {
         $this->isAddPopupOpen = false;
         $this->isEditPopupOpen = false;
-
     }
     public function updated($fields)
     {
