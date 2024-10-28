@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\BookCategories;
 use App\Models\CategoryBook;
 use App\Models\Course;
 use App\Models\User;
@@ -21,7 +22,7 @@ class BookFactory extends Factory
             'quantity' => $this->faker->numberBetween(1, 100),
             'book_activate_id' => $this->faker->numberBetween(1, 5),
             'book_active' => $this->faker->boolean() ? 1 : 0,
-            'category_books_id' => CategoryBook::inRandomOrder()->first()->id,
+            'book_categories_id' => BookCategories::inRandomOrder()->first()->id,
             'image' => $this->faker->imageUrl(),
             'user_id' => User::inRandomOrder()->first()->id,
         ];

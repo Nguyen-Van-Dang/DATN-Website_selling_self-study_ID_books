@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('created_by', 255)->nullable();
             $table->string('url', 255)->nullable();
             $table->foreignId('lecture_id')->nullable()->constrained('lectures')->onDelete('set null');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

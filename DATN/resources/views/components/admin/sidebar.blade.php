@@ -45,8 +45,8 @@
          <li class="{{ request()->routeIs('listOrder') ? 'active' : '' }}">
             <a href="{{route('listOrder')}}"><i class="ri-shopping-cart-line"></i> Đơn Hàng</a>
          </li>
-         <li class="{{ request()->routeIs('listNotification') ? 'active' : '' }}">
-            <a href="{{route('listNotification')}}"><i class="ri-notification-3-line"></i> Thông Báo</a>
+         <li class="{{ request()->routeIs('listNotificationUser') ? 'active' : '' }}">
+            <a href="{{route('listNotificationUser')}}"><i class="ri-notification-3-line"></i> Thông Báo</a>
          </li>
          @if (Auth::user()->role_id != 2)
             <li class="{{ request()->routeIs('listContact') ? 'active' : '' }}">

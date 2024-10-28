@@ -2,10 +2,7 @@
     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
         <div class="iq-card-header d-flex justify-content-between">
             <div class="iq-header-title">
-                <h4 class="card-title">Danh sách thông báo</h4>
-            </div>
-            <div class="iq-card-header-toolbar d-flex align-items-center">
-                <a href="{{ route('addNotification') }}" class="btn btn-primary">Gửi thông báo</a>
+                <h4 class="card-title">Chi tiết thông báo</h4>
             </div>
         </div>
         <div class="iq-card-body">
@@ -13,25 +10,20 @@
                 <table class="table mb-0 table-borderless">
                     <thead class="text-center">
                         <tr>
-                            <th  style="width: 3%;">Mã số</th>
-                            <th  style="width: 20%;">Trạng thái</th>
-                            <th  style="width: 20%;">Người Gửi</th>
-                            <th  style="width: 10%;" class="text-center">Hoạt động</th>
+                            <th style="width: 7%;">tiêu đề</th>
+                            <th style="width: 20%;">Nội dung</th>
+                            <th style="width: 5%;">Trạng thái</th>
+                            <th style="width: 3%;" class="text-center">Hoạt động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($notificationUser as $item)
+                        @foreach ($Notification as $item)
                             <tr>
-                                <td class="text-center">{{ $item->id }}</td>
+                                <td class="text-center">{{ $item->title }}</td>
+                                <td>{{ $item->content }}</td>
                                 <td class="text-center">{{ $item->status == 1 ? 'Đã Gửi' : 'Chưa Gửi' }}</td>
-                                @php
-                                    $user = $item->user;
-                                @endphp
-                                <td class="text-center">{{ $user->name }}</td>
                                 <td class="text-center">
                                     <div class="flex align-items-center list-user-action">
-                                        <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"
-                                            href="{{route('listNotification', $item->id)}}"><i class="ri-eye-line"></i></a>
                                         <a id="deleteButton-{{ $item->id }}" class="bg-primary text-white"
                                             href="" data-toggle="tooltip" title="Xóa"><i
                                                 class="ri-delete-bin-line"></i></a>
@@ -49,7 +41,7 @@
             </div>
             
             <div class="text-end">
-                {{ $notificationUser->links() }}
+                {{ $Notification->links() }}
             </div>
         </div>
     </div>

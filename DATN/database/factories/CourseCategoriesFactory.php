@@ -13,6 +13,7 @@ class CourseCategoriesFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'user_id' => User::inRandomOrder()->first()->id,
+            'description' => $this->faker->paragraph(),
         ];
     }
 }

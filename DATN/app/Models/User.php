@@ -71,9 +71,9 @@ class User extends Authenticatable
         return $this->hasMany(CategoryBook::class);
     }
 
-    public function Notification(): BelongsTo
+    public function NotificationUser(): BelongsTo
     {
-        return $this->BelongsTo(Notification::class);
+        return $this->BelongsTo(NotificationUser::class);
     }
     public function followings()
     {

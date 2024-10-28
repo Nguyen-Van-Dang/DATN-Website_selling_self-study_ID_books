@@ -11,6 +11,8 @@ class RenderCourseCate extends Component
 {
     use WithPagination;
     public $name;
+
+    public $nameAdd;
     public $isAddPopupOpen = false;
     public $isEditPopupOpen = false;
     public $editingId;
@@ -40,7 +42,7 @@ class RenderCourseCate extends Component
     public function openPopup($type, $id = null)
     {
         if ($type === 'add') {
-            $this->resetInput();
+            // $this->resetInput();
             $this->isAddPopupOpen = true;
         } elseif ($type === 'edit' && $id) {
             $this->editingId = $id;
@@ -64,14 +66,15 @@ class RenderCourseCate extends Component
     public function storeCourseCate()
     {
         $this->validate([
-            'name' => 'required|unique:course_categories,name',
+            'nameAdd' => 'required|unique:course_categories,name',
         ]);
 
         $courseCate = new CourseCategories();
-        $courseCate->name = $this->name;
+        $courseCate->name = $this->nameAdd;
+        $courseCate->user_id = auth()->id();
         $courseCate->save();
         session()->flash('message', 'Thêm thành công');
-        $this->name = '';
+        $this->nameAdd = '';
         $this->isAddPopupOpen = false;
     }
 
@@ -83,6 +86,7 @@ class RenderCourseCate extends Component
 
         $courseCate = CourseCategories::find($this->editingId);
         $courseCate->name = $this->name;
+        $courseCate->user_id = auth()->id();
         $courseCate->save();
         $this->isEditPopupOpen = false;
         session()->flash('message', 'Danh mục khóa học đã được cập nhật thành công.');
@@ -90,7 +94,6 @@ class RenderCourseCate extends Component
         $this->editingId = null;
     }
 
-    // Phương thức xóa danh mục
     public function delete($id)
     {
         $courseCate = CourseCategories::where('id', $id)->first();
