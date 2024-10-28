@@ -14,6 +14,8 @@
                         document.getElementById("addCourseCateModal").classList.add("is-open");
                     } else if (type === 'edit') {
                         document.getElementById("editCourseCateModal").classList.add("is-open");
+                    } else (type === 'delete') {
+                        document.getElementById("deletedCourseCateModal").classList.add("is-open");
                     }
                     document.getElementById("overlay").style.display = "block";
                 }
@@ -21,6 +23,7 @@
                 function closePopup() {
                     document.getElementById("addCourseCateModal").classList.remove("is-open");
                     document.getElementById("editCourseCateModal").classList.remove("is-open");
+                    document.getElementById("deletedCourseCateModal").classList.remove("is-open");
                     document.getElementById("overlay").style.display = "none";
                 }
             </script>

@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class RenderCourseCate extends Component
 {
     use WithPagination;
-    public $name, $nameAdd, $description, $descriptionAdd, $editingId, $search = '';
+    public $name, $nameAdd, $description, $descriptionAdd, $editingId, $deletedId, $search = '';
     public $isAddPopupOpen = false;
     public $isEditPopupOpen = false;
+    public $isDeletePopupOpen = false;
     protected $paginationTheme = 'bootstrap';
 
     public function updatingSearch()
@@ -24,7 +25,7 @@ class RenderCourseCate extends Component
         if (strlen($this->search) >= 1) {
             $courseCate = CourseCategories::where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('id', $this->search)
-                ->orWhereHas('user', function($query) {
+                ->orWhereHas('user', function ($query) {
                     $query->where('name', 'like', '%' . $this->search . '%');
                 })
                 ->paginate(10);
@@ -43,15 +44,21 @@ class RenderCourseCate extends Component
 
     public function openPopup($type, $id = null)
     {
+        $this->deletedId = null;
+
         if ($type === 'add') {
-            // $this->resetInput();
             $this->isAddPopupOpen = true;
         } elseif ($type === 'edit' && $id) {
             $this->editingId = $id;
             $courseCate = CourseCategories::find($id);
-            $this->name = $courseCate->name;
-            $this->description = $courseCate->description;
+            if ($courseCate) {
+                $this->name = $courseCate->name;
+                $this->description = $courseCate->description;
+            }
             $this->isEditPopupOpen = true;
+        } elseif ($type === 'delete' && $id) {
+            $this->deletedId = $id;
+            $this->isDeletePopupOpen = true;
         }
     }
 
@@ -59,6 +66,8 @@ class RenderCourseCate extends Component
     {
         $this->isAddPopupOpen = false;
         $this->isEditPopupOpen = false;
+        $this->isDeletePopupOpen = false;
+        // $this->deletedId = null;
     }
 
     public function updated($fields)
@@ -108,11 +117,18 @@ class RenderCourseCate extends Component
         $this->description = '';
         $this->editingId = null;
     }
-    public function delete($id)
-    {
-        $courseCate = CourseCategories::where('id', $id)->first();
-        $courseCate->delete();
 
-        session()->flash('message', 'Danh mục đã được xóa thành công.');
+    public function deleted()
+    {
+        $courseCate = CourseCategories::find($this->deletedId);
+
+        if ($courseCate) {
+            $courseCate->delete();
+            session()->flash('message', 'Danh mục đã được xóa thành công.');
+        } else {
+            session()->flash('error', 'Danh mục không tồn tại.');
+        }
+
+        $this->closePopup();
     }
 }
