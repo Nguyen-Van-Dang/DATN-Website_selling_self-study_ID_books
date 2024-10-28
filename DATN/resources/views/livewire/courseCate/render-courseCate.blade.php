@@ -7,11 +7,16 @@
             <div class="iq-header-title">
                 <h4 class="card-title">Danh mục khóa học</h4>
             </div>
+            <div class="iq-search-bar" style="margin-left: 30%;">
+                <form class="searchbox" style="width: 150%;">
+                   <input type="text" class="text search-input" placeholder="Tìm kiếm sản phẩm..." wire:model="search">
+                   <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                </form>
+             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
                 <a href="javascript:void(0);" class="btn btn-primary" onclick="openPopup('add')">
                     Thêm danh mục khóa học
                 </a>
-
             </div>
         </div>
         <div class="iq-card-body">

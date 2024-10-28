@@ -5,9 +5,10 @@
                 <div class="logo-title">
                     <h4 class="text-primary text-uppercas text-center">
                         <a href="{{ route('homeClient') }}" class="header-logo">
-                            <img id="main-logo" src="{{ asset('assets/images/book/icon/big_logo.png') }}" class="img-fluid rounded-normal" alt="" style="width: 60%;">
-                            </a>
-                        </h4>
+                            <img id="main-logo" src="{{ asset('assets/images/book/icon/big_logo.png') }}"
+                                class="img-fluid rounded-normal" alt="" style="width: 60%;">
+                        </a>
+                    </h4>
                 </div>
                 <ul class="list-unstyled mb-0">
                     <li class="mt-3">
@@ -16,11 +17,11 @@
                             Polytechnic, Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ</a>
                     </li>
                     <li class="mt-3">
-                        <a style="font-size: 13px;"><strong class="d-block" style="font-size: 15px;">Hotline:
+                        <a style="font-size: 13px;"><strong style="font-size: 15px;">Hotline:
                             </strong>0123456789</a>
                     </li>
                     <li class="mt-3">
-                        <a style="font-size: 13px;"><strong class="d-block" style="font-size: 15px;">Email:
+                        <a style="font-size: 13px;"><strong style="font-size: 15px;">Email:
                             </strong>infobookstorefpt@gmail.com</a>
                     </li>
                 </ul>
@@ -36,13 +37,16 @@
                         <a href="#" style="font-size: 15px">Sách ID</a>
                     </li>
                     <li>
-                        <a href="#" style="font-size: 15px">Học Tập</a>
+                        <a href="#" style="font-size: 15px">Khóa Học</a>
                     </li>
                     <li>
-                        <a href="#" style="font-size: 15px">Luyện Đề</a>
+                        <a href="#" style="font-size: 15px">Nhắn Tin</a>
                     </li>
                     <li>
-                        <a href="#" style="font-size: 15px">Luyện Thi</a>
+                        <a href="#" style="font-size: 15px">Reels</a>
+                    </li>
+                    <li>
+                        <a href="#" style="font-size: 15px">Dề Thi</a>
                     </li>
                 </ul>
             </div>
@@ -59,13 +63,11 @@
 
                     <h5 class="text-uppercase mt-3" style="font-size: 16px">Đối Tác Liên Hệ</h5>
                     <li class="mt-1">
-                        <a style="font-size: 15px"><i class="fa fa-user"
-                                style="margin-right: 2%"></i>Mr.
-                            Lê Văn Luyện</a>
+                        <a style="font-size: 15px"><i class="fa fa-user" style="margin-right: 2%"></i>Mr.
+                            Nguyễn Văn Đặng</a>
                     </li>
                     <li>
-                        <a style="font-size: 15px"><i class="fa fa-phone"
-                                style="margin-right: 2%"></i>0987.654.321</a>
+                        <a style="font-size: 15px"><i class="fa fa-phone" style="margin-right: 2%"></i>0987.654.321</a>
                     </li>
                 </ul>
             </div>
@@ -74,17 +76,20 @@
                 <h5 class="text-uppercase" style="font-size: 16px">Cấp Phép</h5>
                 <ul class="list-unstyled mb-0">
                     <li class="mt-3">
-                        <a style="font-size: 13px;">Chịu Trách Nhiệm Nội Dung: <strong style="font-size: 15px;">Nguyễn Văn Đặng</strong></a>
+                        <a style="font-size: 13px;">Chịu Trách Nhiệm Nội Dung: <strong class="d-block"
+                                style="font-size: 15px;">Nguyễn Văn Đặng</strong></a>
                     </li>
                     <li class="mt-2">
-                        <a style="font-size: 13px;">Giấy Phép Xác Nhận MXH: <strong style="font-size: 15px;">304360 GP-BTTT</strong></a>
+                        <a style="font-size: 13px;">Giấy Phép Xác Nhận MXH: <strong class="d-block"
+                                style="font-size: 15px;">304360 GP-BTTT</strong></a>
                     </li>
                     <li class="mt-2">
-                        <a style="font-size: 13px;">Bộ Thông Tin Và Truyền Thông Cấp Ngày: <strong
+                        <a style="font-size: 13px;">Bộ Thông Tin Và Truyền Thông Cấp Ngày: <strong class="d-block"
                                 style="font-size: 15px;">9/9/2024</strong></a>
                     </li>
                     <li>
-                        <img src="https://zaria.vn/wp-content/uploads/2021/04/bo-cong-thuong.png" width="40%" height="5%" alt="">
+                        <img src="https://zaria.vn/wp-content/uploads/2021/04/bo-cong-thuong.png" width="40%"
+                            height="5%" alt="">
                     </li>
                 </ul>
             </div>
@@ -99,7 +104,7 @@
             </ul>
         </div>
         <div class="col-lg-6 text-right">
-            Copyright 2020 <a href="#">BookStore</a> All Rights Reserved.
+            Copyright 2024 <a href="#">BookStore</a> All Rights Reserved.
         </div>
     </div>
 </div>
