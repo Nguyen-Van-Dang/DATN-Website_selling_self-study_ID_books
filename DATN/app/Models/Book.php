@@ -30,6 +30,10 @@ class Book extends Model
         return $this->BelongsTo(Course::class);
     }
 
+    public function User(): BelongsTo
+    {
+        return $this->BelongsTo(User::class);
+    }
 
     public function CategoryBook(): BelongsTo
     {

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('lectures', function (Blueprint $table) {
             $table->id();
-
             $table->string('name', 255)->nullable();
             $table->foreignId('course_id')->nullable()->constrained('courses')->onDelete('set null');
-
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->string('video_url', 255)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

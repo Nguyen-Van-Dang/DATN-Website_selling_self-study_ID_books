@@ -7,6 +7,7 @@ use App\Models\CategoryBook;
 use App\Models\CategoryCourse;
 use App\Models\Contact;
 use App\Models\Course;
+use App\Models\Lecture;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Role;
@@ -33,14 +34,15 @@ class DatabaseSeeder extends Seeder
         DB::statement('ALTER TABLE courses AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE category_books AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE books AUTO_INCREMENT = 1;');
+        DB::statement('ALTER TABLE lectures AUTO_INCREMENT = 1;');
 
-        Role::factory()->create(['id' => 1, 'name' => 'Quản lý']);
-        Role::factory()->create(['id' => 2, 'name' => 'Giảng viên']);
-        Role::factory()->create(['id' => 3, 'name' => 'Sinh viên']);
-        User::factory()->create(['role_id' => '1']);
-        User::factory()->create(['role_id' => '2']);
-        User::factory()->create(['role_id' => '3']);
-        User::factory(12)->create();
+        // Role::factory()->create(['id' => 1, 'name' => 'Quản lý']);
+        // Role::factory()->create(['id' => 2, 'name' => 'Giảng viên']);
+        // Role::factory()->create(['id' => 3, 'name' => 'Sinh viên']);
+        // User::factory()->create(['role_id' => 1, 'phone' => 0123456789]);
+        // User::factory()->create(['role_id' => '2']);
+        // User::factory()->create(['role_id' => '3']);
+        // User::factory(12)->create();
         Contact::factory(5)->create();
         Order::factory(5)->create();
         Payment::factory(5)->create();
@@ -49,5 +51,6 @@ class DatabaseSeeder extends Seeder
         Course::factory(5)->create();
         CategoryBook::factory(5)->create();
         Book::factory(5)->create();
+        Lecture::factory(5)->create();
     }
 }

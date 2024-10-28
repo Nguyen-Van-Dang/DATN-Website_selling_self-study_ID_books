@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255)->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('category_books')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

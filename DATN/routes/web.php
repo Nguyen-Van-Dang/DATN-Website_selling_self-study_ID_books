@@ -13,14 +13,16 @@ use App\Http\Controllers\Client\CourseCateController;
 use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
+use App\Http\Middleware\CheckRole;
 
 Route::get('/', function () {
     return view('client.home');
 })->name('homeClient');
 
-Route::get('/admin', function () {
-    return view('admin.home');
-})->name('homeAdmin');
+//Abc
+Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
+Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
+Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
 
 // Login Google
 Route::get('auth/google', [UserController::class, 'redirectToGoogle'])->name('login-by-google');
@@ -52,176 +54,96 @@ Route::get('/500', function () {
 Route::get('/maintenance', function () {
     return view('error.maintenance');
 })->name('maintenance');
-
 /*-------------------------------------------------ADMIN--------------------------------------------------*/
 
-//user
-Route::resource('nguoi-dung', controller: UserController::class)->names('nguoi-dung');
+// role 1 2 sẽ vào được các trang trong route này
 
-Route::get('user-list', [UserController::class, 'index'])->name('listUser');
+/* --------------- ADMIN GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin', function () { return view('admin.home');})->name('homeAdmin');
+    Route::get('/admin/user-info', function () { return view('admin.user.userInfo');})->name('userInfo');
+});
+/* --------------- ORDER GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/order-list', [OrderController::class, 'getAllOrder'])->name('listOrder');
+    Route::get('/admin/detail-Order', function () { return view('admin.order.detailOrder');})->name('detailOrder');
+    Route::get('/admin/update-Order', function () { return view('admin.order.updateOrder');})->name('updateOrder');
+});
 
-Route::get('/user-add', function () {
-    return view('admin.user.addUser');
-})->name('addUser');
+/* --------------- CATEGORY-COURSE GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-CategoryCourse', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
+    Route::get('/admin/add-CategoryCourse', function () { return view('admin.categoryCourse.addCategoryCourse');})->name('addCategoryCourse');
+    Route::get('/admin/detail-CategoryCourse', function () { return view('admin.categoryCourse.detailCategoryCourse');})->name('detailCategoryCourse');
+    Route::get('/admin/update-CategoryCourse', function () { return view('admin.categoryCourse.updateCategoryCourse');})->name('updateCategoryCourse');
+});
 
-Route::get('/user-update', function () {
-    return view('admin.user.updateUser');
-})->name('updateUser');
+/* --------------- COURSE GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+// Route::get('/list-Course', function () { return view('admin.course.listCourse');})->name('listCourse');
+    Route::get('/admin/list-Course', [CourseController::class, 'getAllCourse'])->name('listCourse');
+    Route::get('/admin/add-Course', function () { return view('admin.course.addCourse');})->name('addCourse');
+    Route::get('/admin/update-Course', function () { return view('admin.course.updateCourse');})->name('updateCourse');
+    Route::get('/admin/detail-Course', function () { return view('admin.course.updateCourse');})->name('detailCourse');
+});
 
-Route::get('/user-detail', function () {
-    return view('admin.user.detailUser');
-})->name('detailUser');
+/* --------------- CATEGORY-BOOK GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-CategoryBook', [BookCateController::class, 'getAllBookCate'])->name('listCategoryBook');
+    Route::get('/admin/add-CategoryBook', function () { return view('admin.categoryBook.addCategoryBook');})->name('addCategoryBook');
+    Route::get('/admin/detail-CategoryBook', function () { return view('admin.categoryBook.detailCategoryBook');})->name('detailCategoryBook');
+    Route::get('/admin/update-CategoryBook', function () { return view('admin.categoryBook.updateCategoryBook');})->name('updateCategoryBook');
+});
 
-Route::get('/user-info', function () {
-    return view('admin.user.userInfo');
-})->name('userInfo');
+/* --------------- BOOK GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-book', [BookController::class, 'getAllBook'])->name('listBook');
+    Route::get('/admin/add-Book', function () { return view('admin.book.addBook');})->name('addBook');
+    Route::get('/admin/update-Book', function () { return view('admin.book.updateBook');})->name('updateBook');
+    Route::get('/admin/detail-Book', function () { return view('admin.book.detailBook');})->name('detailBook');
+});
 
-// Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
-Route::get('user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
+/* --------------- LECTURE GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-Lecture', function () { return view('admin.lecture.listLecture');})->name('listLecture');
+    Route::get('/admin/add-Lecture', function () { return view('admin.lecture.addLecture');})->name('addLecture');
+    Route::get('/admin/update-Lecture', function () { return view('admin.lecture.updateLecture');})->name('updateLecture');
+    Route::get('/admin/detail-Lecture', function () { return view('admin.lecture.detailLecture');})->name('detailLecture');
+});
 
-//course
-Route::get('list-CategoryCourse', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
+/* --------------- EXERCISE GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-Exercise', function () { return view('admin.exercise.listExercise');})->name('listExercise');
+    Route::get('/admin/add-Exercise', function () { return view('admin.exercise.addExercise');})->name('addExercise');
+    Route::get('/admin/update-Exercise', function () { return view('admin.exercise.updateExercise');})->name('updateExercise');
+    Route::get('/admin/detail-Exercise', function () { return view('admin.exercise.detailExercise');})->name('detailExercise');
+});
 
-Route::get('/add-CategoryCourse', function () {
-    return view('admin.categoryCourse.addCategoryCourse');
-})->name('addCategoryCourse');
-
-Route::get('/detail-CategoryCourse', function () {
-    return view('admin.categoryCourse.detailCategoryCourse');
-})->name('detailCategoryCourse');
-
-Route::get('/update-CategoryCourse', function () {
-    return view('admin.categoryCourse.updateCategoryCourse');
-})->name('updateCategoryCourse');
-
-// Route::get('/list-Course', function () {
-//     return view('admin.course.listCourse');
-// })->name('listCourse');
-
-Route::get('list-Course', [CourseController::class, 'getAllCourse'])->name('listCourse');
-
-
-Route::get('/add-Course', function () {
-    return view('admin.course.addCourse');
-})->name('addCourse');
-
-Route::get('/update-Course', function () {
-    return view('admin.course.updateCourse');
-})->name('updateCourse');
-
-Route::get('/detail-Course', function () {
-    return view('admin.course.updateCourse');
-})->name('detailCourse');
-
-
-//book
-Route::get('list-CategoryBook', [BookCateController::class, 'getAllBookCate'])->name('listCategoryBook');
-
-
-Route::get('/add-CategoryBook', function () {
-    return view('admin.categoryBook.addCategoryBook');
-})->name('addCategoryBook');
-
-Route::get('/detail-CategoryBook', function () {
-    return view('admin.categoryBook.detailCategoryBook');
-})->name('detailCategoryBook');
-
-Route::get('/update-CategoryBook', function () {
-    return view('admin.categoryBook.updateCategoryBook');
-})->name('updateCategoryBook');
-
-Route::get('list-book', [BookController::class, 'getAllBook'])->name('listBook');
-
-Route::get('/add-Book', function () {
-    return view('admin.book.addBook');
-})->name('addBook');
-
-Route::get('/update-Book', function () {
-    return view('admin.book.updateBook');
-})->name('updateBook');
-
-Route::get('/detail-Book', function () {
-    return view('admin.book.detailBook');
-})->name('detailBook');
-
-//lecture
-Route::get('/list-Lecture', function () {
-    return view('admin.lecture.listLecture');
-})->name('listLecture');
-
-Route::get('/add-Lecture', function () {
-    return view('admin.lecture.addLecture');
-})->name('addLecture');
-
-Route::get('/update-Lecture', function () {
-    return view('admin.lecture.updateLecture');
-})->name('updateLecture');
-
-Route::get('/detail-Lecture', function () {
-    return view('admin.lecture.detailLecture');
-})->name('detailLecture');
-
-//exercise
-Route::get('/list-Exercise', function () {
-    return view('admin.exercise.listExercise');
-})->name('listExercise');
-
-Route::get('/add-Exercise', function () {
-    return view('admin.exercise.addExercise');
-})->name('addExercise');
-
-Route::get('/update-Exercise', function () {
-    return view('admin.exercise.updateExercise');
-})->name('updateExercise');
-
-Route::get('/detail-Exercise', function () {
-    return view('admin.exercise.detailExercise');
-})->name('detailExercise');
-
-//document
-
-//order
-
-Route::get('order-list', [OrderController::class, 'getAllOrder'])->name('listOrder');
+/* --------------- NOTIFICATION GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotification');
+    Route::get('/admin/detail-Notification', function () { return view('admin.notification.detailNotification');})->name('detailNotification');
+    Route::get('/admin/add-Notification', function () { return view('admin.notification.addNotification');})->name('addNotification');
+});
 
 
-Route::get('/detail-Order', function () {
-    return view('admin.order.detailOrder');
-})->name('detailOrder');
+// role 2 không vào được các trang này
+Route::middleware([CheckRole::class . ':1'])->group(function () {
+    Route::resource('/admin/nguoi-dung', UserController::class)->names('nguoi-dung');
+    Route::get('/admin/user-list', [UserController::class, 'index'])->name('listUser');
+    Route::get('/admin/user-add', function () { return view('admin.user.addUser');})->name('addUser');
+    Route::get('/admin/user-update', function () { return view('admin.user.updateUser');})->name('updateUser');
+    Route::get('/admin/user-detail', function () { return view('admin.user.detailUser');})->name('detailUser');
+    Route::get('/admin/user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
+    // Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
+});
 
-Route::get('/update-Order', function () {
-    return view('admin.order.updateOrder');
-})->name('updateOrder');
-
-//notification
-
-Route::get('list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotification');
-
-Route::get('/detail-Notification', function () {
-    return view('admin.notification.detailNotification');
-})->name('detailNotification');
-
-Route::get('/add-Notification', function () {
-    return view('admin.notification.addNotification');
-})->name('addNotification');
-
-//contact
-Route::get('Contact-list', [ContactController::class, 'getAllContact'])->name('listContact');
-
-Route::get('/detail-Contact', function () {
-    return view('admin.contact.detailContact');
-})->name('detailContact');
-
-Route::get('/add-Contact', function () {
-    return view('admin.contact.addContact');
-})->name('addContact');
-
-//Abc
-Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
-
-Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
-Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
-
+/* --------------- CONTACT GROUP --------------- */
+Route::middleware([CheckRole::class . ':1'])->group(function () {
+    Route::get('/admin/Contact-list', [ContactController::class, 'getAllContact'])->name('listContact');
+    Route::get('/admin/detail-Contact', function () { return view('admin.contact.detailContact');})->name('detailContact');
+    Route::get('/admin/add-Contact', function () { return view('admin.contact.addContact');})->name('addContact');
+});
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 
 // thông tin người dùng

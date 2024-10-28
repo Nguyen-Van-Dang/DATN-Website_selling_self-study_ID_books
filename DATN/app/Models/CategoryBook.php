@@ -17,6 +17,12 @@ class CategoryBook extends Model
     public  function Book() : HasMany{
         return $this->hasMany(Book::class);
     }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function getAll(){
         return self::all();
     }

@@ -5,6 +5,7 @@ namespace App\Livewire\Course;
 use App\Models\Course;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class RenderCourse  extends Component
 {
@@ -14,8 +15,11 @@ class RenderCourse  extends Component
 
     public function render()
     {
-        $Course = Course::paginate(5);
-
+        if (Auth::user()->role_id == 1) {
+            $Course = Course::paginate(10);
+        } else {
+            $Course = Course::where('user_id', Auth::id())->paginate(10);
+        }
         return view('livewire.course.render-course', [
             'Course' => $Course,
         ]);
