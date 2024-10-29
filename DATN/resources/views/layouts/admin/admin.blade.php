@@ -20,7 +20,7 @@
         <div class="iq-sidebar">
             <x-admin.sidebar></x-admin.sidebar>
         </div>
-        <div class="iq-top-navbar">
+        <div class="iq-top-navbar" style="z-index: 2;">
             <x-admin.header></x-admin.header>
         </div>
         <div id="content-page" class="content-page">

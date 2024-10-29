@@ -12,7 +12,7 @@
                         <div class="video-box">
                             <div class="video-info">
                                 <div class="video-section">
-                                    <iframe src="{{ $reel->video_url }}" width="380" height="570"
+                                    <iframe src="{{ $reel->video_url }}" width="380" height="650"
                                         data-reel-id="{{ $reel->id }}"></iframe>
                                     <span class="video-play-icon"><i class="bx bx-play"></i></span>
                                     <div id="video-timeline" class="video-timeline">
@@ -204,7 +204,7 @@
 
         <!-- CONTENT -->
         <div class="col-md-4 content-column" id="content-column"
-            style="box-shadow: 0px 20px 20px 0px rgba(44, 101, 144, 0.1); height: 570px;">
+            style="box-shadow: 0px 20px 20px 0px rgba(44, 101, 144, 0.1); height: 665px;">
             <div class="content-box">
                 <h3>New Content</h3>
                 <p>Here is the content for the new column. You can add text, images, or other elements as needed.</p>

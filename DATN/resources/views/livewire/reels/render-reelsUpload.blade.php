@@ -120,6 +120,7 @@
             opacity: 0;
         }
     </style>
+    
     <script>
         document.getElementById('fileUpload').addEventListener('change', async function() {
             const file = this.files[0];
