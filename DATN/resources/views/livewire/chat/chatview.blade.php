@@ -15,7 +15,7 @@
             <div class="pt-3">
                 <div class="input-group rounded mb-3">
                     <input type="text" class="form-control rounded mr-3" placeholder="Tìm kiếm" aria-label="Tìm kiếm"
-                        wire:model.debounce.100ms="searchTerm" />
+                        wire:model.live.debounce.100ms="searchTerm" />
                 </div>
                 <div data-mdb-perfect-scrollbar-init style="position: relative; height: 400px">
                     <ul class="list-unstyled mb-0">

@@ -3,8 +3,7 @@
 @section('title', 'Danh sách khóa học')
 
 @section('content')
-<div>
-    
-</div>
-    @livewire('courses.courseslist')
+    @livewireStyles
+    @livewire('client.course.courseIndex')
+    @livewireScripts
 @endsection

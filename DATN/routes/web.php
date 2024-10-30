@@ -167,7 +167,7 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 
 /* --------------- NOTIFICATION GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotification');
+    Route::get('/admin/list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotificationUser');
     Route::get('/admin/detail-Notification', function () {
         return view('admin.notification.detailNotification');
     })->name('detailNotification');
@@ -241,12 +241,9 @@ Route::get('/book-id', function () {
 })->name('bookID');
 
 //danh sách khóa học
-Route::prefix('khoa-hoc')->name('khoa-hoc')->group(function () {
-    Route::controller(CourseController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('/{id?}', 'show')->name('khoa-hoc.show');
-        // Route::post('/orders', 'store');
-    });
+Route::prefix('khoa-hoc')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('khoa-hoc.index');
+    Route::get('/{id}', [CourseController::class, 'show'])->name('khoa-hoc.show');
 });
 
 //chi tiết khóa học

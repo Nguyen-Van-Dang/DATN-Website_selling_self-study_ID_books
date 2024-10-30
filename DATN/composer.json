@@ -21,9 +21,9 @@
         "masbug/flysystem-google-drive-ext": "^2.4",
         "nesbot/carbon": "^3.8",
         "pusher/pusher-php-server": "^7.2",
+        "socialiteproviders/manager": "^4.6",
         "socialiteproviders/zalo": "^5.0",
         "zaloplatform/zalo-php-sdk": "*"
-
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

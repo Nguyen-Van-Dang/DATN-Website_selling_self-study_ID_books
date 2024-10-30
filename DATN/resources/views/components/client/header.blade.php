@@ -27,7 +27,7 @@
                 </a>
             </div>
             <div class="navbar-breadcrumb px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
-                <a href="{{ route('khoa-hoc') }}" class="iq-waves-effect rounded">
+                <a href="{{ route('khoa-hoc.index') }}" class="iq-waves-effect rounded">
                     <h6 class="mb-0">Khóa học</h6>
                 </a>
             </div>
