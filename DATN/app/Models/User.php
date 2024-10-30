@@ -23,11 +23,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image_url',
         'phone',
         'loginType',
         'role_id',
         'token',
         'delete_at',
+        'zalo_id',
     ];
 
     public function Role(): BelongsTo
@@ -100,15 +102,15 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+
+    public static function getAll()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-    
-    public static function getAll(){
         return self::all();
     }
 }

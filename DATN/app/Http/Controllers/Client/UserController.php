@@ -76,4 +76,17 @@ class UserController extends Controller
     {
         return $this->userRepository->getDeletedUser();
     }
+
+
+    public function redirectToZalo()
+    {
+        return Socialite::driver('zalo')->redirect();
+    }
+    
+    public function handleZaloCallback(Request $request)
+    {
+        return $this->userRepository->handleZaloCallback($request);
+    }
+    
+    
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\ZaloServiceProvider;
+
 return [
 
     /*
@@ -156,6 +158,9 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         // App\Providers\ReelsServiceProvider::class,
         App\Providers\BroadcastServiceProvider::class,
+        App\Providers\ZaloServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
+
     ],
 
 ];

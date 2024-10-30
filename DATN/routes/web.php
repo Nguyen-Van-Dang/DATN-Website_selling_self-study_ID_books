@@ -17,6 +17,7 @@ use App\Http\Controllers\Client\FollowController;
 use App\Http\Controllers\Client\NotificationUserController;
 use App\Http\Middleware\CheckRole;
 
+
 Route::get('/', function () {
     return view('client.home');
 })->name('homeClient');
@@ -31,6 +32,8 @@ Route::get('auth/google', [UserController::class, 'redirectToGoogle'])->name('lo
 Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback']);
 
 // Login Zalo
+Route::get('/auth/zalo', [UserController::class, 'redirectToZalo'])->name('login-by-zalo');
+Route::get('auth/zalo/callback', [UserController::class, 'handleZaloCallback']);
 
 // Login FaceBook
 Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');
