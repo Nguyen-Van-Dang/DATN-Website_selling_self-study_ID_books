@@ -26,7 +26,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('group_id')->constrained('chat_groups')->onDelete('cascade');
-            $table->string('role', 60);
+            $table->boolean('role')->nullable()->default(0);
             $table->timestamps();
         });
 
