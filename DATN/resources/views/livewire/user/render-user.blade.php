@@ -4,6 +4,13 @@
             <div class="iq-header-title">
                 <h4 class="card-title">Danh sách tài khoản</h4>
             </div>
+            <div class="iq-search-bar" style="margin-left: 30%;">
+                <form class="searchbox" style="width: 150%;">
+                    <input type="text" class="text search-input" placeholder="Tìm kiếm danh mục..."
+                        wire:model.live.debounce.10ms="search">
+                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                </form>
+            </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
                 <a href="{{ route('nguoi-dung.create') }}" class="btn btn-primary">Thêm tài khoản</a>
             </div>
@@ -22,6 +29,7 @@
                             <th>Hoạt động</th>
                         </tr>
                     </thead>
+                    @if (sizeof($users) > 0)
                     <tbody class="text-center">
                         @foreach ($users as $item)
                             <tr>
@@ -54,6 +62,13 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    @else
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center">Không tìm thấy tài khoản người dùng nào.</td>
+                        </tr>
+                    </tbody>
+                @endif
                 </table>
             </div>
             <div class="text-end">

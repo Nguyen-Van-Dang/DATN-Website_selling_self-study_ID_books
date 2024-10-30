@@ -4,6 +4,13 @@
             <div class="iq-header-title">
                 <h4 class="card-title">Danh sách các cuốn sách</h4>
             </div>
+            <div class="iq-search-bar" style="margin-left: 30%;">
+                <form class="searchbox" style="width: 150%;">
+                    <input type="text" class="text search-input" placeholder="Tìm kiếm sách..."
+                        wire:model.live.debounce.10ms="search">
+                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                </form>
+            </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
                 <a href="{{ route('addBook') }}" class="btn btn-primary">Thêm sách</a>
             </div>
@@ -13,73 +20,71 @@
                 <table class="data-tables table table-striped table-bordered" style="width:100%">
                     <thead class="text-center">
                         <tr>
-                            <th style="width: 3%;">Mã Số</th>
-                            <th style="width: 10%;">Hình ảnh</th>
-                            <th style="width: 15%;">Tên sách</th>
-                            <th style="width: 7%;">Số trang</th>
-                            <th style="width: 15%;">Khóa học</th>
-                            <th style="width: 15%;">Mô tả sách</th>
+                            <th style="width: 2%;">STT</th>
+                            <th style="width: 7%;">Hình ảnh</th>
+                            <th style="width: 8%;">Tên sách</th>
+                            <th style="width: 3%;">Số trang</th>
+                            <th style="width: 8%;">Khóa học</th>
                             <th style="width: 5%;">Giá</th>
-                            <th style="width: 5%;">Số lượng</th>
-                            <th style="width: 5%;">Mã kích hoạt</th>
-                            <th style="width: 5%;">Kích hoạt</th>
-                            <th style="width: 2%;">Danh Mục</th>
-                            <th style="width: 5%;">Người Tạo</th>
-                            <th style="width: 5%;">Hoạt động</th>
+                            <th style="width: 3%;">Số lượng</th>
+                            <th style="width: 5%;">Danh Mục</th>
+                            <th style="width: 6%;">Hoạt động</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
-                        @foreach ($Book as $item)
+                    @if (sizeof($Book) > 0)
+                        <tbody class="text-center">
+                            @foreach ($Book as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td><img class="img-fluid rounded" src="{{ $item->image }}" alt="">
+                                    </td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->page_number }}</td>
+                                    @php
+                                        $course = $item->course;
+                                        $bookCate = $item->CategoryBook;
+                                        $user = $item->user;
+                                    @endphp
+                                    <td>{{ $course ? optional($item->course)->name : 'Không có bài giảng' }}</td>
+                                    <td>{{ $item->price }}</td>
+                                    <td>{{ $item->quantity }}</td>
+                                    <td>{{ $bookCate ? optional($item->CategoryBook)->name : 'Không có danh mục' }}</td>
+                                    <td>
+                                        <div class="flex align-items-center list-user-action">
+                                            <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"
+                                                href="#"><i class="ri-eye-line"></i></a>
+                                            <a class="bg-primary" data-toggle="tooltip" title="Chỉnh sửa"
+                                                href="{{ route('nguoi-dung.edit', $item->id) }}"><i
+                                                    class="ri-pencil-line"></i></a>
+                                            <a id="deleteButton-{{ $item->id }}" class="bg-primary text-white"
+                                                href="" data-toggle="tooltip" title="Xóa"><i
+                                                    class="ri-delete-bin-line"></i></a>
+                                        </div>
+                                        <form action="{{ route('nguoi-dung.destroy', $item->id) }}" method="POST"
+                                            id="delete-form-{{ $item->id }}" style="display:none">
+                                            @method('DELETE')
+                                            @csrf
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    @else
+                        <tbody>
                             <tr>
-                                <td>{{ $item->id }}</td>
-                                <td><img class="img-fluid rounded" src="{{ $item->image }}" alt="">
-                                </td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->page_number }}</td>
-                                 @php
-                                    $course = $item->course;
-                                    $bookCate = $item->CategoryBook;
-                                    $user = $item->user;
-                                 @endphp
-                                 <td>{{ $course ? optional($item->course)->name : 'Không có bài giảng' }}</td>
-                                 <td>
-                                    <p class="mb-0">{{ $item->description }}</p>
-                                </td>
-                                <td>{{ $item->price }}</td>
-                                <td>{{ $item->quantity }}</td>
-                                <td>{{ $item->book_activate_id }}</td>
-                                <td>{{ $item->book_active }}</td>
-                                <td>{{ $bookCate ? optional($item->CategoryBook)->name : 'Không có danh mục' }}</td>
-                                <td>{{ $user ? optional($item->user)->name : 'Không có người tạo' }}</td>
-                                <td>
-                                    <div class="flex align-items-center list-user-action">
-                                        <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"
-                                            href="#"><i class="ri-eye-line"></i></a>
-                                        <a class="bg-primary" data-toggle="tooltip" title="Chỉnh sửa"
-                                            href="{{ route('nguoi-dung.edit', $item->id) }}"><i
-                                                class="ri-pencil-line"></i></a>
-                                        <a id="deleteButton-{{ $item->id }}" class="bg-primary text-white"
-                                            href="" data-toggle="tooltip" title="Xóa"><i
-                                                class="ri-delete-bin-line"></i></a>
-                                    </div>
-                                    <form action="{{ route('nguoi-dung.destroy', $item->id) }}" method="POST"
-                                        id="delete-form-{{ $item->id }}" style="display:none">
-                                        @method('DELETE')
-                                        @csrf
-                                    </form>
-                                </td>
+                                <td colspan="9" class="text-center">Không tìm thấy cuốn sách nào.</td>
                             </tr>
-                        @endforeach
-                    </tbody>
+                        </tbody>
+                    @endif
                 </table>
-            </div> 
+            </div>
             <div class="text-end">
                 {{ $Book->links() }}
             </div>
         </div>
     </div>
-        <!-- Popup xác nhận -->
-        <div id="confirmPopup"
+    <!-- Popup xác nhận -->
+    <div id="confirmPopup"
         style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
         <p>Bạn có chắc chắn muốn xóa tài khoản này không?</p>
         <div class="text-center">
