@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\ZaloServiceProvider;
+
 return [
 
     /*
@@ -153,6 +155,8 @@ return [
          */
         App\Providers\GoogleDriveServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\ZaloServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
 ];

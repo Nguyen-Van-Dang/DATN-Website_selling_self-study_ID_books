@@ -14,6 +14,7 @@ use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
 
+
 Route::get('/', function () {
     return view('client.home');
 })->name('homeClient');
@@ -27,6 +28,8 @@ Route::get('auth/google', [UserController::class, 'redirectToGoogle'])->name('lo
 Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback']);
 
 // Login Zalo
+Route::get('/auth/zalo', [UserController::class, 'redirectToZalo'])->name('login-by-zalo');
+Route::get('auth/zalo/callback', [UserController::class, 'handleZaloCallback']);
 
 // Login FaceBook
 Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');

@@ -14,7 +14,9 @@
         "league/flysystem": "~3.28",
         "livewire/livewire": "^3.5",
         "maatwebsite/excel": "^3.1",
-        "masbug/flysystem-google-drive-ext": "^2.4"
+        "masbug/flysystem-google-drive-ext": "^2.4",
+        "socialiteproviders/zalo": "^5.0",
+        "zaloplatform/zalo-php-sdk": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
