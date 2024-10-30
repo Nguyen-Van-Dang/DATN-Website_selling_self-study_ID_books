@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script> --}}
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
@@ -20,21 +20,31 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/reals.css') }}">
+    {{-- <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('2dd03bcdcd6ca1fda1a6', {
+            cluster: 'ap1'
+        });
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script> --}}
+    {{-- @vite(['resources/js/app.js']) --}}
     @livewireStyles
 </head>
 
 <body>
-    @livewireStyles
+
     <div class="wrapper">
         <div class="iq-top-navbar">
             <x-client.header></x-client.header>
         </div>
-
+        @livewireScripts
         @yield('content')
 
     </div>
-    @livewireScripts
-    <script src="/js/app.js"></script>
+
     {{-- script here --}}
     <script src="{{ asset('assets/js/reals.js') }}"></script>
     <script src="{{ asset('assets/js/login.js') }}"></script>
@@ -67,6 +77,7 @@
     <script src="{{ asset('assets/js/style-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/chart-custom.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
 </body>
 
 </html>

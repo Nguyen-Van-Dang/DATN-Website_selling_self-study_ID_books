@@ -21,4 +21,15 @@ class ChatGroup extends Model
     {
         return $this->hasMany(ChatMessage::class, 'group_id');
     }
+    public function course()
+    {
+        return $this->hasOne(Course::class, 'id');
+    }
+
+    // public function latestMessage()
+    // {
+    //     return $this->hasOne(ChatMessage::class)
+    //         ->select('id', 'group_id', 'message', 'created_at')
+    //         ->orderBy('created_at', 'desc');
+    // }
 }
