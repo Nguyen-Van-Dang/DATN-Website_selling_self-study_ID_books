@@ -9,8 +9,8 @@
             </div>
             <div class="iq-search-bar" style="margin-left: 30%;">
                 <form class="searchbox" style="width: 150%;">
-                    <input type="text" class="text search-input" placeholder="Tìm kiếm danh mục..."
-                        wire:model.live.debounce.100ms="search">
+                    <input type="text" class="text search-input" placeholder="Tìm kiếm khóa học..."
+                        wire:model.live.debounce.10ms="search">
                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                 </form>
             </div>
@@ -32,6 +32,7 @@
                             <th style="width: 7%;">Hoạt động</th>
                         </tr>
                     </thead>
+                    @if (sizeof($Course) > 0)
                     <tbody class="text-center">
                         @foreach ($Course as $item)
                             <tr>
@@ -62,6 +63,13 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    @else
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center">Không tìm thấy khóa học dùng nào.</td>
+                        </tr>
+                    </tbody>
+                @endif
                 </table>
             </div>
             <div class="text-end">

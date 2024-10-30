@@ -5,7 +5,11 @@
 @section('content')
 
 
-<div class="couser"><a href="{{ route('homeClient') }}" style="text-decoration:none">Trở về</a></div>
+<div class="couser" style="  padding: 20px;
+  background: #0dd6b8;
+  font-size: 20px;
+  font-weight: bold;
+  color: #444444;"><a href="{{ route('homeClient') }}" style="text-decoration:none">Trở về</a></div>
 <ul class="notifications"
     style="background: white; box-shadow: 0px 5px 20px 0px rgb(52 70 84 / 10%); padding-bottom: 10px; border-radius: 10px;">
 </ul>

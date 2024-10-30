@@ -10,23 +10,32 @@ use Illuminate\Support\Facades\Auth;
 class RenderCourse  extends Component
 {
     use WithPagination;
-    public $editingId, $deletedId;
+    public $editingId, $deletedId, $search='';
     public $isEditPopupOpen = false;
     public $isDeletePopupOpen = false;
     protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
-        if (Auth::user()->role_id == 1) {
-            $Course = Course::paginate(10);
+        if (strlen($this->search) >= 1) {
+            $Course = Course::where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('id', $this->search)
+                ->orWhereHas('user', function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                })
+                ->paginate(10);
         } else {
-            $Course = Course::where('user_id', Auth::id())->paginate(10);
+            if (Auth::user()->role_id == 1) {
+                $Course = Course::paginate(10);
+            } else {
+                $Course = Course::where('user_id', Auth::id())->paginate(10);
+            }
         }
+
         return view('livewire.course.render-course', [
             'Course' => $Course,
         ]);
     }
-
     public function openPopup($type, $id = null)
     {
         $this->deletedId = null;

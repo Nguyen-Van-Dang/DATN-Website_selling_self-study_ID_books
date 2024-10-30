@@ -4,6 +4,13 @@
             <div class="iq-header-title">
                 <h4 class="card-title">Danh mục sách</h4>
             </div>
+            <div class="iq-search-bar" style="margin-left: 30%;">
+                <form class="searchbox" style="width: 150%;">
+                    <input type="text" class="text search-input" placeholder="Tìm kiếm danh mục sách..."
+                        wire:model.live.debounce.10ms="search">
+                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                </form>
+            </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
                 <a href="{{ route('addCategoryBook') }}" class="btn btn-primary">Thêm danh mục sách</a>
             </div>
@@ -19,6 +26,7 @@
                             <th style="width: 11%;">Hoạt động</th>
                         </tr>
                     </thead>
+                    @if (sizeof($bookCate) > 0)
                     <tbody class="text-center">
                         @foreach ($bookCate as $item)
                             <tr>
@@ -43,6 +51,13 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    @else
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center">Không tìm thấy danh mục sách nào.</td>
+                        </tr>
+                    </tbody>
+                @endif
                 </table>
             </div>
 
@@ -52,26 +67,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.querySelectorAll('[id^=deleteButton-]').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            // Lấy ID tài khoản từ nút xóa
-            const notificationId = this.id.split('-')[1];
-            // Hiển thị popup và màn che
-            document.getElementById('confirmPopup').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-            // Gán sự kiện cho nút Xác nhận
-            document.getElementById('yesButton').onclick = function() {
-                // Gửi form xóa tài khoản
-                document.getElementById(`delete-form-${notificationId}`).submit();
-            };
-        });
-    });
-    // Ẩn popup khi nhấn nút "Trở về"
-    document.getElementById('noButton').addEventListener('click', function() {
-        document.getElementById('confirmPopup').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    });
-</script>

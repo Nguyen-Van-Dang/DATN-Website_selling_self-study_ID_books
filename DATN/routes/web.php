@@ -280,7 +280,8 @@ Route::prefix('chat')->name('chat')->middleware('auth')->group(function () {
 });
 Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup']);
 
-//course 
+//course
+
 // mail
 Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
 
@@ -288,6 +289,11 @@ Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail')
 Route::get('/hoc-tap', function () {
     return view('client.course.myCourses');
 })->name('hoc-tap');
+
+
+Route::get('/hoc-khoa-hoc', function () {
+    return view('client.lecture.lecture');
+})->name('lecture');
 
 Route::get('/test', function () {
     return view('welcome');

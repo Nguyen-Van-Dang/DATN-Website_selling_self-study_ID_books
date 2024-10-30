@@ -9,7 +9,7 @@
             </div>
             <div class="iq-search-bar" style="margin-left: 30%;">
                 <form class="searchbox" style="width: 150%;">
-                    <input type="text" class="text search-input" placeholder="Tìm kiếm danh mục..."
+                    <input type="text" class="text search-input" placeholder="Tìm kiếm danh mục khóa học..."
                         wire:model.live.debounce.100ms="search">
                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                 </form>
