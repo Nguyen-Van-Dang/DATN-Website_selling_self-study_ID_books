@@ -80,7 +80,7 @@ class RenderCourseCate extends Component
     {
         $this->validate([
             'nameAdd' => 'required|unique:course_categories,name',
-            'descriptionAdd' => 'required|unique:course_categories,descriptionAdd',
+            'descriptionAdd' => 'required|unique:course_categories,description',
         ]);
 
         $courseCate = new CourseCategories();

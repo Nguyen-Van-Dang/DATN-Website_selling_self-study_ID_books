@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class RenderCourse  extends Component
 {
     use WithPagination;
-
+    public $editingId, $deletedId;
+    public $isEditPopupOpen = false;
+    public $isDeletePopupOpen = false;
     protected $paginationTheme = 'bootstrap';
 
     public function render()
@@ -23,5 +25,42 @@ class RenderCourse  extends Component
         return view('livewire.course.render-course', [
             'Course' => $Course,
         ]);
+    }
+
+    public function openPopup($type, $id = null)
+    {
+        $this->deletedId = null;
+        if ($type === 'edit' && $id) {
+            $this->editingId = $id;
+            $Course = Course::find($id);
+            if ($Course) {
+                // $this->name = $Course->name;
+                // $this->description = $Course->description;
+            }
+            $this->isEditPopupOpen = true;
+        } elseif ($type === 'delete' && $id) {
+            $this->deletedId = $id;
+            $this->isDeletePopupOpen = true;
+        }
+    }
+
+    public function closePopup()
+    {
+        $this->isEditPopupOpen = false;
+        $this->isDeletePopupOpen = false;
+    }
+
+    public function deleted()
+    {
+        $Course = Course::find($this->deletedId);
+
+        if ($Course) {
+            $Course->delete();
+            session()->flash('message', 'Danh mục đã được xóa thành công.');
+        } else {
+            session()->flash('error', 'Danh mục không tồn tại.');
+        }
+
+        $this->closePopup();
     }
 }
