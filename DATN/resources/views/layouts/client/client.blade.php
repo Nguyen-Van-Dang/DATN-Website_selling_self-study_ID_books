@@ -59,7 +59,7 @@
         <div class="iq-top-navbar">
             <x-client.header></x-client.header>
         </div>
-        <div id="content-page" class="content-page">
+        <div id="content-page" class="content-page mb-5">
             @yield('content')
         </div>
     </div>

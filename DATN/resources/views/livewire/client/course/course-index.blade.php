@@ -1,0 +1,208 @@
+<div class="container-fluid">
+    <div class="slider">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100 h-50"
+                        src="https://mshoagiaotiep.com/uploads/images/resize/900x900/2020/08/lotrinhkhtructuyen.png"
+                        alt="First slide" style="width:100%; height:400px!important">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100 h-50"
+                        src="https://hoctot.hocmai.vn/wp-content/uploads/2021/09/188771577_171199578338164_5563194315142148917_n-8.png"
+                        alt="Second slide" style="width:100%; height:400px!important">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100 h-50" src="https://i.ytimg.com/vi/0yE64-0U1IE/maxresdefault.jpg"
+                        alt="Third slide" style="width:100%; height:400px!important">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center position-relative mt-3">
+        <div class="w-100 iq-search-filter mb-0">
+            <ul class="list-inline p-0 m-0 row justify-content-center search-menu-options">
+                <li class="search-menu-opt">
+                    <div class="iq-dropdown">
+                        <div class="form-group mb-0">
+                            <select class="form-control form-search-control bg-white border-0"
+                                wire:model.live="date_filter">
+                                <option value="latest">Mới nhất</option>
+                                <option value="oldest">Cũ nhất</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="search-menu-opt">
+                    <div class="iq-dropdown">
+                        <div class="form-group mb-0">
+                            <select class="form-control form-search-control bg-white border-0"
+                                wire:model.live="price_filter">
+                                <option value="">Giá</option>
+                                <option value="desc">Cao đến thấp</option>
+                                <option value="asc">Thấp đến cao</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="search-menu-opt">
+                    <div class="iq-dropdown">
+                        <div class="form-group mb-0">
+                            <select class="form-control form-search-control bg-white border-0"
+                                wire:model.live="teacher_filter">
+                                <option value="">Giảng viên</option>
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="search-menu-opt">
+                    <div class="iq-search-bar search-book">
+                        <input type="text" class="text search-input" wire:model.live.debounce.100ms="name_filter"
+                            placeholder="Tên khóa học...">
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height mt-4">
+
+        <div class="iq-card-body pt-0">
+            <div class="row">
+                @foreach ($courseList as $course)
+                    <div class="col-6 col-lg-3">
+                        <div class="card card-filter h-50">
+                            <div class="card-body">
+                                <h5 class="card-title course-title">{{ $course->name }}</h5>
+                                <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                                    class="card-img-top img-fluid rounded course-image" alt="Product 3"
+                                    style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
+                                    <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                        đ</span>
+                                    {{-- <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4 col">
+            <img style="width:100%;height:200px"
+                src="https://mshoagiaotiep.com/uploads/images/crop/500x263/Ti%E1%BA%BFng%20Anh%20chuy%C3%AAn%20ng%C3%A0nh/videotrainghiempphoc.jpg"
+                class="img-container rounded" alt="Image 1">
+        </div>
+        <div class="col-4 col">
+            <img style="width:100%;height:200px"
+                src="https://mshoagiaotiep.com/uploads/images/crop/500x263/VIDEO/phat_am.png"
+                class="img-container rounded" alt="Image 2">
+        </div>
+        <div class="col-4 col">
+            <img style="width:100%;height:200px"
+                src="https://topbaiviet.com/wp-content/uploads/2021/04/khoa-hoc-online-1-730x373.png"
+                class="img-container rounded" alt="Image 3">
+        </div>
+    </div>
+
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height mt-4">
+        <div class="iq-card-body trendy-contens">
+            <ul id="trendy-slider" class="row">
+                @foreach ($teachers as $teacher)
+                    <li>
+                        <div class="d-flex flex-column align-items-center teacher-card">
+                            <div class="avatar-container">
+                                <img src="{{ asset('assets/images/book/user/1.jpg') }}" class="carousel-img"
+                                    alt="Giáo viên 1">
+                            </div>
+                            <div class="text-center mt-1 p-0">
+                                <p class="m-0">Thầy</p>
+                                <h6 class="teacher-name">{{ $teacher->name }}</h6>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+        <div class="iq-card-body similar-contens">
+            <h5 class="card-title mb-2">KHOÁ HỌC BÁN CHẠY NHẤT</h5>
+            <div class="row">
+                @foreach ($courseTrending as $course)
+                    <div class="col-2 col-lg-2 px-2 mb-3">
+                        <div class="trendy-course card h-100 " style=" transition: transform 0.3s ease;">
+                            <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                                class="card-img-top img-fluid rounded course-image" alt="Product 3"
+                                style="aspect-ratio: 1.5/1; object-fit: cover;">
+                            <div class="card-body border pt-1">
+                                <div>
+                                    <h5 class="card-title course-title">{{ $course->name }}</h5>
+                                    <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
+                                </div>
+                                <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
+                                    <span class="text-danger font-weight-bold">500.000đ</span>
+                                    <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .card:hover .course-title {
+            color: blue;
+        }
+
+        .trendy-course:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-filter:hover .course-image {
+            transform: scale(1.02);
+        }
+
+        .avatar-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .teacher-card:hover .avatar-container {
+            transform: scale(1.05);
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</div>

@@ -1,6 +1,6 @@
 @extends('layouts.client.client')
 @section('content')
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-8">
             <div class="iq-card">
                 <div class="iq-edit-list">
