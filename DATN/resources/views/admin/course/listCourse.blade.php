@@ -3,12 +3,9 @@
 @section('title', 'Danh sách khóa học')
 
 @section('content')
-
     <div class="container-fluid">
         <div class="row">
-
-            <livewire:course.render-course />
-
+            <livewire:admin.course />
         </div>
     </div>
     <script>
@@ -27,8 +24,19 @@
             document.getElementById("overlay").style.display = "none";
         }
     </script>
-
+    
     <style>
+        .modal-content {
+            max-height: 90vh;
+            overflow-y: 90vh;
+            padding-right: 15px;
+        }
+
+        .modal-body-scrollable {
+            max-height: calc(90vh - 100px);
+            overflow-y: auto;
+        }
+
         .modal {
             display: none;
             opacity: 0;

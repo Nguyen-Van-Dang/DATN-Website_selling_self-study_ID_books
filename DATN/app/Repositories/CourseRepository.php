@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\Course;
+use App\Models\Courses;
 
 class CourseRepository
 {
@@ -14,7 +14,7 @@ class CourseRepository
     }
 
     public function getAllCourse() {
-        $Course = Course::getAll();
+        $Course = Courses::getAll();
         return view('admin.course.listCourse', ['Course' => $Course]);
     }
 }

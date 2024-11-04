@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255)->nullable();
             $table->foreignId('course_id')->nullable()->constrained('courses')->onDelete('set null');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('lecture_categories_id')->nullable()->constrained('lecture_categories')->onDelete('set null');
             $table->string('video_url', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();

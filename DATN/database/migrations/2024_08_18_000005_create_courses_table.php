@@ -16,9 +16,11 @@ return new class extends Migration
 
             $table->string('name', 255);
             $table->float('price');
-            $table->integer('amount_lecture');
+            $table->float('discount');
+            $table->integer('amount_lecture')->nullable();
             $table->text('description');
-            $table->string('image_url', 255);
+            $table->string('image_url', 255)->nullable();
+            $table->boolean('status')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('course_categories_id')->nullable()->constrained('course_categories')->onDelete('set null');
             $table->softDeletes();

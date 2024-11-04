@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    @livewireStyles
+
     <title>@yield('title', 'TRANG CHỦ ADMIN')</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
     <meta charset="UTF-8">
@@ -12,7 +14,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
-    <livewire:styles />
 </head>
 
 <body>
@@ -25,7 +26,6 @@
         </div>
         <div id="content-page" class="content-page">
             @yield('content')
-            <livewire:scripts />
         </div>
         <footer class="iq-footer">
             <x-admin.footer></x-admin.footer>
@@ -60,6 +60,8 @@
     <script src="{{ asset('assets/js/style-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/chart-custom.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    @livewireScripts
+
 </body>
 
 </html>

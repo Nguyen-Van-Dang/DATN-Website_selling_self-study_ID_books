@@ -146,7 +146,8 @@
         </div>
     </div>
     <!-- Popup xóa danh mục -->
-    <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseCateModal" wire:click="closePopup()">
+    <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseCateModal"
+        wire:click="closePopup()">
         <div class="modal-content" style="width: 30%;" wire:click.stop>
             <div class="col-12 text-center">
                 <div class="col-sm-12">
@@ -157,10 +158,12 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                        <form wire:submit.prevent="deleted" style="padding: 25px;">
-                            <button type="submit" class="btn btn-primary" style="width: 100px; height: 40px;">Xác Nhận</button>
-                            <button type="reset" class="btn btn-danger" wire:click="closePopup()" style="width: 100px; height: 40px;">Hủy</button>
-                        </form>
+                            <form wire:submit.prevent="deleted" style="padding: 25px;">
+                                <button type="submit" class="btn btn-primary"
+                                    style="width: 100px; height: 40px;">Xác Nhận</button>
+                                <button type="reset" class="btn btn-danger" wire:click="closePopup()"
+                                    style="width: 100px; height: 40px;">Hủy</button>
+                            </form>
                         </div>
                     </div>
                 </div>
