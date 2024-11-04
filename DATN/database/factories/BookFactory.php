@@ -3,8 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\BookCategories;
-use App\Models\CategoryBook;
-use App\Models\Course;
+use App\Models\Courses;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -17,7 +16,7 @@ class BookFactory extends Factory
             'name' => $this->faker->sentence(3),
             'price' => $this->faker->randomFloat(2, 100, 1000),
             'page_number' => $this->faker->numberBetween(1, 50),
-            'course_id' => Course::inRandomOrder()->first()->id,
+            'course_id' => Courses::inRandomOrder()->first()->id,
             'description' => $this->faker->paragraph(3),
             'quantity' => $this->faker->numberBetween(1, 100),
             'book_activate_id' => $this->faker->numberBetween(1, 5),

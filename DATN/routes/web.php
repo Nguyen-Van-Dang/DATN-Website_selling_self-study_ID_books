@@ -64,7 +64,7 @@ Route::get('/maintenance', function () {
 /* --------------- ADMIN GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin', function () { return view('admin.home');})->name('homeAdmin');
-    Route::get('/admin/user-info', function () { return view('admin.user.userInfo');})->name('userInfo');
+    Route::get('/admin/thong-tin-nguoi-dung', function () { return view('admin.user.userInfo');})->name('userInfo');
 });
 /* --------------- ORDER GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
@@ -75,15 +75,13 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 
 /* --------------- CATEGORY-COURSE GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('list-CategoryCourse', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
+    Route::get('/admin/danh-muc-khoa-hoc', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
 });
 
 /* --------------- COURSE GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Course', [CourseController::class, 'getAllCourse'])->name('listCourse');
-    Route::get('/admin/add-Course', function () { return view('admin.course.addCourse');})->name('addCourse');
-    Route::get('/admin/update-Course', function () { return view('admin.course.updateCourse');})->name('updateCourse');
-    Route::get('/admin/detail-Course', function () { return view('admin.course.updateCourse');})->name('detailCourse');
+    Route::get('/admin/khoa-hoc/danh-sach-khoa-hoc', [CourseController::class, 'getAllCourse'])->name('listCourse');
+    Route::get('/admin/khoa-hoc/them-khoa-hoc', function () { return view('admin.course.addCourse');})->name('addCourse');
 });
 
 /* --------------- CATEGORY-BOOK GROUP --------------- */
@@ -100,14 +98,6 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/add-Book', function () { return view('admin.book.addBook');})->name('addBook');
     Route::get('/admin/update-Book', function () { return view('admin.book.updateBook');})->name('updateBook');
     Route::get('/admin/detail-Book', function () { return view('admin.book.detailBook');})->name('detailBook');
-});
-
-/* --------------- LECTURE GROUP --------------- */
-Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Lecture', function () { return view('admin.lecture.listLecture');})->name('listLecture');
-    Route::get('/admin/add-Lecture', function () { return view('admin.lecture.addLecture');})->name('addLecture');
-    Route::get('/admin/update-Lecture', function () { return view('admin.lecture.updateLecture');})->name('updateLecture');
-    Route::get('/admin/detail-Lecture', function () { return view('admin.lecture.detailLecture');})->name('detailLecture');
 });
 
 //Abc

@@ -6,7 +6,7 @@ use App\Models\Book;
 use App\Models\BookCategories;
 use App\Models\CourseCategories;
 use App\Models\Contact;
-use App\Models\Course;
+use App\Models\Courses;
 use App\Models\Lecture;
 use App\Models\Order;
 use App\Models\Role;
@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Notification;
 use App\Models\NotificationUser;
 use App\Models\PaymentMethods;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -50,7 +49,7 @@ class DatabaseSeeder extends Seeder
         Notification::factory(15)->create();
         NotificationUser::factory(15)->create();
         CourseCategories::factory(15)->create();
-        Course::factory(15)->create();
+        Courses::factory(15)->create();
         BookCategories::factory(15)->create();
         Book::factory(15)->create();
         Lecture::factory(15)->create();

@@ -27,7 +27,7 @@ class Book extends Model
 
     public function Course(): BelongsTo
     {
-        return $this->BelongsTo(Course::class);
+        return $this->BelongsTo(Courses::class);
     }
 
     public function User(): BelongsTo
