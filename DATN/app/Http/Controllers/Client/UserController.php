@@ -78,15 +78,18 @@ class UserController extends Controller
     }
 
 
+    // public function redirectToZalo()
+    // {
+    //     return Socialite::driver('zalo')->redirect();
     public function redirectToZalo()
     {
-        return Socialite::driver('zalo')->redirect();
+    // }
+        return Socialite::driver('zalo')
+            ->scopes(['email', 'phone']) // Thêm phạm vi quyền
+            ->redirect();
     }
-    
     public function handleZaloCallback(Request $request)
     {
         return $this->userRepository->handleZaloCallback($request);
     }
-    
-    
 }

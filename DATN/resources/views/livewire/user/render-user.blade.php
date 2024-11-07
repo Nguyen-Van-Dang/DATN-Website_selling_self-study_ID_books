@@ -12,7 +12,9 @@
                 </form>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
-                <a href="{{ route('nguoi-dung.create') }}" class="btn btn-primary">Thêm tài khoản</a>
+                {{-- <a href="{{ route('nguoi-dung.create') }}"  class="btn btn-primary">Thêm tài khoản</a> --}}
+                <a wire:click="openPopup('add')" class="btn btn-primary">Thêm tài khoản</a>
+
             </div>
         </div>
         <div class="iq-card-body">
@@ -23,9 +25,11 @@
                             <th>Mã Số</th>
                             <th>Ảnh</th>
                             <th>Tên người dùng</th>
-                            <th>Vai trò</th>
+                  
                             <th>Số điện thoại</th>
                             <th>Email</th>
+                            <th>Vai trò</th>
+                            <th>Trạng Thái</th>
                             <th>Hoạt động</th>
                         </tr>
                     </thead>
@@ -37,27 +41,30 @@
                                 <td>
                                     <img src="{{ $item->image_url }}" class="img-fluid avatar-50 rounded"
                                         alt="">
+                                      
                                 </td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->role->name }}</td>
+                                {{-- <td>{{ $item->role_id->name }}</td> --}}
+                            
+
                                 <td>{{ $item->phone }}</td>
                                 <td>{{ $item->email }}</td>
+                                <td>{{ $item->role_id}}</td>
+                                <td>{{ $item->status}}</td>
                                 <td>
                                     <div class="flex align-items-center list-user-action">
-                                        <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"
-                                            href="#"><i class="ri-eye-line"></i></a>
-                                        <a class="bg-primary" data-toggle="tooltip" title="Chỉnh sửa"
-                                            href="{{ route('nguoi-dung.edit', $item->id) }}"><i
-                                                class="ri-pencil-line"></i></a>
-                                        <a id="deleteButton-{{ $item->id }}" class="bg-primary text-white"
-                                            href="" data-toggle="tooltip" title="Xóa"><i
-                                                class="ri-delete-bin-line"></i></a>
+                                        <a class="bg-primary text-white" data-toggle="tooltip" title="Xem chi tiết">
+                                            <i class="ri-eye-line"></i>
+                                        </a>
+                                        <a class="bg-primary text-white" data-toggle="tooltip" title="Chỉnh sửa"
+                                            wire:click="openPopup('edit', {{ $item->id }})">
+                                            <i class="ri-pencil-line"></i>
+                                        </a>
+                                        <a class="bg-primary text-white" data-toggle="tooltip" title="Xóa"
+                                            wire:click="openPopup('delete', {{ $item->id }})">
+                                            <i class="ri-delete-bin-line"></i>
+                                        </a>
                                     </div>
-                                    <form action="{{ route('nguoi-dung.destroy', $item->id) }}" method="POST"
-                                        id="delete-form-{{ $item->id }}" style="display:none">
-                                        @method('DELETE')
-                                        @csrf
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -77,47 +84,145 @@
         </div>
     </div>
 
-    <!-- Popup xác nhận -->
-    <div id="confirmPopup"
-        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
-        <p>Bạn có chắc chắn muốn xóa tài khoản này không?</p>
-        <div class="text-center">
-            <button id="yesButton"
-                style="width: 90px; height: 35px; border: none; color: white; background: #11e1c2; border-radius: 5px;">
-                Xác nhận
-            </button>
-            <button id="noButton"
-                style="width: 90px; height: 35px; border: none; color: black; background-color: #0000000e; border-radius: 5px;">
-                Trở về
-            </button>
+
+
+    {{-- them nguoi dung --}}
+    <div class="modal {{ $isAddPopupOpen ? 'is-open' : '' }}" id="addCourseCateModal" wire:click="closePopup()">
+        <div class="modal-content" wire:click.stop>
+            <span class="close" wire:click="closePopup()">&times;</span>
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Thêm người dùng</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form wire:submit.prevent="createUser">
+                            <div class="form-group">
+                                <label>Tên tài khoản:</label>
+                                <input wire:model="name" type="text" class="form-control" placeholder="Nhập tên tài khoản...">
+                            </div>
+                            <div class="form-group">
+                                <label>Ảnh tài khoản:</label>
+                                <div class="custom-file">
+                                    <input wire:model="image_url"  type="file" class="custom-file-input" id="image_url">
+                                    <label class="custom-file-label" for="image_url" style="z-index: 0;">Chọn tập
+                                        tin</label>
+                                </div>
+                            </div> <div class="form-group">
+                                <label>Phone:</label>
+                                <input wire:model="phone" type="phone" class="form-control" placeholder="Nhập phone...">
+                            </div>
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input wire:model="email" type="email" class="form-control" placeholder="Nhập email...">
+                            </div>
+                            <div class="form-group">
+                                <label>Vai trò:</label>
+                                <select class="form-control" wire:model="role_id">
+                                    <option value="1">Admin</option>
+                                    <option value="2">Giáo viên</option>
+                                    <option value="3">Học sinh</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng thái:</label>
+                                <select class="form-control" wire:model="status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Màn che -->
-    <div id="overlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;">
+
+    {{-- sua nguoi dung --}}
+    <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="isEditPopupOpen" wire:click="closePopup()">
+        <div class="modal-content" wire:click.stop>
+            <span class="close" wire:click="closePopup()">&times;</span>
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Sửa người dùng</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form wire:submit.prevent="updateUser">
+                            <div class="form-group">
+                                <label>Tên tài khoản:</label>
+                                <input wire:model="nameAdd" type="text" class="form-control" placeholder="Nhập tên tài khoản...">
+
+                            </div>
+                            <div class="form-group">
+                                <label>Ảnh tài khoản:</label>
+                                <div class="custom-file">
+                                    <input wire:model="image_urlAdd" type="file" class="custom-file-input" id="image_urlAdd">
+                                    <label class="custom-file-label" for="image_urlAdd" style="z-index: 0;">Chọn tập tin</label>
+                                </div>
+                          
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input wire:model="emailAdd" type="email" class="form-control" placeholder="Nhập email...">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone:</label>
+                                <input wire:model="phoneAdd" type="phone" class="form-control" placeholder="Nhập sdt...">
+                            </div>
+                            <div class="form-group">
+                                <label>Vai trò:</label>
+                                <select wire:model="role_idAdd" class="form-control">
+                                    <option value="">Chọn vai trò</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Giáo viên</option>
+                                    <option value="3">Học sinh</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng thái:</label>
+                                <select wire:model="statusAdd"  class="form-control">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup xóa danh mục -->
+    <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseCateModal" wire:click="closePopup()">
+        <div class="modal-content" style="width: 30%;" wire:click.stop>
+            <div class="col-12 text-center">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Bạn có chắc chắn xóa hay không?</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                        <form wire:submit.prevent="deleted" style="padding: 25px;">
+                            <button type="submit" class="btn btn-primary" style="width: 100px; height: 40px;">Xác Nhận</button>
+                            <button type="reset" class="btn btn-danger" wire:click="closePopup()" style="width: 100px; height: 40px;">Hủy</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
-<script>
-    document.querySelectorAll('[id^=deleteButton-]').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            // Lấy ID tài khoản từ nút xóa
-            const userId = this.id.split('-')[1];
-            // Hiển thị popup và màn che
-            document.getElementById('confirmPopup').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-            // Gán sự kiện cho nút Xác nhận
-            document.getElementById('yesButton').onclick = function() {
-                // Gửi form xóa tài khoản
-                document.getElementById(`delete-form-${userId}`).submit();
-            };
-        });
-    });
-    // Ẩn popup khi nhấn nút "Trở về"
-    document.getElementById('noButton').addEventListener('click', function() {
-        document.getElementById('confirmPopup').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    });
-</script>

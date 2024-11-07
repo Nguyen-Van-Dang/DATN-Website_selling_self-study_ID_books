@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\ReelComment;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
@@ -21,16 +22,19 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'id',
+        'zalo_id',
         'name',
-        'email',
-        'password',
         'image_url',
         'phone',
+        'email',
+        'password',
         'loginType',
-        'role_id',
         'token',
+        'role_id',
         'delete_at',
-        'zalo_id',
+        'created_at',
+        'updated_at',
+
     ];
 
     public function Role(): BelongsTo
@@ -52,15 +56,18 @@ class User extends Authenticatable
     }
 
 
-    public  function Book() : HasMany{
+    public  function Book(): HasMany
+    {
         return $this->hasMany(Book::class);
     }
 
-    public  function Course() : HasMany{
+    public  function Course(): HasMany
+    {
         return $this->hasMany(Courses::class);
     }
 
-    public  function Lecture() : HasMany{
+    public  function Lecture(): HasMany
+    {
         return $this->hasMany(Lecture::class);
     }
 
@@ -82,7 +89,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
-    
+
     public function followers()
     {
         return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
