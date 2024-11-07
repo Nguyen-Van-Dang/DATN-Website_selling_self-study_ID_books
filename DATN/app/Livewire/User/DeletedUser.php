@@ -17,7 +17,7 @@ class DeletedUser extends Component
     {
         $users = User::onlyTrashed()->paginate(1);
 
-        return view('livewire.user.user-deleted', [
+        return view('livewire.user.user-render', [
             'users' => $users
         ]);
     }

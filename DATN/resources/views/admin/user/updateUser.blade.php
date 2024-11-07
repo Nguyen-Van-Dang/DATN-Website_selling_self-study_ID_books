@@ -27,22 +27,26 @@
                       </div>
                    </div>
                    <div class="form-group">
+                     <label>Phone:</label>
+                     <input type="phone" class="form-control" placeholder="Nhập phone...">
+                  </div>
+                   <div class="form-group">
                       <label>Email:</label>
                       <input type="email" class="form-control" placeholder="Nhập email...">
                    </div>
                    <div class="form-group">
                       <label>Vai trò:</label>
                       <select class="form-control">
-                        <option value="admin">Admin</option>
-                        <option value="teacher">Giáo viên</option>
-                        <option value="student">Học sinh</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Giáo viên</option>
+                        <option value="3">Học sinh</option>
                     </select>
                    </div>
                    <div class="form-group">
                     <label>Trạng thái:</label>
                     <select class="form-control">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
                     </select>
                     </div>
                    <button type="submit" class="btn btn-primary">Gửi</button>

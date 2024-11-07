@@ -81,9 +81,9 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 /* --------------- COURSE GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/list-Course', [CourseController::class, 'getAllCourse'])->name('listCourse');
-    Route::get('/admin/add-Course', function () { return view('admin.course.addCourse');})->name('addCourse');
-    Route::get('/admin/update-Course', function () { return view('admin.course.updateCourse');})->name('updateCourse');
-    Route::get('/admin/detail-Course', function () { return view('admin.course.updateCourse');})->name('detailCourse');
+    // Route::get('/admin/add-Course', function () { return view('admin.course.addCourse');})->name('addCourse');
+    // Route::get('/admin/update-Course', function () { return view('admin.course.updateCourse');})->name('updateCourse');
+    // Route::get('/admin/detail-Course', function () { return view('admin.course.updateCourse');})->name('detailCourse');
 });
 
 /* --------------- CATEGORY-BOOK GROUP --------------- */
@@ -135,10 +135,10 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::resource('/admin/nguoi-dung', UserController::class)->names('nguoi-dung');
     Route::get('/admin/user-list', [UserController::class, 'index'])->name('listUser');
-    Route::get('/admin/user-add', function () { return view('admin.user.addUser');})->name('addUser');
-    Route::get('/admin/user-update', function () { return view('admin.user.updateUser');})->name('updateUser');
-    Route::get('/admin/user-detail', function () { return view('admin.user.detailUser');})->name('detailUser');
-    Route::get('/admin/user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
+    // Route::get('/admin/user-add', function () { return view('admin.user.addUser');})->name('addUser');
+    // Route::get('/admin/user-update', function () { return view('admin.user.updateUser');})->name('updateUser');
+    // Route::get('/admin/user-detail', function () { return view('admin.user.detailUser');})->name('detailUser');
+    // Route::get('/admin/user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
     // Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
 });
 

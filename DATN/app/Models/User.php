@@ -19,17 +19,32 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    // protected $fillable = [
+    //     'name',
+    //     'image_url',
+    //     'email',
+    //     'phone',
+    //     'password',
+    //     'loginType',
+    //     'role_id',
+    //     'token',
+    //     'delete_at',
+    //     'zalo_id',
+    // ];
+      protected $fillable = [
+        'zalo_id',
         'name',
-        'email',
-        'password',
         'image_url',
         'phone',
+        'email',
+        'password',
         'loginType',
-        'role_id',
         'token',
+        'role_id',
         'delete_at',
-        'zalo_id',
+        'created_at',
+        'updated_at',
+       
     ];
 
     public function Role(): BelongsTo
