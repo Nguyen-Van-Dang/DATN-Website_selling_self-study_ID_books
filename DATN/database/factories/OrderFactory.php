@@ -18,6 +18,9 @@ class OrderFactory extends Factory
         return [
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'user_id' => User::inRandomOrder()->first()->id,
+            'user_phone' => '0' . $this->faker->numberBetween(100000000, 999999999),
+            'user_name' => $this->faker->name(),
+            'address' => $this->faker->address(),
             'payment_methods_id' => PaymentMethods::inRandomOrder()->first()->id,
         ];
     }

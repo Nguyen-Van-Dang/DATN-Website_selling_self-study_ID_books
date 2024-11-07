@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\ReelComment;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
@@ -49,15 +50,18 @@ class User extends Authenticatable
     }
 
 
-    public  function Book() : HasMany{
+    public  function Book(): HasMany
+    {
         return $this->hasMany(Book::class);
     }
 
-    public  function Course() : HasMany{
+    public  function Course(): HasMany
+    {
         return $this->hasMany(Course::class);
     }
 
-    public  function Lecture() : HasMany{
+    public  function Lecture(): HasMany
+    {
         return $this->hasMany(Lecture::class);
     }
 
@@ -71,6 +75,16 @@ class User extends Authenticatable
         return $this->hasMany(CategoryBook::class);
     }
 
+    public function Favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function cartDetails()
+    {
+        return $this->hasMany(CartDetail::class);
+    }
+
     public function NotificationUser(): BelongsTo
     {
         return $this->BelongsTo(NotificationUser::class);
@@ -79,7 +93,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
-    
+
     public function followers()
     {
         return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
@@ -107,8 +121,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
-    public static function getAll(){
+
+    public static function getAll()
+    {
         return self::all();
     }
 }

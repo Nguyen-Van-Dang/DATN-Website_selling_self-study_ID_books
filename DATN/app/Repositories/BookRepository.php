@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Book;
+use App\Models\Favorite;
 
 class BookRepository
 {
@@ -14,8 +15,13 @@ class BookRepository
         //
     }
 
-    public function getAllBook() {
+    public function getAllBook()
+    {
         $Book = Book::getAll();
         return view('admin.book.listBook', ['Book' => $Book]);
+    }
+    public function getAllBookClient()
+    {
+        return view('client.book.book');
     }
 }

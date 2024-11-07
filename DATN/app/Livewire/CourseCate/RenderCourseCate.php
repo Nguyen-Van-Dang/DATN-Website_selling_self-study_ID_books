@@ -18,7 +18,7 @@ class RenderCourseCate extends Component
 
     // public $isPopupOpen = false;
     public $isAddPopupOpen = false;
-public $isEditPopupOpen = false;
+    public $isEditPopupOpen = false;
     public $editingId;
     protected $paginationTheme = 'bootstrap';
 
@@ -33,7 +33,6 @@ public $isEditPopupOpen = false;
         return view('livewire.courseCate.render-courseCate', [
             'courseCate' => $courseCate,
         ]);
-
     }
 
     public function openPopup($type, $id = null)
@@ -53,7 +52,6 @@ public $isEditPopupOpen = false;
     {
         $this->isAddPopupOpen = false;
         $this->isEditPopupOpen = false;
-
     }
     public function updated($fields)
     {

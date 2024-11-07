@@ -11,24 +11,34 @@ class Order extends Model
 {
     use HasFactory;
 
-    public function User()
-{
-    return $this->belongsTo(User::class);
-}
-    
+    protected $fillable = [
+        'price',
+        'payment_status',
+        'user_name',
+        'user_phone',
+        'address',
+        'payment_method',
+        'user_id',
+    ];
+
+    public function User(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderDetails(): HasMany
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
     public function PaymentMethods(): BelongsTo
     {
         return $this->BelongsTo(PaymentMethods::class);
     }
 
-    protected $fillable = [
-        'price',
-        'payment_status',
-        'payment_method',
-        'user_id'
-    ];
 
-    public static function getAll(){
+    public static function getAll()
+    {
         return self::all();
     }
 }

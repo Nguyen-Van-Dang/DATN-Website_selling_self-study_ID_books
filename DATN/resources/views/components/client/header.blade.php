@@ -116,68 +116,75 @@
                         <i class="ri-mail-line"></i>
                         <span class="bg-primary dots"></span>
                     </a>
-                        <div class="iq-sub-dropdown">
-                            <div class="iq-card shadow-none m-0">
-                                <div class="iq-card-body p-0 ">
-                                    <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white">Tin Nhắn<small
-                                                class="badge  badge-light float-right pt-1">5</small></h5>
-                                    </div>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="media align-items-center">
-                                            <div class="">
-                                                <img class="avatar-40 rounded"
-                                                    src="{{ asset('assets/images/book/user/4.jpg') }}" alt="">
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">QT Shop</h6>
-                                                <small class="float-left font-size-12">9/9/2024</small>
-                                            </div>
+                    <div class="iq-sub-dropdown">
+                        <div class="iq-card shadow-none m-0">
+                            <div class="iq-card-body p-0 ">
+                                <div class="bg-primary p-3">
+                                    <h5 class="mb-0 text-white">Tin Nhắn<small
+                                            class="badge  badge-light float-right pt-1">5</small></h5>
+                                </div>
+                                <a href="#" class="iq-sub-card">
+                                    <div class="media align-items-center">
+                                        <div class="">
+                                            <img class="avatar-40 rounded"
+                                                src="{{ asset('assets/images/book/user/4.jpg') }}" alt="">
                                         </div>
-                                    </a>
-                                    <div class="text-center ">
-                                        <p>
-                                            {{-- <a href="{{ route('messageList') }}">Tất cả tin nhắn</a> --}}
-                                            <a href="">Tất cả tin nhắn</a>
-                                        </p>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">QT Shop</h6>
+                                            <small class="float-left font-size-12">9/9/2024</small>
+                                        </div>
                                     </div>
+                                </a>
+                                <div class="text-center ">
+                                    <p>
+                                        {{-- <a href="{{ route('messageList') }}">Tất cả tin nhắn</a> --}}
+                                        <a href="">Tất cả tin nhắn</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </li>
                 {{-- cart --}}
                 <li class="nav-item nav-icon dropdown">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                         <i class="ri-shopping-cart-2-line"></i>
-                        <span class="badge badge-danger count-cart rounded-circle">2</span>
+                        <span class="badge badge-danger count-cart rounded-circle">{{ $cartCount }}</span>
                     </a>
                     <div class="iq-sub-dropdown">
                         <div class="iq-card shadow-none m-0">
                             <div class="iq-card-body p-0 toggle-cart-info">
                                 <div class="bg-primary p-3">
                                     <h5 class="mb-0 text-white">Giỏ Hàng<small
-                                            class="badge  badge-light float-right pt-1">2</small></h5>
+                                            class="badge badge-light float-right pt-1">{{ $cartCount }}</small>
+                                    </h5>
                                 </div>
-                                <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                        <div class="">
-                                            <img class="rounded" src="{{ asset('assets/images/book/book/03.jpg') }}"
-                                                alt="">
+                                @foreach ($cartItems as $item)
+                                    <a href="" class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div>
+                                                <img class="rounded"
+                                                    src="{{ asset('assets/images/book/book/02.jpg') }}"
+                                                    alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0">Tên: {{ $item->book->name }}</h6>
+                                                <p class="mb-0">Giá: ${{ $item->book->price * $item->quantity }}</p>
+                                                <p class="mb-0">Số Lượng: {{ $item->quantity }}</p>
+                                            </div>
+                                            <div class="float-right font-size-24 text-danger">
+                                                <i class="ri-close-fill"
+                                                    onclick="removeFromCart({{ $item->id }})"
+                                                    style="cursor: pointer;"></i>
+                                            </div>
                                         </div>
-                                        <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">Night People book</h6>
-                                            <p class="mb-0">$32</p>
-                                        </div>
-                                        <div class="float-right font-size-24 text-danger"><i
-                                                class="ri-close-fill"></i></div>
-                                    </div>
-                                </a>
+                                    </a>
+                                @endforeach
                                 <div class="align-items-center text-center p-3">
                                     <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
                                         role="button">Giỏ Hàng</a>
                                     <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
-                                        role="button">Thanh
-                                        Toán</a>
+                                        role="button">Thanh Toán</a>
                                 </div>
                             </div>
                         </div>
@@ -185,13 +192,13 @@
                 </li>
                 {{-- reels --}}
                 @if (auth()->check() && in_array(Auth::user()->role_id, [1, 2]))
-                <li class="nav-item nav-icon dropdown">
-                    <a href="{{ route('reelsUpload') }}" class="text-gray rounded">
-                        <i class="ri-upload-cloud-line"></i>
-                        {{-- <span class="badge badge-danger count-cart rounded-circle">2</span> --}}
-                    </a>
-                </li>
-            @endif            
+                    <li class="nav-item nav-icon dropdown">
+                        <a href="{{ route('reelsUpload') }}" class="text-gray rounded">
+                            <i class="ri-upload-cloud-line"></i>
+                            {{-- <span class="badge badge-danger count-cart rounded-circle">2</span> --}}
+                        </a>
+                    </li>
+                @endif
                 {{-- user --}}
                 @if (auth()->check())
                     <li class="line-height pt-3">
@@ -200,7 +207,7 @@
                                 class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption"
                                 @php
-                                    $userName = Auth::user()->name;
+$userName = Auth::user()->name;
                                     $displayName = Str::limit($userName, 10, '...'); @endphp>
                                 <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                 <p class="mb-0 text-primary">Tài Khoản</p>
@@ -584,3 +591,26 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 </style>
+
+<script>
+    function removeFromCart(cartId) {
+        console.log("Removing cart item with ID:", cartId);
+        fetch(`/cart/remove/${cartId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>

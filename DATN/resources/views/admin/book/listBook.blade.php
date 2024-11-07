@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            
+
             <livewire:book.render-book />
 
         </div>
