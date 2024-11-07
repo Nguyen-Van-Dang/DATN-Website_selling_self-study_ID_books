@@ -113,7 +113,7 @@
                                                         <p class="font-size-13 line-height mb-1">{{ $user->name }}</p>
                                                     </div>
                                                     <div class="price d-flex align-items-center">
-                                                        <h6><b>${{ $item->price }}</b></h6>
+                                                        <h6><b>{{ number_format($item->price) }}đ</b></h6>
                                                     </div>
                                                     <div class="iq-product-action">
                                                         <a href="javascript:void(0);"
@@ -179,7 +179,7 @@
                                                 </div>
                                             </div>
                                             <div class="price d-flex align-items-center">
-                                                <h6><b>${{ $item->price }}</b></h6>
+                                                <h6><b>{{ number_format($item->price) }}đ</b></h6>
                                             </div>
                                             <div class="iq-product-action">
                                                 <a href="javascript:void(0);"
@@ -229,7 +229,7 @@
                                             <div class="mb-2">
                                                 <h6 class="mb-1">{{ $item['name'] }}</h6>
                                                 <div class="price d-flex align-items-center">
-                                                    <h6><b>${{ $item['price'] }}</b></h6>
+                                                    <h6><b>{{ number_format($item->price) }}đ</b></h6>
                                                 </div>
                                                 <div class="iq-product-action">
                                                     <a href="javascript:void(0);"

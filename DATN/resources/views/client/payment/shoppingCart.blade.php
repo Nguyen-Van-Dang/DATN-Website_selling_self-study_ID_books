@@ -403,5 +403,25 @@
             }
         }
     </script>
+    <script>
+        function removeFromCart(id) {
+            fetch(`/remove-from-cart/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cập nhật giao diện, ví dụ: reload lại giỏ hàng hoặc cập nhật số lượng
+                        alert(data.message);
+                        location.reload(); // Reload để cập nhật lại danh sách sản phẩm
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 
 @endsection

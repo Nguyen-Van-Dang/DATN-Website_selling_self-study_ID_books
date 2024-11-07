@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="navbar-breadcrumb px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
-                    <a href="{{ route('khoa-hoc') }}" class="iq-waves-effect rounded">
+                    <a href="{{ route('khoa-hoc.index') }}" class="iq-waves-effect rounded">
                         <h6 class="mb-0">Khóa học</h6>
                     </a>
                 </div>
@@ -150,41 +150,55 @@
                     <li class="nav-item nav-icon dropdown">
                         <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                             <i class="ri-shopping-cart-2-line"></i>
-                            <span class="badge badge-danger count-cart rounded-circle">{{ $cartCount }}</span>
+                            <span class="badge badge-danger count-cart rounded-circle">
+                                {{ auth()->check() ? $cartCount : 0 }}
+                            </span>
                         </a>
                         <div class="iq-sub-dropdown">
                             <div class="iq-card shadow-none m-0">
                                 <div class="iq-card-body p-0 toggle-cart-info">
                                     <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white">Giỏ Hàng<small
-                                                class="badge badge-light float-right pt-1">{{ $cartCount }}</small>
+                                        <h5 class="mb-0 text-white">
+                                            Giỏ Hàng
+                                            <small
+                                                class="badge badge-light float-right pt-1">{{ auth()->check() ? $cartCount : 0 }}</small>
                                         </h5>
                                     </div>
-                                    <div style="overflow-y: auto; max-height: 350px;">
+                                    @if (auth()->check() && $cartCount > 0)
                                         @foreach ($cartItems as $item)
-                                            <a href="javascript:void(0);" class="iq-sub-card pb-2">
-                                                <div class="media align-items-center">
-                                                    <div>
-                                                        <img class="rounded"
-                                                            src="{{ asset('assets/images/book/book/02.jpg') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <h6 class="mb-0">Tên: {{ $item->book->name }}</h6>
-                                                        <p class="mb-0">Giá:
-                                                            ${{ $item->book->price * $item->quantity }}
-                                                        </p>
-                                                        <p class="mb-0">Số Lượng: {{ $item->quantity }}</p>
-                                                    </div>
-                                                    <div class="float-right font-size-24 text-danger">
-                                                        <i class="ri-close-fill"
-                                                            wire:click="removeFromCart({{ $item->id }})"
-                                                            style="cursor: pointer;"></i>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <a class="iq-sub-card">
+                                                        <div class="media align-items-center">
+                                                            <div>
+                                                                <img class="rounded"
+                                                                    src="{{ asset('assets/images/book/book/02.jpg') }}"
+                                                                    alt="">
+                                                            </div>
+                                                            <div class="media-body ml-3">
+                                                                <h6 class="mb-0">Tên: {{ $item->book->name }}</h6>
+                                                                <p class="mb-0">Giá:
+                                                                    ${{ $item->book->price * $item->quantity }}</p>
+                                                                <p class="mb-0">Số Lượng: {{ $item->quantity }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </a>
+                                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                                    <a style="padding-right: 20px">
+                                                        <div class="font-size-24 text-danger"
+                                                            style="cursor: pointer;">
+                                                            <i class="ri-close-fill"
+                                                                wire:click="removeFromCart({{ $item->id }})"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                            </div>
                                         @endforeach
-                                    </div>
+                                    @else
+                                        <p class="text-center p-3">Giỏ hàng trống</p>
+                                    @endif
                                     <div class="align-items-center text-center p-3">
                                         <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
                                             role="button">Giỏ Hàng</a>

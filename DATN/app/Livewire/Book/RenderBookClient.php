@@ -25,7 +25,7 @@ class RenderBookClient  extends Component
     {
 
         $book = Book::findOrFail($bookId);
-        $user = auth()->user();
+        $user = auth::user();
         $cartItem = $user->cartDetails()->where('book_id', $bookId)->first();
 
         if (!$user) {
@@ -41,6 +41,7 @@ class RenderBookClient  extends Component
             $cartItem->quantity = 1;
             $cartItem->save();
         }
+        toastr()->success('<p>Sản phẩm đã được thêm vào giỏ hàng!</p>');
         // $this->dispatch('cartUpdated');
         return response()->json(['success' => true, 'message' => 'Sản phẩm đã được thêm vào giỏ hàng!', 'cartCount' => $user->cartDetails->sum('quantity')]);
     }
@@ -48,7 +49,7 @@ class RenderBookClient  extends Component
     public function toggleFavorite($id)
     {
         $book = Book::findOrFail($id);
-        $user = auth()->user();
+        $user = auth::user();
 
         if (!$user) {
             return response()->json(['success' => false, 'message' => 'Vui lòng đăng nhập!'], 401);

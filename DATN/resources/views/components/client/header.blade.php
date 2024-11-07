@@ -27,7 +27,7 @@
                 </a>
             </div>
             <div class="navbar-breadcrumb px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
-                <a href="{{ route('khoa-hoc.index') }}" class="iq-waves-effect rounded">
+                <a href="{{ route('khoa-hoc') }}" class="iq-waves-effect rounded">
                     <h6 class="mb-0">Khóa học</h6>
                 </a>
             </div>
@@ -337,8 +337,8 @@ $userName = Auth::user()->name;
                                         </a>
                                     @endif
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a href="{{ route('logout') }}" class="bg-primary iq-sign-btn"
-                                            id="openPopup1" role="button">
+                                        <a class="bg-primary iq-sign-btn" href="{{ route('logout') }}"
+                                            role="button">
                                             Sign out<i class="ri-login-box-line ml-2"></i>
                                         </a>
                                     </div>
@@ -393,7 +393,7 @@ $userName = Auth::user()->name;
                                                     <a href="{{ route('login-by-facebook') }}" class="social-icon">
                                                         <i class="fab fa-facebook-f"></i>
                                                     </a>
-                                                    <a href="{{ route('login-by-zalo') }}" class="social-icon">
+                                                    <a href="#" class="social-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                             width="100" height="30px" viewBox="0 0 50 50">
                                                             <path
@@ -437,7 +437,7 @@ $userName = Auth::user()->name;
                                                     <a href="#" class="social-icon">
                                                         <i class="fab fa-facebook-f"></i>
                                                     </a>
-                                                    <a href="" class="social-icon">
+                                                    <a href="#" class="social-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                             width="100" height="30px" viewBox="0 0 50 50">
                                                             <path
@@ -527,7 +527,6 @@ $userName = Auth::user()->name;
         <a class="btn btn-primary d-block mt-3" href="">Mua Ngay</a>
     </div>
 </div>
-
 <style>
     a {
         text-decoration: none

@@ -191,9 +191,6 @@ Route::get('/user-information', function () {
 Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
 
 //giỏ hàng
-// Route::get('/shopping-cart', function () {
-//     return view('client.payment.shoppingCart');
-// })->name('shoppingCart');
 Route::get('/shopping-cart', [CartDetailController::class, 'getAllCartDetail'])->name('shoppingCart');
 Route::post('/cart/add/{id}', [RenderBookClient::class, 'addToCart'])->name('addToCart');
 Route::delete('/cart/remove/{id}', [CartDetailController::class, 'removeFromCart'])->name('removeFromCart');

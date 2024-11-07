@@ -80,7 +80,8 @@ class User extends Authenticatable
     }
     public function cartDetails()
     {
-        return $this->hasMany(CartDetail::class);
+        // return $this->hasMany(CartDetail::class);
+        return $this->hasMany(CartDetail::class, 'user_id');
     }
     public function NotificationUser(): BelongsTo
     {

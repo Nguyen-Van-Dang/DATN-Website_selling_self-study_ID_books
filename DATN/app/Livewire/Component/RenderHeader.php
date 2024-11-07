@@ -4,6 +4,7 @@ namespace App\Livewire\Component;
 
 use App\Models\CartDetail;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class RenderHeader extends Component
 {
@@ -19,7 +20,11 @@ class RenderHeader extends Component
 
     public function updateCart()
     {
-        $user = auth()->user();
+        $user = auth::user();
+        if (!$user) {
+            return; // Hoặc xử lý logic khi người dùng chưa đăng nhập
+        }
+        // dd($user);
         $this->cartCount = $user->cartDetails->sum('quantity');
         $this->cartItems = $user->cartDetails;
     }
@@ -31,14 +36,14 @@ class RenderHeader extends Component
 
     public function removeFromCart($id)
     {
-        $user = auth()->user();
 
+        $user = auth::user();
         $cartItem = CartDetail::where('id', $id)->where('user_id', $user->id)->first();
 
-        if ($cartItem) {
-            $cartItem->delete();
-            $this->dispatch('cartUpdated');
-            return response()->json(['success' => true, 'message' => 'Đã xóa sản phẩm khỏi giỏ hàng!']);
-        }
+        $cartItem->delete();
+        $this->dispatch('cartUpdated');
+        toastr()->success('<p>Sản phẩm đã được xóa khỏi giỏ hàng!</p>');
+
+        return;
     }
 }
