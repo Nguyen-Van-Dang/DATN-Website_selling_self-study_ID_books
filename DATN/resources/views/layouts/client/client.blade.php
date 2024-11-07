@@ -43,6 +43,7 @@
             background-color: #e5f7f0;
             border-color: #d8f7eb;
         }
+
         .overflow-scroll {
             overflow: scroll;
         }
@@ -57,7 +58,7 @@
             <x-client.sidebar></x-client.sidebar>
         </div>
         <div class="iq-top-navbar">
-            <x-client.header></x-client.header>
+            <livewire:component.render-header />
         </div>
         <div id="content-page" class="content-page mb-5">
             @yield('content')
@@ -71,7 +72,7 @@
     <script src="{{ asset('assets/js/key.js') }}"></script>
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/image.js') }}"></script>
-    
+
     <script src="{{ asset('assets/js/reals.js') }}"></script>
     <script src="{{ asset('assets/js/login.js') }}"></script>
     <script src="{{ asset('assets/js/toast.js') }}" defer></script>

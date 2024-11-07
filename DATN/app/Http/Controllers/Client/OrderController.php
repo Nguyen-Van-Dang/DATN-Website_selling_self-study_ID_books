@@ -19,4 +19,9 @@ class OrderController extends Controller
     {
         return $this->orderRepository->getAllOrder();
     }
+
+    public function checkout(Request $request)
+    {
+        return $this->orderRepository->checkout($request);
+    }
 }

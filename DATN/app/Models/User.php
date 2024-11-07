@@ -81,6 +81,16 @@ class User extends Authenticatable
         return $this->hasMany(CategoryBook::class);
     }
 
+    public function Favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function cartDetails()
+    {
+        return $this->hasMany(CartDetail::class);
+    }
+
     public function NotificationUser(): BelongsTo
     {
         return $this->BelongsTo(NotificationUser::class);
@@ -115,7 +125,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
 
     public static function getAll()
     {

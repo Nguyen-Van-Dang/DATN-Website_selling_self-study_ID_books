@@ -19,4 +19,9 @@ class BookController extends Controller
     {
         return $this->bookRepository->getAllBook();
     }
+
+    public function getAllBookClient()
+    {
+        return $this->bookRepository->getAllBookClient();
+    }
 }

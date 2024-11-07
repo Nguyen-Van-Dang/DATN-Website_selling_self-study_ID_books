@@ -8,14 +8,17 @@ use App\Http\Controllers\Admin\AbcController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Client\BookCateController;
 use App\Http\Controllers\Client\BookController;
+use App\Http\Controllers\Client\CartDetailController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\CourseCateController;
 use App\Http\Controllers\Client\CourseController;
+use App\Http\Controllers\Client\FavoriteController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Client\FollowController;
 use App\Http\Controllers\Client\NotificationUserController;
 use App\Http\Middleware\CheckRole;
+use App\Livewire\Book\RenderBookClient;
 
 
 Route::get('/', function () {
@@ -121,6 +124,22 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
         return view('admin.book.detailBook');
     })->name('detailBook');
 });
+
+/* --------------- LECTURE GROUP --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/list-Lecture', function () {
+        return view('admin.lecture.listLecture');
+    })->name('listLecture');
+    Route::get('/admin/add-Lecture', function () {
+        return view('admin.lecture.addLecture');
+    })->name('addLecture');
+    Route::get('/admin/update-Lecture', function () {
+        return view('admin.lecture.updateLecture');
+    })->name('updateLecture');
+    Route::get('/admin/detail-Lecture', function () {
+        return view('admin.lecture.detailLecture');
+    })->name('detailLecture');
+});
 //Abc
 Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
 Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
@@ -144,7 +163,8 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 
 /* --------------- NOTIFICATION GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Notification', [NotificationController::class, 'getAllNotification'])->name('listNotificationUser');
+    Route::get('/admin/list-Notification', [NotificationUserController::class, 'getAllNotificationUser'])->name('listNotificationUser');
+    Route::get('/admin/list-Notification-Detail/{id}', [NotificationController::class, 'getNotificationById'])->name('listNotification');
     Route::get('/admin/detail-Notification', function () {
         return view('admin.notification.detailNotification');
     })->name('detailNotification');
@@ -182,6 +202,11 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
 });
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 
+//danh sách cuốn sách
+Route::get('/book-list', [BookController::class, 'getAllBookClient'])->name('bookList');
+Route::post('/books/{id}/toggle-favorite', [RenderBookClient::class, 'toggleFavorite'])->name('toggleFavorite');
+
+
 // thông tin người dùng
 Route::get('/user-information', function () {
     return view('client.user.userInformation');
@@ -193,14 +218,15 @@ Route::get('/user-detail', function () {
 })->name('userDetail');
 
 //giỏ hàng
-Route::get('/shopping-cart', function () {
-    return view('client.payment.shoppingCart');
-})->name('shoppingCart');
+// Route::get('/shopping-cart', function () {
+//     return view('client.payment.shoppingCart');
+// })->name('shoppingCart');
+Route::get('/shopping-cart', [CartDetailController::class, 'getAllCartDetail'])->name('shoppingCart');
+Route::post('/cart/add/{id}', [RenderBookClient::class, 'addToCart'])->name('addToCart');
+Route::delete('/cart/remove/{id}', [CartDetailController::class, 'removeFromCart'])->name('removeFromCart');
+Route::post('/shopping-cart', [OrderController::class, 'checkout'])->name('checkout');
 
-//danh sách cuốn sách
-Route::get('/book-list', function () {
-    return view('client.book.book');
-})->name('bookList');
+
 
 // tất cả thông báo
 Route::get('/notification-list', function () {

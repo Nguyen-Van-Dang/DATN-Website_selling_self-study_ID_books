@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Book extends Model
 {
@@ -23,6 +25,7 @@ class Book extends Model
         'book_active',
         'category_books_id',
         'image',
+        'is_favorite',
     ];
 
     public function Course(): BelongsTo
@@ -39,9 +42,19 @@ class Book extends Model
     {
         return $this->belongsTo(CategoryBook::class, 'category_books_id'); // Đảm bảo trường khóa ngoại đúng
     }
-    
 
-    public static function getAll(){
+    public function Favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function cartDetails(): HasMany
+    {
+        return $this->hasMany(CartDetail::class);
+    }
+    
+    public static function getAll()
+    {
         return self::all();
     }
 }
