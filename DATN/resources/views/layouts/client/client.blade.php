@@ -7,12 +7,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta property="zalo-platform-site-verification" content="RDkY3gkeAL1KtF9nd_zrHtx2uXkIj392E3Kn" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{{ asset('vendor/flasher/css/flasher.css') }}">
+    <script src="{{ asset('vendor/flasher/js/flasher.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
@@ -21,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/reals.css') }}">
+    @livewireStyles
     <style>
         body {
             margin-top: 20px;
@@ -43,6 +47,7 @@
             background-color: #e5f7f0;
             border-color: #d8f7eb;
         }
+
         .overflow-scroll {
             overflow: scroll;
         }
@@ -51,7 +56,6 @@
 </head>
 
 <body>
-
     <div class="wrapper">
         <div class="iq-sidebar">
             <x-client.sidebar></x-client.sidebar>
@@ -66,12 +70,12 @@
     <footer class="iq-footer">
         <x-client.footer></x-client.footer>
     </footer>
+    @livewireScripts
 
     {{-- script here --}}
     <script src="{{ asset('assets/js/key.js') }}"></script>
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/image.js') }}"></script>
-    
     <script src="{{ asset('assets/js/reals.js') }}"></script>
     <script src="{{ asset('assets/js/login.js') }}"></script>
     <script src="{{ asset('assets/js/toast.js') }}" defer></script>
@@ -106,10 +110,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-
-
-
-
     {{-- <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
 	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->

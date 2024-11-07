@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\Courses;
+use App\Models\Course;
 use App\Models\Documents;
 use App\Models\LectureCategories;
 use App\Models\Lecture;
@@ -145,7 +145,7 @@ class CourseAdd extends Component
         $this->validate();
 
         // Create a new course
-        $course = Courses::create([
+        $course = Course::create([
             'name' => $this->courseName,
             'description' => $this->description,
             'price' => $this->price,

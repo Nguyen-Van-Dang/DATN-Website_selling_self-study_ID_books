@@ -4,12 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\ReelComment;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
@@ -41,39 +43,34 @@ class User extends Authenticatable
     {
         return $this->BelongsTo(Order::class);
     }
-
-    public function reels()
-    {
-        return $this->hasMany(Reels::class);
-    }
     public function reelComments()
     {
         return $this->hasMany(ReelComment::class);
     }
-
-
-    public  function Book() : HasMany{
+    public  function Books(): HasMany
+    {
         return $this->hasMany(Book::class);
     }
-
-    public  function Course() : HasMany{
-        return $this->hasMany(Courses::class);
+    public function Reels()
+    {
+        return $this->hasMany(Reels::class);
     }
-
-    public  function Lecture() : HasMany{
+    public function Courses()
+    {
+        return $this->hasMany(Course::class, 'user_id');
+    }
+    public  function Lecture(): HasMany
+    {
         return $this->hasMany(Lecture::class);
     }
-
     public function CategoryCourse(): HasMany
     {
         return $this->hasMany(CourseCategories::class);
     }
-
     public function CategoryBook(): HasMany
     {
         return $this->hasMany(CategoryBook::class);
     }
-
     public function NotificationUser(): BelongsTo
     {
         return $this->BelongsTo(NotificationUser::class);
@@ -82,12 +79,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
-    
     public function followers()
     {
         return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
     }
-
     /**
      * The attributes that should be hidden for serialization.
      *

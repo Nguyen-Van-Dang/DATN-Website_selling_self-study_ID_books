@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Lecture;
+
 class LectureCategories extends Model
 {
     use HasFactory;
@@ -13,13 +14,14 @@ class LectureCategories extends Model
         'name',
         'created_by',
     ];
-    public function lectures(): HasMany
+
+    public function Courses()
     {
-        return $this->hasMany(Lecture::class, 'lecture_categories_id'); // Đảm bảo tên cột đúng
+        return $this->belongsToMany(Course::class);
     }
 
-    public function courses()
+    public function Lectures()
     {
-        return $this->belongsToMany(Courses::class);
+        return $this->hasMany(Lecture::class, 'lecture_categories_id'); // Khóa ngoại trong bảng lectures
     }
 }

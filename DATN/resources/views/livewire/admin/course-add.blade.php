@@ -29,7 +29,6 @@
                             <!-- Ảnh thu nhỏ sẽ xuất hiện ở đây sau khi chọn -->
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label>Chọn khóa học PDF:</label>
                         <div class="custom-file" wire:ignore>
@@ -38,7 +37,6 @@
                             <label class="custom-file-label" for="pdfInput" id="pdfLabel">Chọn file</label>
                         </div>
                     </div>
-
                     <script>
                         function showImagePreview(event) {
                             // Hiển thị tên file ảnh
@@ -61,7 +59,6 @@
                             document.getElementById('pdfLabel').innerHTML = fileName;
                         }
                     </script>
-
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label>Giá khóa học:</label>
@@ -189,8 +186,6 @@
                     document.getElementById('chapterContainer').appendChild(chapterDiv);
                 });
             </script>
-
-
         </div>
         <style>
             .modal-content {
@@ -212,3 +207,4 @@
             }
         </style>
     </div>
+</div>

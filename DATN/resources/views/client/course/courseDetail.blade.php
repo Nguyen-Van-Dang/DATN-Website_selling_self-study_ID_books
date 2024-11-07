@@ -3,22 +3,24 @@
 @section('title', 'Chi Tiết khóa học')
 
 @section('content')
+
     <div class="container-fluid">
         <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-3">
-            <div class="row align-items-center">
+            <div class="row">
                 <div class="col-12 col-md-4 order-1 order-md-1">
                     <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
                         class="img-fluid rounded" alt="Course Image" style="object-fit: cover;aspect-ratio: 2/1">
                 </div>
-                <div class="col-12 col-md-8 order-2 order-md-2">
-                    <h4 class="mb-2 fw-bold">Live C - Luyện thi TN THPT 2025 môn Ngữ văn</h4>
-                    <p class="text-muted mb-1">Thầy Phạm Minh Nhật</p>
+                <div class="col-12 col-md-8 order-2 order-md-2"style="border-right: 0.5px solid #8080804f;">
+                    <h5 class="mb-0">{{ $course->name }}</h5>
+                    <p class="text-muted mb-1">Thầy {{ $course->user->name }}</p>
                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                        <span class="text-danger font-weight-bold">500.000đ</span>
-                        <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span>
+                        <span class="text-danger font-weight-bold">{{ $course->price }}đ</span>
+                        <span class="text-muted ml-3" style="text-decoration:line-through">{{ $course->discount }}đ</span>
                     </div>
                     <p class="mb-2">
-                        <span class="d-block"><i class="bi bi-collection-play"></i> Số bài: 88</span>
+                        <span class="d-block"><i class="bi bi-collection-play"></i> Số bài:
+                            {{ $course->amount_lecture }}</span>
                         <a href="#" class="text-primary d-block mt-1"><i class="bi bi-people"></i> Nhóm Mooners</a>
                     </p>
                     <div class="d-flex">
@@ -26,9 +28,12 @@
                         <button class="btn btn-secondary btn-lg">Kích hoạt</button>
                     </div>
                 </div>
+
+                <div class="col-12 col-md-12 order-2 order-md-2">
+                    <p class="mb-2 fw-bold">{{ $course->description }}</p>
+                </div>
             </div>
         </div>
-
 
         <div class="row mt-4">
             <div class="col-lg-8">
@@ -50,174 +55,40 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content mt-3" id="myTabContent">
-                        <div class="tab-pane fade show active" id="bai-giang" role="tabpanel"
-                            aria-labelledby="bai-giang-tab">
-
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="tab-pane fade show active" id="bai-giang" role="tabpanel" aria-labelledby="bai-giang-tab">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            @foreach ($course->lectures->groupBy('lecture_categories_id') as $categoryId => $lectures)
                                 <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
+                                    <div class="panel-heading" role="tab" id="heading{{ $categoryId }}">
                                         <h6 class="panel-title">
                                             <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                                class="collapsed">
-                                                Chương 1
+                                                href="#collapse{{ $categoryId }}" aria-expanded="false"
+                                                aria-controls="collapse{{ $categoryId }}">
+                                                {{ $lectures->first()->lectureCategory->name ?? 'Chương ' . $categoryId }}
+                                                <!-- Tên chương -->
                                             </a>
                                             <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">14</span>
+                                                style="right: 0; top: 0;">
+                                                {{ $lecturesCountByCategory[$categoryId] ?? 0 }}
+                                                <!-- Số lượng bài giảng trong danh mục -->
+                                            </span>
                                         </h6>
                                     </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                                        aria-labelledby="headingOne">
-                                        <div class="panel-body">
+                                    <div id="collapse{{ $categoryId }}" class="panel-collapse collapse" role="tabpanel"
+                                        aria-labelledby="heading{{ $categoryId }}">
+                                        <div class="panel-body" style="margin-left: 45px">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
+                                                @foreach ($lectures as $lecture)
+                                                    <li class="list-group-item py-0">
+                                                        <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
+                                                        <!-- Liên kết đến bài giảng -->
+                                                    </li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h6 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse"
-                                                data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                                                aria-controls="collapseTwo">
-                                                Chương 2
-                                            </a>
-                                            <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">24</span>
-                                        </h6>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
-                                        aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h6 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse"
-                                                data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                                                aria-controls="collapseThree">
-                                                Chương 3
-                                            </a>
-                                            <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">14</span>
-                                        </h6>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel"
-                                        aria-labelledby="headingThree">
-                                        <div class="panel-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="tab-pane fade" id="bai-kiem-tra" role="tabpanel" aria-labelledby="bai-kiem-tra-tab">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h6 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                                class="collapsed">
-                                                Kiểm tra chương 1
-                                            </a>
-                                            <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">14</span>
-                                        </h6>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                                        aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h6 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse"
-                                                data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                                                aria-controls="collapseTwo">
-                                                Kiểm tra chương 2
-                                            </a>
-                                            <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">24</span>
-                                        </h6>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
-                                        aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h6 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse"
-                                                data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                                                aria-controls="collapseThree">
-                                                Kiểm tra chương 3
-                                            </a>
-                                            <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">14</span>
-                                        </h6>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel"
-                                        aria-labelledby="headingThree">
-                                        <div class="panel-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item py-0"><a href="#">Bài 1</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 2</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 3</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 4</a></li>
-                                                <li class="list-group-item py-0"><a href="#">Bài 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -233,7 +104,8 @@
                         </div>
                         <div class="col-9">
                             <div>
-                                <h5 class="mb-0">Thầy Bùi Văn Công <i class="bi bi-check-circle-fill text-success"></i>
+                                <h5 class="mb-0">Thầy {{ $course->user->name }} <i
+                                        class="bi bi-check-circle-fill text-success"></i>
                                 </h5>
                             </div>
                             <div class="d-flex justify-content-between border-top pt-2 pb-3">
@@ -265,10 +137,51 @@
                             - Tham gia học văn bằng 2 ngành Ngôn ngữ Anh, trường Đại học KHXH&NV, ĐHQG TP.HCM
                         </p>
                     </div>
+                    <div class="modal-content">
+                        <h5 class="mb-0">Khóa học nổi bậc</h5>
+
+                        <div class="iq-card-body pt-0 py-3 modal-body-scrollable">
+
+                            @foreach ($user->courses as $userCourse)
+                                <div class="row pb-2">
+                                    <div class="col-3">
+                                        <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                                            class="card-img-top img-fluid rounded course-image" alt="Product 3"
+                                            style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;">
+                                    </div>
+                                    <div class="col-9">
+                                        <a href="" class="card-title course-title">
+                                            <h6 class="panel-title">
+                                                {{ $userCourse->name }}
+                                            </h6>
+                                        </a>
+                                        <div class="d-flex justify-content-evenly mt-1 flex-nowrap"
+                                            style="font-size: 15px">
+                                            <span class="text-danger font-weight-bold">1.500.00đ</span>
+                                            <span class="text-muted ml-3"
+                                                style="text-decoration:line-through">500.000đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <style>
+            .modal-content {
+                max-height: 50vh;
+                overflow-y: auto;
+                padding-right: 15px;
+                border: none;
+            }
 
+            .modal-body-scrollable {
+                max-height: calc(45vh - 100px);
+                overflow-y: auto;
+            }
+        </style>
         <style>
             #accordion .course-panel {
                 border: none;
@@ -347,6 +260,5 @@
                 letter-spacing: 1px;
             }
         </style>
-
-
-    @endsection
+    </div>
+@endsection

@@ -5,9 +5,12 @@ namespace App\Livewire\Client\Course;
 use Livewire\Component;
 use App\Models\Course;
 use App\Models\User;
+use Livewire\WithPagination;
 
 class CourseIndex extends Component
 {
+    use WithPagination;
+
     public $courseList;
     public $courseTrending;
     public $teachers;
@@ -20,6 +23,7 @@ class CourseIndex extends Component
     {
         $this->loadCourses();
     }
+
     public function mount()
     {
         $this->teachers = User::where('role_id', 2)->get();
@@ -56,6 +60,10 @@ class CourseIndex extends Component
         $this->courseList = $query->get();
     }
 
+    public function goToCourseDetail($id)
+    {
+        return redirect()->route('khoa-hoc.show', $id);
+    }
 
     public function render()
     {

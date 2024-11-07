@@ -12,10 +12,12 @@
                         <div class="profile-header">
                             <div class="cover-container">
                                 <div class="row">
+
                                     <div class="col-3 text-center">
-                                        <img src="{{ asset('assets/images/book/user/1.jpg') }}" alt="profile-bg"
-                                            class="rounded-circle img-fluid"
-                                            style="width: 60%;box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.50);">
+                                        <img src="{{ asset($user->image_url ?? 'assets/images/book/user/avatar.jpg') }}"
+                                            alt="profile-bg" class="rounded-circle img-fluid"
+                                            style="width: 60%; box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.50);">
+
                                         <div class="iq-social d-inline-block align-items-center pt-5">
                                             <ul class="list-inline d-flex p-0 mb-0 align-items-center">
                                                 <li>
@@ -88,6 +90,7 @@
                 </div>
             </div>
 
+            <!-- Display Courses -->
             <div class="col-12">
                 <div class="iq-card">
                     <div class="iq-card-body profile-page">
@@ -95,35 +98,36 @@
                             <div class="cover-container">
                                 <h4 class="pb-4">Khóa Học</h4>
                                 <div class="row">
-                                    <div class="col-6 pb-1">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <img src="{{ asset('assets/images/book/user/4.jpg') }}" alt="profile-bg"
-                                                    class="w-100"
-                                                    style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
-                                            </div>
-                                            <div class="col-6">
-                                                <span style="font-weight: bold; display: block;">Tổng ôn tập - HSG Toán học
-                                                    và Xử lý số liệu</span>
-                                                <p>Số bài: 160</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 pb-1">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
-                                                    class="w-100"
-                                                    style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
-                                            </div>
-                                            <div class="col-6">
-                                                <span style="font-weight: bold; display: block;">Tổng ôn tập - HSG Toán học
-                                                    và Xử lý số liệu</span>
-                                                <p>Số bài: 160</p>
+                                    @forelse ($courses as $course)
+                                        <div class="col-6 pb-3">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <img src="{{ asset('assets/images/book/user/4.jpg') }}" alt="profile-bg"
+                                                        class="w-100"
+                                                        style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
+                                                </div>
+                                                <div class="col-6">
+                                                    <span
+                                                        style="font-weight: bold; display: block;">{{ $course->name }}</span>
+                                                    <p>Số bài: {{ $course->amount_lecture }}</p>
+                                                    <span
+                                                        class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                                        đ</span>
+                                                    <span class="text-muted ml-3"
+                                                        style="text-decoration:line-through">{{ number_format($course->discount) }}
+                                                        đ</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @empty
+                                        <div class="col-12 pb-1">
+                                            <div class="row text-center">
+                                                <div class="col-12">
+                                                    <p>Hiện tại chưa có Khóa Học nào...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforelse
                                 </div>
                                 <div class="text-center pt-5" style="color: black">
                                     <a href=""><span style="font-size: 20px"><i
@@ -135,6 +139,7 @@
                 </div>
             </div>
 
+            <!-- Display Books -->
             <div class="col-12">
                 <div class="iq-card">
                     <div class="iq-card-body profile-page">
@@ -142,113 +147,47 @@
                             <div class="cover-container">
                                 <h4 class="pb-4">Sách ID</h4>
                                 <div class="row px-2">
-                                    <div class="col-3 pb-1">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
-                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
-                                                        alt="profile-bg" class="w-100" style="height: 300px;">
-                                                    <div class="px-3 pb-4 pt-3">
-                                                        <span style="font-weight: 600;">
-                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
-                                                        </span>
-                                                        <br>
-                                                        <div class="pb-1">
-                                                            <button id="yesButton" type="submit"
-                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
-                                                            <button id="noButton"
-                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
+                                    @forelse ($books as $book)
+                                        <div class="col-3 pb-1">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class=""
+                                                        style="border: 2px solid rgba(128, 128, 128, 0.214);">
+                                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}"
+                                                            alt="profile-bg" class="w-100" style="height: 300px;">
+                                                        <div class="px-3 pb-4 pt-3">
+                                                            <span style="font-weight: 600;">
+                                                                {{ $book->name }}
+                                                            </span>
+                                                            <br>
+                                                            <div class="pb-1">
+                                                                <button id="yesButton" type="submit"
+                                                                    style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
+                                                                <button id="noButton"
+                                                                    style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
+                                                            </div>
+                                                            <span> <a
+                                                                    style="font-weight: bolder; color:#ff2a00;">{{ $book->price }}đ</a>
+                                                                <b class="px-2"></b><del
+                                                                    style="font-size: 12px;">{{ $book->discount }}đ</del></span>
                                                         </div>
-                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
-                                                            <b class="px-2"></b><del
-                                                                style="font-size: 12px;">150.000đ</del></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-3 pb-1">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
-                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
-                                                        alt="profile-bg" class="w-100" style="height: 300px;">
-                                                    <div class="px-3 pb-4 pt-3">
-                                                        <span style="font-weight: 600;">
-                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
-                                                        </span>
-                                                        <br>
-                                                        <div class="pb-1">
-                                                            <button id="yesButton" type="submit"
-                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
-                                                            <button id="noButton"
-                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
-                                                        </div>
-                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
-                                                            <b class="px-2"></b><del
-                                                                style="font-size: 12px;">150.000đ</del></span>
-                                                    </div>
+                                    @empty
+                                        <div class="col-12 pb-1">
+                                            <div class="row text-center">
+                                                <div class="col-12">
+                                                    <p>Hiện tại chưa có Sách nào...</p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-3 pb-1">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
-                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
-                                                        alt="profile-bg" class="w-100" style="height: 300px;">
-                                                    <div class="px-3 pb-4 pt-3">
-                                                        <span style="font-weight: 600;">
-                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
-                                                        </span>
-                                                        <br>
-                                                        <div class="pb-1">
-                                                            <button id="yesButton" type="submit"
-                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
-                                                            <button id="noButton"
-                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
-                                                        </div>
-                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
-                                                            <b class="px-2"></b><del
-                                                                style="font-size: 12px;">150.000đ</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3 pb-1">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="" style="border: 2px solid rgba(128, 128, 128, 0.214);">
-                                                    <img src="{{ asset('assets/images/book/user/3.jpg') }}"
-                                                        alt="profile-bg" class="w-100" style="height: 300px;">
-                                                    <div class="px-3 pb-4 pt-3">
-                                                        <span style="font-weight: 600;">
-                                                            [NEW 2024-2025] Sách HSG Toán cấp quốc gia
-                                                        </span>
-                                                        <br>
-                                                        <div class="pb-1">
-                                                            <button id="yesButton" type="submit"
-                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
-                                                            <button id="noButton"
-                                                                style="background-color: #E1EFFE; color: #1C64F2; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">10%</button>
-                                                        </div>
-                                                        <span> <a style="font-weight: bolder; color:#ff2a00;">150.000đ</a>
-                                                            <b class="px-2"></b><del
-                                                                style="font-size: 12px;">150.000đ</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforelse
                                 </div>
                                 <div class="text-center pt-5" style="color: black">
-                                    <a href=""><span style="font-size: 20px">
-                                            <i class="ri-arrow-down-s-line"></i></span> Xem thêm</a>
+                                    <a href=""><span style="font-size: 20px"><i
+                                                class="ri-arrow-down-s-line"></i></span> Xem thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -256,46 +195,49 @@
                 </div>
             </div>
 
+            <!-- Display Reels -->
             <div class="col-12">
                 <div class="iq-card">
                     <div class="iq-card-body profile-page">
                         <div class="profile-header">
                             <div class="cover-container">
-                                <h4 class="pb-4">Sách ID</h4>
-                                <div class="row px-2">
-                                    <div class="col-3 pb-1">
-                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
-                                            class="w-100" style="height: 400px; border-radius: 10px">
-                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
-                                                class="ri-play-fill"></i> 1.25K View</span>
-                                    </div>
-
-                                    <div class="col-3 pb-1">
-                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
-                                            class="w-100" style="height: 400px; border-radius: 10px">
-                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
-                                                class="ri-play-fill"></i> 1.25K View</span>
-                                    </div>
-
-                                    <div class="col-3 pb-1">
-                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
-                                            class="w-100" style="height: 400px; border-radius: 10px">
-                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
-                                                class="ri-play-fill"></i> 1.25K View</span>
-                                    </div>
-
-                                    <div class="col-3 pb-1">
-                                        <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="profile-bg"
-                                            class="w-100" style="height: 400px; border-radius: 10px">
-                                        <span style="position: absolute; bottom: 5px; left: 20px; color: white"><i
-                                                class="ri-play-fill"></i> 1.25K View</span>
-                                    </div>
+                                <h4 class="pb-4">Reels</h4>
+                                <div class="row">
+                                    @forelse ($reels as $reel)
+                                        <div class="col-6 pb-1">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <img src="{{ asset('assets/images/book/user/4.jpg') }}"
+                                                        alt="profile-bg" class="w-100"
+                                                        style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
+                                                </div>
+                                                <div class="col-12">
+                                                    <span
+                                                        style="font-weight: bold; display: block;">{{ $reel->title }}</span>
+                                                    <p>{{ $reel->description }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="col-12 pb-1">
+                                            <div class="row text-center">
+                                                <div class="col-12">
+                                                    <p>Hiện tại chưa có Reels nào...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforelse
+                                </div>
+                                <div class="text-center pt-5" style="color: black">
+                                    <a href=""><span style="font-size: 20px"><i
+                                                class="ri-arrow-down-s-line"></i></span> Xem thêm</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

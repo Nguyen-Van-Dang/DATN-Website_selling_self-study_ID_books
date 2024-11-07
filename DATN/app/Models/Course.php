@@ -6,24 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Courses extends Model implements HasMedia
+class Course extends Model
 {
-    use InteractsWithMedia;
     use HasFactory;
 
     protected $fillable = [
         'name',
         'price',
-        'discount',
         'amount_lecture',
         'description',
         'image_url',
         'user_id',
-        'category_course_id',
-        'status'
     ];
 
     public  function Book(): HasMany
@@ -31,21 +25,26 @@ class Courses extends Model implements HasMedia
         return $this->hasMany(Book::class);
     }
 
-    public  function LectureCategories()
+    public function lectures()
     {
-        return $this->belongsToMany(LectureCategories::class);
+        return $this->hasMany(Lecture::class, 'course_id');
     }
 
-    public function User()
+    // public function User()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id'); // Định nghĩa mối quan hệ đến User
     }
     public static function getAll()
     {
         return self::all();
     }
-    public function documents()
+    public function media()
     {
-        return $this->hasMany(Documents::class);
+        return $this->hasMany(Media::class);
     }
 }
