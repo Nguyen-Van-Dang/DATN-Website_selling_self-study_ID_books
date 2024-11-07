@@ -53,6 +53,10 @@
                     <a href="{{ route('listContact') }}"><i class="ri-mail-line"></i> <span>Liên Hệ</span></a>
                 </li>
             @endif
+            <li class="{{ request()->routeIs('bin') ? 'active' : '' }}">
+                <a href="{{ route('bin') }}"><i class="ri-delete-bin-5-line"></i> <span>Thùng
+                        Rác</span></a>
+            </li>
         </ul>
     </nav>
     <div id="sidebar-bottom" class="p-3 position-relative">

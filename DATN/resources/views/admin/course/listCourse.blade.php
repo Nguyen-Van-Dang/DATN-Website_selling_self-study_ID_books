@@ -5,7 +5,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <livewire:admin.course />
+            <livewire:admin.courses />
         </div>
     </div>
     <script>
@@ -24,7 +24,7 @@
             document.getElementById("overlay").style.display = "none";
         }
     </script>
-    
+
     <style>
         .modal-content {
             max-height: 90vh;

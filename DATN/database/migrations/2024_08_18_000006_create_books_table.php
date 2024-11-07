@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('name', 255)->nullable();
             $table->float('price');
+            $table->float('discount');
             $table->integer('page_number');
             $table->text('description');
             $table->integer('quantity');

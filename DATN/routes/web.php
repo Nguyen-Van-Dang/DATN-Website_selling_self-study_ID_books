@@ -4,7 +4,7 @@ use App\Http\Controllers\Client\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Client\ReelsController;
-use App\Http\Controllers\Admin\AbcController;
+use App\Http\Controllers\Client\BinController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Client\BookCateController;
 use App\Http\Controllers\Client\BookController;
@@ -20,37 +20,40 @@ use App\Http\Controllers\Client\NotificationUserController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\Book\RenderBookClient;
 
+/* --------------- HOME CLIENT --------------- */
 
-Route::get('/', function () {
-    return view('client.home');
-})->name('homeClient');
-
-//Abc
-Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
-Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
-Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
-
-// Login Google
+Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
+/* --------------- hOME ADMIN --------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.home');
+    })->name('homeAdmin');
+    Route::get('/admin/thong-tin-nguoi-dung', function () {
+        return view('admin.user.userInfo');
+    })->name('userInfo');
+    Route::post('/admin/thong-tin-nguoi-dung', [UserController::class, 'changePassword'])->name('userInfo');
+});
+/* --------------- LOGIN GG --------------- */
 Route::get('auth/google', [UserController::class, 'redirectToGoogle'])->name('login-by-google');
 Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback']);
 
-// Login Zalo
+/* --------------- LOGIN ZL --------------- */
 Route::get('/auth/zalo', [UserController::class, 'redirectToZalo'])->name('login-by-zalo');
 Route::get('auth/zalo/callback', [UserController::class, 'handleZaloCallback']);
 
-// Login FaceBook
+/* -------------- LOGIN FB --------------- */
 Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');
 Route::get('auth/facebook/callback', [UserController::class, 'handleFacebookCallback']);
 
-// Login Phone
+/* -------------- LOGIN PHONE --------------- */
 Route::post('/', [UserController::class, 'handleLogin'])->name('handleLogin');
 
-// Register Phone
+/* -------------- REGISTER --------------- */
 
-//Log Out
+/* -------------- LOGOUT--------------- */
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-//error
+/* --------------- ERROR --------------- */
 Route::get('/404', function () {
     return view('error.404');
 })->name('404');
@@ -64,40 +67,28 @@ Route::get('/maintenance', function () {
 })->name('maintenance');
 /*-------------------------------------------------ADMIN--------------------------------------------------*/
 
-/* --------------- ADMIN GROUP --------------- */
+/* --------------- ORDER GROUP ------------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.home');
-    })->name('homeAdmin');
-    Route::get('/admin/thong-tin-nguoi-dung', function () {
-        return view('admin.user.userInfo');
-    })->name('userInfo');
-});
-/* --------------- ORDER GROUP --------------- */
-Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/order-list', [OrderController::class, 'getAllOrder'])->name('listOrder');
-    Route::get('/admin/detail-Order', function () {
+    Route::get('/admin/danh-sach-don-hang', [OrderController::class, 'getAllOrder'])->name('listOrder');
+    Route::get('/admin/chi-tiet-don-hang', function () {
         return view('admin.order.detailOrder');
     })->name('detailOrder');
-    Route::get('/admin/update-Order', function () {
+    Route::get('/admin/chinh-sua-don-hang', function () {
         return view('admin.order.updateOrder');
     })->name('updateOrder');
 });
-
 /* --------------- CATEGORY-COURSE GROUP --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/danh-muc-khoa-hoc', [CourseCateController::class, 'getAllCourseCate'])->name('listCategoryCourse');
 });
-
-/* --------------- COURSE GROUP --------------- */
+/* --------------- COURSE GROUP ------------------------ */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/khoa-hoc/danh-sach-khoa-hoc', [CourseController::class, 'getAllCourse'])->name('listCourse');
     Route::get('/admin/khoa-hoc/them-khoa-hoc', function () {
         return view('admin.course.addCourse');
     })->name('addCourse');
 });
-
-/* --------------- CATEGORY-BOOK GROUP --------------- */
+/* --------------- CATEGORY-BOOK GROUP ------------------*/
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/list-CategoryBook', [BookCateController::class, 'getAllBookCate'])->name('listCategoryBook');
     Route::get('/admin/add-CategoryBook', function () {
@@ -110,8 +101,7 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
         return view('admin.categoryBook.updateCategoryBook');
     })->name('updateCategoryBook');
 });
-
-/* --------------- BOOK GROUP --------------- */
+/* --------------- BOOK GROUP -------------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/list-book', [BookController::class, 'getAllBook'])->name('listBook');
     Route::get('/admin/add-Book', function () {
@@ -124,28 +114,7 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
         return view('admin.book.detailBook');
     })->name('detailBook');
 });
-
-/* --------------- LECTURE GROUP --------------- */
-Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Lecture', function () {
-        return view('admin.lecture.listLecture');
-    })->name('listLecture');
-    Route::get('/admin/add-Lecture', function () {
-        return view('admin.lecture.addLecture');
-    })->name('addLecture');
-    Route::get('/admin/update-Lecture', function () {
-        return view('admin.lecture.updateLecture');
-    })->name('updateLecture');
-    Route::get('/admin/detail-Lecture', function () {
-        return view('admin.lecture.detailLecture');
-    })->name('detailLecture');
-});
-//Abc
-Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
-Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
-Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
-
-/* --------------- EXERCISE GROUP --------------- */
+/* --------------- EXERCISE GROUP ----------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/list-Exercise', function () {
         return view('admin.exercise.listExercise');
@@ -160,8 +129,7 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
         return view('admin.exercise.detailExercise');
     })->name('detailExercise');
 });
-
-/* --------------- NOTIFICATION GROUP --------------- */
+/* --------------- NOTIFICATION GROUP ------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin/list-Notification', [NotificationUserController::class, 'getAllNotificationUser'])->name('listNotificationUser');
     Route::get('/admin/list-Notification-Detail/{id}', [NotificationController::class, 'getNotificationById'])->name('listNotification');
@@ -172,34 +140,41 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
         return view('admin.notification.addNotification');
     })->name('addNotification');
 });
-
-// role 2 không vào được các trang này
+/* --------------- BIN GROUP ---------------------------- */
+Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+    Route::get('/admin/thung-rac', [BinController::class, 'checkRole'])->name('bin');
+});
+/* --------------- ACCOUNT GROUP ------------------------ */
 Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::resource('/admin/nguoi-dung', UserController::class)->names('nguoi-dung');
-    Route::get('/admin/user-list', [UserController::class, 'index'])->name('listUser');
-    Route::get('/admin/user-add', function () {
+    Route::get('/admin/danh-sach-nguoi-dung', [UserController::class, 'index'])->name('listUser');
+    Route::get('/admin/them-nguoi-dung', function () {
         return view('admin.user.addUser');
     })->name('addUser');
-    Route::get('/admin/user-update', function () {
+    Route::get('/admin/sua-nguoi-dung', function () {
         return view('admin.user.updateUser');
     })->name('updateUser');
-    Route::get('/admin/user-detail', function () {
+    Route::get('/admin/chi-tiet-nguoi-dung', function () {
         return view('admin.user.detailUser');
     })->name('detailUser');
-    Route::get('/admin/user-deleted', [UserController::class, 'getDestroyUser'])->name('deleteUser');
+    Route::get('/admin/xoa-nguoi-dung', [UserController::class, 'getDestroyUser'])->name('deleteUser');
     // Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
 });
-
-/* --------------- CONTACT GROUP --------------- */
+/* --------------- CONTACT GROUP ------------------------ */
 Route::middleware([CheckRole::class . ':1'])->group(function () {
-    Route::get('/admin/Contact-list', [ContactController::class, 'getAllContact'])->name('listContact');
-    Route::get('/admin/detail-Contact', function () {
+    Route::get('/admin/danh-sach-lien-he', [ContactController::class, 'getAllContact'])->name('listContact');
+    Route::get('/admin/chi-tiet-lien-he', function () {
         return view('admin.contact.detailContact');
     })->name('detailContact');
-    Route::get('/admin/add-Contact', function () {
+    Route::get('/admin/gui-lien-he', function () {
         return view('admin.contact.addContact');
     })->name('addContact');
 });
+
+/* --------------- ABC --------------- */
+// Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
+// Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
+// Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 
 //danh sách cuốn sách
@@ -213,9 +188,7 @@ Route::get('/user-information', function () {
 })->name('userInformation');
 
 // thông tin chi tiết người dùng
-Route::get('/user-detail', function () {
-    return view('client.user.userDetail');
-})->name('userDetail');
+Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
 
 //giỏ hàng
 // Route::get('/shopping-cart', function () {
@@ -249,11 +222,6 @@ Route::prefix('khoa-hoc')->group(function () {
     Route::get('/{id}', [CourseController::class, 'show'])->name('khoa-hoc.show');
 });
 
-//chi tiết khóa học
-Route::get('/course-detail', function () {
-    return view('client.course.courseDetail');
-})->name('courseDetail');
-
 //reels
 Route::post('/reelsUpload', [ReelsController::class, 'upload'])->name('reelsUpload');
 Route::get('/reelsUpload1', [ReelsController::class, 'showVideo'])->name('reelsUpload1');
@@ -280,8 +248,6 @@ Route::prefix('chat')->name('chat')->middleware('auth')->group(function () {
 });
 Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup']);
 
-//course
-
 // mail
 Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
 
@@ -290,11 +256,6 @@ Route::get('/hoc-tap', function () {
     return view('client.course.myCourses');
 })->name('hoc-tap');
 
-
 Route::get('/hoc-khoa-hoc', function () {
     return view('client.lecture.lecture');
 })->name('lecture');
-
-Route::get('/test', function () {
-    return view('welcome');
-});

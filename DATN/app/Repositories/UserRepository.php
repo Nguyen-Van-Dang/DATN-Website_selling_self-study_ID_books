@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -14,14 +13,14 @@ use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Validation\ValidationException;
+use Flasher\Toastr\Prime\ToastrInterface;
+use Flasher\Toastr\Prime\Toastr;
+use Flasher\Toastr\Laravel\Flasher;
 
 
 class UserRepository
 {
-    /**
-     * Create a new class instance.
-     */
     public function __construct()
     {
         //
@@ -32,9 +31,72 @@ class UserRepository
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        toastr()->success('<p>Bạn đã đăng xuất thành công!</p>');
         return redirect('/');
     }
+    //đăng nhập bằng sdt
+    public function loginUser($data)
+    {
+        $messages = [
+            'phone.required' => 'Xin vui lòng nhập số điện thoại',
+            'phone.regex' => 'Xin vui lòng nhập số điện thoại hợp lệ (10 số)',
+            'password.required' => 'Xin vui lòng nhập mật khẩu',
+        ];
 
+        $validator = Validator::make($data->all(), [
+            'phone' => ['required', 'regex:/^([0-9]{10})$/'],
+            'password' => 'required',
+        ], $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
+
+        // if (!$user || !password_verify($data->password, $user->password)) {
+        //     return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
+        // }
+
+        Auth::login($user);
+        toastr()->success('<p;">Bạn đã đăng nhập thành công!</p>');
+
+        return redirect()->intended('/');
+    }
+    // đăng nhập bằng Zalo
+    public function handleZaloCallback(\Illuminate\Http\Request $request)
+    {
+        $user = Socialite::driver('zalo')->user();
+
+        // Thử lấy email và phone từ dữ liệu người dùng
+        // $email = $user->email ?: uniqid() . '@zalo.com'; // Tạo email ngẫu nhiên nếu không có
+        $email = $user->getEmail() ?: uniqid() . '@zalo.com';
+
+        $phone = $user->user['phone'] ?? null; // Kiểm tra nếu có phone, nếu không thì để null
+
+
+        $findUser = User::where('email', $email)->first();
+
+        if ($findUser) {
+            Auth::login($findUser);
+        } else {
+            $newUser = User::create([
+                'name' => $user->name,
+                // 'image_url' => $user->avatar, // Sử dụng trường avatar nếu cần
+                'email' => $email,
+                'zalo_id' => $user->id,
+                'password' => Hash::make(Str::random(16)),
+                'phone' => $phone, // Lưu số điện thoại nếu có
+                'loginType' => 3,
+                'role_id' => 3,
+            ]);
+
+            Auth::login($newUser);
+        }
+
+        return redirect()->intended('/');
+    }
+    //đăng nhập bằng gg
     public function handleGoogleCallback(\Illuminate\Http\Request $request)
     {
         try {
@@ -63,6 +125,7 @@ class UserRepository
                 ]);
                 Auth::login($newUser);
             }
+            toastr()->success('<p;">Bạn đã đăng nhập thành công!</p>');
 
             return redirect()->intended('/');
         } catch (Exception $e) {
@@ -70,15 +133,12 @@ class UserRepository
             return redirect()->back()->withErrors(['error' => 'Failed to login with Google']);
         }
     }
-
-
-
+    //hiển thịt tất cả tài khoản user bên admin
     public function getAllUser()
     {
         $User = User::getAll();
         return view('admin.user.listUser', ['User' => $User]);
     }
-
     public function softDelete($id)
     {
         $user = User::findOrFail($id);
@@ -88,133 +148,32 @@ class UserRepository
     {
         return view('admin.user.deletedUser');
     }
-    /*-------------------------------------------------------Admin---------------------------------------------------------*/
-
-    /*-------------------------------------------------------Client---------------------------------------------------------*/
-    public function loginUser($data)
-    {
-        $messages = [
-            'phone.required' => 'Xin vui lòng nhập số điện thoại',
-            'phone.regex' => 'Xin vui lòng nhập số điện thoại hợp lệ (10 số)',
-            'password.required' => 'Xin vui lòng nhập mật khẩu',
-        ];
-
-        $validator = Validator::make($data->all(), [
-            'phone' => ['required', 'regex:/^([0-9]{10})$/'],
-            'password' => 'required',
-        ], $messages);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
-
-        // if (!$user || !password_verify($data->password, $user->password)) {
-        //     return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
-        // }
-
-        Auth::login($user);
-        return redirect()->intended('/');
-    }
-
-    // đăng nhập bằng Zalo
-    // public function handleZaloCallback(\Illuminate\Http\Request $request)
+    // public function changePassword($data)
     // {
-    //     $user = Socialite::driver('zalo')->user();
-    //     // $phone = $user->user['phone'] ?? null; 
-    //     $email = $user->email ?: uniqid() . '@zalo.com';
-    //     $findUser = User::where('email', $user->email)->first();
+    //     $messages = [
+    //         'password.required' => 'Xin vui lòng nhập mật khẩu hiện tại',
+    //         'new_password.required' => 'Xin vui lòng nhập mật khẩu mới',
+    //         'new_password.confirmed' => 'Mật khẩu xác nhận không khớp',
+    //         'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự',
+    //     ];
 
-    //     if ($findUser) {
-    //         Auth::login($findUser);
-    //     } else {
-    //         $newUser = User::create([
-    //             'name' => $user->name,
-    //             // 'image_url' => $user->image_url,
-    //             'email' => $email,
-    //             'zalo_id' => $user->id, // Giữ zalo_id nếu cần cho các mục đích khác
-    //             'password' => Hash::make(Str::random(16)),
-    //             // 'phone' => $phone,
-    //             'loginType' => 3,
-    //             'role_id' => 3,
+    //     $validatedData = $data->validate([
+    //         'password' => 'required',
+    //         'new_password' => 'required|min:8|confirmed',
+    //     ], $messages);
+
+    //     $user = Auth::user();
+
+    //     if (!Hash::check($data->password, $user->password)) {
+    //         throw ValidationException::withMessages([
+    //             'password' => 'Mật khẩu hiện tại không đúng.',
     //         ]);
-
-    //         Auth::login($newUser);
     //     }
-    //     // dd($newUser);
-    //     return redirect()->intended('/');
+
+    //     $user->password = Hash::make($data->new_password);
+    //     $user->save();
+    //     return redirect()->back()->with('success', 'Đổi mật khẩu thành công');
     // }
-    public function handleZaloCallback(\Illuminate\Http\Request $request)
-    {
-        $user = Socialite::driver('zalo')->user();
 
-        // Thử lấy email và phone từ dữ liệu người dùng
-        // $email = $user->email ?: uniqid() . '@zalo.com'; // Tạo email ngẫu nhiên nếu không có
-        $email = $user->getEmail() ?: uniqid() . '@zalo.com';
-
-        $phone = $user->user['phone'] ?? null; // Kiểm tra nếu có phone, nếu không thì để null
-        
-
-        $findUser = User::where('email', $email)->first();
-
-        if ($findUser) {
-            Auth::login($findUser);
-        } else {
-            $newUser = User::create([
-                'name' => $user->name,
-                // 'image_url' => $user->avatar, // Sử dụng trường avatar nếu cần
-                'email' => $email,
-                'zalo_id' => $user->id,
-                'password' => Hash::make(Str::random(16)),
-                'phone' => $phone, // Lưu số điện thoại nếu có
-                'loginType' => 3,
-                'role_id' => 3,
-            ]);
-
-            Auth::login($newUser);
-        }
-
-        return redirect()->intended('/');
-    }
-
-
-    // upload image_url
-    public function userUpload1($data)
-    {
-        // Xác thực dữ liệu đầu vào
-        $validatedData = $data->validate([
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Thêm xác thực cho thumbnail
-            'title' => 'required|string|max:255', // Thêm xác thực cho title
-            'video_url' => 'required|file|mimes:mp4,mov,avi,wmv|max:51200', // Xác thực cho video_url
-        ]);
-
-        // Xử lý tệp thumbnail
-        $thumbnail = $validatedData['thumbnail'];
-        $thumbnailName = $thumbnail->getClientOriginalName();
-        $directory = 'Reels/Thumbnails';
-
-        $disk = Storage::disk('google');
-
-        if (!$disk->exists($directory)) {
-            $disk->makeDirectory($directory);
-        }
-
-        $thumbnailPath = $directory . '/' . $thumbnailName;
-        $disk->put($thumbnailPath, file_get_contents($thumbnail));
-        $this->setFilePublic($disk, $thumbnailPath);
-        $thumbnailMeta = $disk->getAdapter()->getMetadata($thumbnailPath)->extraMetadata()['id'];
-
-
-
-        // Lưu thông tin vào cơ sở dữ liệu
-        $video = new Reels();
-        $video->user_id = auth()->id();
-        $video->title = $validatedData['title'];
-        $video->thumbnail = 'https://drive.google.com/file/d/' . $thumbnailMeta . '/preview';
-        $video->video_url = 'https://drive.google.com/file/d/' . $videoMeta . '/preview';
-        $video->save();
-
-        return redirect()->back()->with('success', 'Video uploaded successfully!');
-    }
+    /*-------------------------------------------------------Admin---------------------------------------------------------*/
 }

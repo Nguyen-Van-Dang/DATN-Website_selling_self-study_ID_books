@@ -27,6 +27,7 @@
             </a>
         </div>
     </div>
+
     <div class="d-flex justify-content-between align-items-center position-relative mt-3">
         <div class="w-100 iq-search-filter mb-0">
             <ul class="list-inline p-0 m-0 row justify-content-center search-menu-options">
@@ -76,22 +77,29 @@
             </ul>
         </div>
     </div>
-    <div class="iq-card iq-card-block iq-card-stretch iq-card-height mt-4">
 
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height mt-4">
         <div class="iq-card-body pt-0">
             <div class="row">
                 @foreach ($courseList as $course)
                     <div class="col-6 col-lg-3">
                         <div class="card card-filter h-50">
                             <div class="card-body">
-                                <h5 class="card-title course-title">{{ $course->name }}</h5>
-                                <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
-                                    class="card-img-top img-fluid rounded course-image" alt="Product 3"
-                                    style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="" wire:click="goToCourseDetail({{ $course->id }})"
+                                    style="cursor: pointer;">
+                                    <h5 class="card-title course-title">{{ $course->name }}
+                                    </h5>
+                                    <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                                        class="card-img-top img-fluid rounded course-image" alt="Product 3"
+                                        style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;">
+                                </div>
+
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
                                     <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
                                         đ</span>
-                                    {{-- <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span> --}}
+                                    <span class="text-muted ml-3"
+                                        style="text-decoration:line-through">{{ number_format($course->discount) }}
+                                        đ</span>
                                 </div>
                             </div>
                         </div>
@@ -136,8 +144,6 @@
                         </div>
                     </li>
                 @endforeach
-
-
             </ul>
         </div>
     </div>
@@ -165,8 +171,6 @@
                         </div>
                     </div>
                 @endforeach
-
-
             </div>
         </div>
     </div>

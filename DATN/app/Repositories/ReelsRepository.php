@@ -50,7 +50,6 @@ class ReelsRepository
         return view('reels.reelsUpload1', compact('videoUrl'));
     }
 
-
     public function reelsUpload1($data)
     {
         // Xác thực dữ liệu đầu vào

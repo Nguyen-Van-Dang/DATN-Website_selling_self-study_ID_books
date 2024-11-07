@@ -15,6 +15,7 @@
     "dependencies": {
         "@vnphu/vn-badwords": "github:vnphu/vn-badwords",
         "firebase": "^10.14.0",
-        "livewire": "^0.6.1"
+        "livewire": "^0.6.1",
+        "toastr": "^2.1.4"
     }
 }

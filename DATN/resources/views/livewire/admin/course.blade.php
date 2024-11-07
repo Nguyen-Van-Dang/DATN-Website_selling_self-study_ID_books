@@ -45,31 +45,8 @@
                             @foreach ($Course as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    @foreach ($item->getMedia('courseImages') as $media)
-                                        @php
-                                            $fileId = $media->getCustomProperty('google_drive_file_id');
-                                        @endphp
-                                        @if ($fileId)
-                                            @php
-                                                $fileUrl = 'https://drive.google.com/uc?export=view&id=' . $fileId;
-                                            @endphp
-                                            <td>
-                                                <a href="{{ $fileUrl }}" target="_blank">
-                                                    <img src="{{ $fileUrl }}" alt="{{ $media->file_name }}"
-                                                        style="width: 100px; height: auto;" />
-                                                </a>
-                                            </td>
-                                        @else
-                                            <td>
-                                                <a target="_blank">
-                                                    null
-                                                </a>
-                                            </td>
-                                        @endif
-                                    @endforeach
-
-
-
+                                    <td><img class="img-fluid rounded" src="{{ $item->image_url }}" alt="">
+                                    </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->amount_lecture }}</td>
                                     <td>{{ $item->price }}đ</td>
@@ -97,7 +74,7 @@
                     @else
                         <tbody>
                             <tr>
-                                <td colspan="7" class="text-center">Không tìm thấy khóa học dùng nào.</td>
+                                <td colspan="7" class="text-center">Không tìm thấy khóa học nào.</td>
                             </tr>
                         </tbody>
                     @endif

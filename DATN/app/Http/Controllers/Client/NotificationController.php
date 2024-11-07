@@ -12,7 +12,7 @@ class NotificationController extends Controller
     {
         $this->notificationRepository = $notificationRepository;
     }
-    public function getAllNotification(){
-        return $this->notificationRepository->getAllNotification();
-    }
+    // public function getAllNotification(){
+    //     return $this->notificationRepository->getAllNotification();
+    // }
 }

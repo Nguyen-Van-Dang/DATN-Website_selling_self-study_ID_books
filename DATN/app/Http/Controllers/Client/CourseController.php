@@ -25,6 +25,6 @@ class CourseController extends Controller
     }
     public function show($id)
     {
-        return view('client.course.courseDetail', compact('id'));
+        return $this->courseRepository->getCourseById($id);
     }
 }

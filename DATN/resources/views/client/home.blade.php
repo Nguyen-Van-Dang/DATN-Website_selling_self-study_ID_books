@@ -11,52 +11,62 @@
                         <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/01.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/01.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/02.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/02.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/03.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/03.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/04.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/04.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/12.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/12.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/18.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/18.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/25.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/25.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/32.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/32.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/41.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/41.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                             <li class="item">
                                 <a href="javascript:void(0);">
-                                    <img src="{{ asset('assets/images/book/book/21.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                    <img src="{{ asset('assets/images/book/book/21.jpg') }}" class="img-fluid w-100 rounded"
+                                        alt="">
                                 </a>
                             </li>
                         </ul>
@@ -71,7 +81,7 @@
                             <h4 class="card-title mb-0">Gợi ý cho bạn</h4>
                         </div>
                         <div class="iq-card-header-toolbar d-flex align-items-center">
-                            <a href="category.html" class="btn btn-sm btn-primary view-more">Xem Thêm</a>
+                            <a href="{{ route('bookList') }}" class="btn btn-sm btn-primary view-more">Xem Thêm</a>
                         </div>
                     </div>
                     <div class="iq-card-body">
@@ -128,7 +138,7 @@
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between mb-0">
                         <div class="iq-header-title">
-                            <h4 class="card-title">Best Seller</h4>
+                            <h4 class="card-title">Sách Bán Chạy</h4>
                         </div>
                         <div class="iq-card-header-toolbar d-flex align-items-center">
                             <div class="dropdown">
@@ -176,7 +186,7 @@
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between mb-0">
                         <div class="iq-header-title">
-                            <h4 class="card-title">Nhà Sách TV</h4>
+                            <h4 class="card-title">Giáo Viên</h4>
                         </div>
                         <div class="iq-card-header-toolbar d-flex align-items-center">
                             <div class="dropdown">
@@ -193,77 +203,34 @@
                         </div>
                     </div>
                     <div class="iq-card-body">
-                        <ul class="list-inline row mb-0 align-items-center iq-scrollable-block">
-                            <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                            src="{{ asset('assets/images/book/user/1.jpg') }}" alt=""></a>
-                                </div>
-                                <div class="mt-1">
-                                    <h6>Kinh Tế</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">2831</span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                            src="{{ asset('assets/images/book/user/1.jpg') }}" alt=""></a>
-                                </div>
-                                <div class="mt-1">
-                                    <h6>Văn Học</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">432</span></p>
-                                </div>
-                            </li>
-                            <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                            src="{{ asset('assets/images/book/user/1.jpg') }}" alt=""></a>
-                                </div>
-                                <div class="mt-1">
-                                    <h6>Tâm Lý - Kĩ Năng Sống</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">5471</span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                            src="{{ asset('assets/images/book/user/1.jpg') }}" alt=""></a>
-                                </div>
-                                <div class="mt-1">
-                                    <h6>Sách Giáo Khoa</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">8764</span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                            src="{{ asset('assets/images/book/user/1.jpg') }}" alt=""></a>
-                                </div>
-                                <div class="mt-1">
-                                    <h6>Chính trị – pháp luật</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">8987</span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                            src="{{ asset('assets/images/book/user/1.jpg') }}" alt=""></a>
-                                </div>
-                                <div class="mt-1">
-                                    <h6>Khoa Học - Công Nghệ </h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">2831</span>
-                                    </p>
-                                </div>
-                            </li>
+                        <ul class="list-inline row mb-0 iq-scrollable-block">
+                            @foreach ($teachers as $teacher)
+                                <li class="col-sm-6 d-flex mb-3">
+                                    <div class="icon iq-icon-box mr-3">
+                                        <a href="javascript:void();">
+                                            <img class="img-fluid avatar-60 rounded-circle"
+                                                src="{{ asset('assets/images/book/user/1.jpg') }}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="mt-1">
+                                        <a href="">
+                                            <h6>{{ $teacher->name }}</h6>
+                                        </a>
+                                        <p class="mb-0 text-primary">Số lượng sách:
+                                            <span class="text-body">{{ $teacher->total_books }}</span>
+                                        </p>
+                                        <p class="mb-0 text-primary">Số lượng khóa học:
+                                            <span class="text-body">{{ $teacher->total_courses }}</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>
             </div>
-
+            {{-- book --}}
             <div class="col-lg-12">
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
@@ -271,7 +238,7 @@
                             <h4 class="card-title mb-0">Sách yêu thích</h4>
                         </div>
                         <div class="iq-card-header-toolbar d-flex align-items-center">
-                            <a href="category.html" class="btn btn-sm btn-primary view-more">Xem thêm</a>
+                            <a href="{{ route('bookList') }}" class="btn btn-sm btn-primary view-more">Xem thêm</a>
                         </div>
                     </div>
                     <div class="iq-card-body favorites-contens">
@@ -386,6 +353,56 @@
                     </div>
                 </div>
             </div>
+            {{-- course --}}
+            <div class="col-lg-12">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                    <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                        <div class="iq-header-title">
+                            <h4 class="card-title mb-0">Khóa Học Hấp Dẫn</h4>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                            <a href="{{ route('khoa-hoc.index') }}" class="btn btn-sm btn-primary view-more">Xem thêm</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body favorites-contens">
+                        <ul id="favorites-slider" class="list-inline p-0 mb-0 row">
+                            <li class="col-md-2">
+                                <div class="trendy-course card h-100 pt-3" style=" transition: transform 0.3s ease;">
+                                    <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                                        class="card-img-top img-fluid rounded course-image" alt="Product 3">
+                                    <div class="card-body border pt-1">
+                                        <div>
+                                            <h5 class="card-title course-title">khoa hoc</h5>
+                                            <h7 class="card-title course-teacher" style="font-size: 13px">Thầy Nguyễn Văn
+                                                A</h7>
+                                        </div>
+                                        <div class="d-flex justify-content-evenly mt-3 flex-nowrap"
+                                            style="font-size: 13px">
+                                            <span class="text-danger font-weight-bold">500.000đ</span>
+                                            <span class="text-muted ml-3"
+                                                style="text-decoration:line-through">600.000đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <style>
+        .trendy-course {
+            transition: transform 0.3s ease;
+        }
+
+        .trendy-course:hover {
+            transform: scale(1.05);
+        }
+
+        .course-image {
+            aspect-ratio: 1.5/1;
+            object-fit: cover
+        }
+    </style>
 @endsection
