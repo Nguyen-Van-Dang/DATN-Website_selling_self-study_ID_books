@@ -47,5 +47,10 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
         'checkRole' => \App\Http\Middleware\CheckRole::class,
         'checkLoggedIn' => \App\Http\Middleware\CheckLoggedIn::class,
+        'auto.logout' => \App\Http\Middleware\AutoLogout::class,
+    ];
+
+    protected $routeMiddleware = [
+        'auto.logout' => \App\Http\Middleware\AutoLogout::class,
     ];
 }

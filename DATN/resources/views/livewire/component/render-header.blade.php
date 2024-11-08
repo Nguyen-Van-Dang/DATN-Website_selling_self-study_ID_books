@@ -1,4 +1,3 @@
-{{-- {{dd(Auth::id());}} --}}
 <div>
     <div class="iq-navbar-custom">
         <nav class="navbar navbar-expand-lg navbar-light p-0 ">

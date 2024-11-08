@@ -4,6 +4,6 @@
 
 @section('content')
 
-    @livewire('client.lecture')
+    @livewire('client.lecture.lectures')
 
 @endsection

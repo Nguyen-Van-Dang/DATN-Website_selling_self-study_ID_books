@@ -30,7 +30,7 @@ class Book extends Model
 
     public function Course(): BelongsTo
     {
-        return $this->BelongsTo(Courses::class);
+        return $this->BelongsTo(Course::class);
     }
 
     public function User(): BelongsTo
@@ -52,7 +52,7 @@ class Book extends Model
     {
         return $this->hasMany(CartDetail::class);
     }
-    
+
     public static function getAll()
     {
         return self::all();

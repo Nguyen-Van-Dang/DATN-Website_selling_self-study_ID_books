@@ -18,11 +18,18 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\Client\FollowController;
 use App\Http\Controllers\Client\NotificationUserController;
 use App\Http\Middleware\CheckRole;
-use App\Livewire\Book\RenderBookClient;
+use App\Http\Middleware\AutoLogout;
+use App\Livewire\Client\Book\Books;
+use App\Livewire\Client\Book\BookDetail;
 
 /* --------------- HOME CLIENT --------------- */
 
 Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
+
+// Route::middleware([AutoLogout::class])->group(function () {
+//     Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
+// });
+
 /* --------------- hOME ADMIN --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin', function () {
@@ -171,16 +178,14 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
     })->name('addContact');
 });
 
-/* --------------- ABC --------------- */
-// Route::get('/admin/abc/abc', [AbcController::class, 'getAllAbc'])->name('getAllAbc');
-// Route::get('admin/abc/addAbc', [AbcController::class, 'CreateAbc'])->name('CreateAbc');
-// Route::post('admin/abc/addAbc', [AbcController::class, 'handleImage'])->name('handleImage');
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 
 //danh sách cuốn sách
 Route::get('/book-list', [BookController::class, 'getAllBookClient'])->name('bookList');
-Route::post('/books/{id}/toggle-favorite', [RenderBookClient::class, 'toggleFavorite'])->name('toggleFavorite');
+Route::post('/books/{id}/toggle-favorite', [Books::class, 'toggleFavorite'])->name('toggleFavorite');
 
+//chi tiết sách
+Route::get('/book-detail/{id}', [BookController::class, 'getBookDetailClient'])->name('bookDetail');
 
 // thông tin người dùng
 Route::get('/user-information', function () {
@@ -192,7 +197,7 @@ Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('use
 
 //giỏ hàng
 Route::get('/shopping-cart', [CartDetailController::class, 'getAllCartDetail'])->name('shoppingCart');
-Route::post('/cart/add/{id}', [RenderBookClient::class, 'addToCart'])->name('addToCart');
+Route::post('/cart/add/{id}', [Books::class, 'addToCart'])->name('addToCart');
 Route::delete('/cart/remove/{id}', [CartDetailController::class, 'removeFromCart'])->name('removeFromCart');
 Route::post('/shopping-cart', [OrderController::class, 'checkout'])->name('checkout');
 
@@ -203,10 +208,6 @@ Route::get('/notification-list', function () {
     return view('client.notification.notification');
 })->name('notificationList');
 
-//chi tiết sách
-Route::get('/book-detail', function () {
-    return view('client.book.bookDetail');
-})->name('bookDetail');
 
 //kích hoạt sách
 Route::get('/book-id', function () {

@@ -39,32 +39,6 @@ class Courses extends Component
         ]);
     }
 
-    // public function render()
-    // {
-    //     if (strlen($this->search) >= 1) {
-    //         $Course = Courses::with('media') // Tải các tệp liên quan tới khóa học
-    //             ->where('name', 'like', '%' . $this->search . '%')
-    //             ->orWhere('id', $this->search)
-    //             ->orWhereHas('user', function ($query) {
-    //                 $query->where('name', 'like', '%' . $this->search . '%');
-    //             })
-    //             ->paginate(10);
-    //     } else {
-    //         if (Auth::user()->role_id == 1) {
-    //             $Course = Course::with('media')->paginate(10); // Tải các tệp cho tất cả khóa học
-    //         } else {
-    //             $Course = Course::with('media')->where('user_id', Auth::id())->paginate(10); // Tải các tệp cho khóa học của người dùng
-    //         }
-    //     }
-
-    //     $hasTempData = session()->has('course_name') || session()->has('course_description');
-
-    //     return view('livewire.admin.course', [
-    //         'hasTempData' => $hasTempData,
-    //         'Course' => $Course,
-    //     ]);
-    // }
-
     public function openPopup($type, $id = null)
     {
         $this->deletedId = null;

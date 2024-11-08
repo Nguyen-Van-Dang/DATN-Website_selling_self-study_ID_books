@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Book;
+use App\Models\User;
 use App\Models\Favorite;
 
 class BookRepository
@@ -23,5 +24,14 @@ class BookRepository
     public function getAllBookClient()
     {
         return view('client.book.book');
+    }
+    public function getBookDetailClient($id)
+    {
+        // Tìm cuốn sách với id và tải mối quan hệ với 'lectures' và 'user'
+        $Book = Book::with(['user'])->findOrFail($id);
+
+        // Lấy thông tin người đăng sách (user)
+        $user = $Book->user;
+        return view('client.book.bookDetail', compact('Book', 'user'));
     }
 }

@@ -1,36 +1,37 @@
 <?php
 
-namespace App\Livewire\Book;
+namespace App\Livewire\Client\Book;
 
 use App\Models\Book;
 use App\Models\CartDetail;
 use App\Models\Favorite;
-use App\Repositories\CartDetailRepository;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 
-class RenderBookClient  extends Component
+class Books extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
-        $Book = Book::getAll();
-        return view('livewire.book.render-book-client', ['Book' => $Book]);
+        $Book = Book::query()->paginate(16);
+        return view('livewire.client.book.books', ['Book' => $Book]);
     }
 
     public function addToCart($bookId)
     {
+        $user = auth::user();
+        if (!$user) {
+            toastr()->error('<p>Vui lòng đăng nhập để thêm vào giỏ hàng!</p>');
+            return response();
+        }
 
         $book = Book::findOrFail($bookId);
-        $user = auth::user();
+
         $cartItem = $user->cartDetails()->where('book_id', $bookId)->first();
 
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Vui lòng đăng nhập!'], 401);
-        }
         if ($cartItem) {
             $cartItem->quantity++;
             $cartItem->save();
@@ -41,9 +42,16 @@ class RenderBookClient  extends Component
             $cartItem->quantity = 1;
             $cartItem->save();
         }
+
         toastr()->success('<p>Sản phẩm đã được thêm vào giỏ hàng!</p>');
-        // $this->dispatch('cartUpdated');
-        return response()->json(['success' => true, 'message' => 'Sản phẩm đã được thêm vào giỏ hàng!', 'cartCount' => $user->cartDetails->sum('quantity')]);
+
+        $this->dispatch('cartUpdated');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',
+            'cartCount' => $user->cartDetails->sum('quantity')
+        ]);
     }
 
     public function toggleFavorite($id)
@@ -69,5 +77,10 @@ class RenderBookClient  extends Component
         }
 
         return response()->json(['success' => true, 'is_favorite' => $is_favorite]);
+    }
+
+    public function goToBookDetail($id)
+    {
+        return redirect()->route('bookDetail', $id);
     }
 }
