@@ -3,7 +3,7 @@
 
 <head>
     <title>@yield('title', 'TRANG CHỦ')</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/book/icon/favicon.png') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,6 +43,7 @@
             background-color: #e5f7f0;
             border-color: #d8f7eb;
         }
+
         .overflow-scroll {
             overflow: scroll;
         }
@@ -71,7 +72,7 @@
     <script src="{{ asset('assets/js/key.js') }}"></script>
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/image.js') }}"></script>
-    
+
     <script src="{{ asset('assets/js/reals.js') }}"></script>
     <script src="{{ asset('assets/js/login.js') }}"></script>
     <script src="{{ asset('assets/js/toast.js') }}" defer></script>

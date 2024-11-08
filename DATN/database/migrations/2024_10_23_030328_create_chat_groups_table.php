@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 60);
             $table->text('description');
+            $table->string('avatar', 255)->nullable();
             $table->foreignId('course_id')->nullable()->constrained('courses')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();

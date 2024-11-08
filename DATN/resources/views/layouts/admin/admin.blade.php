@@ -3,7 +3,7 @@
 
 <head>
     <title>@yield('title', 'TRANG CHỦ ADMIN')</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icon/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/book/icon/favicon.png') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

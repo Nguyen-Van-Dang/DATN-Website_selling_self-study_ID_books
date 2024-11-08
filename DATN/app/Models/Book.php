@@ -39,9 +39,16 @@ class Book extends Model
     {
         return $this->belongsTo(CategoryBook::class, 'category_books_id'); // Đảm bảo trường khóa ngoại đúng
     }
-    
+    // Quan hệ với CourseActivation
+    public function courseActivations()
+    {
+        return $this->hasMany(CourseActivation::class);
+    }
 
-    public static function getAll(){
+    // Quan hệ thông qua CourseActivation để lấy các khóa học liên quan
+
+    public static function getAll()
+    {
         return self::all();
     }
 }

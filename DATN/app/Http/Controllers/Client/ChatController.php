@@ -28,18 +28,22 @@ class ChatController extends Controller
     }
     public function leaveGroup($id)
     {
-        // Tìm nhóm chat
         $group = ChatGroup::find($id);
-
         if ($group) {
-            // Tìm người dùng hiện tại trong nhóm
-            $participant = ChatParticipant::where('group_id', $group->id)
-                ->where('user_id', Auth::id())
-                ->first();
-            if ($participant) {
-                // Xóa người dùng khỏi nhóm
-                $participant->delete();
+            if (auth::id() == 1 || auth::id() == 2) {
+                $group->participants()->delete();
+                $group->delete();
+                session()->flash('message', 'Nhóm đã bị xóa thành công.');
                 return response()->json(['success' => true]);
+            } else {
+                $participant = ChatParticipant::where('group_id', $group->id)
+                    ->where('user_id', Auth::id())
+                    ->first();
+                if ($participant) {
+                    $participant->delete();
+                    session()->flash('message', 'Bạn đã rời khỏi nhóm thành công.');
+                    return response()->json(['success' => true]);
+                }
             }
         }
 

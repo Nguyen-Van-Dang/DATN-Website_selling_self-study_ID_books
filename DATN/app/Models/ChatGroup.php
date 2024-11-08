@@ -4,14 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ChatGroup extends Model
+class ChatGroup extends Model implements HasMedia
 {
 
-    protected $fillable = ['name', 'description', 'course_id'];
+    protected $fillable = ['name', 'description', 'course_id', 'avatar'];
 
-    use SoftDeletes;
+    use SoftDeletes, HasFactory, InteractsWithMedia;
 
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatars')->useDisk('google');
+    }
     public function participants()
     {
         return $this->hasMany(ChatParticipant::class, 'group_id');
@@ -23,13 +31,6 @@ class ChatGroup extends Model
     }
     public function course()
     {
-        return $this->hasOne(Course::class, 'id');
+        return $this->belongsTo(Course::class);
     }
-
-    // public function latestMessage()
-    // {
-    //     return $this->hasOne(ChatMessage::class)
-    //         ->select('id', 'group_id', 'message', 'created_at')
-    //         ->orderBy('created_at', 'desc');
-    // }
 }

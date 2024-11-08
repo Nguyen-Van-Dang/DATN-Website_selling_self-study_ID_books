@@ -19,16 +19,18 @@ class BookCategories extends Model
         'deleted_at',
     ];
 
-    public  function Book() : HasMany{
+    public  function Book(): HasMany
+    {
         return $this->hasMany(Book::class);
     }
 
-    public function User(): BelongsTo 
+    public function User(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public static function getAll(){
+    public static function getAll()
+    {
         return self::all();
     }
 }

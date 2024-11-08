@@ -21,11 +21,13 @@ class Course extends Model
         'category_course_id',
     ];
 
-    public  function Book() : HasMany{
+    public  function Book(): HasMany
+    {
         return $this->hasMany(Book::class);
     }
 
-    public  function Lecture() : HasMany{
+    public  function Lecture(): HasMany
+    {
         return $this->hasMany(Lecture::class);
     }
 
@@ -33,7 +35,14 @@ class Course extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public static function getAll(){
+
+    public function courseActivations()
+    {
+        return $this->hasMany(CourseActivation::class);
+    }
+
+    public static function getAll()
+    {
         return self::all();
     }
 }

@@ -15,6 +15,8 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Client\FollowController;
 use App\Http\Controllers\Client\NotificationUserController;
+use App\Http\Controllers\CourseActivationController;
+use App\Http\Middleware\CheckLoggedIn;
 use App\Http\Middleware\CheckRole;
 
 
@@ -236,9 +238,12 @@ Route::get('/book-detail', function () {
 })->name('bookDetail');
 
 //kích hoạt sách
-Route::get('/book-id', function () {
-    return view('client.book.bookID');
-})->name('bookID');
+Route::prefix('kich-hoat-sach')->group(function () {
+    Route::get('/', [CourseActivationController::class, 'index'])->name('kich-hoat-sach');
+    Route::post('/redirect', [CourseActivationController::class, 'redirect'])->name('kich-hoat-sach.redirect');
+    Route::get('/{book_id}', [CourseActivationController::class, 'checkBook'])->name('kich-hoat-sach.checkBook');
+    Route::post('/activate', [CourseActivationController::class, 'activate'])->name('kich-hoat-sach.activate');
+});
 
 //danh sách khóa học
 Route::prefix('khoa-hoc')->group(function () {
@@ -269,13 +274,17 @@ Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow'])->name
 //view
 Route::post('/reels/view/{reelId}', [ReelsController::class, 'incrementViewCount']);
 
-//chat
-Route::prefix('chat')->name('chat')->middleware('auth')->group(function () {
-    Route::controller(ChatController::class)->group(function () {
-        Route::get('/', 'index');
+Route::middleware([CheckLoggedIn::class])->group(function () {
+    Route::prefix('chat')->name('chat')->group(function () {
+        Route::controller(ChatController::class)->group(function () {
+            Route::get('/', 'index');
+        });
     });
 });
-Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup']);
+Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup'])->name('leaveGroup');
+
+//chat
+
 
 //course
 
