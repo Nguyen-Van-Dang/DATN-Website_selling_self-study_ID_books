@@ -52,7 +52,12 @@ class Book extends Model
     {
         return $this->hasMany(CartDetail::class);
     }
-
+    // Quan hệ với CourseActivation
+    public function courseActivations()
+    {
+        return $this->hasMany(CourseActivation::class);
+    }
+    // Quan hệ thông qua CourseActivation để lấy các khóa học liên quan
     public static function getAll()
     {
         return self::all();

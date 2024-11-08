@@ -53,7 +53,8 @@
             </div>
         </div>
         <div class="nav-button" style="margin-left: auto">
-            <a href="{{ route('bookID') }}" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách !</b></a>
+            <a href="{{ route('kich-hoat-sach') }}" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách
+                    !</b></a>
         </div>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -35,6 +35,7 @@ return [
             'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
             'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
             'folder' => env('GOOGLE_DRIVE_FOLDER'),
+            'base_uri' => 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
         ],
 
         'local' => [

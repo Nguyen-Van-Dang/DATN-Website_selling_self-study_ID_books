@@ -24,20 +24,17 @@ class Course extends Model
     {
         return $this->hasMany(Book::class);
     }
-
-    public function lectures()
+    public  function Lecture(): HasMany
     {
-        return $this->hasMany(Lecture::class, 'course_id');
+        return $this->hasMany(Lecture::class);
     }
-
-    // public function User()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id'); // Định nghĩa mối quan hệ đến User
+    }
+    public function courseActivations()
+    {
+        return $this->hasMany(CourseActivation::class);
     }
     public static function getAll()
     {

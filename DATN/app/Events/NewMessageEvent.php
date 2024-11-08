@@ -8,12 +8,15 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
-class NewMessageEvent implements ShouldBroadcast
+
+class NewMessageEvent implements ShouldBroadcastNow
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use InteractsWithSockets, SerializesModels;
 
     public $message;
 
@@ -24,11 +27,11 @@ class NewMessageEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('chat-group.' . $this->message->group_id);
+        return new Channel('chat.' . $this->message->group_id);
     }
 
     public function broadcastAs()
     {
-        return 'message.sent';
+        return 'new-message';
     }
 }

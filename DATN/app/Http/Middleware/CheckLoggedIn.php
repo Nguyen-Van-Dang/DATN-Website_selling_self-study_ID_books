@@ -12,14 +12,18 @@ class CheckLoggedIn
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  mixed  ...$roles
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    // public function handle(Request $request, Closure $next): Response
-    // {
-    //     if (Auth::check()) {
-    //         return $next($request);
-    //     }
-    //     return redirect('/');
-    // }
+    public function handle(Request $request, Closure $next): Response
+    {
+        // Kiểm tra người dùng đã đăng nhập chưa
+        if (!Auth::check()) {
+            return redirect('/')->with('error', 'Vui lòng đăng nhập.');
+        }
+
+        return $next($request);
+    }
 }

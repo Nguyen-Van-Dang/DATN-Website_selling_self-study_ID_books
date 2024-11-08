@@ -1,43 +1,34 @@
 @extends('layouts.client.clientBook')
-
-@section('title', 'Kích hoạt ID sách')
-
 @section('content')
 
-
-<div class="couser" style="  padding: 20px;
-  background: #0dd6b8;
-  font-size: 20px;
-  font-weight: bold;
-  color: #444444;"><a href="{{ route('homeClient') }}" style="text-decoration:none">Trở về</a></div>
-<ul class="notifications"
-    style="background: white; box-shadow: 0px 5px 20px 0px rgb(52 70 84 / 10%); padding-bottom: 10px; border-radius: 10px;">
-</ul>
-<div class="book">
-    <form action="#">
-      <h2><img src="{{ asset('assets/images/book/user/123.jpg') }}" alt=""></h2>
-      <div class="form-group fullname">
-        <label for="fullname">ID Sách</label>
-        <input type="text" id="fullname" style="font-weight: bold; border-radius: 10px;" placeholder="Điền số ID từ bìa trước sách">
-      </div>
-      <div class="form-group email">
-        <label for="text">Mã cào kích hoạt</label>
-        <input type="text" id="text" style="font-weight: bold; border-radius: 10px;" placeholder="Điền mã kích hoạt từ bìa phụ sách (5 kí tự)">
-      </div>
-
-            {{-- <div class="form-group submit-btn">
-        <input type="submit" value="Kích hoạt">
-      </div> --}}
-
+    <div class="col-md-4">
+        <img src="{{ asset('assets/images/book/user/123.jpg') }}" alt="" style="width:150px" class="d-block mx-auto">
+        <form action="{{ route('kich-hoat-sach.redirect') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="book_id" class="form-label"><b>ID Sách</b></label>
+                <input type="text" name="book_id" class="form-control" id="book_id" style="border-radius: 10px;"
+                    placeholder="Điền số ID từ bìa trước sách">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <span class="text-danger">{{ $error }}<br /></span>
+                    @endforeach
+                @endif
+            </div>
             <div class="form-group submit-btn buttons">
-                <input type="submit" value="Kích hoạt" class="btn" id="success" style="background: #1BB295;">
+                <input type="submit" value="Kích hoạt" class="btn m-0" style="background: #1BB295; width:100%">
             </div>
+            <div class="image">
+                <p>ID sách có thể tìm thấy ở góc bìa của quyển sách</p>
+                <img src="{{ asset('assets/images/book/book_active_tutorial2.png') }}" alt="" style="height:303px;">
+            </div>
+            <p>
+                Bạn chưa biết cách kích hoạt? <a href="#" class="ex"> Xem hướng đẫn</a>
 
-            <div class="form-group">
-                <div class="col-md-8">
-                    Bạn chưa biết cách kích hoạt? <a href="#" class="ex"> Xem hướng đẫn</a>
-                </div>
-            </div>
+            </p>
+
+
         </form>
+
     </div>
 @endsection
