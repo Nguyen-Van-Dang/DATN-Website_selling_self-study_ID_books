@@ -53,7 +53,8 @@
                 </div>
             </div>
             <div class="nav-button" style="margin-left: auto">
-                <a href="{{ route('bookID') }}" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách !</b></a>
+                <a href="{{ route('kich-hoat-sach') }}" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách
+                        !</b></a>
             </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -329,7 +330,8 @@ $userName = Auth::user()->name;
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="{{ route('bookID') }}" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('kich-hoat-sach') }}"
+                                                class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-key-2-line"></i>

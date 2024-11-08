@@ -24,6 +24,7 @@ class BookFactory extends Factory
             'book_categories_id' => BookCategories::inRandomOrder()->first()->id,
             'image' => $this->faker->imageUrl(),
             'user_id' => User::inRandomOrder()->first()->id,
+            'discount' => $this->faker->randomFloat(2, 0, 100),  // Cung cấp giá trị cho discount
         ];
     }
 }

@@ -123,7 +123,7 @@
                                             </span>
                                         </div> --}}
                                         <span
-                                            class="text-dark mb-4 pb-4 iq-border-bottom d-block">{{ $Book->discription }}</span>
+                                            class="text-dark mb-4 pb-4 iq-border-bottom d-block">{{ $Book->description }}</span>
                                         <div class="text-primary mb-4">Tác giả: <span
                                                 class="text-body">{{ $Book->user->name }}</span>
                                         </div>

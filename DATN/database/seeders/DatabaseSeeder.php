@@ -36,22 +36,22 @@ class DatabaseSeeder extends Seeder
         DB::statement('ALTER TABLE books AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE lectures AUTO_INCREMENT = 1;');
 
-        // Role::factory()->create(['name' => 'Admin']);
-        // Role::factory()->create(['name' => 'Teacher']);
-        // Role::factory()->create(['name' => 'Student']);
-        // User::factory()->create(['role_id' => 1, 'phone' => '0123456789']);
-        // User::factory()->create(['role_id' => 2]);
-        // User::factory()->create(['role_id' => 3]);
-        // User::factory(12)->create();
-        // Contact::factory(15)->create();
-        // PaymentMethods::factory(15)->create();
+        Role::factory()->create(['name' => 'Admin']);
+        Role::factory()->create(['name' => 'Teacher']);
+        Role::factory()->create(['name' => 'Student']);
+        User::factory()->create(['role_id' => 1, 'phone' => '0123456789']);
+        User::factory()->create(['role_id' => 2]);
+        User::factory()->create(['role_id' => 3]);
+        User::factory(12)->create();
+        Contact::factory(15)->create();
+        PaymentMethods::factory(15)->create();
         Order::factory(15)->create();
         // Notification::factory(15)->create();
         // NotificationUser::factory(15)->create();
         CourseCategories::factory(15)->create();
         Course::factory(15)->create();
         BookCategories::factory(15)->create();
-        Book::factory(15)->create();
+        Book::factory(30)->create();
         Lecture::factory(15)->create();
     }
 }
