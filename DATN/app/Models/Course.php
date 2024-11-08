@@ -24,7 +24,7 @@ class Course extends Model
     {
         return $this->hasMany(Book::class);
     }
-    public  function Lecture(): HasMany
+    public function lectures(): HasMany
     {
         return $this->hasMany(Lecture::class);
     }
