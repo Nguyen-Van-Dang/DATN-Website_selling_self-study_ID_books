@@ -18,6 +18,7 @@ class Course extends Model
         'description',
         'image_url',
         'user_id',
+        'discount'
     ];
 
     public  function Book(): HasMany

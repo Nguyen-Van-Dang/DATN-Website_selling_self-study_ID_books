@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
 
-        @livewire('admin.course-add')
+        <livewire:admin.course.course-add />
 
     </div>
 

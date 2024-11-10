@@ -25,7 +25,7 @@
                             <th>Mã Số</th>
                             <th>Ảnh</th>
                             <th>Tên người dùng</th>
-                  
+                            <th>Mật Khẩu</th>
                             <th>Số điện thoại</th>
                             <th>Email</th>
                             <th>Vai trò</th>
@@ -34,48 +34,46 @@
                         </tr>
                     </thead>
                     @if (sizeof($users) > 0)
-                    <tbody class="text-center">
-                        @foreach ($users as $item)
-                            <tr>
-                                <td>{{ $item->id }}</td>
-                                <td>
-                                    <img src="{{ $item->image_url }}" class="img-fluid avatar-50 rounded"
-                                        alt="">
-                                      
-                                </td>
-                                <td>{{ $item->name }}</td>
-                                {{-- <td>{{ $item->role_id->name }}</td> --}}
-                            
+                        <tbody class="text-center">
+                            @foreach ($users as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>
+                                        <img src="{{ $item->image_url }}" class="img-fluid avatar-50 rounded"
+                                            alt="">
 
-                                <td>{{ $item->phone }}</td>
-                                <td>{{ $item->email }}</td>
-                                <td>{{ $item->role_id}}</td>
-                                <td>{{ $item->status}}</td>
-                                <td>
-                                    <div class="flex align-items-center list-user-action">
-                                        <a class="bg-primary text-white" data-toggle="tooltip" title="Xem chi tiết">
-                                            <i class="ri-eye-line"></i>
-                                        </a>
-                                        <a class="bg-primary text-white" data-toggle="tooltip" title="Chỉnh sửa"
-                                            wire:click="openPopup('edit', {{ $item->id }})">
-                                            <i class="ri-pencil-line"></i>
-                                        </a>
-                                        <a class="bg-primary text-white" data-toggle="tooltip" title="Xóa"
-                                            wire:click="openPopup('delete', {{ $item->id }})">
-                                            <i class="ri-delete-bin-line"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                                    </td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ Str::limit($item->password, 30, '...') }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->role_id }}</td>
+                                    <td>{{ $item->status }}</td>
+                                    <td>
+                                        <div class="flex align-items-center list-user-action">
+                                            <a class="bg-primary text-white" data-toggle="tooltip" title="Xem chi tiết">
+                                                <i class="ri-eye-line"></i>
+                                            </a>
+                                            <a class="bg-primary text-white" data-toggle="tooltip" title="Chỉnh sửa"
+                                                wire:click="openPopup('edit', {{ $item->id }})">
+                                                <i class="ri-pencil-line"></i>
+                                            </a>
+                                            <a class="bg-primary text-white" data-toggle="tooltip" title="Xóa"
+                                                wire:click="openPopup('delete', {{ $item->id }})">
+                                                <i class="ri-delete-bin-line"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     @else
-                    <tbody>
-                        <tr>
-                            <td colspan="7" class="text-center">Không tìm thấy tài khoản người dùng nào.</td>
-                        </tr>
-                    </tbody>
-                @endif
+                        <tbody>
+                            <tr>
+                                <td colspan="7" class="text-center">Không tìm thấy tài khoản người dùng nào.</td>
+                            </tr>
+                        </tbody>
+                    @endif
                 </table>
             </div>
             <div class="text-end">
@@ -101,23 +99,40 @@
                         <form wire:submit.prevent="createUser">
                             <div class="form-group">
                                 <label>Tên tài khoản:</label>
-                                <input wire:model="name" type="text" class="form-control" placeholder="Nhập tên tài khoản...">
+                                <input wire:model="name" type="text" class="form-control"
+                                    placeholder="Nhập tên tài khoản...">
                             </div>
+
+                            <div class="form-group">
+                                <label>Mật khẩu:</label>
+                                <input wire:model="password" type="password" class="form-control"
+                                    placeholder="Nhập mật khẩu...">
+                            </div>
+
                             <div class="form-group">
                                 <label>Ảnh tài khoản:</label>
                                 <div class="custom-file">
-                                    <input wire:model="image_url"  type="file" class="custom-file-input" id="image_url">
+                                    <input wire:model="image_url" type="file" class="custom-file-input"
+                                        id="image_url" accept="image/*">
                                     <label class="custom-file-label" for="image_url" style="z-index: 0;">Chọn tập
                                         tin</label>
                                 </div>
-                            </div> <div class="form-group">
-                                <label>Phone:</label>
-                                <input wire:model="phone" type="phone" class="form-control" placeholder="Nhập phone...">
+                                <!-- Hiển thị trạng thái khi đang upload -->
+                                <div wire:loading wire:target="image_url">Đang tải ảnh lên...</div>
                             </div>
+
+                            <div class="form-group">
+                                <label>Phone:</label>
+                                <input wire:model="phone" type="text" class="form-control"
+                                    placeholder="Nhập số điện thoại...">
+                            </div>
+
                             <div class="form-group">
                                 <label>Email:</label>
-                                <input wire:model="email" type="email" class="form-control" placeholder="Nhập email...">
+                                <input wire:model="email" type="email" class="form-control"
+                                    placeholder="Nhập email...">
                             </div>
+
                             <div class="form-group">
                                 <label>Vai trò:</label>
                                 <select class="form-control" wire:model="role_id">
@@ -126,6 +141,7 @@
                                     <option value="3">Học sinh</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label>Trạng thái:</label>
                                 <select class="form-control" wire:model="status">
@@ -133,6 +149,7 @@
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
+
                             <button type="submit" class="btn btn-primary">Thêm</button>
                             <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
                         </form>
@@ -141,6 +158,7 @@
             </div>
         </div>
     </div>
+
 
     {{-- sua nguoi dung --}}
     <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="isEditPopupOpen" wire:click="closePopup()">
@@ -157,26 +175,31 @@
                         <form wire:submit.prevent="updateUser">
                             <div class="form-group">
                                 <label>Tên tài khoản:</label>
-                                <input wire:model="nameAdd" type="text" class="form-control" placeholder="Nhập tên tài khoản...">
+                                <input wire:model="nameAdd" type="text" class="form-control"
+                                    placeholder="Nhập tên tài khoản...">
 
                             </div>
                             <div class="form-group">
                                 <label>Ảnh tài khoản:</label>
                                 <div class="custom-file">
-                                    <input wire:model="image_urlAdd" type="file" class="custom-file-input" id="image_urlAdd">
-                                    <label class="custom-file-label" for="image_urlAdd" style="z-index: 0;">Chọn tập tin</label>
+                                    <input wire:model="image_urlAdd" type="file" class="custom-file-input"
+                                        id="image_urlAdd">
+                                    <label class="custom-file-label" for="image_urlAdd" style="z-index: 0;">Chọn tập
+                                        tin</label>
                                 </div>
-                          
+
                             </div>
-                            
-                            
+
+
                             <div class="form-group">
                                 <label>Email:</label>
-                                <input wire:model="emailAdd" type="email" class="form-control" placeholder="Nhập email...">
+                                <input wire:model="emailAdd" type="email" class="form-control"
+                                    placeholder="Nhập email...">
                             </div>
                             <div class="form-group">
                                 <label>Phone:</label>
-                                <input wire:model="phoneAdd" type="phone" class="form-control" placeholder="Nhập sdt...">
+                                <input wire:model="phoneAdd" type="phone" class="form-control"
+                                    placeholder="Nhập sdt...">
                             </div>
                             <div class="form-group">
                                 <label>Vai trò:</label>
@@ -189,7 +212,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Trạng thái:</label>
-                                <select wire:model="statusAdd"  class="form-control">
+                                <select wire:model="statusAdd" class="form-control">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
@@ -204,7 +227,8 @@
     </div>
 
     <!-- Popup xóa danh mục -->
-    <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseCateModal" wire:click="closePopup()">
+    <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseCateModal"
+        wire:click="closePopup()">
         <div class="modal-content" style="width: 30%;" wire:click.stop>
             <div class="col-12 text-center">
                 <div class="col-sm-12">
@@ -215,10 +239,12 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                        <form wire:submit.prevent="deleted" style="padding: 25px;">
-                            <button type="submit" class="btn btn-primary" style="width: 100px; height: 40px;">Xác Nhận</button>
-                            <button type="reset" class="btn btn-danger" wire:click="closePopup()" style="width: 100px; height: 40px;">Hủy</button>
-                        </form>
+                            <form wire:submit.prevent="deleted" style="padding: 25px;">
+                                <button type="submit" class="btn btn-primary"
+                                    style="width: 100px; height: 40px;">Xác Nhận</button>
+                                <button type="reset" class="btn btn-danger" wire:click="closePopup()"
+                                    style="width: 100px; height: 40px;">Hủy</button>
+                            </form>
                         </div>
                     </div>
                 </div>

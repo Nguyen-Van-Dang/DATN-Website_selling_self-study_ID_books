@@ -8,15 +8,16 @@
         <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-3">
             <div class="row">
                 <div class="col-12 col-md-4 order-1 order-md-1">
-                    <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
-                        class="img-fluid rounded" alt="Course Image" style="object-fit: cover;aspect-ratio: 2/1">
+                    <img src="{{ $course->image_url }}" class="img-fluid rounded" alt="Course Image"
+                        style="object-fit: cover;aspect-ratio: 2/1; height: 250px;;">
                 </div>
                 <div class="col-12 col-md-8 order-2 order-md-2"style="border-right: 0.5px solid #8080804f;">
                     <h5 class="mb-0">{{ $course->name }}</h5>
                     <p class="text-muted mb-1">Thầy {{ $course->user->name }}</p>
                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                        <span class="text-danger font-weight-bold">{{ $course->price }}đ</span>
-                        <span class="text-muted ml-3" style="text-decoration:line-through">{{ $course->discount }}đ</span>
+                        <span class="text-danger font-weight-bold">{{ number_format($course->price) }}đ</span>
+                        <span class="text-muted ml-3"
+                            style="text-decoration:line-through">{{ number_format($course->discount) }}đ</span>
                     </div>
                     <p class="mb-2">
                         <span class="d-block"><i class="bi bi-collection-play"></i> Số bài:
@@ -157,9 +158,11 @@
                                         </a>
                                         <div class="d-flex justify-content-evenly mt-1 flex-nowrap"
                                             style="font-size: 15px">
-                                            <span class="text-danger font-weight-bold">1.500.00đ</span>
+                                            <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                                đ</span>
                                             <span class="text-muted ml-3"
-                                                style="text-decoration:line-through">500.000đ</span>
+                                                style="text-decoration:line-through">{{ number_format($course->discount) }}
+                                                đ</span>
                                         </div>
                                     </div>
                                 </div>

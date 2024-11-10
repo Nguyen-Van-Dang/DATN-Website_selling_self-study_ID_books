@@ -89,9 +89,9 @@
                                     style="cursor: pointer;">
                                     <h5 class="card-title course-title">{{ $course->name }}
                                     </h5>
-                                    <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
+                                    <img src="{{ $course->image_url }}"
                                         class="card-img-top img-fluid rounded course-image" alt="Product 3"
-                                        style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;">
+                                        style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;">
                                 </div>
 
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">

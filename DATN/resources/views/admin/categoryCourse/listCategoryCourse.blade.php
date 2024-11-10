@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <livewire:admin.course-cate />
+            <livewire:admin.course-cate.course-cate-index />
             {{--  --}}
             <script>
                 function openPopup(type) {

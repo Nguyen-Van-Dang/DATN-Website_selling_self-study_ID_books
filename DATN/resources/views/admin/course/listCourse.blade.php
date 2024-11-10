@@ -5,7 +5,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <livewire:admin.courses />
+            <livewire:admin.course.course-index />
         </div>
     </div>
     <script>

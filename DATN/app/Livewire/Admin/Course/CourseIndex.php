@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Course;
 
 use App\Models\Course;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
-
-class Courses extends Component
+class CourseIndex extends Component
 {
     use WithPagination;
 
@@ -34,7 +33,7 @@ class Courses extends Component
             }
         }
         $hasTempData = session()->has('course_name') || session()->has('course_description');
-        return view('livewire.admin.course', compact('hasTempData'), [
+        return view('livewire.admin.course.course-index', compact('hasTempData'), [
             'Course' => $Course,
         ]);
     }
@@ -76,3 +75,4 @@ class Courses extends Component
         $this->closePopup();
     }
 }
+

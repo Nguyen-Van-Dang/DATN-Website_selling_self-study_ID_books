@@ -23,6 +23,7 @@ use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\AutoLogout;
 use App\Livewire\Client\Book\Books;
 use App\Livewire\Client\Book\BookDetail;
+use App\Http\Controllers\Client\LectureController;
 
 /* --------------- HOME CLIENT --------------- */
 
@@ -190,10 +191,15 @@ Route::post('/books/{id}/toggle-favorite', [Books::class, 'toggleFavorite'])->na
 Route::get('/book-detail/{id}', [BookController::class, 'getBookDetailClient'])->name('bookDetail');
 
 // thông tin người dùng
-Route::get('/user-information', function () {
-    return view('client.user.userInformation');
-})->name('userInformation');
 
+Route::get('/user-information', [UserController::class, 'showUser'])->name('userInformation');
+Route::post('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
+
+
+// Route::get('/user-information', function () {
+//     return view('client.user.userInformation');
+// })->name('userInformation');
+// Route::pots('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
 // thông tin chi tiết người dùng
 Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
 
@@ -203,13 +209,10 @@ Route::post('/cart/add/{id}', [Books::class, 'addToCart'])->name('addToCart');
 Route::delete('/cart/remove/{id}', [CartDetailController::class, 'removeFromCart'])->name('removeFromCart');
 Route::post('/shopping-cart', [OrderController::class, 'checkout'])->name('checkout');
 
-
-
 // tất cả thông báo
 Route::get('/notification-list', function () {
     return view('client.notification.notification');
 })->name('notificationList');
-
 
 //kích hoạt sách
 Route::prefix('kich-hoat-sach')->group(function () {
@@ -251,9 +254,6 @@ Route::middleware([CheckLoggedIn::class])->group(function () {
     });
 });
 Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup'])->name('leaveGroup');
-
-//chat
-
 
 // mail
 Route::get('send-mail', [MailController::class, 'SendEmail'])->name('SendEmail');
