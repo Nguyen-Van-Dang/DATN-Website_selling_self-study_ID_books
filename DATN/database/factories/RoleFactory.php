@@ -18,9 +18,9 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-           'id' => $this->faker->unique()->randomElement(['1', '2', '3']),
-           'name' => $this->faker->unique()->randomElement(['Quản lý', 'Sinh viên', 'Giảng viên']),
-           'description' => $this->faker->text(50),
+            'id' => $this->faker->unique()->randomElement(['1', '2', '3']),
+            'name' => $this->faker->unique()->randomElement(['Quản lý', 'Giảng viên', 'Học sinh ']),
+            'description' => $this->faker->text(50),
         ];
     }
 }

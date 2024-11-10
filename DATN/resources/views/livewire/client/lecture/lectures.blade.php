@@ -5,8 +5,9 @@
 
     <div class="row" style="height: 90vh; width: 100%;">
         <div class="col-lg-9" style="padding: 0; height: 90vh; background: black">
-            <img src="https://images.pexels.com/photos/2728238/pexels-photo-2728238.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                style="height: 80%; object-fit: cover; width: 100%;">
+            <source src="{{ $lecture->video_url }}" type="video/mp4">
+            {{-- <img src="https://images.pexels.com/photos/2728238/pexels-photo-2728238.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                style="height: 80%; object-fit: cover; width: 100%;"> --}}
             <div class="d-flex align-items-center osahan-post-header p-10"
                 style=" background: black; margin-left: 10%; margin-top: 3%">
                 <img class="rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""

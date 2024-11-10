@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\CourseCate;
 
 use App\Models\CourseCategories;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
-
-class CourseCate extends Component
+class CourseCateIndex extends Component
 {
     use WithPagination;
     public $name, $nameAdd, $description, $descriptionAdd, $editingId, $deletedId, $search = '';
@@ -32,7 +31,7 @@ class CourseCate extends Component
             }
         }
 
-        return view('livewire.admin.course-cate', [
+        return view('livewire.admin.course-cate.course-cate-index', [
             'courseCate' => $courseCate,
         ]);
     }

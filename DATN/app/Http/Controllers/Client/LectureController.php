@@ -15,8 +15,8 @@ class LectureController extends Controller
         $this->lectureRepository = $lectureRepository;
     }
 
-    // public function getAllLecture()
-    // {
-    //     return $this->lectureRepository->getAllLecture();
-    // }
+    public function show($id)
+    {
+        return $this->lectureRepository->showLecture($id);
+    }
 }

@@ -4,13 +4,6 @@
     @endif
     <div class="iq-card">
         <div class="iq-card-header d-flex justify-content-between">
-            @if ($hasTempData)
-                <div class="alert alert-warning mt-3">
-                    Bạn có dữ liệu tạm thời từ lần nhập trước.
-                    <a href="{{ route('addCourse') }}" class="alert-link">Quay lại trang Thêm Khóa Học</a> hoặc
-                    <button wire:click="clearTemporaryData" class="btn btn-link">Hủy dữ liệu</button>.
-                </div>
-            @endif
             <div class="iq-header-title">
                 <h4 class="card-title">Danh khóa học khóa học</h4>
             </div>
@@ -21,7 +14,6 @@
                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                 </form>
             </div>
-
             <div class="iq-card-header-toolbar d-flex align-items-center">
                 <a href="{{ route('addCourse') }}" class="btn btn-primary">Thêm khóa học</a>
             </div>
@@ -45,7 +37,8 @@
                             @foreach ($Course as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td><img class="img-fluid rounded" src="{{ $item->image_url }}" alt="">
+                                    <td><img class="img-fluid rounded" src="{{ $item->image_url }}" alt=""
+                                            style="height: 130px;">
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->amount_lecture }}</td>

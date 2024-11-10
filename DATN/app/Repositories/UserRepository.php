@@ -17,6 +17,7 @@ use Illuminate\Validation\ValidationException;
 use Flasher\Toastr\Prime\ToastrInterface;
 use Flasher\Toastr\Prime\Toastr;
 use Flasher\Toastr\Laravel\Flasher;
+use App\Services\GoogleDriveService;
 
 
 class UserRepository
@@ -25,6 +26,7 @@ class UserRepository
     {
         //
     }
+
     //đăng xuất
     public function logout(\Illuminate\Http\Request $request)
     {
@@ -68,12 +70,9 @@ class UserRepository
     {
         $user = Socialite::driver('zalo')->user();
 
-        // Thử lấy email và phone từ dữ liệu người dùng
-        // $email = $user->email ?: uniqid() . '@zalo.com'; // Tạo email ngẫu nhiên nếu không có
         $email = $user->getEmail() ?: uniqid() . '@zalo.com';
 
-        $phone = $user->user['phone'] ?? null; // Kiểm tra nếu có phone, nếu không thì để null
-
+        $phone = $user->user['phone'] ?? null;
 
         $findUser = User::where('email', $email)->first();
 
@@ -176,4 +175,44 @@ class UserRepository
     // }
 
     /*-------------------------------------------------------Admin---------------------------------------------------------*/
+
+    public function updateUser(Request $request)
+    {
+        // Xác thực dữ liệu đầu vào
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',  // Ví dụ số điện thoại có thể dài hơn
+            'email' => 'required|email|max:255',  // Xác thực email
+            'image_url' => 'nullable|image|mimes:jpg,jpeg,png',  // Xác thực ảnh tải lên
+            'sex' => 'nullable|in:0,1',  // 0 là Nam, 1 là Nữ
+        ]);
+
+        // Lấy thông tin người dùng hiện tại
+        $user = Auth::user();
+
+        // Cập nhật các trường dữ liệu
+        $user->name = $validatedData['name'];
+        $user->phone = $validatedData['phone'];
+        $user->email = $validatedData['email'];
+
+        // Nếu có ảnh mới, xử lý tải lên
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('avatars', 'public');
+            $user->avatar = $imagePath;
+        }
+
+        // Cập nhật giới tính nếu có
+        if (isset($validatedData['sex'])) {
+            $user->sex = $validatedData['sex'];
+        }
+
+        // Lưu lại thông tin người dùng
+        $user->save();
+
+        // Hiển thị thông báo thành công
+        toastr()->success('Cập nhật thông tin thành công!');
+
+        // Chuyển hướng về trang thông tin người dùng
+        return redirect()->route('userInformation');
+    }
 }

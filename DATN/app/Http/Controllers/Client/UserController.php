@@ -101,4 +101,13 @@ class UserController extends Controller
     {
         return $this->userRepository->handleZaloCallback($request);
     }
+    public function updateUser()
+    {
+        return $this->userRepository->updateUser();
+    }
+    public function showUser()
+    {
+        $user = auth::user();
+        return view('client.user.userInformation', compact('user'));
+    }
 }

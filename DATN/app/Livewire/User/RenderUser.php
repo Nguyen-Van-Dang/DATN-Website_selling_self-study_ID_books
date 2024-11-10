@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads; // Thêm vào đây
 use Illuminate\Support\Facades\Storage;
 use Google\Service\Drive\Permission as Google_Service_Drive_Permission;
+use App\Services\GoogleDriveService;
 
 class RenderUser extends Component
 {
@@ -37,7 +38,7 @@ class RenderUser extends Component
                 $users = User::where('id', Auth::id())->paginate(10);
             }
         }
-        $users = User::paginate(5);
+        $users = User::paginate(10);
         return view('livewire.user.render-user', [
             'users' => $users,
         ]);
@@ -53,7 +54,7 @@ class RenderUser extends Component
             $user = User::find($id);
             if ($user) {
                 $this->nameAdd = $user->name;
-                // $this->image_urlAdd = $user->image_url;
+                $this->image_urlAdd = $user->image_url;
                 $this->emailAdd = $user->email;
                 $this->phoneAdd = $user->phone;
                 $this->role_idAdd = $user->role_id;
@@ -76,18 +77,41 @@ class RenderUser extends Component
 
     public function createUser()
     {
+
+        // Tạo người dùng mới
         $user = new User();
         $user->name = $this->name;
-        $user->image_url = $this->image_url;
         $user->phone = $this->phone;
         $user->email = $this->email;
         $user->role_id = $this->role_id;
         $user->status = $this->status;
-        // $user->password = bcrypt($this->password); // Mã hóa mật khẩu
+        $user->password = bcrypt($this->password);
+
+        // Kiểm tra nếu có file ảnh được upload
+        if ($this->image_url) {
+            // Sử dụng Livewire để lưu file vào thư mục tạm
+            $uploadedFilePath = $this->image_url->store('temp', 'public');
+            $fullPath = storage_path('app/public/' . $uploadedFilePath);
+
+            // Upload lên Google Drive
+            $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
+            $googleDriveService = new GoogleDriveService();
+            $fileId = $googleDriveService->uploadAndGetFileId($fullPath, $folderId);
+            $user->image_url = "https://drive.google.com/thumbnail?id=" . $fileId;
+        } else {
+            $user->image_url = ''; // Nếu không có ảnh, để trống
+        }
+
+        // Lưu người dùng vào cơ sở dữ liệu
         $user->save();
-        session()->flash('message', 'Thêm thành công');
+
+        // Thông báo và reset form
+        session()->flash('message', 'Thêm tài khoản thành công');
+        $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
         $this->isAddPopupOpen = false;
     }
+
+
 
     public function updateUser()
     {
