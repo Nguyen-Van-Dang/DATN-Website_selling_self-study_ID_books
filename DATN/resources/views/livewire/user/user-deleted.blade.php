@@ -42,11 +42,15 @@
                                 </td>
                                 <td>
                                     <div class="flex align-items-center list-user-action">
-                                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Xoá Vĩnh Viễn"
-                                            href="{{ route('deleteUser', $item->id) }}"><i
+                                        <a class="bg-primary" data-toggle="tooltip" data-placement="top"
+                                            title="Khôi phục" href="{{ route('restoreUser', $item->id) }}"><i
+                                                class="ri-restore-line"></i></a>
+                                        <a class="bg-danger" data-toggle="tooltip" data-placement="top"
+                                            title="Xoá Vĩnh Viễn" href="{{ route('deleteUserForever', $item->id) }}"><i
                                                 class="ri-delete-bin-line"></i></a>
                                     </div>
+                                 
+
                                 </td>
                             </tr>
                         @endforeach

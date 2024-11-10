@@ -66,16 +66,24 @@ class UserController extends Controller
     //     return $this->userRepository->handleFacebookCallback($request);
     // }
 
-    public function destroy($id)
-    {
-        $this->userRepository->softDelete($id);
-        return redirect()->back();
-    }
+// UserController.php
 
-    public function getDestroyUser()
-    {
-        return $this->userRepository->getDeletedUser();
-    }
+public function restoreUser($id)
+{
+    // Gọi phương thức restoreUser từ repository
+    $this->userRepository->restoreUser($id);
+
+    return redirect()->route('deletedUsers')->with('success', 'Khôi phục tài khoản thành công!');
+}
+
+public function deleteUserForever($id)
+{
+    // Gọi phương thức deleteUserForever từ repository
+    $this->userRepository->deleteUserForever($id);
+
+    return redirect()->route('deletedUsers')->with('success', 'Đã xóa tài khoản vĩnh viễn!');
+}
+
 
 
     // public function redirectToZalo()

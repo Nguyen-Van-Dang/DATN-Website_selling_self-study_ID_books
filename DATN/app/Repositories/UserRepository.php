@@ -24,7 +24,7 @@ class UserRepository
      */
     public function __construct()
     {
-        //
+        
     }
     //đăng xuất
     public function logout(\Illuminate\Http\Request $request)
@@ -179,42 +179,60 @@ class UserRepository
     }
 
 
-    // upload image_url
-    public function userUpload1($data)
-    {
-        // Xác thực dữ liệu đầu vào
-        $validatedData = $data->validate([
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Thêm xác thực cho thumbnail
-            'title' => 'required|string|max:255', // Thêm xác thực cho title
-            'video_url' => 'required|file|mimes:mp4,mov,avi,wmv|max:51200', // Xác thực cho video_url
-        ]);
+    // // upload image_url
+    // public function userUpload1($data)
+    // {
+    //     // Xác thực dữ liệu đầu vào
+    //     $validatedData = $data->validate([
+    //         'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Thêm xác thực cho thumbnail
+    //         'title' => 'required|string|max:255', // Thêm xác thực cho title
+    //         'video_url' => 'required|file|mimes:mp4,mov,avi,wmv|max:51200', // Xác thực cho video_url
+    //     ]);
 
-        // Xử lý tệp thumbnail
-        $thumbnail = $validatedData['thumbnail'];
-        $thumbnailName = $thumbnail->getClientOriginalName();
-        $directory = 'Reels/Thumbnails';
+    //     // Xử lý tệp thumbnail
+    //     $thumbnail = $validatedData['thumbnail'];
+    //     $thumbnailName = $thumbnail->getClientOriginalName();
+    //     $directory = 'Reels/Thumbnails';
 
-        $disk = Storage::disk('google');
+    //     $disk = Storage::disk('google');
 
-        if (!$disk->exists($directory)) {
-            $disk->makeDirectory($directory);
-        }
+    //     if (!$disk->exists($directory)) {
+    //         $disk->makeDirectory($directory);
+    //     }
 
-        $thumbnailPath = $directory . '/' . $thumbnailName;
-        $disk->put($thumbnailPath, file_get_contents($thumbnail));
-        $this->setFilePublic($disk, $thumbnailPath);
-        $thumbnailMeta = $disk->getAdapter()->getMetadata($thumbnailPath)->extraMetadata()['id'];
+    //     $thumbnailPath = $directory . '/' . $thumbnailName;
+    //     $disk->put($thumbnailPath, file_get_contents($thumbnail));
+    //     $this->setFilePublic($disk, $thumbnailPath);
+    //     $thumbnailMeta = $disk->getAdapter()->getMetadata($thumbnailPath)->extraMetadata()['id'];
 
 
 
-        // Lưu thông tin vào cơ sở dữ liệu
-        $video = new Reels();
-        $video->user_id = auth()->id();
-        $video->title = $validatedData['title'];
-        $video->thumbnail = 'https://drive.google.com/file/d/' . $thumbnailMeta . '/preview';
-        $video->video_url = 'https://drive.google.com/file/d/' . $videoMeta . '/preview';
-        $video->save();
+    //     // Lưu thông tin vào cơ sở dữ liệu
+    //     $video = new Reels();
+    //     $video->user_id = auth()->id();
+    //     $video->title = $validatedData['title'];
+    //     $video->thumbnail = 'https://drive.google.com/file/d/' . $thumbnailMeta . '/preview';
+    //     $video->video_url = 'https://drive.google.com/file/d/' . $videoMeta . '/preview';
+    //     $video->save();
 
-        return redirect()->back()->with('success', 'Video uploaded successfully!');
-    }
+    //     return redirect()->back()->with('success', 'Video uploaded successfully!');
+    // }
+// UserRepository.php
+
+public function restoreUser($id)
+{
+    // Khôi phục tài khoản người dùng
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->restore();
+    return true; // Trả về true nếu khôi phục thành công
+}
+
+public function deleteUserForever($id)
+{
+    // Xóa tài khoản người dùng vĩnh viễn
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->forceDelete();
+    return true; // Trả về true nếu xóa thành công
+}
+
 }

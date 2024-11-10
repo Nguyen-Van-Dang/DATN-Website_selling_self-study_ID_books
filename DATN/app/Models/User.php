@@ -13,7 +13,7 @@ use App\Models\ReelComment;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
-
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *

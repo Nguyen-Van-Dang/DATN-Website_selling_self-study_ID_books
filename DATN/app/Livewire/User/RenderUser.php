@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads; // Thêm vào đây
 use Illuminate\Support\Facades\Storage;
 
+
 use Google\Service\Drive\Permission as Google_Service_Drive_Permission;
 
 class RenderUser extends Component
@@ -64,6 +65,15 @@ class RenderUser extends Component
 
     public function createUser()
     {
+        $this->validate([
+            'name' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|unique:users,phone',
+            'role_id' => 'required',
+            'status' => 'required',
+        ]);
+
+
         $user = new User();
         $user->name = $this->name;
         $user->image_url = $this->image_url;
@@ -73,7 +83,12 @@ class RenderUser extends Component
         $user->status = $this->status;
         // $user->password = bcrypt($this->password); // Mã hóa mật khẩu
         $user->save();
-        session()->flash('message', 'Thêm thành công');
+        session()->flash('message', 'Thêm người dùng thành công');
+        $this->nameAdd = '';
+        $this->emailAdd = '';
+        $this->phoneAdd = '';
+        $this->role_idAdd = '';
+        $this->statusAdd = '';
         $this->isAddPopupOpen = false;
     }
 
@@ -141,15 +156,15 @@ class RenderUser extends Component
             'role_idAdd' => 'required',
             'statusAdd' => 'required',
         ]);
-    
+
         // Tìm người dùng theo ID đang chỉnh sửa
         $user = User::find($this->editingId);
-    
+
         if (!$user) {
             session()->flash('error', 'Người dùng không tồn tại.');
             return;
         }
-    
+
         // Cập nhật thông tin người dùng
         $user->name = $this->nameAdd;
         $user->email = $this->emailAdd;
@@ -157,26 +172,69 @@ class RenderUser extends Component
         $user->role_id = $this->role_idAdd;
         $user->status = $this->statusAdd;
         $user->save();
-    
+
         session()->flash('message', 'Người dùng đã được cập nhật thành công.');
+        $this->name = '';
+        $this->email = '';
+        $this->phone = '';
+        $this->role_id = '';
+        $this->status = '';
         $this->isEditPopupOpen = false;
         $this->editingId = null;
     }
-    
+
 
 
 
     public function deleted()
     {
         $user = User::find($this->deletedId);
-
+    
         if ($user) {
             $user->delete();
             session()->flash('message', 'Người dùng đã được xóa thành công.');
         } else {
             session()->flash('error', 'Người dùng không tồn tại.');
         }
-
+    
         $this->closePopup();
+    }
+
+    // public function deleted()
+    // {
+    //     $user = User::find($this->deletedId);
+
+    //     if ($user) {
+    //         $user->delete(); // Xóa mềm
+    //         session()->flash('message', 'Người dùng đã được xóa tạm thời.');
+    //     } else {
+    //         session()->flash('error', 'Người dùng không tồn tại.');
+    //     }
+
+    //     $this->closePopup();
+    // }
+
+    public function restoreUser($id)
+    {
+        $user = User::onlyTrashed()->find($id);
+
+        if ($user) {
+            $user->restore();
+            session()->flash('message', 'Người dùng đã được khôi phục.');
+        } else {
+            session()->flash('error', 'Không tìm thấy người dùng.');
+        }
+    }
+
+    public function permanentlyDeleteUser($id)
+    {
+        $user = User::onlyTrashed()->find($id);
+
+        if ($user) {
+            $user->forceDelete(); // Xóa vĩnh viễn
+            session()->flash('message', 'Người dùng đã bị xóa vĩnh viễn.');
+        } else {
+            session()->flash('error', 'Không tìm thấy người dùng.');
+        }
     }
 }

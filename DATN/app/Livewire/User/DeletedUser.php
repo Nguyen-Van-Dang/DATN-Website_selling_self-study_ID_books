@@ -15,10 +15,11 @@ class DeletedUser extends Component
 
     public function render()
     {
-        $users = User::onlyTrashed()->paginate(1);
-
-        return view('livewire.user.user-render', [
+        $users = User::onlyTrashed()->paginate(5);
+    
+        return view('livewire.user.deleted-user', [
             'users' => $users
         ]);
     }
+    
 }

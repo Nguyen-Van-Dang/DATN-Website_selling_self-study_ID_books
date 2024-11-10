@@ -1,3 +1,4 @@
+<!-- resources/views/admin/user/list.blade.php -->
 @extends('layouts.admin.admin')
 
 @section('title', 'Danh sách tài khoản')
@@ -8,22 +9,20 @@
         <div class="row">
 
             <livewire:user.render-user />
+
+        
+
             <script>
-                function openPopup(type) {
-                    if (type === 'add') {
-                        document.getElementById("addCourseCateModal").classList.add("is-open");
-                    } else if (type === 'edit') {
-                        document.getElementById("isEditPopupOpen").classList.add("is-open");
-                    } else (type === 'delete') {
-                        document.getElementById("deletedCourseCateModal").classList.add("is-open");
-                    }
+                // Mở popup xác nhận xóa
+                function openDeletePopup(url) {
+                    document.getElementById("editCourseCateModal").action = url; // Cập nhật URL xóa
+                    document.getElementById("confirmDeleteModal").classList.add("is-open");
                     document.getElementById("overlay").style.display = "block";
                 }
 
+                // Đóng popup
                 function closePopup() {
-                    document.getElementById("addCourseCateModal").classList.remove("is-open");
-                    document.getElementById("isEditPopupOpen").classList.remove("is-open");
-                    document.getElementById("deletedCourseCateModal").classList.remove("is-open");
+                    document.getElementById("confirmDeleteModal").classList.remove("is-open");
                     document.getElementById("overlay").style.display = "none";
                 }
             </script>
@@ -61,19 +60,6 @@
                     top: 10px;
                     right: 15px;
                     cursor: pointer;
-                }
-
-                #confirmPopup {
-                    display: none;
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: white;
-                    padding: 20px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                    z-index: 1000;
-                    border-radius: 5px;
                 }
             </style>
         </div>

@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->softDeletes();
             $table->id();
             $table->integer('social_id')->nullable();
             $table->unsignedBigInteger('zalo_id')->nullable();
@@ -33,6 +34,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
