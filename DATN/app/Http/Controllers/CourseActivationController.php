@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+
 class CourseActivationController extends Controller
 {
     //
@@ -94,6 +95,8 @@ class CourseActivationController extends Controller
             'enroll_date' => Carbon::now(),
         ]);
 
-        return redirect()->back()->with('success', 'Khóa học đã được kích hoạt thành công!');
+        toastr()->success('<p>Kích hoạt thành công!</p>');
+
+        return redirect()->back();
     }
 }

@@ -27,9 +27,9 @@
         <div id="content-page" class="content-page">
             @yield('content')
         </div>
-        <footer class="iq-footer">
+        {{-- <footer class="iq-footer">
             <x-admin.footer></x-admin.footer>
-        </footer>
+        </footer> --}}
     </div>
     {{-- script here --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>

@@ -27,7 +27,8 @@
                                     {{ $book->courseActivations->first()?->course->name }}
                                 </a></h5>
                         </div>
-                        <span class="d-block"><i class="ri-folder-fill"></i> Số bài: 88</span>
+                        <span class="d-block"><i class="ri-folder-fill"></i> Số bài:
+                            {{ $book->courseActivations->first()?->course->lectures->count() }}</span>
                 </div>
             </div>
         </div>

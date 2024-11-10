@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b683b0b085cdf1b2dea98e8218a1f441",
+    "content-hash": "2f41a6dd3c1ad94df7f7c93eb3c20010",
     "packages": [
         {
             "name": "beste/clock",
@@ -7090,7 +7090,6 @@
         },
         {
             "name": "spatie/image-optimizer",
-
             "version": "1.8.0",
             "source": {
                 "type": "git",
@@ -7140,7 +7139,6 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/image-optimizer/issues",
-
                 "source": "https://github.com/spatie/image-optimizer/tree/1.8.0"
             },
             "time": "2024-11-04T08:24:54+00:00"
