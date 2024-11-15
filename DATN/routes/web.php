@@ -1,13 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\BookCategoryController;
 use App\Http\Controllers\Client\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Client\ReelsController;
 use App\Http\Controllers\Client\BinController;
 use App\Http\Controllers\Admin\NotificationController;
-use App\Http\Controllers\Client\BookCateController;
-use App\Http\Controllers\Client\BookController;
+use App\Http\Controllers\Client\BookController as ClientBookController;
+use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Client\CartDetailController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\CourseCateController;
@@ -100,29 +101,15 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 });
 /* --------------- CATEGORY-BOOK GROUP ------------------*/
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-CategoryBook', [BookCateController::class, 'getAllBookCate'])->name('listCategoryBook');
-    Route::get('/admin/add-CategoryBook', function () {
-        return view('admin.categoryBook.addCategoryBook');
-    })->name('addCategoryBook');
-    Route::get('/admin/detail-CategoryBook', function () {
-        return view('admin.categoryBook.detailCategoryBook');
-    })->name('detailCategoryBook');
-    Route::get('/admin/update-CategoryBook', function () {
-        return view('admin.categoryBook.updateCategoryBook');
-    })->name('updateCategoryBook');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('danh-muc-sach', BookCategoryController::class);
+    });
 });
 /* --------------- BOOK GROUP -------------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-book', [BookController::class, 'getAllBook'])->name('listBook');
-    Route::get('/admin/add-Book', function () {
-        return view('admin.book.addBook');
-    })->name('addBook');
-    Route::get('/admin/update-Book', function () {
-        return view('admin.book.updateBook');
-    })->name('updateBook');
-    Route::get('/admin/detail-Book', function () {
-        return view('admin.book.detailBook');
-    })->name('detailBook');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('sach', AdminBookController::class);
+    });
 });
 /* --------------- EXERCISE GROUP ----------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
@@ -184,11 +171,11 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 
 //danh sách cuốn sách
-Route::get('/book-list', [BookController::class, 'getAllBookClient'])->name('bookList');
+Route::get('/book-list', [ClientBookController::class, 'getAllBookClient'])->name('bookList');
 Route::post('/books/{id}/toggle-favorite', [Books::class, 'toggleFavorite'])->name('toggleFavorite');
 
 //chi tiết sách
-Route::get('/book-detail/{id}', [BookController::class, 'getBookDetailClient'])->name('bookDetail');
+Route::get('/book-detail/{id}', [ClientBookController::class, 'getBookDetailClient'])->name('bookDetail');
 
 // thông tin người dùng
 

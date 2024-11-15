@@ -2,18 +2,20 @@
 <html lang="en">
 
 <head>
-    @livewireStyles
+
 
     <title>@yield('title', 'TRANG CHỦ ADMIN')</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/book/icon/favicon.png') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+    {{-- <link rel="shortcut icon" href="{{ asset('assets/images/book/favicon.png') }}" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -25,13 +27,16 @@
             <x-admin.header></x-admin.header>
         </div>
         <div id="content-page" class="content-page">
+            @livewireStyles
             @yield('content')
+            @livewireScripts
         </div>
         {{-- <footer class="iq-footer">
             <x-admin.footer></x-admin.footer>
         </footer> --}}
     </div>
     {{-- script here --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -60,7 +65,7 @@
     <script src="{{ asset('assets/js/style-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/chart-custom.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-    @livewireScripts
+
 
 </body>
 

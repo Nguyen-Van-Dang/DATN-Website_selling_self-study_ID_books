@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Book;
+namespace App\Livewire\Admin\Book;
 
 use App\Models\Book;
 use Livewire\Component;
@@ -11,7 +11,7 @@ class RenderBook  extends Component
 {
     use WithPagination;
 
-    public $search='';
+    public $search = '';
     protected $paginationTheme = 'bootstrap';
     // public function render()
     // {
@@ -42,7 +42,7 @@ class RenderBook  extends Component
             }
         }
 
-        return view('livewire.book.render-book', [
+        return view('livewire.admin.book.index-book', [
             'Book' => $Book,
         ]);
     }

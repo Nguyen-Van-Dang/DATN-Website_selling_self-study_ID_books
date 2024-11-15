@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <livewire:book.render-book />
+            <livewire:admin.book.render-book />
 
         </div>
     </div>

@@ -16,18 +16,12 @@ return new class extends Migration
 
             $table->string('name', 255)->nullable();
             $table->float('price');
-            $table->float('discount')->nullable();
+            $table->integer('discount')->nullable();
             $table->integer('page_number');
             $table->text('description');
             $table->integer('quantity');
-            $table->timestamp('activated_at')->nullable();
-            $table->integer('activated_by')->nullable();
-            $table->boolean('book_active');
-            $table->integer('book_activate_id');
-            $table->string('image', 255)->nullable();
-            $table->foreignId('course_id')->nullable()->constrained('courses')->onDelete('set null');
-            $table->foreignId('book_categories_id')->nullable()->constrained('book_categories')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->boolean('status')->nullable()->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

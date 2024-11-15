@@ -27,7 +27,18 @@ class Book extends Model
         'image',
         'is_favorite',
     ];
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($book) {
+            do {
+                $randomId = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            } while (Book::where('id', $randomId)->exists());
+
+            $book->id = $randomId;
+        });
+    }
     public function Course(): BelongsTo
     {
         return $this->BelongsTo(Course::class);
@@ -38,9 +49,9 @@ class Book extends Model
         return $this->BelongsTo(User::class);
     }
 
-    public function CategoryBook(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(CategoryBook::class, 'category_books_id'); // Đảm bảo trường khóa ngoại đúng
+        return $this->belongsToMany(BookCategories::class, 'book_categories_mapping', 'book_id', 'category_id');
     }
 
     public function Favorites(): HasMany

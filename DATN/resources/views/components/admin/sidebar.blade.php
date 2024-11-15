@@ -1,8 +1,8 @@
 <div class="iq-sidebar-logo d-flex justify-content-between">
     <a href="{{ route('homeAdmin') }}" class="header-logo">
-        <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
+        <img src="{{ asset('assets/images/book/icon/big_logo.png') }}" class="img-fluid rounded-normal" alt="">
         <div class="logo-title">
-            <span class="text-primary text-uppercase">Dashboard</span>
+            <span class="text-primary text-uppercase">Trang quản trị</span>
         </div>
     </a>
     <div class="iq-menu-bt-sidebar">
@@ -31,12 +31,12 @@
             <li class="{{ request()->routeIs('listCourse') ? 'active' : '' }}">
                 <a href="{{ route('listCourse') }}"><i class="ri-book-line"></i> <span>Khóa Học</span></a>
             </li>
-            <li class="{{ request()->routeIs('listCategoryBook') ? 'active' : '' }}">
-                <a href="{{ route('listCategoryBook') }}"><i class="ri-bookmark-line"></i> <span>Danh Mục
+            <li class="{{ request()->routeIs('admin.danh-muc-sach.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.danh-muc-sach.index') }}"><i class="ri-bookmark-line"></i> <span>Danh Mục
                         Sách</span></a>
             </li>
-            <li class="{{ request()->routeIs('listBook') ? 'active' : '' }}">
-                <a href="{{ route('listBook') }}"><i class="ri-book-2-line"></i> <span>Sách</span></a>
+            <li class="{{ request()->routeIs('admin.sach.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.sach.index') }}"><i class="ri-book-2-line"></i> <span>Sách</span></a>
             </li>
             <li class="{{ request()->routeIs('listExercise') ? 'active' : '' }}">
                 <a href="{{ route('listExercise') }}"><i class="ri-file-list-line"></i> <span>Bài Tập</span></a>

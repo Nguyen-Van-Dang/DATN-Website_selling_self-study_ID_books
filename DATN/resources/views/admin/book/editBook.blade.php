@@ -1,11 +1,11 @@
 @extends('layouts.admin.admin')
 
-@section('title', 'Thêm sách')
+@section('title', 'Cập nhật')
 
 @section('content')
     {{-- view --}}
     <div class="container-fluid">
-        @livewire('admin.book.create-book', ['teachers' => $teachers, 'categories' => $categories])
+        @livewire('admin.book.update-book', ['book' => $book, 'teachers' => $teachers, 'categories' => $categories])
     </div>
     <style>
         .select2-selection--multiple {

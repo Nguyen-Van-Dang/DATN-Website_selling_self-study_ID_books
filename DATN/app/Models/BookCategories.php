@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class BookCategories extends Model
 {
@@ -13,15 +13,14 @@ class BookCategories extends Model
 
     protected $fillable = [
         'name',
-        'parent_id',
-        'user_id',
         'description',
+        'status',
         'deleted_at',
     ];
 
-    public  function Book(): HasMany
+    public function books(): BelongsToMany
     {
-        return $this->hasMany(Book::class);
+        return $this->belongsToMany(Book::class, 'book_categories_mapping', 'category_id', 'book_id');
     }
 
     public function User(): BelongsTo

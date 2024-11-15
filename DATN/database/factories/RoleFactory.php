@@ -19,7 +19,7 @@ class RoleFactory extends Factory
     {
         return [
             'id' => $this->faker->unique()->randomElement(['1', '2', '3']),
-            'name' => $this->faker->unique()->randomElement(['Quản lý', 'Giảng viên', 'Học sinh ']),
+            'name' => $this->faker->unique()->randomElement(['Quản trị', 'Giảng viên', 'Học sinh']),
             'description' => $this->faker->text(50),
         ];
     }
