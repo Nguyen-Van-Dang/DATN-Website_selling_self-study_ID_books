@@ -84,7 +84,7 @@ class UserIndex extends Component
         $user->phone = $this->phone;
         $user->email = $this->email;
         $user->role_id = $this->role_id;
-        $user->status = $this->status;
+        $user->status = 0;
         $user->password = bcrypt($this->password);
 
         $user->save();
@@ -110,7 +110,6 @@ class UserIndex extends Component
 
     public function updateUser()
     {
-        // Tìm người dùng bằng ID
         $user = User::find($this->editingId);
 
         if (!$user) {
@@ -118,27 +117,22 @@ class UserIndex extends Component
             return;
         }
 
-        // Cập nhật các thông tin của người dùng
         $user->name = $this->nameAdd;
         $user->email = $this->emailAdd;
         $user->phone = $this->phoneAdd;
         $user->role_id = $this->role_idAdd;
         $user->status = 0;
-        // Kiểm tra nếu có ảnh mới
         if (isset($this->newImg)) {
             $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
             $googleDriveService = new GoogleDriveService();
 
-            // Nếu người dùng chưa có ảnh, upload ảnh mới
             if ($user->images()->count() == 0) {
                 $fileId = $googleDriveService->uploadAndGetFileId($this->newImg, $folderId);
 
-                // Tạo một bản ghi mới trong bảng images
                 $user->images()->create([
                     'image_url' => "https://drive.google.com/thumbnail?id=" . $fileId
                 ]);
             } else {
-                // Nếu người dùng đã có ảnh, cập nhật ảnh cũ
                 $firstImage = $user->images()->first();
                 if ($firstImage) {
                     $fileId = $googleDriveService->updateFile($firstImage->file_id, $this->newImg, $folderId);
@@ -149,13 +143,10 @@ class UserIndex extends Component
             }
         }
 
-        // Lưu thông tin người dùng
         $user->save();
 
-        // Thông báo thành công
         session()->flash('message', 'Người dùng đã được cập nhật thành công.');
 
-        // Reset lại các trường
         $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'image_urlAdd']);
         $this->isEditPopupOpen = false;
     }

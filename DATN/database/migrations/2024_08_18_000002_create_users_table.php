@@ -21,11 +21,12 @@ return new class extends Migration
             $table->string('phone', length: 10)->nullable();
             $table->string('email', length: 255)->unique();
             $table->string('password', length: 255);
-            $table->integer('loginType')->default(1)->nullable();
+            $table->integer('loginType')->nullable()->default(1);
             $table->string('token', length: 10)->nullable();
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('cascade');
             $table->boolean('active')->default(0)->nullable();
             $table->boolean('sex')->nullable();
+            $table->boolean('status')->nullable()->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
