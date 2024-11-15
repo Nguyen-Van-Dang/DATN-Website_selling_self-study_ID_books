@@ -38,12 +38,16 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    
+
     public function down()
     {
+        Schema::table('reel_comments', function (Blueprint $table) {
+            $table->dropForeign(['reel_id']);
+            $table->dropForeign(['parent_id']);
+        });
+
         Schema::dropIfExists('reel_likes');
-        Schema::dropIfExists('comment_reels');
+        Schema::dropIfExists('reel_comments');
         Schema::dropIfExists('reels');
     }
-    
 };

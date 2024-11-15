@@ -36,9 +36,9 @@ class DatabaseSeeder extends Seeder
         DB::statement('ALTER TABLE books AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE lectures AUTO_INCREMENT = 1;');
 
-        Role::factory()->create(['name' => 'Admin']);
-        Role::factory()->create(['name' => 'Teacher']);
-        Role::factory()->create(['name' => 'Student']);
+        Role::create(['id' => 1, 'name' => 'Admin']);
+        Role::create(['id' => 2, 'name' => 'Teacher']);
+        Role::create(['id' => 3, 'name' => 'Student']);
         User::factory()->create(['role_id' => 1, 'phone' => '0123456789']);
         User::factory()->create(['role_id' => 2]);
         User::factory()->create(['role_id' => 3]);
