@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-7">
             <div class="iq-card modal-content">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
@@ -8,54 +8,63 @@
                     </div>
                 </div>
                 <div class="iq-card-body modal-body-scrollable">
-                    <div class="form-group">
-                        <label>Tên khóa học:</label>
-                        <input wire:model="courseName" type="text" class="form-control"
-                            placeholder="Nhập tên khóa học...">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả khóa học:</label>
-                        <textarea wire:model="description" class="form-control" rows="2" placeholder="Nhập mô tả..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Chọn ảnh khóa học:</label>
-                        <div class="custom-file" wire:ignore>
-                            <input wire:model="image_url" type="file" class="custom-file-input" id="imageInput"
-                                onchange="showImagePreview(event)" accept="image/*">
-                            <label class="custom-file-label" for="imageInput" id="imageLabel">Chọn file</label>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label>Tên khóa học:</label>
+                                <input wire:model="courseName" type="text" class="form-control"
+                                    placeholder="Nhập tên khóa học...">
+                                    <div class="form-group">
+                                        <label>Mô tả khóa học:</label>
+                                        <textarea wire:model="description" class="form-control" rows="4" placeholder="Nhập mô tả..."></textarea>
+                                    </div>
+                            </div>
                         </div>
-                        <!-- Hiển thị hình ảnh thu nhỏ -->
-                        <div id="imagePreview" style="margin-top: 10px;" wire:ignore>
-                            <!-- Ảnh thu nhỏ sẽ xuất hiện ở đây sau khi chọn -->
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Chọn ảnh khóa học:</label>
+                                <div class="custom-file" style="display: contents">
+                                    @if ($image_url)
+                                        <img id="image-placeholder" src="{{ $image_url->temporaryUrl() }}"
+                                            alt="Click to choose image" class="img-thumbnail"
+                                            style="cursor: pointer; width: 100%; max-width: 300px; height: 190px;"
+                                            name="image_url">
+                                    @else
+                                        <img id="image-placeholder"
+                                            src="{{ asset('assets/images/book/user/course.jpg') }}"
+                                            alt="Click to choose image" class="img-thumbnail"
+                                            style="cursor: pointer; width: 100%; max-width: 300px; height: 190px;">
+                                    @endif
+                                    <input type="file" class="custom-file-input"
+                                        accept="image/png, image/jpeg, image/jpg" wire:model="image_url"
+                                        id="image-input" style="display: none;">
+                                </div>
+                                <script>
+                                    document.getElementById('image-placeholder').addEventListener('click', function() {
+                                        document.getElementById('image-input').click();
+                                    });
+                                </script>
+                            </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Chọn khóa học PDF:</label>
                         <div class="custom-file" wire:ignore>
-                            <input wire:model="document_url" type="file" class="custom-file-input" id="pdfInput"
-                                onchange="showPDFName(event)" accept=".pdf,.doc,.docx">
+                            <input wire:model="document_url" type="file" class="custom-file-input" id="pdfInput" accept=".pdf,.doc,.docx" onchange="updateFileName()">
                             <label class="custom-file-label" for="pdfInput" id="pdfLabel">Chọn file</label>
                         </div>
                     </div>
+                    
                     <script>
-                        function showImagePreview(event) {
-                            let fileName = event.target.files[0].name;
-                            document.getElementById('imageLabel').innerHTML = fileName;
-
-                            let reader = new FileReader();
-                            reader.onload = function(e) {
-                                let imagePreview = document.getElementById('imagePreview');
-                                imagePreview.innerHTML =
-                                    `<img src="${e.target.result}" alt="Thumbnail" style="max-width: 100px; max-height: 100px;"/>`;
-                            };
-                            reader.readAsDataURL(event.target.files[0]);
-                        }
-
-                        function showPDFName(event) {
-                            let fileName = event.target.files[0].name;
-                            document.getElementById('pdfLabel').innerHTML = fileName;
+                        function updateFileName() {
+                            const input = document.getElementById('pdfInput');
+                            const label = document.getElementById('pdfLabel');
+                            const fileName = input.files[0]?.name || 'Chọn file';
+                            label.textContent = fileName;
                         }
                     </script>
+                    
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label>Giá khóa học:</label>
@@ -68,13 +77,13 @@
                                 placeholder="Nhập giá giảm khóa học...">
                         </div>
                     </div>
-                    <button wire:click="storeCourse" class="btn btn-primary">Gửi</button>
+                    <button wire:click="storeCourse" class="btn btn-primary">Thêm khóa học</button>
                     <button type="reset" class="btn btn-danger">Trở lại</button>
                 </div>
             </div>
         </div>
         <!-- Form thêm chương và bài giảng -->
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <div class="iq-card modal-content">
                 <div class="iq-card-header">
                     <h4 class="card-title">Thêm chương bài giảng</h4>
@@ -128,4 +137,5 @@
             }
         </style>
     </div>
+
 </div>

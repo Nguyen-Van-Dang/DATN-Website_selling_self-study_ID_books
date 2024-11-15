@@ -35,4 +35,8 @@ class Lecture extends Model
     {
         return $this->belongsTo(LectureCategories::class, 'lecture_categories_id');
     }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

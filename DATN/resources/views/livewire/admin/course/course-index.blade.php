@@ -37,8 +37,8 @@
                             @foreach ($Course as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td><img class="img-fluid rounded" src="{{ $item->image_url }}" alt=""
-                                            style="height: 130px;">
+                                    <td style="width: 10%;">
+                                        <img class="img-fluid rounded" src="{{ $item->image_url ?? null }}" alt="">
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->amount_lecture }}</td>

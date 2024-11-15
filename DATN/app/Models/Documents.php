@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Courses;
+use App\Models\Course;
 
 class Documents extends Model
 {
@@ -17,6 +17,10 @@ class Documents extends Model
     ];
     public function course()
     {
-        return $this->hasMany(Courses::class);
+        return $this->hasMany(Course::class);
+    }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

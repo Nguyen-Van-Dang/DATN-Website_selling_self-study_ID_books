@@ -12,7 +12,7 @@
                 </form>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
-                <a wire:click="openPopup('add')" class="btn btn-primary">Thêm tài khoản</a>
+                <a wire:click="openPopup('add')" class="btn btn-primary text-white">Thêm tài khoản</a>
             </div>
         </div>
         <div class="iq-card-body">
@@ -131,18 +131,22 @@
                     </div>
                     <div class="iq-card-body">
                         <form wire:submit.prevent="createUser">
-                            <div class="form-group">
-                                <label>Tên tài khoản:</label>
-                                <input wire:model="name" type="text" class="form-control"
-                                    placeholder="Nhập tên tài khoản...">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Tên tài khoản:</label>
+                                        <input wire:model="name" type="text" class="form-control"
+                                            placeholder="Nhập tên tài khoản...">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Mật khẩu:</label>
+                                        <input wire:model="password" type="password" class="form-control"
+                                            placeholder="Nhập mật khẩu...">
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Mật khẩu:</label>
-                                <input wire:model="password" type="password" class="form-control"
-                                    placeholder="Nhập mật khẩu...">
-                            </div>
-
                             <div class="form-group">
                                 <label>Ảnh tài khoản:</label>
                                 <div class="custom-file">
@@ -154,36 +158,43 @@
                                 <!-- Hiển thị trạng thái khi đang upload -->
                                 <div wire:loading wire:target="image_url">Đang tải ảnh lên...</div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Phone:</label>
-                                <input wire:model="phone" type="text" class="form-control"
-                                    placeholder="Nhập số điện thoại...">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Phone:</label>
+                                        <input wire:model="phone" type="text" class="form-control"
+                                            placeholder="Nhập số điện thoại...">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <input wire:model="email" type="email" class="form-control"
+                                            placeholder="Nhập email...">
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <input wire:model="email" type="email" class="form-control"
-                                    placeholder="Nhập email...">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Vai trò:</label>
+                                        <select class="form-control" wire:model="role_id">
+                                            <option value="1">Admin</option>
+                                            <option value="2">Giáo viên</option>
+                                            <option value="3">Học sinh</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Trạng thái:</label>
+                                        <select class="form-control" wire:model="status">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Vai trò:</label>
-                                <select class="form-control" wire:model="role_id">
-                                    <option value="1">Admin</option>
-                                    <option value="2">Giáo viên</option>
-                                    <option value="3">Học sinh</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Trạng thái:</label>
-                                <select class="form-control" wire:model="status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                            </div>
-
                             <button type="submit" class="btn btn-primary">Thêm</button>
                             <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
                         </form>
@@ -206,63 +217,82 @@
                     </div>
                     <div class="iq-card-body">
                         <form wire:submit.prevent="updateUser">
-                            <div class="form-group">
-                                <label>Tên tài khoản:</label>
-                                <input wire:model="nameAdd" type="text" class="form-control"
-                                    placeholder="Nhập tên tài khoản...">
-
-                            </div>
-                            <div class="form-group">
-                                <label>Ảnh tài khoản:</label>
-                                <div class="row p-0 m-0">
-                                    <div class="{{ $image_urlAdd ? 'col-8' : 'col-12' }} p-0">
-                                        <input wire:model="newImg" type="file" class="custom-file-input"
-                                            id="customFile" accept="image/*">
-                                        <label class="custom-file-label" for="customFile">Chọn
-                                            tập tin</label>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label>Tên tài khoản:</label>
+                                        <input wire:model="nameAdd" type="text" class="form-control"
+                                            placeholder="Nhập tên tài khoản...">
                                     </div>
-                                    @if ($image_urlAdd && is_string($image_urlAdd))
-                                        @if ($newImg)
-                                            <div class="col-4">
+
+                                    <div class="form-group">
+                                        <label>Ảnh tài khoản:</label>
+                                        <div class="row p-0 m-0">
+                                            <div class="{{ $image_urlAdd || $newImg ? 'col-12' : 'col-12' }}  ">
+                                                <input wire:model="newImg" type="file" class="custom-file-input"
+                                                    id="customFile" accept="image/*">
+                                                <label class="custom-file-label" for="customFile">Chọn tập tin</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Hình ảnh:</label>
+                                        <!-- Cột hiển thị ảnh -->
+                                        <div class="{{ $image_urlAdd || $newImg ? 'col-12' : 'col-12' }}">
+                                            @if ($newImg)
                                                 <img src="{{ $newImg->temporaryUrl() }}" alt="Ảnh đại diện"
                                                     style="max-height: 150px;" class="img-fluid">
-                                            </div>
-                                        @else
-                                            <div class="col-4">
+                                            @elseif ($image_urlAdd && is_string($image_urlAdd))
                                                 <img src="{{ $image_urlAdd }}" alt="Ảnh đại diện"
                                                     style="max-height: 150px;" class="img-fluid">
-                                            </div>
-                                        @endif
-                                    @endif
+                                            @else
+                                                <img src="{{ asset('assets/images/book/user/thub.jpg') }}"
+                                                    alt="Ảnh mặc định" style="max-height: 150px;" class="img-fluid">
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <input wire:model="emailAdd" type="email" class="form-control"
-                                    placeholder="Nhập email...">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <input wire:model="emailAdd" type="email" class="form-control"
+                                            placeholder="Nhập email...">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Phone:</label>
+                                        <input wire:model="phoneAdd" type="phone" class="form-control"
+                                            placeholder="Nhập sdt...">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Phone:</label>
-                                <input wire:model="phoneAdd" type="phone" class="form-control"
-                                    placeholder="Nhập sdt...">
-                            </div>
-                            <div class="form-group">
-                                <label>Vai trò:</label>
-                                <select wire:model="role_idAdd" class="form-control">
-                                    <option value="">Chọn vai trò</option>
-                                    <option value="1">Admin</option>
-                                    <option value="2">Giáo viên</option>
-                                    <option value="3">Học sinh</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Trạng thái:</label>
-                                <select wire:model="statusAdd" class="form-control">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Vai trò:</label>
+                                        <select wire:model="role_idAdd" class="form-control">
+                                            <option value="">Chọn vai trò</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">Giáo viên</option>
+                                            <option value="3">Học sinh</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Trạng thái:</label>
+                                        <select wire:model="statusAdd" class="form-control">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Thêm</button>
                             <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>

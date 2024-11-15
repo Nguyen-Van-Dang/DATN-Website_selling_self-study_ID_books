@@ -14,7 +14,6 @@ class Course extends Model
     protected $fillable = [
         'name',
         'price',
-        'amount_lecture',
         'description',
         'image_url',
         'user_id',
@@ -41,8 +40,8 @@ class Course extends Model
     {
         return self::all();
     }
-    public function media()
+    public function images()
     {
-        return $this->hasMany(Media::class);
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

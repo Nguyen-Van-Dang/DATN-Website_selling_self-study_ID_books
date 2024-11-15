@@ -9,8 +9,9 @@ use App\Models\Lecture;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use App\Services\GoogleDriveService;
+use App\Jobs\UploadFileJob;
+
 
 class CourseAdd extends Component
 {
@@ -22,6 +23,7 @@ class CourseAdd extends Component
     public $image_url;
     public $discount;
     public $document_url;
+    public $filePreviewUrl;
     public $lectureCategories = [];
     public $lectures = [];
     public $lectureVideo = [];
@@ -63,38 +65,30 @@ class CourseAdd extends Component
     public function storeCourse()
     {
         // $this->validate();
+        $course = new Course;
+        $course->name = $this->courseName;
+        $course->price = $this->price;
+        $course->discount = $this->discount;
+        $course->description = $this->description;
+        $course->user_id = auth::id();
+        $course->save();
 
-        $course = Course::create([
-            'name' => $this->courseName,
-            'description' => $this->description,
-            'price' => $this->price,
-            'discount' => $this->discount,
-            'user_id' => auth::id(),
-        ]);
+        $document = new Documents;
+        $document->created_by = auth::id();
+        $document->course_id = $course->id;
+        $document->save();
 
         if ($this->image_url) {
-            $folderId = '1WHXXlWVN3xx0XHbyWu9L7Lz3kg_qmmfB';
-            $googleDriveService = new GoogleDriveService();
-            $fileId = $googleDriveService->uploadAndGetFileId($this->image_url, $folderId);
-            $course->update([
-                'image_url' => "https://drive.google.com/thumbnail?id=" . $fileId,
-            ]);
+            $folderId = '1XrcghzBo6Y5bkV-Iasbim_ARS65ZK42R';
+            $filePath = $this->image_url->store('temp');
+            UploadFileJob::dispatch($course, $folderId, $filePath, 'thumbnail');
         }
-
-        $document = Documents::create([
-            'created_by' => auth::id(),
-            'course_id' => $course->id,
-        ]);
 
         if ($this->document_url) {
-            $folderId = '11tDxNBN4OkVJUEPAqLvej2Ure4sjCLAF';
-            $fileId = $googleDriveService->uploadAndGetFileId($this->document_url, $folderId);
-            $course->update([
-                'document_url' => "https://drive.google.com/thumbnail?id=" . $fileId,
-            ]);
+            $folderId = '1G88HQ3NeBXuoIW3QbGDFQCegS73O72g1';
+            $filePath = $this->document_url->store('temp');
+            UploadFileJob::dispatch($document, $folderId, $filePath, 'document');
         }
-
-        $totalLectures = 0;
 
         foreach ($this->lectureCategories as $index => $categoryName) {
             if (isset($this->lectureCategories[$index]) && !isset($this->lectureCategories[$index]['deleted'])) {
@@ -111,30 +105,20 @@ class CourseAdd extends Component
                                 'course_id' => $course->id,
                                 'lecture_categories_id' => $lectureCategory->id,
                             ]);
-                            $totalLectures++;
 
                             if (isset($this->lectureVideo[$index][$lectureIndex])) {
                                 $videoFile = $this->lectureVideo[$index][$lectureIndex];
 
-                                $lectureFolderId = '1FzxoMolrO4KcFsDyDLSx1oh9oIEMftwv';
-
-                                $fileId = $googleDriveService->uploadAndGetFileId($videoFile, $lectureFolderId);
-
-                                if ($fileId) {
-                                    $videoUrl = 'https://drive.google.com/uc?export=view&id=' . $fileId;
-                                    $lecture->update([
-                                        'video_url' => $videoUrl,
-                                    ]);
-                                }
+                                $folderId = '1j0kkkIFeO7qvPMhqWG4OyJUy1WGRclEf';
+                                $filePath = $videoFile->store('temp');
+                                UploadFileJob::dispatch($lecture, $folderId, $filePath, 'video');
                             }
                         }
                     }
                 }
             }
         }
-
-        $course->amount_lecture = $totalLectures;
-        $course->save();
+dd('ok');
 
         toastr()->success('<p>Thêm khóa học và các danh mục bài giảng thành công!</p>');
         session()->flash('message', 'Thêm khóa học và các danh mục bài giảng thành công.');

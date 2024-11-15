@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\ReelComment;
-
+use App\Models\BookCategories;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
@@ -75,7 +75,7 @@ class User extends Authenticatable
     }
     public function CategoryBook(): HasMany
     {
-        return $this->hasMany(CategoryBook::class);
+        return $this->hasMany(BookCategories::class);
     }
     public function Favorites(): HasMany
     {

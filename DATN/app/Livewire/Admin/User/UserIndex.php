@@ -30,21 +30,21 @@ class UserIndex extends Component
         if (strlen($this->search) >= 1) {
             $users = User::where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('id', $this->search)
-
+                ->orderBy('role_id')
                 ->paginate(10);
         } else {
             if (Auth::user()->role_id == 1) {
-                $users = User::paginate(10);
+                $users = User::orderBy('role_id')->paginate(10);
             } else {
                 $users = User::where('id', Auth::id())->paginate(10);
             }
         }
-        $users = User::paginate(10);
+    
         return view('livewire.admin.user.user-index', [
             'users' => $users,
         ]);
     }
-
+    
     public function openPopup($type, $id = null)
     {
         $this->deletedId = null;
@@ -108,7 +108,6 @@ class UserIndex extends Component
         $this->isAddPopupOpen = false;
     }
 
-
     public function updateUser()
     {
         // Tìm người dùng bằng ID
@@ -124,8 +123,7 @@ class UserIndex extends Component
         $user->email = $this->emailAdd;
         $user->phone = $this->phoneAdd;
         $user->role_id = $this->role_idAdd;
-        $user->status = $this->statusAdd;
-
+        $user->status = 0;
         // Kiểm tra nếu có ảnh mới
         if (isset($this->newImg)) {
             $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
@@ -161,8 +159,6 @@ class UserIndex extends Component
         $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'image_urlAdd']);
         $this->isEditPopupOpen = false;
     }
-
-
     public function deleted()
     {
         $user = User::find($this->deletedId);
