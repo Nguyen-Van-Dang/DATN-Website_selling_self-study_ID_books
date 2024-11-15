@@ -44,7 +44,8 @@ class DatabaseSeeder extends Seeder
         User::factory()->create(['role_id' => 3]);
         User::factory(12)->create();
         Contact::factory(15)->create();
-        PaymentMethods::factory(15)->create();
+        PaymentMethods::factory()->create(['id' => 1, 'name' => 'momo']);
+        PaymentMethods::factory()->create(['id' => 2, 'name' => 'vnpay']);
         Order::factory(15)->create();
         // Notification::factory(15)->create();
         // NotificationUser::factory(15)->create();

@@ -597,7 +597,7 @@ $userName = Auth::user()->name;
 <script>
     function removeFromCart(cartId) {
         console.log("Removing cart item with ID:", cartId);
-        fetch(`/cart/remove/${cartId}`, {
+        fetch(`/shopping-cart/cart/remove/${cartId}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

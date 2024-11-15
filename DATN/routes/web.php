@@ -25,6 +25,8 @@ use App\Http\Middleware\AutoLogout;
 use App\Livewire\Client\Book\Books;
 use App\Livewire\Client\Book\BookDetail;
 use App\Http\Controllers\Client\LectureController;
+use App\Livewire\Client\Cart\Carts;
+
 
 /* --------------- HOME CLIENT --------------- */
 
@@ -191,10 +193,16 @@ Route::post('/user-information', [UserController::class, 'updateUser'])->name('u
 Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
 
 //giỏ hàng
-Route::get('/shopping-cart', [CartDetailController::class, 'getAllCartDetail'])->name('shoppingCart');
-Route::post('/cart/add/{id}', [Books::class, 'addToCart'])->name('addToCart');
-Route::delete('/cart/remove/{id}', [CartDetailController::class, 'removeFromCart'])->name('removeFromCart');
-Route::post('/shopping-cart', [OrderController::class, 'checkout'])->name('checkout');
+Route::prefix('/shopping-cart')->group(function () {
+    Route::get('/', function () {
+        return view('client.payment.shoppingCart');
+    })->name('shoppingCart');
+    Route::post('/cart/add/{id}', [Books::class, 'addToCart'])->name('addToCart');
+    Route::post('/cart/remove/{id}', [Carts::class, 'removeFromCart'])->name('removeFromCart');
+    Route::post('/', [Carts::class, 'checkout'])->name('checkout');
+    Route::match(['get', 'post'], '/vnpay-callback', [Carts::class, 'vnpayCallback'])->name('vnpayCallback');
+    Route::match(['get', 'post'], '/momo-callback', [Carts::class, 'momoCallback'])->name('momoCallback');
+});
 
 // tất cả thông báo
 Route::get('/notification-list', function () {

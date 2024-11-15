@@ -114,7 +114,7 @@
                                             <h6><b>{{ number_format($item->price) }}đ</b></h6>
                                         </div>
                                         <div class="iq-product-action">
-                                            <a href="javascript:void(0);" wire:click="addToCart({{ $item->id }})"
+                                            <a href="javascript:void(0);" onclick="addToCart({{ $item->id }})"
                                                 class="ml-2">
                                                 <i class="ri-shopping-cart-2-fill text-primary"></i>
                                             </a>

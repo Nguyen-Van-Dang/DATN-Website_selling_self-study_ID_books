@@ -6,6 +6,7 @@ use App\Models\BookCategories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Course;
 
 class BookFactory extends Factory
 {
@@ -13,8 +14,9 @@ class BookFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(3),
-            'price' => $this->faker->randomFloat(2, 100, 1000),
-            'page_number' => $this->faker->numberBetween(1, 100),
+            'price' => $this->faker->numberBetween(100000, 300000),
+            'page_number' => $this->faker->numberBetween(1, 50),
+            'course_id' => Course::inRandomOrder()->first()->id,
             'description' => $this->faker->paragraph(3),
             'quantity' => $this->faker->numberBetween(1000, 2000),
             'user_id' => User::inRandomOrder()->first()->id,

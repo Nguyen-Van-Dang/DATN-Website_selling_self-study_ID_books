@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f41a6dd3c1ad94df7f7c93eb3c20010",
+
+    "content-hash": "5e8a4b37d9418abe3bef5a0bb7196f96",
     "packages": [
         {
             "name": "beste/clock",
@@ -8335,6 +8336,7 @@
                 }
             ],
             "time": "2024-11-13T14:25:32+00:00"
+
         },
         {
             "name": "symfony/mailer",
@@ -9180,6 +9182,7 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/process/tree/v7.1.8"
+
             },
             "funding": [
                 {
@@ -9760,6 +9763,7 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/var-dumper/tree/v7.1.8"
+
             },
             "funding": [
                 {
@@ -9776,6 +9780,7 @@
                 }
             ],
             "time": "2024-11-08T15:46:42+00:00"
+
         },
         {
             "name": "symfony/var-exporter",
@@ -10486,6 +10491,7 @@
                 "source": "https://github.com/laravel/sail"
             },
             "time": "2024-11-11T20:16:51+00:00"
+
         },
         {
             "name": "mockery/mockery",
