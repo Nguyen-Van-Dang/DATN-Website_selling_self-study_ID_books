@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\Admin\User;
 
 use Livewire\Component;
 use App\Models\User;
@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Storage;
 use Google\Service\Drive\Permission as Google_Service_Drive_Permission;
 use App\Services\GoogleDriveService;
 
-class RenderUser extends Component
+class UserIndex extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    public $userData;
+    public $userData, $newImg;
+    public $existingImageUrl;
     public $name, $image_url, $email, $phone, $password, $role_id, $status;
-    public $nameAdd, $image_urlAdd, $emailAdd, $phoneAdd, $role_idAdd, $statusAdd;
+    public $nameAdd, $image_urlAdd, $emailAdd, $phoneAdd, $role_idAdd, $statusAdd, $passwordAdd;
     public $editingId, $deletedId, $search = '';
     public $isAddPopupOpen = false;
     public $isEditPopupOpen = false;
@@ -39,7 +40,7 @@ class RenderUser extends Component
             }
         }
         $users = User::paginate(10);
-        return view('livewire.user.render-user', [
+        return view('livewire.admin.user.user-index', [
             'users' => $users,
         ]);
     }
@@ -54,7 +55,8 @@ class RenderUser extends Component
             $user = User::find($id);
             if ($user) {
                 $this->nameAdd = $user->name;
-                $this->image_urlAdd = $user->image_url;
+                $this->passwordAdd = $user->password;
+                $this->image_urlAdd = $user->images()->first() ? $user->images()->first()->image_url : null;
                 $this->emailAdd = $user->email;
                 $this->phoneAdd = $user->phone;
                 $this->role_idAdd = $user->role_id;
@@ -77,8 +79,6 @@ class RenderUser extends Component
 
     public function createUser()
     {
-
-        // Tạo người dùng mới
         $user = new User();
         $user->name = $this->name;
         $user->phone = $this->phone;
@@ -87,44 +87,31 @@ class RenderUser extends Component
         $user->status = $this->status;
         $user->password = bcrypt($this->password);
 
-        // Kiểm tra nếu có file ảnh được upload
-        if ($this->image_url) {
-            // Sử dụng Livewire để lưu file vào thư mục tạm
-            $uploadedFilePath = $this->image_url->store('temp', 'public');
-            $fullPath = storage_path('app/public/' . $uploadedFilePath);
-
-            // Upload lên Google Drive
-            $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
-            $googleDriveService = new GoogleDriveService();
-            $fileId = $googleDriveService->uploadAndGetFileId($fullPath, $folderId);
-            $user->image_url = "https://drive.google.com/thumbnail?id=" . $fileId;
-        } else {
-            $user->image_url = ''; // Nếu không có ảnh, để trống
-        }
-
-        // Lưu người dùng vào cơ sở dữ liệu
         $user->save();
 
-        // Thông báo và reset form
+        if ($this->image_url) {
+
+            $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
+            $googleDriveService = new GoogleDriveService();
+            $fileId = $googleDriveService->uploadAndGetFileId($this->image_url, $folderId);
+            $image_url = "https://drive.google.com/thumbnail?id=" . $fileId;
+            $user->images()->create([
+                'image_url' => $image_url,
+                'image_name' => 'avatar'
+            ]);
+
+            $user->save();
+        }
+
         session()->flash('message', 'Thêm tài khoản thành công');
         $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
         $this->isAddPopupOpen = false;
     }
 
 
-
     public function updateUser()
     {
-        // Validate dữ liệu đầu vào
-        $this->validate([
-            'nameAdd' => 'required|unique:users,name,' . $this->editingId,
-            'emailAdd' => 'required|email|unique:users,email,' . $this->editingId,
-            'phoneAdd' => 'required|unique:users,phone,' . $this->editingId,
-            'role_idAdd' => 'required',
-            'statusAdd' => 'required',
-        ]);
-
-        // Tìm người dùng theo ID đang chỉnh sửa
+        // Tìm người dùng bằng ID
         $user = User::find($this->editingId);
 
         if (!$user) {
@@ -132,18 +119,49 @@ class RenderUser extends Component
             return;
         }
 
-        // Cập nhật thông tin người dùng
+        // Cập nhật các thông tin của người dùng
         $user->name = $this->nameAdd;
         $user->email = $this->emailAdd;
         $user->phone = $this->phoneAdd;
         $user->role_id = $this->role_idAdd;
         $user->status = $this->statusAdd;
+
+        // Kiểm tra nếu có ảnh mới
+        if (isset($this->newImg)) {
+            $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
+            $googleDriveService = new GoogleDriveService();
+
+            // Nếu người dùng chưa có ảnh, upload ảnh mới
+            if ($user->images()->count() == 0) {
+                $fileId = $googleDriveService->uploadAndGetFileId($this->newImg, $folderId);
+
+                // Tạo một bản ghi mới trong bảng images
+                $user->images()->create([
+                    'image_url' => "https://drive.google.com/thumbnail?id=" . $fileId
+                ]);
+            } else {
+                // Nếu người dùng đã có ảnh, cập nhật ảnh cũ
+                $firstImage = $user->images()->first();
+                if ($firstImage) {
+                    $fileId = $googleDriveService->updateFile($firstImage->file_id, $this->newImg, $folderId);
+                    $firstImage->update([
+                        'image_url' => "https://drive.google.com/thumbnail?id=" . $fileId
+                    ]);
+                }
+            }
+        }
+
+        // Lưu thông tin người dùng
         $user->save();
 
+        // Thông báo thành công
         session()->flash('message', 'Người dùng đã được cập nhật thành công.');
+
+        // Reset lại các trường
+        $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'image_urlAdd']);
         $this->isEditPopupOpen = false;
-        $this->editingId = null;
     }
+
 
     public function deleted()
     {

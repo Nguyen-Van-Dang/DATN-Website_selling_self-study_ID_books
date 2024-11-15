@@ -18,7 +18,7 @@ use Flasher\Toastr\Prime\ToastrInterface;
 use Flasher\Toastr\Prime\Toastr;
 use Flasher\Toastr\Laravel\Flasher;
 use App\Services\GoogleDriveService;
-
+use Flasher\Laravel\Http\Request;
 
 class UserRepository
 {
@@ -132,6 +132,43 @@ class UserRepository
             return redirect()->back()->withErrors(['error' => 'Failed to login with Google']);
         }
     }
+        // đăng nhập bằng fb
+    public function handleFacebookCallback(\Illuminate\Http\Request $request)
+    {
+        try {
+            $user = Socialite::driver('facebook')->user();
+            $findUser = User::where('social_id', $user->id)->first();
+
+            dd($user);
+            if ($findUser) {
+                $findUser->update([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'image' => $user->image,
+                    'loginType' => 'facebook',
+                ]);
+
+                Auth::login($findUser);
+                return redirect()->intended('/');
+            } else {
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'social_id' => $user->id,
+                    'image' => $user->image,
+                    'loginType' => 'facebook',
+                    'password' => encrypt('123456789'),
+                ]);
+
+                // Đăng nhập người dùng mới tạo
+                Auth::login($newUser);
+                return redirect()->intended('/');
+            }
+        } catch (Exception $e) {
+            return redirect('homeClient')->withErrors(['msg' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
+        }
+    }
+
     //hiển thịt tất cả tài khoản user bên admin
     public function getAllUser()
     {
@@ -146,73 +183,5 @@ class UserRepository
     public function getDeletedUser()
     {
         return view('admin.user.deletedUser');
-    }
-    // public function changePassword($data)
-    // {
-    //     $messages = [
-    //         'password.required' => 'Xin vui lòng nhập mật khẩu hiện tại',
-    //         'new_password.required' => 'Xin vui lòng nhập mật khẩu mới',
-    //         'new_password.confirmed' => 'Mật khẩu xác nhận không khớp',
-    //         'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự',
-    //     ];
-
-    //     $validatedData = $data->validate([
-    //         'password' => 'required',
-    //         'new_password' => 'required|min:8|confirmed',
-    //     ], $messages);
-
-    //     $user = Auth::user();
-
-    //     if (!Hash::check($data->password, $user->password)) {
-    //         throw ValidationException::withMessages([
-    //             'password' => 'Mật khẩu hiện tại không đúng.',
-    //         ]);
-    //     }
-
-    //     $user->password = Hash::make($data->new_password);
-    //     $user->save();
-    //     return redirect()->back()->with('success', 'Đổi mật khẩu thành công');
-    // }
-
-    /*-------------------------------------------------------Admin---------------------------------------------------------*/
-
-    public function updateUser(Request $request)
-    {
-        // Xác thực dữ liệu đầu vào
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',  // Ví dụ số điện thoại có thể dài hơn
-            'email' => 'required|email|max:255',  // Xác thực email
-            'image_url' => 'nullable|image|mimes:jpg,jpeg,png',  // Xác thực ảnh tải lên
-            'sex' => 'nullable|in:0,1',  // 0 là Nam, 1 là Nữ
-        ]);
-
-        // Lấy thông tin người dùng hiện tại
-        $user = Auth::user();
-
-        // Cập nhật các trường dữ liệu
-        $user->name = $validatedData['name'];
-        $user->phone = $validatedData['phone'];
-        $user->email = $validatedData['email'];
-
-        // Nếu có ảnh mới, xử lý tải lên
-        if ($request->hasFile('image_url')) {
-            $imagePath = $request->file('image_url')->store('avatars', 'public');
-            $user->avatar = $imagePath;
-        }
-
-        // Cập nhật giới tính nếu có
-        if (isset($validatedData['sex'])) {
-            $user->sex = $validatedData['sex'];
-        }
-
-        // Lưu lại thông tin người dùng
-        $user->save();
-
-        // Hiển thị thông báo thành công
-        toastr()->success('Cập nhật thông tin thành công!');
-
-        // Chuyển hướng về trang thông tin người dùng
-        return redirect()->route('userInformation');
     }
 }

@@ -35,6 +35,9 @@ class User extends Authenticatable
         'delete_at',
         'created_at',
         'updated_at',
+        'active',
+        'sex',
+        'auth_provider'
 
     ];
 
@@ -94,6 +97,10 @@ class User extends Authenticatable
     public function followers()
     {
         return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
     /**
      * The attributes that should be hidden for serialization.

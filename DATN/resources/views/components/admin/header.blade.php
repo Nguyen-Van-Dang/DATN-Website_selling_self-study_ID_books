@@ -20,9 +20,9 @@
                         <i class="ri-search-line"></i>
                     </a>
                     <form action="#" class="search-box p-0">
-                   <input type="text" class="text search-input" placeholder="Type here to search...">
-                   <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                </form>
+                        <input type="text" class="text search-input" placeholder="Type here to search...">
+                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                    </form>
                 </li>
                 <li class="nav-item nav-icon">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
@@ -87,8 +87,8 @@
                             alt="user">
                         <div class="caption">
                             @php
-                            $userName = Auth::user()->name;
-                            $displayName = Str::limit($userName, 10, '...'); 
+                                $userName = Auth::user()->name;
+                                $displayName = Str::limit($userName, 10, '...');
                             @endphp
                             <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                             <p class="mb-0 text-primary">Tài Khoản</p>
@@ -98,7 +98,8 @@
                         <div class="iq-card shadow-none m-0">
                             <div class="iq-card-body p-0 ">
                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">Xin Chào <br> {{ auth()->user()->name }}</h5>
+                                    <h5 class="mb-0 text-white line-height">Xin Chào <br> {{ auth()->user()->name }}
+                                    </h5>
                                 </div>
                                 @if (Auth::user()->role_id == 1)
                                     <a href="{{ route('userInfo') }}" class="iq-sub-card iq-bg-primary-hover">

@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <livewire:user.render-user />
+            <livewire:admin.user.user-index />
             <script>
                 function openPopup(type) {
                     if (type === 'add') {

@@ -12,9 +12,7 @@
                 </form>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
-                {{-- <a href="{{ route('nguoi-dung.create') }}"  class="btn btn-primary">Thêm tài khoản</a> --}}
                 <a wire:click="openPopup('add')" class="btn btn-primary">Thêm tài khoản</a>
-
             </div>
         </div>
         <div class="iq-card-body">
@@ -22,10 +20,9 @@
                 <table class="data-tables table table-striped table-bordered" style="width:100%">
                     <thead class="text-center">
                         <tr>
-                            <th>Mã Số</th>
+                            <th>STT</th>
                             <th>Ảnh</th>
                             <th>Tên người dùng</th>
-                            <th>Mật Khẩu</th>
                             <th>Số điện thoại</th>
                             <th>Email</th>
                             <th>Vai trò</th>
@@ -37,18 +34,57 @@
                         <tbody class="text-center">
                             @foreach ($users as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>
-                                        <img src="{{ $item->image_url }}" class="img-fluid avatar-50 rounded"
-                                            alt="">
+                                    <td style="width: 3%;">{{ $item->id }}</td>
+                                    <td style="width: 10%;">
+                                        @php
+                                            $firstImage = $item->images->first();
+                                        @endphp
 
+                                        @if ($firstImage)
+                                            <img src="{{ $firstImage->image_url }}" alt="Image"
+                                                class="img-fluid avatar-100 rounded" />
+                                        @endif
                                     </td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ Str::limit($item->password, 30, '...') }}</td>
                                     <td>{{ $item->phone }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>{{ $item->role_id }}</td>
-                                    <td>{{ $item->status }}</td>
+                                    <!-- Hiển thị vai trò -->
+                                    <td>
+                                        @if ($item->role_id == 1)
+                                            <span
+                                                style="background-color: #f44336; color: white; padding: 5px; border-radius: 5px;">Admin</span>
+                                        @elseif ($item->role_id == 2)
+                                            <span
+                                                style="background-color: #2196F3; color: white; padding: 5px; border-radius: 5px;">Giáo
+                                                viên</span>
+                                        @elseif ($item->role_id == 3)
+                                            <span
+                                                style="background-color: #4CAF50; color: white; padding: 5px; border-radius: 5px;">Học
+                                                sinh</span>
+                                        @else
+                                            <span
+                                                style="background-color: #9E9E9E; color: white; padding: 5px; border-radius: 5px;">Không
+                                                xác định</span>
+                                        @endif
+                                    </td>
+
+                                    <!-- Hiển thị trạng thái -->
+                                    <td>
+                                        @if ($item->status == 0)
+                                            <span
+                                                style="background-color: #4CAF50; color: white; padding: 5px; border-radius: 5px;">Hoạt
+                                                động</span>
+                                        @elseif ($item->status == 1)
+                                            <span
+                                                style="background-color: #f44336; color: white; padding: 5px; border-radius: 5px;">Ngừng
+                                                hoạt động</span>
+                                        @else
+                                            <span
+                                                style="background-color: #9E9E9E; color: white; padding: 5px; border-radius: 5px;">Không
+                                                xác định</span>
+                                        @endif
+                                    </td>
+
                                     <td>
                                         <div class="flex align-items-center list-user-action">
                                             <a class="bg-primary text-white" data-toggle="tooltip" title="Xem chi tiết">
@@ -81,8 +117,6 @@
             </div>
         </div>
     </div>
-
-
 
     {{-- them nguoi dung --}}
     <div class="modal {{ $isAddPopupOpen ? 'is-open' : '' }}" id="addCourseCateModal" wire:click="closePopup()">
@@ -159,7 +193,6 @@
         </div>
     </div>
 
-
     {{-- sua nguoi dung --}}
     <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="isEditPopupOpen" wire:click="closePopup()">
         <div class="modal-content" wire:click.stop>
@@ -181,13 +214,27 @@
                             </div>
                             <div class="form-group">
                                 <label>Ảnh tài khoản:</label>
-                                <div class="custom-file">
-                                    <input wire:model="image_urlAdd" type="file" class="custom-file-input"
-                                        id="image_urlAdd">
-                                    <label class="custom-file-label" for="image_urlAdd" style="z-index: 0;">Chọn tập
-                                        tin</label>
+                                <div class="row p-0 m-0">
+                                    <div class="{{ $image_urlAdd ? 'col-8' : 'col-12' }} p-0">
+                                        <input wire:model="newImg" type="file" class="custom-file-input"
+                                            id="customFile" accept="image/*">
+                                        <label class="custom-file-label" for="customFile">Chọn
+                                            tập tin</label>
+                                    </div>
+                                    @if ($image_urlAdd && is_string($image_urlAdd))
+                                        @if ($newImg)
+                                            <div class="col-4">
+                                                <img src="{{ $newImg->temporaryUrl() }}" alt="Ảnh đại diện"
+                                                    style="max-height: 150px;" class="img-fluid">
+                                            </div>
+                                        @else
+                                            <div class="col-4">
+                                                <img src="{{ $image_urlAdd }}" alt="Ảnh đại diện"
+                                                    style="max-height: 150px;" class="img-fluid">
+                                            </div>
+                                        @endif
+                                    @endif
                                 </div>
-
                             </div>
 
 
@@ -251,4 +298,17 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .modal-body-scrollable {
+            max-height: calc(85vh - 100px);
+            overflow-y: auto;
+        }
+    </style>
 </div>
