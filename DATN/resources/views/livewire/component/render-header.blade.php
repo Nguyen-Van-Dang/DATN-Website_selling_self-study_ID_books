@@ -165,46 +165,50 @@
                                         </h5>
                                     </div>
                                     @if (auth()->check() && $cartCount > 0)
-                                        @foreach ($cartItems as $item)
-                                            <div class="row">
-                                                <div class="col-10">
-                                                    <a class="iq-sub-card">
-                                                        <div class="media align-items-center">
-                                                            <div>
-                                                                <img class="rounded"
-                                                                    src="{{ asset('assets/images/book/book/02.jpg') }}"
-                                                                    alt="">
+                                        <div class="custom-scrollbar">
+                                            @foreach ($cartItems as $item)
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <a class="iq-sub-card">
+                                                            <div class="media align-items-center">
+                                                                <div>
+                                                                    <img class="rounded"
+                                                                        src="{{ asset('assets/images/book/book/02.jpg') }}"
+                                                                        alt="">
+                                                                </div>
+                                                                <div class="media-body ml-3">
+                                                                    <h6 class="mb-0">Tên: {{ $item->book->name }}
+                                                                    </h6>
+                                                                    <p class="mb-0">Giá:
+                                                                        {{ $item->book->price * $item->quantity }} đ
+                                                                    </p>
+                                                                    <p class="mb-0">Số Lượng: {{ $item->quantity }}
+                                                                    </p>
+                                                                </div>
                                                             </div>
-                                                            <div class="media-body ml-3">
-                                                                <h6 class="mb-0">Tên: {{ $item->book->name }}</h6>
-                                                                <p class="mb-0">Giá:
-                                                                    ${{ $item->book->price * $item->quantity }}</p>
-                                                                <p class="mb-0">Số Lượng: {{ $item->quantity }}</p>
+                                                        </a>
+                                                    </div>
+                                                    <div
+                                                        class="col-2 d-flex justify-content-center align-items-center">
+                                                        <a style="padding-right: 20px">
+                                                            <div class="font-size-24 text-danger"
+                                                                style="cursor: pointer;">
+                                                                <i class="ri-close-fill"
+                                                                    wire:click="removeFromCart({{ $item->id }})"></i>
                                                             </div>
-                                                        </div>
-                                                    </a>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div class="col-2 d-flex justify-content-center align-items-center">
-                                                    <a style="padding-right: 20px">
-                                                        <div class="font-size-24 text-danger"
-                                                            style="cursor: pointer;">
-                                                            <i class="ri-close-fill"
-                                                                wire:click="removeFromCart({{ $item->id }})"></i>
-                                                        </div>
-                                                    </a>
-                                                </div>
-
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <p class="text-center p-3">Giỏ hàng trống</p>
+                                            @endforeach
+                                        @else
+                                            <p class="text-center p-3">Giỏ hàng trống</p>
                                     @endif
-                                    <div class="align-items-center text-center p-3">
-                                        <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
-                                            role="button">Giỏ Hàng</a>
-                                        <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
-                                            role="button">Thanh Toán</a>
-                                    </div>
+                                </div>
+                                <div class="align-items-center text-center p-3">
+                                    <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
+                                        role="button">Giỏ Hàng</a>
+                                    <a class="btn btn-primary iq-sign-btn" href="{{ route('shoppingCart') }}"
+                                        role="button">Thanh Toán</a>
                                 </div>
                             </div>
                         </div>
@@ -294,16 +298,6 @@ $userName = Auth::user()->name;
                                                     </div>
                                                     <div class="media-body ml-3">
                                                         <h6 class="mb-0">Vào trang quản trị</h6>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="iq-sub-card iq-bg-primary-hover">
-                                                <div class="media align-items-center">
-                                                    <div class="rounded iq-card-icon iq-bg-primary">
-                                                        <i class="ri-account-box-line"></i>
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <h6 class="mb-0">Đơn hàng của tôi</h6>
                                                     </div>
                                                 </div>
                                             </a>
@@ -589,6 +583,25 @@ $userName = Auth::user()->name;
 
         .nav-button .btn:hover {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-scrollbar {
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 350px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #20c997;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #108562;
         }
     </style>
 </div>

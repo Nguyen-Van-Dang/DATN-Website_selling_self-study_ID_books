@@ -24,12 +24,8 @@ class Books extends Component
     {
         $user = auth::user();
         if (!$user) {
-            toastr()->error('<p>Vui lòng đăng nhập để thêm vào giỏ hàng!</p>');
             return response();
         }
-
-        $book = Book::findOrFail($bookId);
-
         $cartItem = $user->cartDetails()->where('book_id', $bookId)->first();
 
         if ($cartItem) {
@@ -43,14 +39,11 @@ class Books extends Component
             $cartItem->save();
         }
 
-        toastr()->success('<p>Sản phẩm đã được thêm vào giỏ hàng!</p>');
-
+        session()->flash('success', 'Sản phẩm đã được thêm vào giỏ hàng');
         $this->dispatch('cartUpdated');
 
         return response()->json([
             'success' => true,
-            'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',
-            'cartCount' => $user->cartDetails->sum('quantity')
         ]);
     }
 

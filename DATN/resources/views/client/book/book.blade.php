@@ -29,7 +29,7 @@
         }
 
         function addToCart(bookId) {
-            fetch(`/cart/add/${bookId}`, {
+            fetch(`/shopping-cart/cart/add/${bookId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
