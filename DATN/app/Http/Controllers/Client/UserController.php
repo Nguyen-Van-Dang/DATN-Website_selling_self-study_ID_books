@@ -8,7 +8,8 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Flasher\Toastr\Laravel\Facades\Toastr;
+use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class UserController extends Controller
 {
@@ -18,9 +19,8 @@ class UserController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-
     /*-------------------Admin-----------------*/
-    public function index()
+    public function getAllUserList()
     {
         return $this->userRepository->getAllUser();
     }
@@ -73,15 +73,40 @@ class UserController extends Controller
     {
         return $this->userRepository->handleGoogleCallback($request);
     }
-    public function redirectToFacebook()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
+    // public function redirectToFacebook()
+    // {
+    //     return Socialite::driver('facebook')->redirect();
+    // }
     // public function handleFacebookCallback(Request $request)
     // {
     //     return $this->userRepository->handleFacebookCallback($request);
     // }
+    public function authProviderRedirect($provider)
+    {
+        if ($provider) {
+            return Socialite::driver($provider)->redirect();
+        }
+    }
+    public function socialAuthentication($provider)
+    {
+        $socialUser = Socialite::driver($provider)->user();
+        dd($socialUser);
+        $user = User::where('social_id', $socialUser->id)->first();
 
+        if ($user) {
+            Auth::login($user);
+        } else {
+            $userData = User::create([
+                'name' => $socialUser->name,
+                'email' => $socialUser->email,
+                'password' => Hash::make('Password@1234'),
+                'social_id' => $socialUser->id,
+                'auth_provider' => $provider,
+            ]);
+            Auth::login($userData);
+        }
+        return redirect()->route('homeClient');
+    }
     public function destroy($id)
     {
         $this->userRepository->softDelete($id);
@@ -100,10 +125,6 @@ class UserController extends Controller
     public function handleZaloCallback(Request $request)
     {
         return $this->userRepository->handleZaloCallback($request);
-    }
-    public function updateUser()
-    {
-        return $this->userRepository->updateUser();
     }
     public function showUser()
     {

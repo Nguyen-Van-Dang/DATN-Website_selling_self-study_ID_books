@@ -226,8 +226,9 @@
                                     class="img-fluid rounded-circle mr-3" alt="user">
                                 <div class="caption"
                                     @php
-$userName = Auth::user()->name;
-                                    $displayName = Str::limit($userName, 10, '...'); @endphp>
+                                        $userName = Auth::user()->name;
+                                        $displayName = Str::limit($userName, 10, '...'); 
+                                    @endphp>
                                     <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                     <p class="mb-0 text-primary">Tài Khoản</p>
                                 </div>
@@ -418,11 +419,11 @@ $userName = Auth::user()->name;
                                                         hội
                                                         khác</p>
                                                     <div class="social-media">
-                                                        <a href="{{ route('login-by-facebook') }}"
-                                                            class="social-icon">
+                                                        <a href="{{ route('login-by-provider', ['provider' => 'facebook']) }}" class="social-icon">
                                                             <i class="fab fa-facebook-f"></i>
                                                         </a>
-                                                        <a href="#" class="social-icon">
+                                                        
+                                                        <a href="{{ route('login-by-zalo') }}" class="social-icon">
                                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                                 width="100" height="30px" viewBox="0 0 50 50">
                                                                 <path

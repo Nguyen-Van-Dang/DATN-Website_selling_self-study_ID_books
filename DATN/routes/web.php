@@ -30,10 +30,6 @@ use App\Http\Controllers\Client\LectureController;
 
 Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
 
-// Route::middleware([AutoLogout::class])->group(function () {
-//     Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
-// });
-
 /* --------------- hOME ADMIN --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
     Route::get('/admin', function () {
@@ -53,8 +49,12 @@ Route::get('/auth/zalo', [UserController::class, 'redirectToZalo'])->name('login
 Route::get('auth/zalo/callback', [UserController::class, 'handleZaloCallback']);
 
 /* -------------- LOGIN FB --------------- */
-Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');
-Route::get('auth/facebook/callback', [UserController::class, 'handleFacebookCallback']);
+// Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');
+// Route::get('auth/facebook/callback', [UserController::class, 'handleFacebookCallback']);
+
+Route::get('auth/{provider}', [UserController::class, 'authProviderRedirect'])->name('login-by-provider');
+Route::get('auth/{provider}/callback', [UserController::class, 'socialAuthentication']);
+
 
 /* -------------- LOGIN PHONE --------------- */
 Route::post('/', [UserController::class, 'handleLogin'])->name('handleLogin');
@@ -144,7 +144,7 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 /* --------------- ACCOUNT GROUP ------------------------ */
 Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::resource('/admin/nguoi-dung', UserController::class)->names('nguoi-dung');
-    Route::get('/admin/danh-sach-nguoi-dung', [UserController::class, 'index'])->name('listUser');
+    Route::get('/admin/danh-sach-nguoi-dung', [UserController::class, 'getAllUserList'])->name('listUser');
     Route::get('/admin/them-nguoi-dung', function () {
         return view('admin.user.addUser');
     })->name('addUser');
