@@ -39,8 +39,10 @@ class BookController extends Controller
     public function create()
     {
         // controller
-        if (Auth::user()->id == 1) {
-            $teachers = User::where('role_id', 2)->get();
+        if (Auth::user()->role_id == 1) {
+            $teachers = User::where('role_id', 2)->where('active', 0)->get();
+        } else {
+            $teachers = null;
         }
         $categories = BookCategories::where('status', 0)->get();
 

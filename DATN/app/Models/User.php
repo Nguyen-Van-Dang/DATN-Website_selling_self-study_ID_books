@@ -50,15 +50,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(ReelComment::class);
     }
-    public  function Books(): HasMany
+    public  function books(): HasMany
     {
-        return $this->hasMany(Book::class);
+        return $this->hasMany(Book::class, 'user_id');
     }
     public function Reels()
     {
         return $this->hasMany(Reels::class);
     }
-    public function Courses()
+    public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'user_id');
     }
@@ -70,10 +70,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(CourseCategories::class);
     }
-    public function CategoryBook(): HasMany
-    {
-        return $this->hasMany(CategoryBook::class);
-    }
+    // public function CategoryBook(): HasMany
+    // {
+    //     return $this->hasMany(CategoryBook::class);
+    // }
     public function Favorites(): HasMany
     {
         return $this->hasMany(Favorite::class);
@@ -94,6 +94,10 @@ class User extends Authenticatable
     public function followers()
     {
         return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
     /**
      * The attributes that should be hidden for serialization.

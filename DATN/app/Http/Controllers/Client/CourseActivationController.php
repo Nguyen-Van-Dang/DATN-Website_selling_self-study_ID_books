@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Models\CourseActivation;
 use App\Models\Book;
@@ -9,7 +9,8 @@ use App\Models\EnrollCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\Controller;
+use App\Models\CourseActivationCode;
 
 class CourseActivationController extends Controller
 {
@@ -26,7 +27,7 @@ class CourseActivationController extends Controller
             return redirect()->route('kich-hoat-sach')->withErrors(['Sách với ID ' . $book_id . ' không tồn tại.']);
         }
 
-        $courseActivation = CourseActivation::where('book_id', $book_id)->first();
+        $courseActivation = CourseActivation::where('book_id', $book_id)->where('status', 0)->first();
         if (!$courseActivation) {
             return redirect()->route('kich-hoat-sach')->withErrors(['Sách không có khoá học đi kèm.']);
         }
@@ -36,13 +37,11 @@ class CourseActivationController extends Controller
     public function redirect(Request $request)
     {
         $request->validate([
-            // 'book_id' => 'required|numeric|digits:6',
-            'book_id' => 'required|numeric',
-
+            'book_id' => 'required|numeric|digits:4',
         ], [
             'book_id.required' => 'Vui lòng nhập ID sách.',
-            'book_id.numeric' => 'ID sách phải là số.',
-            // 'book_id.digits' => 'ID sách phải gồm 6 chữ số.',
+            'book_id.numeric' => 'ID sách phải gồm 4 chữ số.',
+            'book_id.digits' => 'ID sách phải gồm 4 chữ số.',
         ]);
 
         $book_id = $request->input('book_id');
@@ -63,19 +62,22 @@ class CourseActivationController extends Controller
         $activationCode = $request->input('activation_code');
         $bookId = $request->input('book_id');
         $activationCode = str_replace(' - ', '', $activationCode);
-        $courseActivation = CourseActivation::where('activation_code', $activationCode)
-            ->where('book_id', $bookId)
-            ->first();
-        if (!$courseActivation) {
-            return redirect()->back()->with('error', 'Mã kích hoạt không hợp lệ.');
-        }
 
-        $codeAvailable = CourseActivation::where('activation_code', $activationCode)
+        $courseActivation = CourseActivation::where('book_id', $bookId)->first();
+
+        $codeAvailable = CourseActivationCode::where('activation_code', $activationCode)
+            ->where('course_activation_id', $courseActivation->id)
             ->whereNull('user_id')
             ->first();
-
         if (!$codeAvailable) {
-            return redirect()->back()->with('error', 'Mã kích hoạt đã được sử dụng.');
+            return redirect()->back()->with('error', 'Mã kích hoạt không hợp lệ hoặc đã được sử dụng.');
+        }
+
+        $courseCheck = Course::where('status', 1)
+            ->where('id', $courseActivation->course_id)
+            ->first();
+        if ($courseCheck) {
+            return redirect()->back()->with('error', 'Khoá học không hoạt động');
         }
 
         $enrollCheck = EnrollCourse::where('user_id', auth::id())
@@ -85,9 +87,9 @@ class CourseActivationController extends Controller
             return redirect()->back()->with('error', 'Bạn đã sở hữu khóa học này, không thể kích hoạt thêm.');
         }
 
-        $courseActivation->user_id = auth::id();
-        $courseActivation->activation_date = Carbon::now();
-        $courseActivation->save();
+        $codeAvailable->user_id = auth::id();
+        $codeAvailable->activation_date = now();
+        $codeAvailable->save();
 
         EnrollCourse::create([
             'user_id' => auth::id(),
@@ -95,8 +97,6 @@ class CourseActivationController extends Controller
             'enroll_date' => Carbon::now(),
         ]);
 
-        toastr()->success('<p>Kích hoạt thành công!</p>');
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Kích hoạt thành công');
     }
 }

@@ -118,7 +118,7 @@
     <!-- Popup xác nhận -->
     <div id="confirmPopup"
         style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
-        <p>Bạn có chắc chắn muốn xóa tài khoản này không?</p>
+        <p>Bạn có chắc chắn muốn xóa cuốn sách này không?</p>
         <div class="text-center">
             <button id="yesButton"
                 style="width: 90px; height: 35px; border: none; color: white; background: #11e1c2; border-radius: 5px;">

@@ -5,6 +5,8 @@ namespace App\Livewire\Chat;
 use App\Events\NewMessageEvent;
 use App\Http\Requests\CreateChatGroupRequest;
 use App\Http\Requests\SendMessageRequest;
+use App\Jobs\UpdateFileJob;
+use App\Jobs\UploadFileJob;
 use Livewire\Component;
 use App\Models\ChatGroup;
 use App\Models\ChatMessage;
@@ -38,7 +40,7 @@ class ChatComponent extends Component
     public $editingId;
     public $groupName, $groupDescription, $groupCourse, $groupImage;
     public $courses = [];
-
+    public $cantSend = false;
 
     public function openPopup($type, $id = null)
     {
@@ -51,7 +53,11 @@ class ChatComponent extends Component
                 $this->groupName = $groupFind->name;
                 $this->groupDescription = $groupFind->description;
                 $this->groupCourse = $groupFind->course_id;
-                $this->groupImage = $groupFind->avatar;
+
+                $thumbnail = $groupFind->images()->where('image_name', 'thumbnail')->first();
+                if ($thumbnail) {
+                    $this->groupImage = $thumbnail->image_url;
+                };
             }
             $this->isEditPopupOpen = true;
         } elseif ($type === 'delete' && $id) {
@@ -117,7 +123,7 @@ class ChatComponent extends Component
     public function selectGroup($groupId)
     {
         $this->groupId = $groupId;
-        $this->selectedGroup = ChatGroup::with('media')->find($this->groupId);
+        $this->selectedGroup = ChatGroup::find($this->groupId);
         $this->messages = $this->selectedGroup->messages()->with('user')->get();
         $this->myMessages = $this->messages->where('user_id', Auth::id());
         $this->otherMessages = $this->messages->where('user_id', '!=', Auth::id());
@@ -130,14 +136,20 @@ class ChatComponent extends Component
 
     public function sendMessage()
     {
-        // if ($this->lastMessageTime && now()->diffInSeconds($this->lastMessageTime) < 1) {
-        //     return;
-        // }
-        // $this->lastMessageTime = now();
 
         if (empty(trim($this->newMessage))) {
             return;
         }
+
+        $participant = $this->selectedGroup->participants()->where('user_id', Auth::id())->first();
+
+        if (!$participant || $participant->status === 1) { // 1: bị chặn
+            $this->cantSend = true; // Cập nhật trạng thái
+            return;
+        }
+
+        $this->cantSend = false;
+
         $message = ChatMessage::create([
             'user_id' => Auth::id(),
             'group_id' => $this->selectedGroup->id,
@@ -174,35 +186,25 @@ class ChatComponent extends Component
         $validatedData = $this->validate([
             'groupName' => 'required|string|max:255',
             'groupDescription' => 'required|string|max:500',
-            'groupImage' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'groupCourse' => 'required',
+            'groupCourse' => 'required'
         ], [
             'groupName.required' => 'Tên nhóm chat là bắt buộc.',
             'groupName.max' => 'Tên nhóm chat không được vượt quá 255 ký tự.',
             'groupDescription.required' => 'Mô tả nhóm là bắt buộc.',
             'groupDescription.max' => 'Mô tả nhóm không được vượt quá 500 ký tự.',
-            'groupImage.image' => 'Phải là định dạng ảnh',
-            'groupImage.max' => 'Ảnh vượt quá dung lượng cho phép (2 MB) ',
             'groupCourse.required' => 'Khoá học đại diện là bắt buộc.',
         ]);
 
-        $groupCreate = new ChatGroup();
+        $groupCreate = new ChatGroup;
         $groupCreate->name = $this->groupName;
         $groupCreate->description = $this->groupDescription;
         $groupCreate->course_id = $this->groupCourse;
-
-        if ($this->groupImage) {
-            $folderId = '1ccvEGR7O8_BIV5X6Kq4CSct6VviDckUz';
-            $googleDriveService = new GoogleDriveService();
-            $fileId = $googleDriveService->uploadAndGetFileId($this->groupImage, $folderId);
-            $groupCreate->avatar = "https://drive.google.com/thumbnail?id=" . $fileId;
-        } else {
-            $groupCreate->avatar = '';
-        }
-
         $groupCreate->save();
-
-
+        if ($this->groupImage && $this->groupImage instanceof \Illuminate\Http\UploadedFile) {
+            $folderId = '1ccvEGR7O8_BIV5X6Kq4CSct6VviDckUz';
+            $filePath = $this->groupImage->store('temp');
+            UploadFileJob::dispatch($groupCreate, $folderId, $filePath, 'thumbnail');
+        }
 
         $currentUser = Auth::id();
         $groupId = $groupCreate->id;
@@ -236,15 +238,16 @@ class ChatComponent extends Component
             $groupUpdate->course_id = $this->groupCourse;
         }
         if (isset($this->groupImage)) {
-            $folderId = '1ccvEGR7O8_BIV5X6Kq4CSct6VviDckUz';
-            $googleDriveService = new GoogleDriveService();
+            if ($this->groupImage instanceof \Illuminate\Http\UploadedFile) {
+                $oldFile = $groupUpdate->images()->where('image_name', 'thumbnail')->first();
+                $folderId = '1ccvEGR7O8_BIV5X6Kq4CSct6VviDckUz'; // Thư mục lưu trữ ảnh
+                $filePath = $this->groupImage->store('temp');
 
-            if (is_null($groupUpdate->avatar)) {
-                $fileId = $googleDriveService->uploadAndGetFileId($this->groupImage, $folderId);
-                $groupUpdate->avatar = "https://drive.google.com/thumbnail?id=" . $fileId;
-            } elseif ($groupUpdate->avatar != $this->groupImage) {
-                $fileId = $googleDriveService->updateFile($groupUpdate->avatar, $this->groupImage, $folderId);
-                $groupUpdate->avatar = "https://drive.google.com/thumbnail?id=" . $fileId;
+                if (isset($oldFile->image_url)) {
+                    UpdateFileJob::dispatch($groupUpdate, $oldFile->image_url, $filePath, $folderId, 'thumbnail');
+                } else {
+                    UploadFileJob::dispatch($groupUpdate, $folderId, $filePath, 'thumbnail');
+                }
             }
         }
         $groupUpdate->save();
@@ -253,7 +256,20 @@ class ChatComponent extends Component
         $this->loadGroups();
     }
 
+    public function toggleMemberStatus($memberId)
+    {
+        $participant = ChatParticipant::find($memberId);
 
+        if ($participant) {
+            $participant->status = $participant->status === 0 ? 1 : 0;
+            $participant->save();
+
+            $this->loadMembers();
+            session()->flash('success', 'Cập nhật trạng thái thành viên thành công.');
+        } else {
+            session()->flash('error', 'Không tìm thấy thành viên.');
+        }
+    }
     public function render()
     {
         return view('livewire.chat.chatview', [

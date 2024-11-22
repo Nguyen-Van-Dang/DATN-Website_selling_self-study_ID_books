@@ -28,7 +28,7 @@ class CheckRole
             }
             if (Auth::user()->role_id == 2) {
                 // role = 2 không vào được trang user của admin
-                if ($request->is('admin/user*') || $request->is('admin/nguoi-dung*') || $request->is('admin/Contact*')) {
+                if ($request->is('admin/user*') || $request->is('admin/nguoi-dung*') || $request->is('admin/Contact*') || $request->is('admin/kich-hoat-sach*')) {
                     return redirect('/admin')->with('error', 'Bạn không có quyền truy cập trang này.');
                 }
                 return $next($request);

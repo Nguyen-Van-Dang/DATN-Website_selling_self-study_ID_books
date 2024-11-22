@@ -35,17 +35,11 @@
                                     <td class="mb-0">{{ $item->name }}</td>
 
                                     <td>
-                                        @if ($item->status == 0)
-                                            <span
-                                                style="background-color: #4CAF50; color: white; padding: 5px; border-radius: 5px;">Hoạt
-                                                động</span>
-                                        @elseif ($item->status == 1)
-                                            <span
-                                                style="background-color: #f44336; color: white; padding: 5px; border-radius: 5px;">Không
-                                                hoạt động</span>
-                                        @endif
+                                        <span class="badge {{ $item->status == 0 ? 'badge-primary' : 'badge-danger' }}">
+                                            {{ $item->status == 0 ? 'Hoạt động' : 'Không hoạt động' }}
+                                        </span>
                                     </td>
-                                    <td class="mb-0">{{ $item->book->count() }}</td>
+                                    <td class="mb-0">{{ $item->books->count() }}</td>
                                     <td>
                                         <div class="flex align-items-center text-center list-user-action">
                                             <a class="bg-primary" data-toggle="tooltip" data-placement="top"
@@ -77,7 +71,7 @@
                                         </div>
                                         <div class="modal fade" id="deleteModal" tabindex="-1"
                                             role="dialog"aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog d-flex align-items-center justify-content-center "
+                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center justify-content-center "
                                                 role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-body">

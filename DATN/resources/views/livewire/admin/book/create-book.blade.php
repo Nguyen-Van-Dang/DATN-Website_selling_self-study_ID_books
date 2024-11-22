@@ -23,10 +23,14 @@
                                     <div class="form-group">
                                         <label>Tác giả:</label>
                                         <select class="form-control" wire:model="bookAuthor" name="bookAuthor">
-                                            <option selected="" disabled="">Chọn tác giả</option>
-                                            @foreach ($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                            @endforeach
+                                            @if ($teachers)
+                                                @foreach ($teachers as $teacher)
+                                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}
+                                                    </option>
+                                                @endforeach
+                                            @else
+                                                <option selected value="{{ Auth::id() }}">{{ Auth::user()->name }}</option>
+                                            @endif
                                         </select>
                                         @error('bookAuthor')
                                             <span class="text-danger">{{ $message }}</span>
@@ -112,7 +116,6 @@
                                                 accept="image/png, image/jpeg, image/jpg" wire:model="bookImage"
                                                 id="image-input" style="display: none;">
                                         </div>
-
                                     </div>
 
                                     <div class="col-8">
@@ -206,35 +209,7 @@
                     document.getElementById(`image-input-${i}`).click();
                 });
             }
+
         });
-
-
-        // {{-- <select class="js-example-basic-multiple form-control" multiple="multiple"
-        //     id="categories-select" name="selectedCategories">
-        //     @foreach ($categories as $category)
-        //         <option value="{{ $category->id }}">{{ $category->name }}</option>
-        //     @endforeach
-        // </select> --}}
-        // function initializeEvents() {
-        //     initializeSelect2Events();
-        // }
-
-        // function initializeSelect2Events() {
-        //     $(document).ready(function() {
-        //         $('.js-example-basic-multiple').select2({
-        //             width: "100%",
-        //         });
-
-        //         $('form').on('submit', function(e) {
-        //             e.preventDefault();
-
-        //             let selectedCategories = $('#categories-select').val();
-
-        //             @this.set('selectedCategories', selectedCategories);
-        //         });
-        //     });
-        // }
-        // $(document).ready(initializeEvents);
     </script>
-
 </div>

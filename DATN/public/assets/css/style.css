@@ -1739,7 +1739,9 @@ div#lottie-fullscreen svg path {
   -o-transition: all 0.3s ease-out 0s;
   transition: all 0.3s ease-out 0s;
 }
-
+.content-page-client{
+  padding: 80px 15px 0!important;
+}
 .iq-user-dropdown {
   width: 350px;
 }

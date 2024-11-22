@@ -18,7 +18,10 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Client\FollowController;
 use App\Http\Controllers\Client\NotificationUserController;
-use App\Http\Controllers\CourseActivationController;
+use App\Http\Controllers\Client\CourseActivationController;
+use App\Http\Controllers\Admin\CourseActivationController as AdminCourseActivationController;
+use App\Http\Controllers\Admin\ExamController as AdminExamController;
+use App\Http\Controllers\Client\ExamController as ClientExamController;
 use App\Http\Middleware\CheckLoggedIn;
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\AutoLogout;
@@ -111,20 +114,20 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
         Route::resource('sach', AdminBookController::class);
     });
 });
-/* --------------- EXERCISE GROUP ----------------------- */
+/* --------------- COURSE-ACTIVATION GROUP -------------------------- */
+Route::middleware([CheckRole::class . ':1'])->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('kich-hoat-sach', controller: AdminCourseActivationController::class);
+        Route::get('/export-course-activation/{courseActivationId}', [AdminCourseActivationController::class, 'export'])->name('export-course-activation');
+    });
+});
+/* --------------- EXAM GROUP ----------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/list-Exercise', function () {
-        return view('admin.exercise.listExercise');
-    })->name('listExercise');
-    Route::get('/admin/add-Exercise', function () {
-        return view('admin.exercise.addExercise');
-    })->name('addExercise');
-    Route::get('/admin/update-Exercise', function () {
-        return view('admin.exercise.updateExercise');
-    })->name('updateExercise');
-    Route::get('/admin/detail-Exercise', function () {
-        return view('admin.exercise.detailExercise');
-    })->name('detailExercise');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('de-thi', controller: AdminExamController::class);
+        Route::get('admin/de-thi/{id}/export', [AdminExamController::class, 'download'])->name('de-thi.download');
+        // Route::get('/export-course-activation/{courseActivationId}', [AdminCourseActivationController::class, 'export'])->name('export-course-activation');
+    });
 });
 /* --------------- NOTIFICATION GROUP ------------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
@@ -202,11 +205,13 @@ Route::get('/notification-list', function () {
 })->name('notificationList');
 
 //kích hoạt sách
-Route::prefix('kich-hoat-sach')->group(function () {
-    Route::get('/', [CourseActivationController::class, 'index'])->name('kich-hoat-sach');
-    Route::post('/redirect', [CourseActivationController::class, 'redirect'])->name('kich-hoat-sach.redirect');
-    Route::get('/{book_id}', [CourseActivationController::class, 'checkBook'])->name('kich-hoat-sach.checkBook');
-    Route::post('/activate', [CourseActivationController::class, 'activate'])->name('kich-hoat-sach.activate');
+Route::middleware([CheckLoggedIn::class])->group(function () {
+    Route::prefix('kich-hoat-sach')->group(function () {
+        Route::get('/', [CourseActivationController::class, 'index'])->name('kich-hoat-sach');
+        Route::post('/redirect', [CourseActivationController::class, 'redirect'])->name('kich-hoat-sach.redirect');
+        Route::get('/{book_id}', [CourseActivationController::class, 'checkBook'])->name('kich-hoat-sach.checkBook');
+        Route::post('/activate', [CourseActivationController::class, 'activate'])->name('kich-hoat-sach.activate');
+    });
 });
 
 //danh sách khóa học
@@ -253,3 +258,12 @@ Route::get('/hoc-tap', function () {
 Route::get('/hoc-khoa-hoc', function () {
     return view('client.lecture.lecture');
 })->name('lecture');
+
+//đề thi
+Route::middleware([CheckLoggedIn::class])->group(function () {
+    Route::prefix('de-thi')->group(function () {
+        Route::get('/', [ClientExamController::class, 'index'])->name('de-thi.index');
+        Route::get('/{exam_id}', [ClientExamController::class, 'doExam'])->name('de-thi.doExam');
+        Route::get('/ket-qua/{result_id}', [ClientExamController::class, 'showExam'])->name('de-thi.showExam');
+    });
+});

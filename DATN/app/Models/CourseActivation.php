@@ -10,7 +10,7 @@ class CourseActivation extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['book_id', 'course_id', 'user_id', 'activation_code', 'activation_date'];
+    protected $fillable = ['book_id', 'course_id'];
 
     // Quan hệ ngược với Book
     public function book()
@@ -23,10 +23,8 @@ class CourseActivation extends Model
     {
         return $this->belongsTo(Course::class);
     }
-
-    // Nếu có trường hợp mỗi CourseActivation thuộc về một User
-    public function user()
+    public function codes()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(CourseActivationCode::class)->withTrashed();
     }
 }
