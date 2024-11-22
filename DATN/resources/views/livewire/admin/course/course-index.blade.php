@@ -15,7 +15,7 @@
                 </form>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
-                <a href="{{ route('addCourse') }}" class="btn btn-primary">Thêm khóa học</a>
+                <a href="{{ route('admin.khoa-hoc.create') }}" class="btn btn-primary">Thêm khóa học</a>
             </div>
         </div>
         <div class="iq-card-body">
@@ -26,9 +26,9 @@
                             <th style="width: 3%;">STT</th>
                             <th style="width: 10%;">Hình ảnh</th>
                             <th style="width: 15%;">Tên khóa học</th>
-                            <th style="width: 10%;">Số lượng bài giảng</th>
-                            <th style="width: 5%;">Giá</th>
-                            <th style="width: 15%;">Người tạo</th>
+                            <th style="width: 6%;">Số bài giảng</th>
+                            <th style="width: 6%;">Giá</th>
+                            <th style="width: 10%;">Người tạo</th>
                             <th style="width: 7%;">Hoạt động</th>
                         </tr>
                     </thead>
@@ -38,11 +38,44 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td style="width: 10%;">
-                                        <img class="img-fluid rounded" src="{{ $item->image_url ?? null }}" alt="">
+                                        @php
+                                            $firstImage = $item->images->first();
+                                        @endphp
+
+                                        @if ($firstImage)
+                                            <img src="{{ $firstImage->image_url }}" alt="Image"
+                                                class="img-fluid avatar-100 rounded" />
+                                        @else
+                                            <img src="{{ asset('assets/images/book/user/course.jpg') }}" alt="No Image"
+                                                class="img-fluid avatar-100 rounded" />
+                                        @endif
                                     </td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->amount_lecture }}</td>
-                                    <td>{{ $item->price }}đ</td>
+                                    <td>{{ strlen($item->name) > 100 ? substr($item->name, 0, 100) . '...' : $item->name }}
+                                    </td>
+                                    <td>{{ $item->lectures_count }}</td>
+                                    <td>
+                                        @if ($item->discount > 0)
+                                            <span class="fw-bold text-danger">
+                                                {{ number_format($item->price - $item->discount, 0, ',', '.') }} đ
+                                            </span>
+                                            <br>
+                                            <span class="text-muted"
+                                                style="text-decoration: line-through; margin-left: 8px;">
+                                                {{ number_format($item->price, 0, ',', '.') }} đ
+                                            </span>
+                                            <br>
+                                            @php
+                                                $discountPercent = round(($item->discount / $item->price) * 100, 2);
+                                            @endphp
+                                            <div
+                                                style="background-color: #f44336; color: white; padding: 3px 8px; border-radius: 5px; display: inline-block; margin-top: 5px;">
+                                                -{{ $discountPercent }}%
+                                            </div>
+                                        @else
+                                            <span class="fw-bold">{{ number_format($item->price, 0, ',', '.') }}
+                                                đ</span>
+                                        @endif
+                                    </td>
                                     @php
                                         $user = $item->user;
                                     @endphp
@@ -52,7 +85,7 @@
                                             <a class="bg-primary" data-toggle="tooltip" title="Xem chi tiết"
                                                 href="#"><i class="ri-eye-line"></i></a>
                                             <a class="bg-primary text-white" data-toggle="tooltip" title="Chỉnh sửa"
-                                                wire:click="openPopup('edit', {{ $item->id }})">
+                                                href="{{ route('admin.khoa-hoc.edit', $item->id) }}">
                                                 <i class="ri-pencil-line"></i>
                                             </a>
                                             <a class="bg-primary text-white" data-toggle="tooltip" title="Xóa"

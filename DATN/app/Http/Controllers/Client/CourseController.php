@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Repositories\CourseRepository;
 use Illuminate\Http\Request;
+use App\Models\Course;
+use App\Models\User;
+use App\Models\Lecture;
 
 class CourseController extends Controller
 {
@@ -14,11 +17,6 @@ class CourseController extends Controller
     {
         $this->courseRepository = $courseRepository;
     }
-
-    public function getAllCourse()
-    {
-        return $this->courseRepository->getAllCourse();
-    }
     public function index()
     {
         return view('client.course.courses');
@@ -26,5 +24,17 @@ class CourseController extends Controller
     public function show($id)
     {
         return $this->courseRepository->getCourseById($id);
+    }
+    public function detail($course_id, $lecture_id)
+    {
+
+        $course = Course::with(['lectures.lectureCategory'])->findOrFail($course_id);
+        $lecture = $course->lectures()->findOrFail($lecture_id);
+
+        $lecturesCountByCategory = $course->lectures->groupBy('lecture_categories_id')->map(function ($lectures) {
+            return $lectures->count();
+        });
+
+        return view('client.lecture.lecture', compact('course', 'lecture', 'lecturesCountByCategory'));
     }
 }

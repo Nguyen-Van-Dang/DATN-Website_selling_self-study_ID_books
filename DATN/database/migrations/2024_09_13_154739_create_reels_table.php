@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title')->nullable();
-            $table->string('video_url');
-            $table->string('thumbnail');
             $table->unsignedInteger('views_count')->default(0);
             $table->timestamps();
             $table->softDeletes();

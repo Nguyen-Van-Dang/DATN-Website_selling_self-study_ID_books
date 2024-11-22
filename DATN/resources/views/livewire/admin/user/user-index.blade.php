@@ -6,7 +6,7 @@
             </div>
             <div class="iq-search-bar" style="margin-left: 30%;">
                 <form class="searchbox" style="width: 150%;">
-                    <input type="text" class="text search-input" placeholder="Tìm kiếm danh mục..."
+                    <input type="text" class="text search-input" placeholder="Tìm kiếm tài khoản..."
                         wire:model.live.debounce.10ms="search">
                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                 </form>
@@ -43,12 +43,14 @@
                                         @if ($firstImage)
                                             <img src="{{ $firstImage->image_url }}" alt="Image"
                                                 class="img-fluid avatar-100 rounded" />
+                                        @else
+                                            <img src="{{ asset('assets/images/book/user/thub.jpg') }}" alt="No Image"
+                                                class="img-fluid avatar-100 rounded" />
                                         @endif
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->phone }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <!-- Hiển thị vai trò -->
                                     <td>
                                         @if ($item->role_id == 1)
                                             <span
@@ -68,7 +70,6 @@
                                         @endif
                                     </td>
 
-                                    <!-- Hiển thị trạng thái -->
                                     <td>
                                         @if ($item->status == 0)
                                             <span
@@ -132,31 +133,52 @@
                     <div class="iq-card-body">
                         <form wire:submit.prevent="createUser">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-8">
                                     <div class="form-group">
                                         <label>Tên tài khoản:</label>
                                         <input wire:model="name" type="text" class="form-control"
                                             placeholder="Nhập tên tài khoản...">
                                     </div>
-                                </div>
-                                <div class="col-6">
                                     <div class="form-group">
                                         <label>Mật khẩu:</label>
                                         <input wire:model="password" type="password" class="form-control"
                                             placeholder="Nhập mật khẩu...">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Ảnh tài khoản:</label>
-                                <div class="custom-file">
-                                    <input wire:model="image_url" type="file" class="custom-file-input"
-                                        id="image_url" accept="image/*">
-                                    <label class="custom-file-label" for="image_url" style="z-index: 0;">Chọn tập
-                                        tin</label>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Ảnh tài khoản:</label>
+                                        <br>
+                                        <div class="custom-file" style="display: contents">
+                                            @if ($image_url)
+                                                <img id="image-placeholder" src="{{ $image_url->temporaryUrl() }}"
+                                                    alt="Click to choose image" class="img-thumbnail"
+                                                    style="cursor: pointer; width: 100%; max-width: 140px;"
+                                                    name="image_url">
+                                            @else
+                                                <img id="image-placeholder"
+                                                    src="{{ asset('assets/images/book/user/thub.jpg') }}"
+                                                    alt="Click to choose image" class="img-thumbnail"
+                                                    style="cursor: pointer; width: 100%; max-width: 140px;">
+                                            @endif
+                                            <input type="file" class="custom-file-input"
+                                                accept="image/png, image/jpeg, image/jpg" wire:model="image_url"
+                                                id="image-input" style="display: none;">
+                                        </div>
+                                        <script>
+                                            document.getElementById('image-placeholder').addEventListener('click', function() {
+                                                document.getElementById('image-input').click();
+                                            });
+                                        </script>
+                                    </div>
+
                                 </div>
-                                <!-- Hiển thị trạng thái khi đang upload -->
-                                <div wire:loading wire:target="image_url">Đang tải ảnh lên...</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mật khẩu:</label>
+                                <input wire:model="password" type="password" class="form-control"
+                                    placeholder="Nhập mật khẩu...">
                             </div>
                             <div class="row">
                                 <div class="col-6">
@@ -179,7 +201,7 @@
                                     <div class="form-group">
                                         <label>Vai trò:</label>
                                         <select class="form-control" wire:model="role_id">
-                                            <option value="1">Admin</option>
+                                            <option value="1" selected>Admin</option>
                                             <option value="2">Giáo viên</option>
                                             <option value="3">Học sinh</option>
                                         </select>
@@ -195,7 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="submit" class="btn btn-primary">Thêm tài khoản</button>
                             <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
                         </form>
                     </div>
@@ -228,10 +250,16 @@
                                     <div class="form-group">
                                         <label>Ảnh tài khoản:</label>
                                         <div class="row p-0 m-0">
-                                            <div class="{{ $image_urlAdd || $newImg ? 'col-12' : 'col-12' }}  ">
+                                            <div class="{{ $image_urlAdd || $newImg ? 'col-12' : 'col-12' }}">
                                                 <input wire:model="newImg" type="file" class="custom-file-input"
-                                                    id="customFile" accept="image/*">
-                                                <label class="custom-file-label" for="customFile">Chọn tập tin</label>
+                                                    id="customFile" accept="image/*" onchange="updateFileName()">
+                                                <label class="custom-file-label" for="customFile">
+                                                    @if ($newImg)
+                                                        {{ $newImg->getClientOriginalName() }}
+                                                    @else
+                                                        Chọn tập tin
+                                                    @endif
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -239,7 +267,6 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label>Hình ảnh:</label>
-                                        <!-- Cột hiển thị ảnh -->
                                         <div class="{{ $image_urlAdd || $newImg ? 'col-12' : 'col-12' }}">
                                             @if ($newImg)
                                                 <img src="{{ $newImg->temporaryUrl() }}" alt="Ảnh đại diện"

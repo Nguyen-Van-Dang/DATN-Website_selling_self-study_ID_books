@@ -1,0 +1,6 @@
+{
+    "editor.scrollbar.horizontal": "auto",
+    "editor.scrollbar.ignoreHorizontalScrollbarInContentHeight": false,
+    "editor.scrollbar.scrollByPage": false,
+    "editor.stickyScroll.scrollWithEditor": true
+}

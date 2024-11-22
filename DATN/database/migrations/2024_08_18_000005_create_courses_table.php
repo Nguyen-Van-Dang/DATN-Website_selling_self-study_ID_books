@@ -16,9 +16,8 @@ return new class extends Migration
 
             $table->string('name', 255);
             $table->float('price');
-            $table->float('discount');
+            $table->float('discount')->nullable();
             $table->text('description');
-            $table->string('image_url', 255)->nullable();
             $table->boolean('status')->nullable()->default(1);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->softDeletes();

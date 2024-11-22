@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\CartDetailController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\CourseCateController;
 use App\Http\Controllers\Client\CourseController;
+use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Client\FavoriteController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\MailController;
@@ -96,10 +97,9 @@ Route::middleware([CheckRole::class . ':1,2'])->group(function () {
 });
 /* --------------- COURSE GROUP ------------------------ */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin/khoa-hoc/danh-sach-khoa-hoc', [CourseController::class, 'getAllCourse'])->name('listCourse');
-    Route::get('/admin/khoa-hoc/them-khoa-hoc', function () {
-        return view('admin.course.addCourse');
-    })->name('addCourse');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('khoa-hoc', AdminCourseController::class);
+    });
 });
 /* --------------- CATEGORY-BOOK GROUP ------------------*/
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
@@ -171,7 +171,6 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
 });
 
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
-
 //danh sách cuốn sách
 Route::get('/book-list', [ClientBookController::class, 'getAllBookClient'])->name('bookList');
 Route::post('/books/{id}/toggle-favorite', [Books::class, 'toggleFavorite'])->name('toggleFavorite');
@@ -221,15 +220,14 @@ Route::prefix('kich-hoat-sach')->group(function () {
 Route::prefix('khoa-hoc')->group(function () {
     Route::get('/', [CourseController::class, 'index'])->name('khoa-hoc.index');
     Route::get('/{id}', [CourseController::class, 'show'])->name('khoa-hoc.show');
+    Route::get('/{course_id}/bai-giang/{lecture_id}', [CourseController::class, 'detail'])->name('khoa-hoc.chitiet');
 });
 
 //reels
-Route::post('/reelsUpload', [ReelsController::class, 'upload'])->name('reelsUpload');
-Route::get('/reelsUpload1', [ReelsController::class, 'showVideo'])->name('reelsUpload1');
-Route::post('/reelsUpload1', [ReelsController::class, 'reelsUpload1'])->name('reelsUpload1');
-Route::get('/reelsUpload', function () {
-    return view('client.reels.reelsUpload');
-})->name('reelsUpload');
+Route::prefix('tai-video')->group(function () {
+    Route::get('/', [ReelsController::class, 'index'])->name('tai-video.index');
+    Route::post('/', [ReelsController::class,'submit'])->name('tai-video.submit');
+});
 
 Route::get('/reels', function () {
     return view('client.reels.reels');

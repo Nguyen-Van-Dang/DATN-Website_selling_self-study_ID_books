@@ -28,8 +28,8 @@
                 <a href="{{ route('listCategoryCourse') }}"><i class="ri-folders-line"></i> <span>Combo Khóa
                         Học</span></a>
             </li>
-            <li class="{{ request()->routeIs('listCourse') ? 'active' : '' }}">
-                <a href="{{ route('listCourse') }}"><i class="ri-book-line"></i> <span>Khóa Học</span></a>
+            <li class="{{ request()->routeIs('admin.khoa-hoc.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.khoa-hoc.index') }}"><i class="ri-book-line"></i> <span>Khóa Học</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.danh-muc-sach.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.danh-muc-sach.index') }}"><i class="ri-bookmark-line"></i> <span>Danh Mục

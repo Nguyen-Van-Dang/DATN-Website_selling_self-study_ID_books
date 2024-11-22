@@ -216,7 +216,7 @@
                     {{-- reels --}}
                     @if (auth()->check() && in_array(Auth::user()->role_id, [1, 2]))
                         <li class="nav-item nav-icon dropdown">
-                            <a href="{{ route('reelsUpload') }}" class="text-gray rounded">
+                            <a href="{{ route('tai-video.index') }}" class="text-gray rounded">
                                 <i class="ri-upload-cloud-line"></i>
                                 {{-- <span class="badge badge-danger count-cart rounded-circle">2</span> --}}
                             </a>

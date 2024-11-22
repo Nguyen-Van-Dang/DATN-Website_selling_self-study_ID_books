@@ -38,8 +38,8 @@ class User extends Authenticatable
         'active',
         'sex',
         'auth_provider'
-
     ];
+    protected $dates = ['deleted_at'];
 
     public function Role(): BelongsTo
     {

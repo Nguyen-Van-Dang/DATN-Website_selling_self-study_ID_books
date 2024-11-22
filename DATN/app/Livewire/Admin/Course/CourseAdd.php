@@ -11,11 +11,14 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use App\Services\GoogleDriveService;
 use App\Jobs\UploadFileJob;
+use App\Models\User;
 
 
 class CourseAdd extends Component
 {
     use WithFileUploads;
+    public $teachers;
+    public $courseAuthor;
     public $courseId;
     public $courseName;
     public $price;
@@ -34,22 +37,27 @@ class CourseAdd extends Component
     {
         return view('livewire.admin.course.course-add');
     }
-
     public function addChapter()
     {
         $this->lectureCategories[] = '';
     }
-
     public function addLecture($chapterIndex)
     {
         $this->lectures[$chapterIndex][] = '';
     }
-
     public function removeLecture($chapterIndex, $lectureIndex)
     {
         unset($this->lectures[$chapterIndex][$lectureIndex]);
         unset($this->lectureVideo[$chapterIndex][$lectureIndex]);
         $this->lectures[$chapterIndex] = array_values($this->lectures[$chapterIndex]);
+    }
+    public function mount()
+    {
+        if (Auth::user()->id == 1) {
+            $this->teachers = User::where('role_id', 2)->get();
+        } else {
+            $this->teachers = collect(); // Trả về mảng rỗng nếu không phải admin
+        }
     }
     protected $rules = [
         'courseName' => 'required',
@@ -68,13 +76,15 @@ class CourseAdd extends Component
         $course = new Course;
         $course->name = $this->courseName;
         $course->price = $this->price;
-        $course->discount = $this->discount;
+        $course->discount = $this->discount ?? 0;
         $course->description = $this->description;
-        $course->user_id = auth::id();
+        $course->user_id = $this->courseAuthor;
+        $course->user_id = Auth::id();
+        $course->status = Auth::user()->role_id == 1 ? 0 : 1;
         $course->save();
 
         $document = new Documents;
-        $document->created_by = auth::id();
+        $document->created_by = Auth::id();
         $document->course_id = $course->id;
         $document->save();
 
@@ -96,7 +106,6 @@ class CourseAdd extends Component
                     'name' => $categoryName,
                     'created_by' => auth::id(),
                 ]);
-
                 if (isset($this->lectures[$index])) {
                     foreach ($this->lectures[$index] as $lectureIndex => $lectureName) {
                         if (!isset($this->lectures[$index][$lectureIndex]['deleted'])) {
@@ -118,10 +127,12 @@ class CourseAdd extends Component
                 }
             }
         }
-dd('ok');
 
         toastr()->success('<p>Thêm khóa học và các danh mục bài giảng thành công!</p>');
-        session()->flash('message', 'Thêm khóa học và các danh mục bài giảng thành công.');
-        $this->reset(['courseName', 'description', 'price', 'discount', 'image_url', 'document_url', 'lectureCategories', 'lectures', 'lectureVideo']);
+        $this->reset([
+            'courseName', 'description', 'price', 'discount', 
+            'image_url', 'document_url', 'lectureCategories', 
+            'lectures', 'lectureVideo'
+        ]);
     }
 }

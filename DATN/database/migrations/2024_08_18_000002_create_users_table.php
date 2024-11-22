@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('auth_provider')->nullable();
             $table->unsignedBigInteger('zalo_id')->nullable();
             $table->string('name', length: 255)->nullable();
-            $table->string('image_url', length: 255)->nullable();
             $table->string('phone', length: 10)->nullable();
             $table->string('email', length: 255)->unique();
             $table->string('password', length: 255);

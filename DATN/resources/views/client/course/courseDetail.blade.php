@@ -80,8 +80,12 @@
                                         <div class="panel-body" style="margin-left: 45px">
                                             <ul class="list-group list-group-flush">
                                                 @foreach ($lectures as $lecture)
-                                                    <li class="list-group-item py-0">
-                                                        <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
+                                                    <li class="list-group-item py-0">   
+                                                       
+                                                        <a href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
+                                                            {{ $lecture->name }}
+                                                        </a>
+                                                                                                             
                                                         <!-- Liên kết đến bài giảng -->
                                                     </li>
                                                 @endforeach

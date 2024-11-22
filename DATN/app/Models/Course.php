@@ -26,11 +26,15 @@ class Course extends Model
     }
     public function lectures(): HasMany
     {
-        return $this->hasMany(Lecture::class);
+        return $this->hasMany(Lecture::class, 'course_id');
     }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id'); // Định nghĩa mối quan hệ đến User
+    }
+    public function documents()
+    {
+        return $this->hasMany(Documents::class, 'course_id');
     }
     public function courseActivations()
     {

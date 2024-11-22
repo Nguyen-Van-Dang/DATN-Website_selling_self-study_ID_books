@@ -6,6 +6,7 @@ use App\Models\Course;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
+
 class CourseIndex extends Component
 {
     use WithPagination;
@@ -18,25 +19,48 @@ class CourseIndex extends Component
 
     public function render()
     {
+        // Kiểm tra nếu có từ khóa tìm kiếm
         if (strlen($this->search) >= 1) {
-            $Course = Course::where('name', 'like', '%' . $this->search . '%')
-                ->orWhere('id', $this->search)
-                ->orWhereHas('user', function ($query) {
-                    $query->where('name', 'like', '%' . $this->search . '%');
-                })
-                ->paginate(10);
-        } else {
+            // Nếu người dùng là quản trị viên (role_id == 1)
             if (Auth::user()->role_id == 1) {
-                $Course = Course::paginate(10);
+                $Course = Course::withCount('lectures')
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('id', $this->search)
+                    ->orWhereHas('user', function ($query) {
+                        $query->where('name', 'like', '%' . $this->search . '%');
+                    })
+                    ->paginate(10);
             } else {
-                $Course = Course::where('user_id', Auth::id())->paginate(10);
+                // Người dùng thông thường chỉ tìm kiếm khóa học của chính họ
+                $Course = Course::withCount('lectures')
+                    ->where('user_id', Auth::id())
+                    ->where(function ($query) {
+                        $query->where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('id', $this->search)
+                            ->orWhereHas('user', function ($q) {
+                                $q->where('name', 'like', '%' . $this->search . '%');
+                            });
+                    })
+                    ->paginate(10);
+            }
+        } else {
+            // Nếu không có từ khóa tìm kiếm
+            if (Auth::user()->role_id == 1) {
+                $Course = Course::withCount('lectures')->paginate(10);
+            } else {
+                $Course = Course::withCount('lectures')
+                    ->where('user_id', Auth::id())
+                    ->paginate(10);
             }
         }
+    
         $hasTempData = session()->has('course_name') || session()->has('course_description');
+    
         return view('livewire.admin.course.course-index', compact('hasTempData'), [
             'Course' => $Course,
         ]);
     }
+    
 
     public function openPopup($type, $id = null)
     {
@@ -75,4 +99,3 @@ class CourseIndex extends Component
         $this->closePopup();
     }
 }
-

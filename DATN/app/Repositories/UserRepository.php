@@ -33,8 +33,7 @@ class UserRepository
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        toastr()->success('<p>Bạn đã đăng xuất thành công!</p>');
-        return redirect('/');
+        return redirect('/')->with('success', 'Bạn đã đăng xuất thành công');
     }
     //đăng nhập bằng sdt
     public function loginUser($data)
@@ -61,9 +60,7 @@ class UserRepository
         // }
 
         Auth::login($user);
-        toastr()->success('<p;">Bạn đã đăng nhập thành công!</p>');
-
-        return redirect()->intended('/');
+        return redirect('/')->with('success', 'Bạn đã đăng nhập thành công');
     }
     // đăng nhập bằng Zalo
     public function handleZaloCallback(\Illuminate\Http\Request $request)
@@ -93,7 +90,7 @@ class UserRepository
             Auth::login($newUser);
         }
 
-        return redirect()->intended('/');
+        return redirect('/')->with('success', 'Bạn đã đăng nhập thành công');
     }
     //đăng nhập bằng gg
     public function handleGoogleCallback(\Illuminate\Http\Request $request)
@@ -124,12 +121,10 @@ class UserRepository
                 ]);
                 Auth::login($newUser);
             }
-            toastr()->success('<p;">Bạn đã đăng nhập thành công!</p>');
-
-            return redirect()->intended('/');
+            return redirect('/')->with('success', 'Bạn đã đăng nhập thành công');
         } catch (Exception $e) {
             Log::error('Error during Google callback: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Failed to login with Google']);
+            return redirect('/')->with('error', 'Failed to login with Google');
         }
     }
         // đăng nhập bằng fb

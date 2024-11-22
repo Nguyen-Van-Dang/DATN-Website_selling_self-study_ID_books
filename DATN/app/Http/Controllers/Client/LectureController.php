@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Repositories\LectureRepository;
 use Illuminate\Http\Request;
+use App\Models\Course;
+use App\Models\User;
+use App\Models\Lecture;
 
 class LectureController extends Controller
 {
@@ -15,8 +18,4 @@ class LectureController extends Controller
         $this->lectureRepository = $lectureRepository;
     }
 
-    public function show($id)
-    {
-        return $this->lectureRepository->showLecture($id);
-    }
 }

@@ -194,7 +194,7 @@
                 {{-- reels --}}
                 @if (auth()->check() && in_array(Auth::user()->role_id, [1, 2]))
                     <li class="nav-item nav-icon dropdown">
-                        <a href="{{ route('reelsUpload') }}" class="text-gray rounded">
+                        <a href="{{ route('client.reels-upload.index') }}" class="text-gray rounded">
                             <i class="ri-upload-cloud-line"></i>
                             {{-- <span class="badge badge-danger count-cart rounded-circle">2</span> --}}
                         </a>
@@ -208,7 +208,7 @@
                                 class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption"
                                 @php
-$userName = Auth::user()->name;
+                                    $userName = Auth::user()->name;
                                     $displayName = Str::limit($userName, 10, '...'); @endphp>
                                 <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                 <p class="mb-0 text-primary">Tài Khoản</p>

@@ -4,6 +4,6 @@
 
 @section('content')
 
-<livewire:reels.reel/>
+<livewire:client.reels.reels-index/>
 
 @endsection

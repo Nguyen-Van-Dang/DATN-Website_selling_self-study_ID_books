@@ -12,14 +12,13 @@ class Lecture extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'video_url',
         'course_id',
         'lecture_categories_id',
     ];
 
-    public function User()
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function Course()
     {
@@ -39,4 +38,5 @@ class Lecture extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    
 }

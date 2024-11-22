@@ -14,10 +14,10 @@
                                 <label>Tên khóa học:</label>
                                 <input wire:model="courseName" type="text" class="form-control"
                                     placeholder="Nhập tên khóa học...">
-                                    <div class="form-group">
-                                        <label>Mô tả khóa học:</label>
-                                        <textarea wire:model="description" class="form-control" rows="4" placeholder="Nhập mô tả..."></textarea>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mô tả khóa học:</label>
+                                <textarea wire:model="description" class="form-control" rows="4" placeholder="Nhập mô tả..."></textarea>
                             </div>
                         </div>
                         <div class="col-4">
@@ -27,13 +27,13 @@
                                     @if ($image_url)
                                         <img id="image-placeholder" src="{{ $image_url->temporaryUrl() }}"
                                             alt="Click to choose image" class="img-thumbnail"
-                                            style="cursor: pointer; width: 100%; max-width: 300px; height: 190px;"
+                                            style="cursor: pointer; width: 100%; max-width: 300px;"
                                             name="image_url">
                                     @else
                                         <img id="image-placeholder"
                                             src="{{ asset('assets/images/book/user/course.jpg') }}"
                                             alt="Click to choose image" class="img-thumbnail"
-                                            style="cursor: pointer; width: 100%; max-width: 300px; height: 190px;">
+                                            style="cursor: pointer; width: 100%; max-width: 300px;">
                                     @endif
                                     <input type="file" class="custom-file-input"
                                         accept="image/png, image/jpeg, image/jpg" wire:model="image_url"
@@ -55,7 +55,15 @@
                             <label class="custom-file-label" for="pdfInput" id="pdfLabel">Chọn file</label>
                         </div>
                     </div>
-                    
+                    <div class="form-group">
+                        <label>Tác giả:</label>
+                        <select class="form-control" wire:model="courseAuthor" name="courseAuthor">
+                            <option selected="" disabled="">Chọn tác giả</option>
+                            @foreach ($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <script>
                         function updateFileName() {
                             const input = document.getElementById('pdfInput');
@@ -77,8 +85,8 @@
                                 placeholder="Nhập giá giảm khóa học...">
                         </div>
                     </div>
-                    <button wire:click="storeCourse" class="btn btn-primary">Thêm khóa học</button>
-                    <button type="reset" class="btn btn-danger">Trở lại</button>
+                    <button wire:click="storeCourse" class="btn btn-primary">{{ Auth::user()->id == 1 ? 'Thêm khóa học' : 'Gửi phê duyệt' }}</button>
+                    <button type="reset" class="btn btn-danger">Xóa bỏ</button>
                 </div>
             </div>
         </div>
@@ -100,8 +108,10 @@
                                 <div class="lecture mt-3">
                                     <input wire:model.defer="lectures.{{ $chapterIndex }}.{{ $lectureIndex }}"
                                         type="text" class="form-control" placeholder="Nhập tên bài giảng...">
-                                    <input wire:model.defer="lectureVideo.{{ $chapterIndex }}.{{ $lectureIndex }}"
-                                        type="file" class="form-control mt-2">
+                                    {{-- <input wire:model.defer="lectureVideo.{{ $chapterIndex }}.{{ $lectureIndex }}"
+                                        type="file" class="form-control mt-2"> --}}
+                                        <input wire:model.lazy="lectureVideo.{{ $chapterIndex }}.{{ $lectureIndex }}" type="file" class="form-control mt-2">
+
                                     <button wire:click="removeLecture({{ $chapterIndex }}, {{ $lectureIndex }})"
                                         class="btn btn-danger mt-2">Xóa Bài Giảng</button>
                                 </div>
@@ -137,5 +147,4 @@
             }
         </style>
     </div>
-
 </div>

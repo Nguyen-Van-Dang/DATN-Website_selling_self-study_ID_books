@@ -10,6 +10,7 @@ use Livewire\WithFileUploads; // Thêm vào đây
 use Illuminate\Support\Facades\Storage;
 use Google\Service\Drive\Permission as Google_Service_Drive_Permission;
 use App\Services\GoogleDriveService;
+use App\Jobs\UploadFileJob;
 
 class UserIndex extends Component
 {
@@ -28,23 +29,30 @@ class UserIndex extends Component
     public function render()
     {
         if (strlen($this->search) >= 1) {
-            $users = User::where('name', 'like', '%' . $this->search . '%')
-                ->orWhere('id', $this->search)
+            $users = User::where(function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('id', $this->search);
+            })
+                ->whereNull('deleted_at')
                 ->orderBy('role_id')
                 ->paginate(10);
         } else {
             if (Auth::user()->role_id == 1) {
-                $users = User::orderBy('role_id')->paginate(10);
+                $users = User::whereNull('deleted_at')
+                    ->orderBy('role_id')
+                    ->paginate(10);
             } else {
-                $users = User::where('id', Auth::id())->paginate(10);
+                $users = User::where('id', Auth::id())
+                    ->whereNull('deleted_at')
+                    ->paginate(10);
             }
         }
-    
+
         return view('livewire.admin.user.user-index', [
             'users' => $users,
         ]);
     }
-    
+
     public function openPopup($type, $id = null)
     {
         $this->deletedId = null;
@@ -90,16 +98,9 @@ class UserIndex extends Component
         $user->save();
 
         if ($this->image_url) {
-
             $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
-            $googleDriveService = new GoogleDriveService();
-            $fileId = $googleDriveService->uploadAndGetFileId($this->image_url, $folderId);
-            $image_url = "https://drive.google.com/thumbnail?id=" . $fileId;
-            $user->images()->create([
-                'image_url' => $image_url,
-                'image_name' => 'avatar'
-            ]);
-
+            $filePath = $this->image_url->store('temp');
+            UploadFileJob::dispatch($user, $folderId, $filePath, 'thumbnail');
             $user->save();
         }
 
@@ -107,11 +108,10 @@ class UserIndex extends Component
         $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
         $this->isAddPopupOpen = false;
     }
-
     public function updateUser()
     {
         $user = User::find($this->editingId);
-
+    
         if (!$user) {
             session()->flash('error', 'Người dùng không tồn tại.');
             return;
@@ -122,45 +122,57 @@ class UserIndex extends Component
         $user->phone = $this->phoneAdd;
         $user->role_id = $this->role_idAdd;
         $user->status = 0;
-        if (isset($this->newImg)) {
+
+        if ($this->newImg) {
             $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
-            $googleDriveService = new GoogleDriveService();
-
-            if ($user->images()->count() == 0) {
-                $fileId = $googleDriveService->uploadAndGetFileId($this->newImg, $folderId);
-
-                $user->images()->create([
-                    'image_url' => "https://drive.google.com/thumbnail?id=" . $fileId
-                ]);
-            } else {
+            if ($user->images()->count() > 0) {
                 $firstImage = $user->images()->first();
-                if ($firstImage) {
-                    $fileId = $googleDriveService->updateFile($firstImage->file_id, $this->newImg, $folderId);
-                    $firstImage->update([
-                        'image_url' => "https://drive.google.com/thumbnail?id=" . $fileId
-                    ]);
+                if (!empty($firstImage->file_id)) {
+                    $googleDriveService = new GoogleDriveService();
+                    $googleDriveService->deleteFile($firstImage->file_id);
                 }
+                $firstImage->delete();
             }
+            $filePath = $this->newImg->store('temp');
+            UploadFileJob::dispatch($user, $folderId, $filePath, 'avatar');
         }
-
         $user->save();
-
-        session()->flash('message', 'Người dùng đã được cập nhật thành công.');
-
-        $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'image_urlAdd']);
+        // session()->flash('success', 'Người dùng đã được cập nhật thành công.');
+    
+        $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'newImg']);
         $this->isEditPopupOpen = false;
+        return redirect()->with('success', 'Mật khẩu đã được thay đổi thành công. Vui lòng đăng nhập lại với mật khẩu mới.');
     }
+
+    //khôi phục
+    public function restoreUser($id)
+    {
+        $user = User::withTrashed()->find($id);
+
+        if ($user) {
+            $user->restore();
+            session()->flash('message', 'Người dùng đã được khôi phục thành công.');
+        } else {
+            session()->flash('error', 'Không tìm thấy người dùng.');
+        }
+    }
+
+    //xóa mềm
     public function deleted()
     {
         $user = User::find($this->deletedId);
-
-        if ($user) {
-            $user->delete();
-            session()->flash('message', 'Người dùng đã được xóa thành công.');
-        } else {
+        if (!$user) {
             session()->flash('error', 'Người dùng không tồn tại.');
+        } else {
+            if ($user->role_id == 1) {
+                toastr()->error('Không thể xóa quản trị viên.');
+            } else {
+                $user->delete();
+                toastr()->success( 'Người dùng đã được xóa thành công.');
+            }
         }
-
+        $this->reset(['search']);
         $this->closePopup();
     }
+    
 }

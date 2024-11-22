@@ -34,4 +34,8 @@ class Reels extends Model
     {
         return self::all();
     }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

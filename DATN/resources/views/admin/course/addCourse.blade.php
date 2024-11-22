@@ -5,9 +5,7 @@
 @section('content')
 
     <div class="container-fluid">
-
         <livewire:admin.course.course-add />
-
     </div>
 
 @endsection
