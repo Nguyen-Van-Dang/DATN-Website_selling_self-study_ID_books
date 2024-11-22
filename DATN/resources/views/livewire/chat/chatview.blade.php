@@ -53,32 +53,30 @@
                                         <div class="form-group">
                                             <label>Ảnh đại diện</label>
                                             <div class="row p-0 m-0">
-                                                <div class="{{ $groupImage ? 'col-8' : 'col-12' }} p-0">
-                                                    <input wire:model="groupImage" type="file"
-                                                        class="custom-file-input" id="customFile" accept="image/*">
-                                                    <label class="custom-file-label" for="customFile">Chọn
-                                                        tập tin</label>
-                                                    @error('groupImage')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                @if ($groupImage && is_string($groupImage))
-                                                    <div class="col-4">
-                                                        <img src="{{ $groupImage }}" alt="Ảnh đại diện"
-                                                            style="max-height: 150px;" class="img-fluid">
-                                                    </div>
-                                                @elseif ($groupImage)
-                                                    <div class="col-4">
-                                                        <img src="{{ $groupImage->temporaryUrl() }}" alt="Ảnh đại diện"
-                                                            style="max-height: 150px;" class="img-fluid">
-                                                    </div>
+                                                @if ($groupImage instanceof \Illuminate\Http\UploadedFile)
+                                                    <img id="image-add" src="{{ $groupImage->temporaryUrl() }}"
+                                                        alt="Click to choose image" class="img-thumbnail"
+                                                        style="cursor: pointer; width: 100%; max-width: 100px;"
+                                                        name="groupImage">
+                                                @elseif (is_string($groupImage))
+                                                    <img id="image-add" src="{{ $groupImage }}"
+                                                        alt="Click to choose image" class="img-thumbnail"
+                                                        style="cursor: pointer; width: 100%; max-width: 100px;"
+                                                        name="groupImage">
+                                                @else
+                                                    <img id="image-add"
+                                                        src="{{ asset('assets/images/book/default_groupchat.png') }}"
+                                                        alt="Click to choose image" class="img-thumbnail"
+                                                        style="cursor: pointer; width: 100%; max-width: 100px;">
                                                 @endif
+                                                <input type="file" class="custom-file-input"
+                                                    accept="image/png, image/jpeg, image/jpg" wire:model="groupImage"
+                                                    id="image-input-add" style="display: none;">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Mô tả nhóm</label>
-                                            <textarea wire:model="groupDescription" class="form-control" placeholder="Nhập mô tả..." rows="4"></textarea>
+                                            <textarea wire:model="groupDescription" class="form-control" placeholder="Nhập mô tả..." rows="2"></textarea>
                                             @error('groupDescription')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -113,9 +111,25 @@
                                 <li class="py-2 mr-3 border-bottom" wire:click="selectGroup({{ $group->id }})">
                                     <a href="#!" class="row">
                                         <div class="col-3 pr-0">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                                alt="avatar" class="d-flex align-self-center" style="width: 50px">
-                                            <span class="badge bg-success badge-dot"></span>
+                                            @php
+                                                $thumbnail = $group
+                                                    ->images()
+                                                    ->where('image_name', 'thumbnail')
+                                                    ->first();
+                                            @endphp
+                                            @if ($thumbnail)
+                                                <img src="{{ $thumbnail->image_url }}" alt="avatar"
+                                                    class="d-flex align-self-center img-fluid rounded-circle"
+                                                    style="width: 50px">
+                                                <span class="badge bg-success badge-dot"></span>
+                                            @else
+                                                <img src="{{ asset('assets/images/book/default_groupchat.png') }}"
+                                                    alt="avatar"
+                                                    class="d-flex align-self-center img-fluid rounded-circle"
+                                                    style="width: 50px">
+                                                <span class="badge bg-success badge-dot"></span>
+                                            @endif
+
                                         </div>
                                         <div class="col-9 pl-1 pr-1">
                                             <div class="pt-1">
@@ -169,9 +183,25 @@
                         <div class="iq-card-header p-2 pl-3">
                             <div class="d-flex">
                                 <div class="mr-2">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                        alt="avatar" class="d-flex align-self-center me-3" style="width: 60px">
-                                    <span class="badge bg-success badge-dot"></span>
+                                    @php
+                                        $thumbnail = $selectedGroup
+                                            ->images()
+                                            ->where('image_name', 'thumbnail')
+                                            ->first();
+                                    @endphp
+                                    @if ($thumbnail)
+                                        <img src="{{ $thumbnail->image_url }}" alt="avatar"
+                                            class="d-flex align-self-center me-3 img-fluid rounded-circle"
+                                            style="width: 60px">
+                                        <span class="badge bg-success badge-dot"></span>
+                                    @else
+                                        <img src="{{ asset('assets/images/book/default_groupchat.png') }}"
+                                            alt="avatar"
+                                            class="d-flex align-self-center me-3  img-fluid rounded-circle"
+                                            style="width: 60px">
+                                        <span class="badge bg-success badge-dot"></span>
+                                    @endif
+
                                 </div>
                                 <div class="pt-1">
                                     <p class="fw-bold mb-0"><b>{{ $selectedGroup->name }}</b></p>
@@ -181,7 +211,7 @@
                             </div>
                         </div>
 
-                        <div class="chat-content px-5 overflow-scroll flex-grow-1" id="messagesContainer">
+                        <div class="chat-content px-2 overflow-scroll flex-grow-1" id="messagesContainer">
                             @if (count($messages) > 0)
                                 @foreach ($messages as $message)
                                     @if ($message->user_id === Auth::id())
@@ -189,21 +219,54 @@
                                         <div class="d-flex flex-row justify-content-end">
                                             <div>
                                                 <p class="p-2 me-3 mb-1 rounded self-chat message border"
-                                                    style="background-color: #ebfffc; ">{{ $message->message }}</p>
+                                                    style="background-color: {{ in_array($message->user->role_id, [1, 2]) ? '#ffebeb' : '#ebfffc' }}">
+                                                    {{ $message->message }}</p>
+
                                                 <p class="small me-3 mb-3 rounded text-muted float-right ">
                                                     {{ $message->created_at ? $message->created_at->locale('vi')->diffForHumans() : 'Chưa xác định' }}
                                             </div>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                            @php
+                                                $thumbnail = $message->user
+                                                    ->images()
+                                                    ->where('image_name', 'thumbnail')
+                                                    ->first();
+                                            @endphp
+                                            <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
                                                 alt="avatar 1" style="width: 45px; height: 100%;">
                                         </div>
+                                        @if ($cantSend)
+                                            <div class="d-flex flex-row justify-content-end">
+                                                <div>
+                                                    <p class="p-2 me-3 mb-1 rounded self-chat message border"
+                                                        style="background-color: #ff8989' }}">
+                                                        Bạn không thể gửi tin nhắn</p>
+                                                    <p class="small me-3 mb-3 rounded text-muted float-right ">
+                                                        {{ $message->created_at ? $message->created_at->locale('vi')->diffForHumans() : 'Chưa xác định' }}
+                                                </div>
+                                                @php
+                                                    $thumbnail = $message->user
+                                                        ->images()
+                                                        ->where('image_name', 'thumbnail')
+                                                        ->first();
+                                                @endphp
+                                                <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
+                                                    alt="avatar 1" style="width: 45px; height: 100%;">
+                                            </div>
+                                        @endif
                                     @else
                                         {{-- Tin nhắn của người dùng khác  (bên trái) --}}
                                         <div class="d-flex flex-row justify-content-start">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                            @php
+                                                $thumbnail = $message->user
+                                                    ->images()
+                                                    ->where('image_name', 'thumbnail')
+                                                    ->first();
+                                            @endphp
+                                            <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
                                                 alt="avatar 1" style="width: 45px; height: 100%;">
                                             <div>
-                                                <p class="p-2 ms-3 mb-1 rounded message border"
-                                                    style="background-color: hsl(0, 0%, 92%);">
+                                                <p class="p-2 me-3 mb-1 rounded self-chat message border"
+                                                    style="background-color: {{ in_array($message->user->role_id, [1, 2]) ? '#ffebeb' : 'hsl(0, 0%, 92%)' }}">
                                                     {{ $message->message }}
                                                 </p>
                                                 <p class="small ms-3 mb-3 rounded text-muted float-end">
@@ -228,7 +291,12 @@
 
                         <div class="text-muted d-flex justify-content-start align-items-center p-3 mt-2 bg-white"
                             style="background: #ffffff!important">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                            @php
+                                $user = Auth::user();
+                                $thumbnail = $user ? $user->images()->where('image_name', 'thumbnail')->first() : null;
+                            @endphp
+
+                            <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
                                 alt="avatar 3" style="width: 60px; height: 100%;">
                             <textarea class="form-control form-control-lg" placeholder="Nhập tin nhắn..." wire:model="newMessage" rows="1"
                                 oninput="autoResize(this)"
@@ -274,34 +342,32 @@
                                                 <div class="form-group">
                                                     <label>Ảnh đại diện</label>
                                                     <div class="row p-0 m-0">
-                                                        <div class="{{ $groupImage ? 'col-8' : 'col-12' }} p-0">
-                                                            <input wire:model="groupImage" type="file"
-                                                                class="custom-file-input" id="customFile"
-                                                                accept="image/*">
-                                                            <label class="custom-file-label" for="customFile">Chọn
-                                                                tập tin</label>
-                                                            @error('groupImage')
-                                                                <span class="text-danger">{{ $message }}</span>
-                                                            @enderror
-                                                        </div>
-
                                                         @if ($groupImage && is_string($groupImage))
-                                                            <div class="col-4">
-                                                                <img src="{{ $groupImage }}" alt="Ảnh đại diện"
-                                                                    style="max-height: 150px;" class="img-fluid">
-                                                            </div>
-                                                        @elseif ($groupImage)
-                                                            <div class="col-4">
-                                                                <img src="{{ $groupImage->temporaryUrl() }}"
-                                                                    alt="Ảnh đại diện" style="max-height: 150px;"
-                                                                    class="img-fluid">
-                                                            </div>
+                                                            <img id="image-edit" src="{{ $groupImage }}"
+                                                                alt="Click to choose image" class="img-thumbnail"
+                                                                style="cursor: pointer; width: 100%; max-width: 100px;"
+                                                                name="groupImage">
+                                                        @elseif($groupImage)
+                                                            <img id="image-edit"
+                                                                src="{{ $groupImage->temporaryUrl() }}"
+                                                                alt="Click to choose image" class="img-thumbnail"
+                                                                style="cursor: pointer; width: 100%; max-width: 100px;"
+                                                                name="groupImage">
+                                                        @else
+                                                            <img id="image-edit"
+                                                                src="{{ asset('assets/images/book/default_groupchat.png') }}"
+                                                                alt="Click to choose image" class="img-thumbnail"
+                                                                style="cursor: pointer; width: 100%; max-width: 100px;">
                                                         @endif
+                                                        <input type="file" class="custom-file-input"
+                                                            accept="image/png, image/jpeg, image/jpg"
+                                                            wire:model="groupImage" id="image-input-edit"
+                                                            style="display: none;">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Mô tả nhóm</label>
-                                                    <textarea wire:model="groupDescription" class="form-control" placeholder="Nhập mô tả..." rows="4"></textarea>
+                                                    <textarea wire:model="groupDescription" class="form-control" placeholder="Nhập mô tả..." rows="2"></textarea>
                                                     @error('groupDescription')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -331,9 +397,16 @@
                         </div>
 
                         <div class="text-center mb-3">
-                            <img src="{{ $selectedGroup->avatar ?: asset('assets/images/book/default_groupchat.png') }}"
-                                alt="Nhóm Mooners" class="img-fluid rounded-circle"
-                                style="width: 150px; height: 150px;">
+                            @php
+                                $thumbnail = $selectedGroup->images()->where('image_name', 'thumbnail')->first();
+                            @endphp
+                            @if ($thumbnail)
+                                <img src="{{ $thumbnail->image_url }}" alt="Avatar nhóm"
+                                    class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                            @else
+                                <img src="{{ asset('assets/images/book/default_groupchat.png') }}" alt="Avatar nhóm"
+                                    class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                            @endif
                             <h4 class="mt-2">{{ $selectedGroup->name }}</h4>
                         </div>
                         <div class="row text-center mb-4 border-bottom">
@@ -418,19 +491,59 @@
                                                 @if ($member->role == 0)
                                                     @php $hasMembers = true; @endphp
                                                     <a href="#" class="iq-sub-card ">
-                                                        <div class="media align-items-center mb-1">
+                                                        <div class="media mb-1">
                                                             <div class="">
-                                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                                                    alt="avatar"
-                                                                    class="d-flex align-self-center me-3"
-                                                                    style="width: 40px">
+                                                                @php
+                                                                    $thumbnail = $member->user
+                                                                        ->images()
+                                                                        ->where('image_name', 'thumbnail')
+                                                                        ->first();
+                                                                @endphp
+                                                                <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
+                                                                    alt="Thành viên"
+                                                                    class="img-fluid rounded-circle mr-2"
+                                                                    style="width: 40px; height: 40px;">
                                                             </div>
                                                             <div class="media-body ml-3">
                                                                 <h6 class="mb-0">{{ $member->user->name }}</h6>
-                                                                {{-- <small class="float-right font-size-12">Just
-                                                                    Now</small> --}}
-                                                                <p class="mb-0">Thành viên</p>
+                                                                @if (Auth::user()->user_id != 3)
+                                                                    <small class="float-right font-size-12">
+                                                                        <a id="editMember" class="dropdown-toggle   "
+                                                                            href="#" data-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                            <i class="bi bi-three-dots"
+                                                                                style="font-size: 1rem; color: gray;"
+                                                                                title="Cài Đặt"></i>
+                                                                        </a>
+                                                                        <div class="dropdown-menu dropdown-menu-right"
+                                                                            aria-labelledby="editMember"
+                                                                            style="">
+                                                                            <a class="dropdown-item" href="#"
+                                                                                wire:click="toggleMemberStatus({{ $member->id }})">
+                                                                                <i class="ri-pencil-fill mr-2"></i>
+                                                                                {{ $member->status === 0 ? 'Chặn thành viên' : 'Kích hoạt thành viên' }}
+                                                                            </a>
+                                                                        </div>
+                                                                    </small>
+                                                                @endif
+
+                                                                @if ($member->status === 0)
+                                                                    <p class="mb-0" style="color:rgb(0, 171, 0)
+">
+                                                                        Hoạt động
+                                                                    </p>
+                                                                @else
+                                                                    <p class="mb-0">
+                                                                        Không hoạt động
+                                                                    </p>
+                                                                @endif
+
                                                             </div>
+                                                            <style>
+                                                                .dropdown-toggle::after {
+                                                                    display: none;
+                                                                }
+                                                            </style>
                                                         </div>
                                                     </a>
                                                 @endif
@@ -470,7 +583,13 @@
                                     @else
                                         @foreach ($teachers as $teacher)
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/images/book/user/6.jpg') }}"
+                                                @php
+                                                    $thumbnail = $teacher->user
+                                                        ->images()
+                                                        ->where('image_name', 'thumbnail')
+                                                        ->first();
+                                                @endphp
+                                                <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
                                                     alt="Giảng viên" class="img-fluid rounded-circle mr-2"
                                                     style="width: 40px; height: 40px;">
                                                 <div>{{ $teacher->user->name }}</div>
@@ -478,10 +597,10 @@
                                         @endforeach
                                     @endif
                                 </div>
-                                <div>
+                                {{-- <div>
                                     <h5>Danh sách ghim</h5>
                                     <p class="text-muted">Danh sách tin nhắn ghim trống</p>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     @else
@@ -537,7 +656,13 @@
                                                 <a href="#" class="iq-sub-card ">
                                                     <div class="media align-items-center mb-1">
                                                         <div class="">
-                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                            @php
+                                                                $thumbnail = $member->user
+                                                                    ->images()
+                                                                    ->where('image_name', 'thumbnail')
+                                                                    ->first();
+                                                            @endphp
+                                                            <img src="{{ $thumbnail->image_url ?? asset('asset/images/book/user_thumbnail') }}"
                                                                 alt="avatar" class="d-flex align-self-center me-3"
                                                                 style="width: 40px">
                                                         </div>
@@ -577,7 +702,13 @@
                                         @else
                                             @foreach ($teachers as $teacher)
                                                 <div class="d-flex align-items-center">
-                                                    <img src="{{ asset('assets/images/book/user/6.jpg') }}"
+                                                    @php
+                                                        $thumbnail = $teacher->user
+                                                            ->images()
+                                                            ->where('image_name', 'thumbnail')
+                                                            ->first();
+                                                    @endphp
+                                                    <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
                                                         alt="Giảng viên" class="img-fluid rounded-circle mr-2"
                                                         style="width: 40px; height: 40px;">
                                                     <div>{{ $teacher->user->name }}</div>
@@ -730,6 +861,13 @@
 
         // Khởi tạo sự kiện khi DOM đã sẵn sàng
         $(document).ready(initializeEvents);
+
+        document.getElementById('image-add').addEventListener('click', function() {
+            document.getElementById('image-input-add').click();
+        });
+        document.getElementById('image-edit').addEventListener('click', function() {
+            document.getElementById('image-input-edit').click();
+        });
     </script>
 
     <style>

@@ -31,15 +31,23 @@
             <li class="{{ request()->routeIs('admin.khoa-hoc.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.khoa-hoc.index') }}"><i class="ri-book-line"></i> <span>Khóa Học</span></a>
             </li>
-            <li class="{{ request()->routeIs('admin.danh-muc-sach.index') ? 'active' : '' }}">
-                <a href="{{ route('admin.danh-muc-sach.index') }}"><i class="ri-bookmark-line"></i> <span>Danh Mục
-                        Sách</span></a>
-            </li>
-            <li class="{{ request()->routeIs('admin.sach.index') ? 'active' : '' }}">
+            @if (Auth::user()->role_id == 1)
+                <li class="{{ request()->routeIs('admin.danh-muc-sach.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.danh-muc-sach.index') }}"><i class="ri-bookmark-line"></i> <span>Danh Mục
+                            Sách</span></a>
+                </li>
+            @endif
+            <li class="{{ request()->routeIs('admin.sach*') ? 'active' : '' }}">
                 <a href="{{ route('admin.sach.index') }}"><i class="ri-book-2-line"></i> <span>Sách</span></a>
             </li>
-            <li class="{{ request()->routeIs('listExercise') ? 'active' : '' }}">
-                <a href="{{ route('listExercise') }}"><i class="ri-file-list-line"></i> <span>Bài Tập</span></a>
+            @if (Auth::user()->role_id == 1)
+                <li class="{{ request()->routeIs('admin.kich-hoat-sach*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.kich-hoat-sach.index') }}"><i class="ri-key-2-line"></i> <span>Mã kích
+                            hoạt</span></a>
+                </li>
+            @endif
+            <li class="{{ request()->routeIs('admin.de-thi*') ? 'active' : '' }}">
+                <a href="{{ route('admin.de-thi.index') }}"><i class="ri-file-list-line"></i> <span>Đề thi</span></a>
             </li>
             <li class="{{ request()->routeIs('listOrder') ? 'active' : '' }}">
                 <a href="{{ route('listOrder') }}"><i class="ri-shopping-cart-line"></i> <span>Đơn Hàng</span></a>

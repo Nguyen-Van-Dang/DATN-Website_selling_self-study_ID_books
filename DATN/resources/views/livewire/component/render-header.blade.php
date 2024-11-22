@@ -26,7 +26,7 @@
                         <h6 class="mb-0">Sách</h6>
                     </a>
                 </div>
-                <div class="navbar-breadcrumb px-3 {{ Request::is('khoa-hoc') ? 'active' : '' }}">
+                <div class="navbar-breadcrumb px-3 {{ Request::is('khoa-hoc*') ? 'active' : '' }}">
                     <a href="{{ route('khoa-hoc.index') }}" class="iq-waves-effect rounded">
                         <h6 class="mb-0">Khóa học</h6>
                     </a>
@@ -36,7 +36,7 @@
                         <h6 class="mb-0">Học tập</h6>
                     </a>
                 </div>
-                <div class="navbar-breadcrumb px-3 {{ Request::is('chat') ? 'active' : '' }}">
+                <div class="navbar-breadcrumb px-3 {{ Request::is('chat*') ? 'active' : '' }}">
                     <a href="{{ route('chat') }}" class="iq-waves-effect  rounded">
                         <h6 class="mb-0">Tin nhắn</h6>
                     </a>
@@ -46,8 +46,8 @@
                         <h6 class="mb-0">Reels</h6>
                     </a>
                 </div>
-                <div class="navbar-breadcrumb px-3">
-                    <a href="#" class="iq-waves-effect  rounded">
+                <div class="navbar-breadcrumb px-3 {{ Request::is('de-thi*') ? 'active' : '' }}">
+                    <a href="{{ route('de-thi.index') }}" class="iq-waves-effect  rounded">
                         <h6 class="mb-0">Đề thi</h6>
                     </a>
                 </div>

@@ -63,7 +63,7 @@
         <div class="iq-top-navbar">
             <livewire:component.render-header />
         </div>
-        <div id="content-page" class="content-page mb-5">
+        <div id="content-page" class="content-page content-page-client mb-5">
             @yield('content')
         </div>
     </div>
