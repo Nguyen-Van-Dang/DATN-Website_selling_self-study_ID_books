@@ -120,7 +120,7 @@
 
 .videos .video .video-box {
     height: 80%;
-    width: 50%;
+    /* width: 50%; */
     display: flex;
     gap: 8px;
     position: relative;

@@ -116,7 +116,7 @@
                                                 <div class="post-comments-area">
                                                     {{-- COMMENT --}}
                                                     @foreach ($comments as $comment)
-                                                    <span>ID: {{ $comment->id }}</span>
+                                                        <span>ID: {{ $comment->id }}</span>
                                                         <div class="post-comment">
                                                             <div class="post-comment-user verified">
                                                                 <img class="post-comment-user-img"

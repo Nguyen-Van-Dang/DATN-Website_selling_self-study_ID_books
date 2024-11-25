@@ -6,7 +6,8 @@
     <div class="">
         <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
         <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
-        <form method="post" enctype="multipart/form-data" action="{{ route('tai-video.submit') }}" style="padding: 0" id="your-form-id">
+        <form method="post" enctype="multipart/form-data" action="{{ route('tai-video.submit') }}" style="padding: 0"
+            id="your-form-id">
             @csrf
             <!-- Phần chọn video -->
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height" style="padding: 30px" id="dropZone">
@@ -67,7 +68,7 @@
                                         alt="Tỷ lệ khung hình" class="jsx-399202212">
                                     Tỷ lệ khung hình
                                 </div>
-                                <div style="color: #777;">Đề xuất: 16:9 cho chế độ ngang, 9:16 cho chế độ dọc.</div>
+                                <div style="color: #777;">Đề xuất: 9:16 cho chế độ ngang, 9:16 cho chế độ dọc.</div>
                             </div>
                         </div>
                     </div>
@@ -106,46 +107,60 @@
                     </div>
                     <div class="iq-card-body">
                         <div class="row" style="border-bottom: 1px solid var(--iq-border-light);">
-                            <div class="col-8">
-                                <p style="color: black">Mô tả</p>
-                                <textarea id="title" cols="80" rows="5" name="title"
-                                    placeholder="Chia sẻ thêm về Video của bạn tại đây..."
-                                    style="border-radius: 10px; border: none; background: rgba(0, 0, 0, 0.13); padding: 10px;"></textarea>
-                                <div id="charCount"
-                                    style="color: #00000075; margin-top: -30px; position: absolute; margin-left: 75%; font-size: 10px">
-                                    0 ký tự/2000</div>
-                                <p style="color: black">Ảnh bìa
-                                    <svg data-toggle="tooltip" data-placement="top"
-                                        title="Chọn hoặc tải ảnh bìa lên từ thiết bị của bạn. Ảnh bìa đẹp có thể thu hút sự quan tâm của người xem một cách hiệu quả."
-                                        fill="rgba(0,0,0,0.48)" height="1em" width="1em" viewBox="0 0 48 48"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36ZM2 24a22 22 0 1 1 44 0 22 22 0 0 1-44 0Zm25-8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-4 6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V23a1 1 0 0 0-1-1h-2Z">
-                                        </path>
-                                    </svg>
-                                </p>
-                                <br>
-                                @if (isset($reelsImg) && $reelsImg)
-                                    <img id="image-placeholder" src="{{ $reelsImg->temporaryUrl() }}"
-                                        alt="Click to choose image" class="img-thumbnail"
-                                        style="cursor: pointer; width: 100%; max-width: 300px;">
-                                @else
-                                    <img id="image-placeholder" src="{{ asset('assets/images/book/user/course.jpg') }}"
-                                        alt="Click to choose image" class="img-thumbnail"
-                                        style="cursor: pointer; width: 100%; max-width: 300px;">
-                                @endif
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            <label>Mô tả ngắn:</label>
+                                            <textarea id="title" cols="50" rows="3" name="title" class="form-control"
+                                                placeholder="Chia sẻ thêm về Video của bạn tại đây..."
+                                                style="border-radius: 10px; border: none; background: rgba(0, 0, 0, 0.13); padding: 10px;"></textarea>
+                                            {{-- <div id="charCount"
+                                                style="color: #00000075; margin-top: -30px; position: absolute; margin-left: 75%; font-size: 10px">
+                                                0 ký tự/2000</div> --}}
+                                        </div>
+                                        <div class="iq-card-body">
+                                            <button type="submit" class="btn btn-primary" style="width: 100%">Đăng
+                                                video</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label style="width:100%">Ảnh bìa:
+                                                <svg data-toggle="tooltip" data-placement="top"
+                                                    title="Chọn hoặc tải ảnh bìa lên từ thiết bị của bạn. Ảnh bìa đẹp có thể thu hút sự quan tâm của người xem một cách hiệu quả."
+                                                    fill="rgba(0,0,0,0.48)" height="1em" width="1em"
+                                                    viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36ZM2 24a22 22 0 1 1 44 0 22 22 0 0 1-44 0Zm25-8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-4 6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V23a1 1 0 0 0-1-1h-2Z">
+                                                    </path>
+                                                </svg>
+                                            </label>
+                                            <div class="custom-file form-control"
+                                                style="display: contents; max-width:100%">
+                                                @if (isset($reelsImg) && $reelsImg)
+                                                    <img id="image-placeholder" src="{{ $reelsImg->temporaryUrl() }}"
+                                                        alt="Click to choose image" class="img-thumbnail img-fluid"
+                                                        style="cursor: pointer; max-width: 100%; height: 300px;">
+                                                @else
+                                                    <img id="image-placeholder"
+                                                        src="{{ asset('assets/images/book/reel_thumbnail.png') }}"
+                                                        alt="Click to choose image" class="img-thumbnail img-fluid"
+                                                        style="cursor: pointer; max-width: 100%; height: 300px;">
+                                                @endif
+                                                <input type="file" class="custom-file-input"
+                                                    accept="image/png, image/jpeg, image/jpg" name="reelsImg"
+                                                    id="image-input" style="display: none;" onchange="updateImage(this)">
+                                            </div>
+                                        </div>
 
-                                <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/jpg"
-                                    name="reelsImg" id="image-input" style="display: none;" onchange="updateImage(this)">
+                                    </div>
+                                </div>
 
                             </div>
-                            <div class="col-4 text-center">
-                                <p style="color: black">Xem trước</p>
-                                <video id="videoFrame" controls width="100%" height="600" name="reelsVideo"></video>
+                            <div class="col-lg-4 text-center">
+                                <video id="videoFrame" controls width="336px" height="598px" name="reelsVideo"></video>
                             </div>
-                        </div>
-                        <div class="iq-card-body">
-                            <button type="submit" class="btn btn-primary" style="width: 100%">Đăng video</button>
                         </div>
                     </div>
                 </div>
@@ -157,20 +172,34 @@
         function handleVideoChange(event) {
             const file = event.target.files[0]; // Lấy file được chọn
             if (file && file.type.startsWith("video")) {
-                document.getElementById("dropZone").style.display = "none";
-                document.getElementById("videoContainer").style.display = "block";
-
-                // Hiển thị thông tin video
-                document.getElementById("videoName").textContent = file.name;
-                document.getElementById("videoSize").textContent = (file.size / (1024 * 1024)).toFixed(2) + " MB";
-
-                const videoFrame = document.getElementById("videoFrame");
-                const fileURL = URL.createObjectURL(file);
-                videoFrame.src = fileURL;
-
                 const videoElement = document.createElement("video");
+                const fileURL = URL.createObjectURL(file);
                 videoElement.src = fileURL;
+
+                // Lắng nghe sự kiện khi metadata của video được tải
                 videoElement.addEventListener("loadedmetadata", function() {
+                    const videoWidth = videoElement.videoWidth;
+                    const videoHeight = videoElement.videoHeight;
+                    const aspectRatio = videoWidth / videoHeight;
+
+                    // Kiểm tra tỷ lệ 9:16 (khoảng sai số nhỏ để tránh lỗi làm tròn)
+                    if (Math.abs(aspectRatio - 9 / 16) > 0.01) {
+                        alert("Video phải có tỷ lệ 9:16. Vui lòng chọn video khác.");
+                        event.target.value = ""; // Reset input file
+                        return;
+                    }
+
+                    // Nếu tỷ lệ hợp lệ, hiển thị thông tin
+                    document.getElementById("dropZone").style.display = "none";
+                    document.getElementById("videoContainer").style.display = "block";
+
+                    document.getElementById("videoName").textContent = file.name;
+                    document.getElementById("videoSize").textContent = (file.size / (1024 * 1024)).toFixed(2) +
+                        " MB";
+
+                    const videoFrame = document.getElementById("videoFrame");
+                    videoFrame.src = fileURL;
+
                     const duration = videoElement.duration;
                     const minutes = Math.floor(duration / 60);
                     const seconds = Math.floor(duration % 60);
@@ -198,22 +227,22 @@
         }
     </script>
 
-<script>
-    let isSubmitting = false;
+    <script>
+        let isSubmitting = false;
 
-    // Lắng nghe sự kiện beforeunload để cảnh báo người dùng nếu chưa submit
-    window.addEventListener('beforeunload', function(e) {
-        if (!isSubmitting) {
-            e.preventDefault();
-            e.returnValue = 'Bạn có chắc chắn muốn rời khỏi trang này không? Dữ liệu chưa được lưu sẽ bị mất!';
-        }
-    });
+        // Lắng nghe sự kiện beforeunload để cảnh báo người dùng nếu chưa submit
+        window.addEventListener('beforeunload', function(e) {
+            if (!isSubmitting) {
+                e.preventDefault();
+                e.returnValue = 'Bạn có chắc chắn muốn rời khỏi trang này không? Dữ liệu chưa được lưu sẽ bị mất!';
+            }
+        });
 
-    // Đặt flag isSubmitting thành true khi người dùng nhấn submit
-    document.getElementById('your-form-id').addEventListener('submit', function() {
-        isSubmitting = true;
-    });
-</script>
+        // Đặt flag isSubmitting thành true khi người dùng nhấn submit
+        document.getElementById('your-form-id').addEventListener('submit', function() {
+            isSubmitting = true;
+        });
+    </script>
 
     <style>
         @keyframes spin {

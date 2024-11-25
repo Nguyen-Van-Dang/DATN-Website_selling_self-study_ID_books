@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <div class="row" style="margin-top: -3%;">
+    <div class="row mt-3">
         <!-- VIDEO -->
-        <div class="col-md-8 videos">
+        <div class="col-md-6 videos">
             <div class="align-element">
                 <!-- VIDEO 1 -->
                 @foreach ($reels as $reel)
@@ -12,12 +12,12 @@
                         <div class="video-box">
                             <div class="video-info">
                                 <div class="video-section">
-                                    <iframe src="{{ $reel->video_url }}" width="380" height="650"
-                                        data-reel-id="{{ $reel->id }}"></iframe>
-                                    <span class="video-play-icon"><i class="bx bx-play"></i></span>
+                                    <iframe id="videoFrame" src="{{ $reel->preview_url }}" width="450" height="750"
+                                        allow="autoplay; fullscreen" playsinline></iframe>
+                                    {{-- <span class="video-play-icon"><i class="bx bx-play"></i></span>
                                     <div id="video-timeline" class="video-timeline">
                                         <div id="progress-bar" class="progress-bar"></div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="user-info">
                                     <h5 class="h5" style="width: 300px;">
@@ -67,7 +67,7 @@
                                                 <div class="post-comments-area">
                                                     {{-- COMMENT --}}
                                                     @foreach ($comments as $comment)
-                                                    <span>ID: {{ $comment->id }}</span>
+                                                        <span>ID: {{ $comment->id }}</span>
                                                         <div class="post-comment">
                                                             <div class="post-comment-user verified">
                                                                 <img class="post-comment-user-img"
@@ -113,42 +113,180 @@
         {{-- popup --}}
         <script>
             // Lấy phần tử
-const message = document.querySelectorAll(".comments");
-const popup1 = document.getElementById("popup1");
-const closePopup1 = document.getElementById("closePopup1");
-const popupOverlay = document.getElementById("popupOverlay");
+            const message = document.querySelectorAll(".comments");
+            const popup1 = document.getElementById("popup1");
+            const closePopup1 = document.getElementById("closePopup1");
+            const popupOverlay = document.getElementById("popupOverlay");
 
-// Hiển thị popup1 khi nhấn vào biểu tượng
-message.forEach((msg) => {
-    msg.addEventListener("click", () => {
-        popup1.style.display = "block";
-        popupOverlay.style.display = "block";
-    });
-});
+            // Hiển thị popup1 khi nhấn vào biểu tượng
+            message.forEach((msg) => {
+                msg.addEventListener("click", () => {
+                    popup1.style.display = "block";
+                    popupOverlay.style.display = "block";
+                });
+            });
 
-// Đóng popup1 khi nhấn nút đóng
-closePopup1.addEventListener("click", () => {
-    popup1.style.display = "none";
-    popupOverlay.style.display = "none";
-});
+            // Đóng popup1 khi nhấn nút đóng
+            closePopup1.addEventListener("click", () => {
+                popup1.style.display = "none";
+                popupOverlay.style.display = "none";
+            });
 
-popupOverlay.addEventListener("click", (event) => {
-    if (event.target === popupOverlay) {
-        popup1.style.display = "none";
-        popupOverlay.style.display = "none";
-    }
-});
-
+            popupOverlay.addEventListener("click", (event) => {
+                if (event.target === popupOverlay) {
+                    popup1.style.display = "none";
+                    popupOverlay.style.display = "none";
+                }
+            });
         </script>
 
         <!-- CONTENT -->
-        <div class="col-md-4 content-column" id="content-column"
-            style="box-shadow: 0px 20px 20px 0px rgba(44, 101, 144, 0.1); height: 665px;">
-            <div class="content-box">
-                <h3>New Content</h3>
-                <p>Here is the content for the new column. You can add text, images, or other elements as needed.</p>
+        <div class="col-md-4 ml-3">
+            <div class="iq-card">
+                <div class="card-header">
+                    Bình luận <span><small>242 </small></span>
+                </div>
+                <div class="card-body" style="max-height: 589px; overflow-y: auto; overflow-x: hidden;">
+                    <!-- Danh sách bình luận -->
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="mt-1">
+                            <a href="">
+                                <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                            </a>
+                            <p class="mb-0">Nội dung bình luận
+                            </p>
+                            <span>
+                                Phản hồi
+                            </span>
+                            <div class="d-flex mb-3">
+                                <div class="icon iq-icon-box">
+                                    <a href="javascript:void();">
+                                        <img class="img-fluid avatar-40 rounded-circle"
+                                            src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="mt-1">
+                                    <a href="">
+                                        <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                                    </a>
+                                    <p class="mb-0">Nội dung phản hồi
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="mt-1">
+                            <a href="">
+                                <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                            </a>
+                            <p class="mb-0">Nội dung bình luận
+                            </p>
+                            <span>
+                                Phản hồi </span>
+                        </div>
+                    </li>
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="mt-1">
+                            <a href="">
+                                <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                            </a>
+                            <p class="mb-0">Nội dung bình luận
+                            </p>
+                            <span>
+                                Phản hồi </span>
+                        </div>
+                    </li>
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="mt-1">
+                            <a href="">
+                                <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                            </a>
+                            <p class="mb-0">Nội dung bình luận
+                            </p>
+                            <span>
+                                Phản hồi </span>
+                        </div>
+                    </li>
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="mt-1">
+                            <a href="">
+                                <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                            </a>
+                            <p class="mb-0">Nội dung bình luận
+                            </p>
+                            <span>
+                                Phản hồi </span>
+                        </div>
+                    </li>
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="mt-1">
+                            <a href="">
+                                <h6>Người bình luận <small class="text-muted">1 năm trước</small></h6>
+                            </a>
+                            <p class="mb-0">Nội dung bình luận
+                            </p>
+                            <span>
+                                Phản hồi </span>
+                        </div>
+                    </li>
+                </div>
+                <div class="card-footer">
+                    <li class="d-flex mb-3">
+                        <div class="icon iq-icon-box mr-3">
+                            <a href="javascript:void();">
+                                <img class="img-fluid avatar-60 rounded-circle"
+                                    src="http://127.0.0.1:8000/assets/images/book/user/1.jpg" alt="">
+                            </a>
+                        </div>
+
+                        <div class="mt-1 d-flex align-items-center">
+                            <input type="text" class="form-control" placeholder="Để lại bình luận"
+                                style="width:350px">
+                        </div>
+
+                    </li>
+                </div>
             </div>
         </div>
+
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {

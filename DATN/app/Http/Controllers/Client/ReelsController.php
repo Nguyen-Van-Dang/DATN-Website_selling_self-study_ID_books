@@ -22,28 +22,29 @@ class ReelsController extends Controller
         return view('client.reels.reelsUpload');
     }
     public function submit(Request $request)
-{ $reelsImg = null; 
+    {
+        $reelsImg = null;
 
-    $reels = new Reels();
-    $reels->user_id = Auth::id();
-    $reels->title = $request->title;
-    $reels->save();
-    
+        $reels = new Reels();
+        $reels->user_id = Auth::id();
+        $reels->title = $request->title;
+        $reels->save();
 
-    // Lưu ảnh lên Google Drive
-    if ($request->hasFile('reelsImg')) {
-        $imagePath = $request->file('reelsImg')->store('temp');
-        UploadFileJob::dispatch($reels, '1tBSCtPIIFXHrfXq4CZCDvAFfyG9g9UAI', $imagePath, 'reelsImg');
+
+        // Lưu ảnh lên Google Drive
+        if ($request->hasFile('reelsImg')) {
+            $imagePath = $request->file('reelsImg')->store('temp');
+            UploadFileJob::dispatch($reels, '1tBSCtPIIFXHrfXq4CZCDvAFfyG9g9UAI', $imagePath, 'reelsImg');
+        }
+
+        // Lưu video lên Google Drive
+        if ($request->hasFile('reelsVideo')) {
+            $videoPath = $request->file('reelsVideo')->store('temp');
+            UploadFileJob::dispatch($reels, '1lal7kv8uiBTmLjm8Br1ktYlkn2DqSdfW', $videoPath, 'reelsVideo');
+        }
+
+        return redirect()->route('tai-video.index')->with('success', 'Thêm mới reels thành công');
     }
-
-    // Lưu video lên Google Drive
-    if ($request->hasFile('reelsVideo')) {
-        $videoPath = $request->file('reelsVideo')->store('temp');
-        UploadFileJob::dispatch($reels, '1lal7kv8uiBTmLjm8Br1ktYlkn2DqSdfW', $videoPath, 'reelsVideo');
-    }
-
-    return redirect()->route('tai-video.index')->with('success', 'Thêm mới reels thành công');
-}
 
 
     //view

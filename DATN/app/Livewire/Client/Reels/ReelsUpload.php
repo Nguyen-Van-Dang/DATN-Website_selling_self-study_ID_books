@@ -8,6 +8,7 @@ use App\Models\Reels;
 use App\Jobs\UploadFileJob;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+
 class ReelsUpload extends Component
 {
     use WithFileUploads;
