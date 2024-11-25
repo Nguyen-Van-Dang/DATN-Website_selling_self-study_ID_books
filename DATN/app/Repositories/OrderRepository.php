@@ -18,7 +18,10 @@ class OrderRepository
         //
     }
 
-
+    public function orderList()
+    {
+        return view('client.payment.orderList');
+    }
 
     public function getAllOrder()
     {

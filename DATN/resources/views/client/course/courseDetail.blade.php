@@ -8,15 +8,19 @@
         <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-3">
             <div class="row">
                 <div class="col-12 col-md-4 order-1 order-md-1">
-                    <img src="{{ $course->image_url }}" class="img-fluid rounded" alt="Course Image"
-                        style="object-fit: cover;aspect-ratio: 2/1; height: 250px;;">
+                    @php
+                        $courseImage = $course->images()->where('image_name', 'course')->first();
+                    @endphp
+                    <img class="img-fluid rounded" style="object-fit: cover;aspect-ratio: 2/1; height: 250px;"
+                        src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                 </div>
                 <div class="col-12 col-md-8 order-2 order-md-2"style="border-right: 0.5px solid #8080804f;">
                     <h5 class="mb-0">{{ $course->name }}</h5>
                     <p class="text-muted mb-1">Thầy {{ $course->user->name }}</p>
                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                        <span class="text-danger font-weight-bold">{{ number_format($course->price) }}đ</span>
-                        <span class="text-muted ml-3"
+                        <span name="course_price"
+                            class="text-danger font-weight-bold">{{ number_format($course->price) }}đ</span>
+                        <span class="text-muted ml-3" name="course_discount"
                             style="text-decoration:line-through">{{ number_format($course->discount) }}đ</span>
                     </div>
                     <p class="mb-2">
@@ -25,7 +29,8 @@
                         <a href="#" class="text-primary d-block mt-1"><i class="bi bi-people"></i> Nhóm Mooners</a>
                     </p>
                     <div class="d-flex">
-                        <button class="btn btn-danger btn-lg mr-2">Mua ngay</button>
+                        <button class="btn btn-danger btn-lg mr-2" data-toggle="modal" data-target="#payment-popup"
+                            data-order-id="{{ $course->id }}">Mua ngay</button>
                         <button class="btn btn-secondary btn-lg">Kích hoạt</button>
                     </div>
                 </div>
@@ -66,12 +71,10 @@
                                                 href="#collapse{{ $categoryId }}" aria-expanded="false"
                                                 aria-controls="collapse{{ $categoryId }}">
                                                 {{ $lectures->first()->lectureCategory->name ?? 'Chương ' . $categoryId }}
-                                                <!-- Tên chương -->
                                             </a>
                                             <span class="badge bg-danger rounded-pill position-absolute"
                                                 style="right: 0; top: 0;">
                                                 {{ $lecturesCountByCategory[$categoryId] ?? 0 }}
-                                                <!-- Số lượng bài giảng trong danh mục -->
                                             </span>
                                         </h6>
                                     </div>
@@ -82,7 +85,6 @@
                                                 @foreach ($lectures as $lecture)
                                                     <li class="list-group-item py-0">
                                                         <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
-                                                        <!-- Liên kết đến bài giảng -->
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -99,8 +101,11 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="{{ asset('assets/images/book/user/3.jpg') }}" alt="Giảng viên"
-                                    class="rounded-circle me-3" style="width: 100px; height: 100px;">
+                                @php
+                                    $avatar = $course->user->images()->where('image_name', 'avatar')->first();
+                                @endphp
+                                <img class="rounded-circle me-3"style="width: 100px; height: 100px;"
+                                    src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg') }}">
                             </div>
                         </div>
                         <div class="col-9">
@@ -144,30 +149,77 @@
                         <div class="iq-card-body pt-0 py-3 modal-body-scrollable">
 
                             @foreach ($user->courses as $userCourse)
+                                @php
+                                    $courseImage = $userCourse->images()->where('image_name', 'course')->first();
+                                @endphp
                                 <div class="row pb-2">
                                     <div class="col-3">
-                                        <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
-                                            class="card-img-top img-fluid rounded course-image" alt="Product 3"
-                                            style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;">
+                                        <img class="card-img-top img-fluid rounded course-image"
+                                            style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;"
+                                            src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                                     </div>
                                     <div class="col-9">
-                                        <a href="" class="card-title course-title">
+                                        <a href="{{ route('khoa-hoc.show', $userCourse->id) }}"
+                                            class="card-title course-title">
                                             <h6 class="panel-title">
                                                 {{ $userCourse->name }}
                                             </h6>
                                         </a>
                                         <div class="d-flex justify-content-evenly mt-1 flex-nowrap"
                                             style="font-size: 15px">
-                                            <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                            <span
+                                                class="text-danger font-weight-bold">{{ number_format($userCourse->price) }}
                                                 đ</span>
                                             <span class="text-muted ml-3"
-                                                style="text-decoration:line-through">{{ number_format($course->discount) }}
+                                                style="text-decoration:line-through">{{ number_format($userCourse->discount) }}
                                                 đ</span>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="payment-popup" tabindex="-1" role="dialog" aria-labelledby="paymentPopupLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentPopupLabel">Lựa chọn thanh toán</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-3 mb-3" style="padding-left: 40px !important; padding-right: 40px !important">
+                            <div class="d-flex align-items-center">
+                                <span>Mã giảm giá: </span>
+                                <div class="cvv-input ml-3 mr-3" style="width: 40%;">
+                                    <input type="text" class="form-control" required="">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Tiếp tục</button>
+                            </div>
+                        </form>
+                        <form action="{{ route('courseCheckout') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                @foreach ($paymentMethods as $method)
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="payment_method_{{ $method->id }}"
+                                            name="payment_method" value="{{ $method->id }}"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label"
+                                            for="payment_method_{{ $method->id }}">{{ $method->name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <input type="hidden" value="{{ $course->id }}" name="course_id" id="">
+                            <button type="submit" class="btn btn-primary d-block mt-1" name="redirect">Thanh
+                                toán</button>
+                        </form>
                     </div>
                 </div>
             </div>

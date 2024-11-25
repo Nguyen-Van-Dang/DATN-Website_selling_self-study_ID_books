@@ -36,14 +36,12 @@ class RenderHeader extends Component
 
     public function removeFromCart($id)
     {
-
         $user = auth::user();
         $cartItem = CartDetail::where('id', $id)->where('user_id', $user->id)->first();
-
-        $cartItem->delete();
-        $this->dispatch('cartUpdated');
-        toastr()->success('<p>Sản phẩm đã được xóa khỏi giỏ hàng!</p>');
-
-        return;
+        if ($cartItem) {
+            $cartItem->delete();
+            $this->dispatch('cartUpdated');
+            toastr()->success('<p>Sản phẩm đã được xóa khỏi giỏ hàng!</p>');
+        }
     }
 }

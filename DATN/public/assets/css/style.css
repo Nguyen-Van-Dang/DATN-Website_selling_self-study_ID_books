@@ -1097,7 +1097,7 @@ body.sidebar-main .iq-sidebar .iq-menu li a[aria-expanded="false"].collapsed {
   right: 0;
   width: calc(100% - 300px);
   display: inline-block;
-  z-index: 3;
+  z-index: 5;
   background: var(--iq-body-bg);
   border-bottom: 1px solid var(--iq-border);
   margin: 0;

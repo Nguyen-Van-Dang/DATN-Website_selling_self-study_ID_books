@@ -90,9 +90,16 @@
                                             <div class="row align-items-center">
                                                 <div class="col-sm-2">
                                                     <span class="checkout-product-img">
-                                                        <a href="javascript:void();"><img class="img-fluid rounded"
-                                                                src="{{ asset('assets/images/book/book/01.jpg') }}"
-                                                                alt=""></a>
+                                                        <a href="javascript:void();">
+                                                            @php
+                                                                $thumbnail = $Book
+                                                                    ->images()
+                                                                    ->where('image_name', 'thumbnail')
+                                                                    ->first();
+                                                            @endphp
+                                                            <img class="img-fluid rounded"
+                                                                src="{{ $thumbnail ? $thumbnail->image_url : asset('assets/images/book/book/01.jpg') }}">
+                                                        </a>
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -123,7 +130,8 @@
                                                                 </div>
                                                                 <div class="col-sm-5 col-md-6">
                                                                     <span
-                                                                        class="product-price">{{ $item->book->price * $item->quantity }}</span>
+                                                                        class="product-price">{{ $item->book->price * $item->quantity }}
+                                                                        đ</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -200,7 +208,7 @@
                     </div>
                 </div>
             </div>
-            <div id="address" class="card-block p-0 col-12">
+            <div id="address" wire:ignore class="card-block p-0 col-12">
                 <div class="row align-item-center">
                     <div class="col-lg-8">
                         <div class="iq-card">
@@ -301,7 +309,7 @@
                     </div>
                 </div>
             </div>
-            <div id="payment" class="card-block p-0 col-12">
+            <div id="payment" wire:ignore class="card-block p-0 col-12">
                 <div class="row align-item-center">
                     <div class="col-lg-8">
                         <div class="iq-card">
@@ -383,7 +391,7 @@
 </div>
 <script>
     function removeFromCart(cartId) {
-        fetch(`/shopping-cart/cart/remove/${cartId}`, {
+        fetch(`/gio-hang/cart/remove/${cartId}`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

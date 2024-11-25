@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image_url', 255)->nullable();
             $table->boolean('status')->nullable()->default(1);
+            $table->unsignedBigInteger('views')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();

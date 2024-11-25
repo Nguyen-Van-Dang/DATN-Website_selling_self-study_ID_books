@@ -19,6 +19,7 @@ class Carts extends Component
     {
         $paymentMethods = PaymentMethods::all();
         $user = Auth::user();
+        $Book = Book::where('user_id', Auth::id())->first();
         $cart = CartDetail::where('user_id', Auth::id())->with('book')->get();
         $totalPrice = $cart->sum(function ($item) {
             return $item->book->price * $item->quantity;
@@ -27,6 +28,7 @@ class Carts extends Component
             return $item->quantity;
         });
         return view('livewire.client.cart.carts', [
+            'Book' => $Book,
             'user' => $user,
             'cart' => $cart,
             'totalQuantity' => $totalQuantity,
@@ -85,7 +87,6 @@ class Carts extends Component
             $totalPrice = $data['finalTotal'];
             $order = new Order();
             $order->price = $totalPrice;
-            $order->payment_methods_id = $data['payment_method'];
             $order->payment_status = 0;
             $order->user_id = $user->id;
             $order->user_name = $data['hiddenFname'];
@@ -155,7 +156,7 @@ class Carts extends Component
                 ]);
             }
             CartDetail::where('user_id', $user->id)->delete();
-            return redirect()->back()->with('success', 'Đặt hàng thành công!');
+            return redirect('/don-hang')->with('success', 'Thanh toán thành công');
         }
     }
 
@@ -192,7 +193,7 @@ class Carts extends Component
         $orderInfo = "Thanh toán qua ATM MoMo";
         $amount = $totalPrice;
         $orderid = time() . "";
-        $returnUrl = "http://localhost:8000/shopping-cart/momo-callback";
+        $returnUrl = "http://localhost:8000/don-hang/momo-callback";
         $notifyurl = "/";
         $bankCode = "SML";
         $extraData = (string) $order;
@@ -235,11 +236,12 @@ class Carts extends Component
         if ($message == "Success") {
             if ($order) {
                 $order->payment_status = 1;
+                $order->payment_methods_id = 1;
                 $order->save();
-                return redirect('/shopping-cart')->with('success', 'Thanh toán thành công');
+                return redirect('/don-hang')->with('success', 'Thanh toán thành công');
             }
         } else {
-            return redirect('/shopping-cart')->with('error', 'Thanh toán thất bại');
+            return redirect('/don-hang')->with('error', 'Thanh toán thất bại');
         }
     }
 
@@ -247,7 +249,7 @@ class Carts extends Component
     {
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://127.0.0.1:8000/shopping-cart/vnpay-callback";
+        $vnp_Returnurl = "http://127.0.0.1:8000/gio-hang/vnpay-callback";
         $vnp_TmnCode = "55GEKX1F";
         $vnp_HashSecret = "86RSGPDYIJMSAZNQ5GVM3O2YC5IJ39H1";
         $order = Order::where('id', $order)->first();
@@ -318,7 +320,7 @@ class Carts extends Component
 
         $order = Order::where('id', $vnp_TxnRef)->first();
         if (!$order) {
-            return redirect('/shopping-cart')->with('error', 'Đơn hàng không tồn tại');
+            return redirect('/gio-hang')->with('error', 'Đơn hàng không tồn tại');
         }
 
         $vnp_HashSecret = "86RSGPDYIJMSAZNQ5GVM3O2YC5IJ39H1";
@@ -335,10 +337,11 @@ class Carts extends Component
 
         if ($vnp_SecureHash == $vnpSecureHashCalculated && $vnp_TransactionStatus == '00') {
             $order->payment_status = 1;
+            $order->payment_methods_id = 2;
             $order->save();
-            return redirect('/shopping-cart')->with('success', 'Thanh toán thành công');
+            return redirect('/don-hang')->with('success', 'Thanh toán thành công');
         } else {
-            return redirect('/shopping-cart')->with('error', 'Thanh toán thất bại');
+            return redirect('/don-hang')->with('error', 'Thanh toán thất bại');
         }
     }
 }

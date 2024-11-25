@@ -10,17 +10,20 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class Books extends Component
+class Likes extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
-        $popularBooks = Book::orderBy('views', 'desc')->take(6)->get();
-        $favBook = Book::withCount('favorites')->orderByDesc('favorites_count')->limit(6)->get();
-        $Book = Book::paginate(16);
-        return view('livewire.client.book.books', ['Book' => $Book, 'popularBooks' => $popularBooks, 'favBook' => $favBook]);
+        $userId = auth()->id();
+
+        $likedBooks = Book::whereHas('Favorites', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->paginate(12);
+
+        return view('livewire.client.book.likes', ['likedBooks' => $likedBooks]);
     }
 
     public function addToCart($bookId)
