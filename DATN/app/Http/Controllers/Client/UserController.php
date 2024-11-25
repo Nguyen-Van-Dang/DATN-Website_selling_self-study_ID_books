@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
+use App\Models\Course;
 use Laravel\Socialite\Facades\Socialite;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -38,13 +40,16 @@ class UserController extends Controller
     public function HomeClient()
     {
         $teachers = User::where('role_id', 2)->with(['courses', 'books'])->get();
-
+        $popularBooks = Book::orderBy('views', 'desc')->take(6)->get();
+        $popularCourses = Course::orderBy('views', 'desc')->take(6)->get();
+        $favBook = Book::withCount('favorites')->orderByDesc('favorites_count')->limit(6)->get();
+        $Book = Book::orderBy('created_at', 'desc')->limit(4)->get();
         foreach ($teachers as $teacher) {
             $teacher->total_courses = $teacher->courses ? $teacher->courses->count() : 0;
             $teacher->total_books = $teacher->books ? $teacher->books->count() : 0;
         }
 
-        return view('client.home', compact('teachers'));
+        return view('client.home', compact('teachers', 'popularBooks', 'popularCourses', 'favBook', 'Book'));
     }
     //render course, book, reel
     public function showUserDetail()

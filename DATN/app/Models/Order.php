@@ -21,6 +21,19 @@ class Order extends Model
         'user_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($order) {
+            do {
+                $randomId = str_pad(mt_rand(0, 99999), 4, '0', STR_PAD_LEFT);
+            } while (Order::where('id', $randomId)->exists());
+
+            $order->id = $randomId;
+        });
+    }
+
     public function User(): BelongsTo
     {
         return $this->belongsTo(User::class);

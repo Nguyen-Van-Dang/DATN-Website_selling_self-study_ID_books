@@ -28,4 +28,8 @@ class BookController extends Controller
     {
         return $this->bookRepository->getBookDetailClient($id);
     }
+    public function getAllBookFavorite()
+    {
+        return $this->bookRepository->getAllBookFavorite();
+    }
 }

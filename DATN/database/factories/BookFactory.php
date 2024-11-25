@@ -16,7 +16,6 @@ class BookFactory extends Factory
             'name' => $this->faker->sentence(3),
             'price' => $this->faker->numberBetween(100000, 300000),
             'page_number' => $this->faker->numberBetween(1, 50),
-            'course_id' => Course::inRandomOrder()->first()->id,
             'description' => $this->faker->paragraph(3),
             'quantity' => $this->faker->numberBetween(1000, 2000),
             'user_id' => User::inRandomOrder()->first()->id,

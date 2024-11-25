@@ -30,7 +30,7 @@ use App\Livewire\Client\Book\Books;
 use App\Livewire\Client\Book\BookDetail;
 use App\Http\Controllers\Client\LectureController;
 use App\Livewire\Client\Cart\Carts;
-
+use App\Livewire\Client\Order\Orders;
 
 /* --------------- HOME CLIENT --------------- */
 
@@ -175,12 +175,20 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
 
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 //danh sách cuốn sách
-Route::get('/book-list', [ClientBookController::class, 'getAllBookClient'])->name('bookList');
-Route::post('/books/{id}/toggle-favorite', [Books::class, 'toggleFavorite'])->name('toggleFavorite');
+Route::prefix('/sach')->group(
+    function () {
+        Route::get('/', [ClientBookController::class, 'getAllBookClient'])->name('bookList');
+        Route::post('/{id}/toggle-favorite', [Books::class, 'toggleFavorite'])->name('toggleFavorite');
+        Route::get('/yeu-thich', [ClientBookController::class, 'getAllBookFavorite'])->name('getAllBookFavorite');
+        Route::get('/{id}', [ClientBookController::class, 'getBookDetailClient'])->name('bookDetail');
+    }
+);
 
-//chi tiết sách
-Route::get('/book-detail/{id}', [ClientBookController::class, 'getBookDetailClient'])->name('bookDetail');
-
+Route::prefix('khoa-hoc')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('khoa-hoc.index');
+    Route::get('/{id}', [CourseController::class, 'show'])->name('khoa-hoc.show');
+    Route::post('/', [Orders::class, 'courseCheckout'])->name('courseCheckout');
+});
 // thông tin người dùng
 
 Route::get('/user-information', [UserController::class, 'showUser'])->name('userInformation');
@@ -195,7 +203,7 @@ Route::post('/user-information', [UserController::class, 'updateUser'])->name('u
 Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
 
 //giỏ hàng
-Route::prefix('/shopping-cart')->group(function () {
+Route::prefix('/gio-hang')->group(function () {
     Route::get('/', function () {
         return view('client.payment.shoppingCart');
     })->name('shoppingCart');
@@ -205,6 +213,15 @@ Route::prefix('/shopping-cart')->group(function () {
     Route::match(['get', 'post'], '/vnpay-callback', [Carts::class, 'vnpayCallback'])->name('vnpayCallback');
     Route::match(['get', 'post'], '/momo-callback', [Carts::class, 'momoCallback'])->name('momoCallback');
 });
+Route::prefix('/don-hang')->group(
+    function () {
+        Route::get('/', [OrderController::class, 'orderList'])->name('orderList');
+        Route::post('/', [Orders::class, 'orderCheckout'])->name('orderCheckout');
+        Route::match(['get', 'post'], '/vnpay-callback', [Carts::class, 'vnpayCallback'])->name('vnpayCallback');
+        Route::match(['get', 'post'], '/momo-callback', [Carts::class, 'momoCallback'])->name('momoCallback');
+    }
+);
+
 
 // tất cả thông báo
 Route::get('/notification-list', function () {
@@ -226,6 +243,7 @@ Route::prefix('khoa-hoc')->group(function () {
     Route::get('/', [CourseController::class, 'index'])->name('khoa-hoc.index');
     Route::get('/{id}', [CourseController::class, 'show'])->name('khoa-hoc.show');
     Route::get('/{course_id}/bai-giang/{lecture_id}', [CourseController::class, 'detail'])->name('khoa-hoc.chitiet');
+    Route::post('/', [Orders::class, 'courseCheckout'])->name('courseCheckout');
 });
 
 //reels

@@ -1,12 +1,12 @@
 @extends('layouts.client.client')
 
-@section('title', 'Sách')
+@section('title', 'Sách Yêu Thích')
 
 @section('content')
 
     <div class="container-fluid">
         @livewireStyles
-        <livewire:client.book.books />
+        <livewire:client.book.likes />
         @livewireScripts
     </div>
     <script>

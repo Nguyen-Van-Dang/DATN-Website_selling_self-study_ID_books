@@ -171,10 +171,14 @@
                                                     <div class="col-10">
                                                         <a class="iq-sub-card">
                                                             <div class="media align-items-center">
-                                                                <div>
+                                                                <div>@php
+                                                                    $thumbnail = $item->book
+                                                                        ->images()
+                                                                        ->where('image_name', 'thumbnail')
+                                                                        ->first();
+                                                                @endphp
                                                                     <img class="rounded"
-                                                                        src="{{ asset('assets/images/book/book/02.jpg') }}"
-                                                                        alt="">
+                                                                        src="{{ $thumbnail ? $thumbnail->image_url : asset('assets/images/book/book/02.jpg') }}">
                                                                 </div>
                                                                 <div class="media-body ml-3">
                                                                     <h6 class="mb-0">Tên: {{ $item->book->name }}
@@ -230,9 +234,8 @@
                                     class="img-fluid rounded-circle mr-3" alt="user">
                                 <div class="caption"
                                     @php
-                                        $userName = Auth::user()->name;
-                                        $displayName = Str::limit($userName, 10, '...'); 
-                                    @endphp>
+$userName = Auth::user()->name;
+                                        $displayName = Str::limit($userName, 10, '...'); @endphp>
                                     <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                     <p class="mb-0 text-primary">Tài Khoản</p>
                                 </div>
@@ -336,7 +339,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('orderList') }}"
+                                                class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-account-box-line"></i>
@@ -346,7 +350,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('getAllBookFavorite') }}"
+                                                class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-heart-line"></i>
@@ -413,10 +418,11 @@
                                                         hội
                                                         khác</p>
                                                     <div class="social-media">
-                                                        <a href="{{ route('login-by-provider', ['provider' => 'facebook']) }}" class="social-icon">
+                                                        <a href="{{ route('login-by-provider', ['provider' => 'facebook']) }}"
+                                                            class="social-icon">
                                                             <i class="fab fa-facebook-f"></i>
                                                         </a>
-                                                        
+
                                                         <a href="{{ route('login-by-zalo') }}" class="social-icon">
                                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                                 width="100" height="30px" viewBox="0 0 50 50">

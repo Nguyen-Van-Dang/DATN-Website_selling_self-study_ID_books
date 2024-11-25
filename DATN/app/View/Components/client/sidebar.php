@@ -18,7 +18,8 @@ class sidebar extends Component
      */
     public function __construct()
     {
-        $this->courses = Course::limit(8)->get();
+        // $this->courses = Course::limit(8)->get();
+        $this->courses = Course::limit(8)->get() ?? collect([]);
         $this->teachers = User::where('role_id', 2)->get();
     }
 

@@ -13,6 +13,7 @@ class CourseIndex extends Component
 
     public $courseList;
     public $courseTrending;
+    public $popularCourses;
     public $teachers;
     public $date_filter = 'latest';
     public $price_filter = null;
@@ -26,6 +27,7 @@ class CourseIndex extends Component
 
     public function mount()
     {
+        $this->popularCourses = Course::orderBy('views', 'desc')->take(6)->get();
         $this->teachers = User::where('role_id', 2)->get();
         $this->courseTrending = Course::limit(12)->get();
         $this->loadCourses();
@@ -71,6 +73,7 @@ class CourseIndex extends Component
             'courses' => $this->courseList,
             'teachers' => $this->teachers,
             'courseTrending' => $this->courseTrending,
+            'popularCourses' => $this->popularCourses,
         ]);
     }
 }

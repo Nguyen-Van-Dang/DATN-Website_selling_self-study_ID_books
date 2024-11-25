@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('book_categories_mapping', function (Blueprint $table) {
             $table->foreignId('category_id')->constrained('book_categories')->onDelete('cascade');
             $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

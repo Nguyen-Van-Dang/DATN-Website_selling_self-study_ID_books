@@ -82,6 +82,9 @@
         <div class="iq-card-body pt-0">
             <div class="row">
                 @foreach ($courseList as $course)
+                    @php
+                        $courseImage = $course->images()->where('image_name', 'course')->first();
+                    @endphp
                     <div class="col-6 col-lg-3">
                         <div class="card card-filter h-50">
                             <div class="card-body">
@@ -89,9 +92,9 @@
                                     style="cursor: pointer;">
                                     <h5 class="card-title course-title">{{ $course->name }}
                                     </h5>
-                                    <img src="{{ $course->image_url }}"
-                                        class="card-img-top img-fluid rounded course-image" alt="Product 3"
-                                        style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;">
+                                    <img class="card-img-top img-fluid rounded course-image"
+                                        style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;"
+                                        src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                                 </div>
 
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
@@ -131,11 +134,14 @@
         <div class="iq-card-body trendy-contens">
             <ul id="trendy-slider" class="row">
                 @foreach ($teachers as $teacher)
+                    @php
+                        $teachetImage = $teacher->images()->where('image_name', 'avatar')->first();
+                    @endphp
                     <li>
                         <div class="d-flex flex-column align-items-center teacher-card">
-                            <div class="avatar-container">
-                                <img src="{{ asset('assets/images/book/user/1.jpg') }}" class="carousel-img"
-                                    alt="Giáo viên 1">
+                            <div class="avatar-container">=
+                                <img class="carousel-img"
+                                    src="{{ $teachetImage ? $teachetImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                             </div>
                             <div class="text-center mt-1 p-0">
                                 <p class="m-0">Thầy</p>
@@ -150,14 +156,18 @@
 
     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
         <div class="iq-card-body similar-contens">
-            <h5 class="card-title mb-2">KHOÁ HỌC BÁN CHẠY NHẤT</h5>
+            <h5 class="card-title mb-2">KHOÁ HỌC Thịnh Hành</h5>
             <div class="row">
-                @foreach ($courseTrending as $course)
-                    <div class="col-2 col-lg-2 px-2 mb-3">
+                @foreach ($popularCourses as $course)
+                    <div class="col-2 col-lg-2 px-2 mb-3" wire:click="goToCourseDetail({{ $course->id }})"
+                        style="cursor: pointer;">
                         <div class="trendy-course card h-100 " style=" transition: transform 0.3s ease;">
-                            <img src="https://cdn.mclass.vn/blog/uploads/2024/06/28134058/z5581767185476_8dde1beb2c61f7600912c0684e0a1435.jpg"
-                                class="card-img-top img-fluid rounded course-image" alt="Product 3"
-                                style="aspect-ratio: 1.5/1; object-fit: cover;">
+                            @php
+                                $courseImage = $course->images()->where('image_name', 'course')->first();
+                            @endphp
+                            <img class="card-img-top img-fluid rounded course-image"
+                                style="aspect-ratio: 1.5/1; object-fit: cover;"
+                                src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                             <div class="card-body border pt-1">
                                 <div>
                                     <h5 class="card-title course-title">{{ $course->name }}</h5>

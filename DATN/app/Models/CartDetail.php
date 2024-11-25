@@ -25,6 +25,11 @@ class CartDetail extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
     public static function getAll()
     {
         return self::all();
