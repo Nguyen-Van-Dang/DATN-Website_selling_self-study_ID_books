@@ -49,15 +49,15 @@
                                 <div class="form-group">
                                     <label>Tác giả:</label>
                                     <select class="form-control" wire:model="courseAuthor">
-                                        <option selected="" disabled="">Chọn tác giả</option>
+                                        <option selected disabled>Chọn tác giả</option>
                                         @foreach ($teachers as $teacher)
-                                            <option value="{{ $teacher->id }}"
-                                                {{ $teacher->id == $courseAuthor ? 'selected' : '' }}>
+                                            <option value="{{ $teacher->id }}" {{ $teacher->id == $courseAuthor ? 'selected' : '' }}>
                                                 {{ $teacher->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
+                                
                             </div>
                         </div>
 

@@ -37,4 +37,14 @@ class CourseController extends Controller
 
         return view('client.lecture.lecture', compact('course', 'lecture', 'lecturesCountByCategory'));
     }
+    public function convertLink($url): mixed
+    { // truyền link vô đề đối thành link xem được 
+        if (strpos($url, 'drive.google.com') !== false) {
+            preg_match('/\/d\/(.*?)\//', $url, $matches);
+            if (!empty($matches[1])) {
+                return "https://drive.google.com/file/d/{$matches[1]}/preview";
+            }
+        }
+        return $url;
+    }
 }

@@ -31,8 +31,11 @@ class CourseRepository
             $lectureCategories = LectureCategories::all();
         
             // Lấy danh sách giáo viên chỉ khi người dùng là admin (ID = 1)
-            if (Auth::user()->id == 1) {
+            if (Auth::user()->role_id == 1) {
                 $teachers = User::where('role_id', 2)->get();
+            } else {
+                // Nếu là giáo viên, chỉ lấy thông tin của chính người dùng
+                $teachers = User::where('id', Auth::id())->get();
             }
         
             // Truyền dữ liệu vào component Livewire
@@ -44,10 +47,13 @@ class CourseRepository
     }
     public function create()
     {
-        if (Auth::user()->id == 1) {
-            $teachers = User::where('role_id', 2)->get();
+        if (Auth::user()->role_id == 1) {
+            // Hiển thị giáo viên chưa kích hoạt
+            $teachers = User::where('role_id', 2)->where('active', 0)->get();
+        } else {
+            // Nếu là giáo viên, không hiển thị danh sách giáo viên, chỉ chọn chính mình
+            $teachers = null;
         }
-
         return view('admin.course.addCourse', compact('teachers'));
     }
     public function getAllCourse()
