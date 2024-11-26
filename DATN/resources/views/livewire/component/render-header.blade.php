@@ -51,6 +51,11 @@
                         <h6 class="mb-0">Đề thi</h6>
                     </a>
                 </div>
+                <div class="navbar-breadcrumb px-3 {{ Request::is('addContact*') ? 'active' : '' }}">
+                    <a href="{{ route('addContact') }}" class="iq-waves-effect  rounded">
+                        <h6 class="mb-0">Liên hệ</h6>
+                    </a>
+                </div>
             </div>
             <div class="nav-button" style="margin-left: auto">
                 <a href="{{ route('kich-hoat-sach') }}" class="btn btn-primary float-end"> <b>Kích hoạt ID Sách

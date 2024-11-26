@@ -19,6 +19,7 @@ use Flasher\Toastr\Prime\Toastr;
 use Flasher\Toastr\Laravel\Flasher;
 use App\Services\GoogleDriveService;
 use Flasher\Laravel\Http\Request;
+use App\Mail\PasswordChangedNotification;
 
 class UserRepository
 {
@@ -33,7 +34,7 @@ class UserRepository
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->with('success', 'Bạn đã đăng xuất thành công');
+        return redirect('/')->with('error', 'Bạn đã đăng xuất thành công');
     }
     //đăng nhập bằng sdt
     public function loginUser($data)
@@ -45,7 +46,7 @@ class UserRepository
         ];
 
         $validator = Validator::make($data->all(), [
-            'phone' => ['required', 'regex:/^([0-9]{10})$/'],
+            'phone' => ['required'],
             'password' => 'required',
         ], $messages);
 
@@ -54,13 +55,15 @@ class UserRepository
         }
 
         $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
-
-        // if (!$user || !password_verify($data->password, $user->password)) {
-        //     return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
-        // }
+        
+        if (!$user || !password_verify($data->password, $user->password)) {
+            return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
+        }
 
         Auth::login($user);
-        return redirect('/')->with('success', 'Bạn đã đăng nhập thành công');
+        toastr()->success('<p;">Bạn đã đăng nhập thành công!</p>');
+
+        return redirect()->intended('/');
     }
     // đăng nhập bằng Zalo
     public function handleZaloCallback(\Illuminate\Http\Request $request)
@@ -127,7 +130,7 @@ class UserRepository
             return redirect('/')->with('error', 'Failed to login with Google');
         }
     }
-        // đăng nhập bằng fb
+    // đăng nhập bằng fb
     public function handleFacebookCallback(\Illuminate\Http\Request $request)
     {
         try {
@@ -175,8 +178,60 @@ class UserRepository
         $user = User::findOrFail($id);
         return $user->delete();
     }
+
     public function getDeletedUser()
     {
         return view('admin.user.deletedUser');
+    }
+    public function changePassword(Request $request)
+    {
+        // Validate dữ liệu nhập vào
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        // Kiểm tra mật khẩu hiện tại
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            throw ValidationException::withMessages([
+                'password' => 'Mật khẩu hiện tại không đúng',
+            ]);
+        }
+
+        // Lấy người dùng hiện tại
+        $user = Auth::user();
+
+        // Kiểm tra xem $user có phải là một thể hiện của \App\Models\User hay không
+        if ($user instanceof \App\Models\User) {
+            // Mã hóa mật khẩu mới và lưu
+            $user->password = Hash::make($request->new_password);
+
+            if ($request->new_password !== $request->new_password_confirmation) {
+                return back()->withErrors(['new_password' => 'Mật khẩu mới và xác nhận mật khẩu không khớp.']);
+            }
+
+            try {
+                // $user->save(); // Lưu dữ liệu người dùng
+                if ($user instanceof \App\Models\User) {
+                    // Save user
+                    $user->save();
+                } else {
+                    return back()->withErrors(['error' => 'Không thể lưu dữ liệu người dùng.']);
+                }
+
+                // Gửi email thông báo thay đổi mật khẩu
+                Mail::to($user->email)->send(new PasswordChangedNotification($user));
+
+                // Gửi email cho admin thông báo thay đổi mật khẩu
+                $adminEmail = 'infobookstorefpt@gmail.com'; // Thay bằng địa chỉ email của admin
+                Mail::to($adminEmail)->send(new PasswordChangedNotification($user));
+
+                return back()->with('success', 'Mật khẩu đã được cập nhật thành công!');
+            } catch (\Exception $e) {
+                return back()->withErrors(['error' => 'Đã có lỗi xảy ra. Vui lòng thử lại sau.']);
+            }
+        } else {
+            return back()->withErrors(['error' => 'Không thể lưu dữ liệu người dùng.']);
+        }
     }
 }

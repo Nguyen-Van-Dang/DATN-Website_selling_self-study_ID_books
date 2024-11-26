@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->string('name', length: 255)->nullable();
-            $table->string('email', length: 255)->unique();
-            $table->text('emailMessage');
+            $table->string('email', length: 255);
+            $table->text('message');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->boolean('is_replied')->default(false);
+            $table->timestamp('last_sent_at')->nullable();
             $table->timestamps();
+
+
         });
     }
 
