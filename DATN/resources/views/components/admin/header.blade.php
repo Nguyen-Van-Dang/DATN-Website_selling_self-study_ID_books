@@ -20,9 +20,9 @@
                         <i class="ri-search-line"></i>
                     </a>
                     <form action="#" class="search-box p-0">
-                        <input type="text" class="text search-input" placeholder="Type here to search...">
-                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                    </form>
+                   <input type="text" class="text search-input" placeholder="Type here to search...">
+                   <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                </form>
                 </li>
                 <li class="nav-item nav-icon">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
@@ -40,7 +40,7 @@
                                     <div class="media align-items-center">
                                         <div class="">
                                             <img class="avatar-40 rounded"
-                                                src="{{ asset('assets/images/book/user/1.jpg') }}" alt="">
+                                                src="{{ asset('assets/images/book/user/01.jpg') }}" alt="">
                                         </div>
                                         <div class="media-body ml-3">
                                             <h6 class="mb-0 ">Đơn hàng giao thành công</h6>
@@ -69,7 +69,7 @@
                                     <div class="media align-items-center">
                                         <div class="">
                                             <img class="avatar-40 rounded"
-                                                src="{{ asset('assets/images/book/user/1.jpg') }}" alt="">
+                                                src="{{ asset('assets/images/book/user/01.jpg') }}" alt="">
                                         </div>
                                         <div class="media-body ml-3">
                                             <h6 class="mb-0 ">QT Shop</h6>
@@ -86,9 +86,9 @@
                         <img src="{{ asset('assets/images/book/user/1.jpg') }}" class="img-fluid rounded-circle mr-3"
                             alt="user">
                         <div class="caption">
-                            @php
-                                $userName = Auth::user()->name;
-                                $displayName = Str::limit($userName, 10, '...');
+                            @php 
+                            $userName = (auth()->check() && Auth::user()->name);
+                            $displayName = Str::limit($userName, 10, '...'); 
                             @endphp
                             <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                             <p class="mb-0 text-primary">Tài Khoản</p>
@@ -98,10 +98,9 @@
                         <div class="iq-card shadow-none m-0">
                             <div class="iq-card-body p-0 ">
                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">Xin Chào <br> {{ auth()->user()->name }}
-                                    </h5>
+                                    <h5 class="mb-0 text-white line-height">Xin Chào <br> {{ auth()->check() && auth()->user()->name }}</h5>
                                 </div>
-                                @if (Auth::user()->role_id == 1)
+                                @if (Auth::check() && Auth::user()->role_id == 1)
                                     <a href="{{ route('userInfo') }}" class="iq-sub-card iq-bg-primary-hover">
                                         <div class="media align-items-center">
                                             <div class="rounded iq-card-icon iq-bg-primary">

@@ -2,19 +2,17 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
+// use Illuminate\Support\Facades\Mail;
 
 class ContactRepository
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    public function store($data)
     {
-        //
-    }
-    public function getAllContact() {
-        $Contact = Contact::getAll();
-        return view('admin.contact.listContact', ['Contact' => $Contact]);
+        // Tìm liên hệ gần nhất dựa trên email
+        $recentContact = Contact::where('email', $data['email'])->latest('created_at')->first();
+        // Tạo hoặc cập nhật liên hệ
+        return Contact::create($data);
     }
 }

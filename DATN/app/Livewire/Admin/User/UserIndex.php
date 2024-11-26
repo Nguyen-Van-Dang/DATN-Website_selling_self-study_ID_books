@@ -86,7 +86,9 @@ class UserIndex extends Component
     }
 
     public function createUser()
-    {
+{
+    try {
+        // Tạo người dùng mới
         $user = new User();
         $user->name = $this->name;
         $user->phone = $this->phone;
@@ -94,9 +96,9 @@ class UserIndex extends Component
         $user->role_id = $this->role_id;
         $user->status = 0;
         $user->password = bcrypt($this->password);
-
         $user->save();
 
+        // Nếu có ảnh, thực hiện xử lý ảnh
         if ($this->image_url) {
             $folderId = '1E1KVm0X-uBr6vyWLPuzrRu4XGhnOJY2M';
             $filePath = $this->image_url->store('temp');
@@ -104,10 +106,24 @@ class UserIndex extends Component
             $user->save();
         }
 
-        session()->flash('message', 'Thêm tài khoản thành công');
-        $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
-        $this->isAddPopupOpen = false;
+        // Hiển thị thông báo thành công
+        session()->flash('success', 'Thêm tài khoản thành công');
+    } catch (\Illuminate\Database\QueryException $e) {
+        // Kiểm tra nếu lỗi do email đã tồn tại
+        if ($e->getCode() == 23000) { // Mã lỗi 23000 liên quan đến vi phạm ràng buộc
+            session()->flash('error', 'Email đã tồn tại!');
+        } else {
+            session()->flash('error', 'Có lỗi xảy ra. Vui lòng thử lại!');
+        }
     }
+
+    // Reset form sau khi xử lý
+    $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
+    $this->isAddPopupOpen = false;
+
+    return redirect()->back();
+}
+
     public function updateUser()
     {
         $user = User::find($this->editingId);

@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\PasswordChangedNotification;
 use Exception;
+use App\Mail\UserApprovedMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -20,21 +23,51 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
     /*-------------------Admin-----------------*/
+    public function index()
+    {
+        return $this->userRepository->getAllUser();
+    }
     public function getAllUserList()
     {
         return $this->userRepository->getAllUser();
     }
-    // public function changePassword(Request $request)
-    // {
-    //     try {
-    //         $this->userRepository->changePassword($request);
-    //         return back()->with('success', 'Đổi mật khẩu thành công');
-    //     } catch (ValidationException $e) {
-    //         return back()->withErrors($e->errors());
-    //     }
-    // }
+
 
     /*-------------------Client-----------------*/
+    public function changePassword(Request $request)
+    {
+        // Xác thực dữ liệu nhập vào
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        // Kiểm tra mật khẩu hiện tại bằng Bcrypt
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Mật khẩu hiện tại không đúng.']);
+        }
+
+        // Đổi mật khẩu
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Gửi email thông báo thay đổi mật khẩu cho người dùng
+        try {
+            // Gửi email cho người dùng
+            Mail::to($user->email)->send(new PasswordChangedNotification($user));
+
+            // Gửi email cho admin thông báo thay đổi mật khẩu của người dùng
+            $adminEmail = 'infobookstorefpt@gmail.com'; // Thay bằng địa chỉ email của admin
+            Mail::to($adminEmail)->send(new PasswordChangedNotification($user));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Mật khẩu đã được thay đổi, nhưng không thể gửi email thông báo.');
+        }
+
+        Auth::logout();
+        return redirect()->route('handleLogin')->with('success', 'Mật khẩu đã được thay đổi thành công. Vui lòng đăng nhập lại với mật khẩu mới.');
+    }
     public function HomeClient()
     {
         $teachers = User::where('role_id', 2)->with(['courses', 'books'])->get();
@@ -81,6 +114,7 @@ class UserController extends Controller
     // {
     //     return $this->userRepository->handleFacebookCallback($request);
     // }
+
     public function authProviderRedirect($provider)
     {
         if ($provider) {
@@ -131,4 +165,10 @@ class UserController extends Controller
         $user = auth::user();
         return view('client.user.userInformation', compact('user'));
     }
+
+
+
+
+    
+
 }
