@@ -57,11 +57,15 @@
                     </div>
                     <div class="form-group">
                         <label>Tác giả:</label>
-                        <select class="form-control" wire:model="courseAuthor" name="courseAuthor">
-                            <option selected="" disabled="">Chọn tác giả</option>
-                            @foreach ($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                            @endforeach
+                        <select class="form-control" wire:model="bookAuthor" name="bookAuthor">
+                            @if ($teachers)
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option selected value="{{ Auth::id() }}">{{ Auth::user()->name }}</option>
+                            @endif
                         </select>
                     </div>
                     <script>

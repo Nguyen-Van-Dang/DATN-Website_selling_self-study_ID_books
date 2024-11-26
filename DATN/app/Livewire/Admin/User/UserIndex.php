@@ -143,20 +143,7 @@ class UserIndex extends Component
         $this->isEditPopupOpen = false;
         return redirect()->with('success', 'Mật khẩu đã được thay đổi thành công. Vui lòng đăng nhập lại với mật khẩu mới.');
     }
-
-    //khôi phục
-    public function restoreUser($id)
-    {
-        $user = User::withTrashed()->find($id);
-
-        if ($user) {
-            $user->restore();
-            session()->flash('message', 'Người dùng đã được khôi phục thành công.');
-        } else {
-            session()->flash('error', 'Không tìm thấy người dùng.');
-        }
-    }
-
+    
     //xóa mềm
     public function deleted()
     {

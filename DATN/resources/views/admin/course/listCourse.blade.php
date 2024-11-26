@@ -10,16 +10,13 @@
     </div>
     <script>
         function openPopup(type) {
-            if (type === 'edit') {
-                document.getElementById("editCourseCateModal").classList.add("is-open");
-            } else(type === 'delete') {
+            if (type === 'delete') {
                 document.getElementById("deletedCourseModal").classList.add("is-open");
             }
             document.getElementById("overlay").style.display = "block";
         }
 
         function closePopup() {
-            document.getElementById("editCourseCateModal").classList.remove("is-open");
             document.getElementById("deletedCourseModal").classList.remove("is-open");
             document.getElementById("overlay").style.display = "none";
         }

@@ -53,12 +53,13 @@ class CourseAdd extends Component
     }
     public function mount()
     {
-        if (Auth::user()->id == 1) {
+        if (Auth::user()->role_id == 1) {
             $this->teachers = User::where('role_id', 2)->get();
         } else {
-            $this->teachers = collect(); // Trả về mảng rỗng nếu không phải admin
+            $this->teachers = [];
         }
     }
+    
     protected $rules = [
         'courseName' => 'required',
         'price' => 'required|numeric',
@@ -78,8 +79,7 @@ class CourseAdd extends Component
         $course->price = $this->price;
         $course->discount = $this->discount ?? 0;
         $course->description = $this->description;
-        $course->user_id = $this->courseAuthor;
-        $course->user_id = Auth::id();
+        $course->user_id = Auth::user()->role_id == 1 ? $this->courseAuthor : Auth::id();
         $course->status = Auth::user()->role_id == 1 ? 0 : 1;
         $course->save();
 

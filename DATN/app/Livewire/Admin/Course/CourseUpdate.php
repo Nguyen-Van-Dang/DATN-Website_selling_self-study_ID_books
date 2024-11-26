@@ -19,7 +19,6 @@ class CourseUpdate extends Component
     public $course, $teachers;
     public $documentFile, $lectureVideo;
     public $lectures = [], $newLectureName;
-    // public $newCourseImage, $newDocumentFile, $newLectureVideo;
     public $lectureCategories = [], $newLectureCategoryId, $newLectureCategoryName;
     public $courseId, $name, $price, $discount, $description, $courseImage, $courseAuthor, $courseUpdate;
 

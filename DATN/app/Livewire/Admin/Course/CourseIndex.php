@@ -11,9 +11,7 @@ class CourseIndex extends Component
 {
     use WithPagination;
 
-    public $editingId, $deletedId, $search = '';
-    public $isAddPopupOpen = false;
-    public $isEditPopupOpen = false;
+    public $deletedId, $search = '';
     public $isDeletePopupOpen = false;
     protected $paginationTheme = 'bootstrap';
 
@@ -24,16 +22,20 @@ class CourseIndex extends Component
             // Nếu người dùng là quản trị viên (role_id == 1)
             if (Auth::user()->role_id == 1) {
                 $Course = Course::withCount('lectures')
-                    ->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('id', $this->search)
-                    ->orWhereHas('user', function ($query) {
-                        $query->where('name', 'like', '%' . $this->search . '%');
+                    ->where('status', '!=', 1) // Loại bỏ các khóa học có status = 0
+                    ->where(function ($query) {
+                        $query->where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('id', $this->search)
+                            ->orWhereHas('user', function ($query) {
+                                $query->where('name', 'like', '%' . $this->search . '%');
+                            });
                     })
                     ->paginate(10);
             } else {
                 // Người dùng thông thường chỉ tìm kiếm khóa học của chính họ
                 $Course = Course::withCount('lectures')
                     ->where('user_id', Auth::id())
+                    ->where('status', '!=', 1) // Loại bỏ các khóa học có status = 0
                     ->where(function ($query) {
                         $query->where('name', 'like', '%' . $this->search . '%')
                             ->orWhere('id', $this->search)
@@ -46,10 +48,13 @@ class CourseIndex extends Component
         } else {
             // Nếu không có từ khóa tìm kiếm
             if (Auth::user()->role_id == 1) {
-                $Course = Course::withCount('lectures')->paginate(10);
+                $Course = Course::withCount('lectures')
+                    ->where('status', '!=', 1) // Loại bỏ các khóa học có status = 0
+                    ->paginate(10);
             } else {
                 $Course = Course::withCount('lectures')
                     ->where('user_id', Auth::id())
+                    ->where('status', '!=', 1) // Loại bỏ các khóa học có status = 0
                     ->paginate(10);
             }
         }
@@ -59,30 +64,18 @@ class CourseIndex extends Component
         return view('livewire.admin.course.course-index', compact('hasTempData'), [
             'Course' => $Course,
         ]);
-    }
-    
+    }    
 
     public function openPopup($type, $id = null)
     {
         $this->deletedId = null;
-        if ($type === 'add') {
-            $this->isAddPopupOpen = true;
-        } elseif ($type === 'edit' && $id) {
-            $this->editingId = $id;
-            $Course = Course::find($id);
-            if ($Course) {
-                // $this->name = $Course->name;
-                // $this->description = $Course->description;
-            }
-            $this->isEditPopupOpen = true;
-        } elseif ($type === 'delete' && $id) {
+        if ($type === 'delete' && $id) {
             $this->deletedId = $id;
             $this->isDeletePopupOpen = true;
         }
     }
     public function closePopup()
     {
-        $this->isEditPopupOpen = false;
         $this->isDeletePopupOpen = false;
     }
     public function deleted()
@@ -91,7 +84,7 @@ class CourseIndex extends Component
 
         if ($Course) {
             $Course->delete();
-            session()->flash('message', 'Danh mục đã được xóa thành công.');
+            toastr()->success('<p>Xóa khóa học thành công!</p>');
         } else {
             session()->flash('error', 'Danh mục không tồn tại.');
         }
