@@ -6,18 +6,23 @@
             <i class="fas fa-phone"></i>
             <input type="text" wire:model="phone" placeholder="Số điện thoại" />
         </div>
-        @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+        @error('phone')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
         <div class="input-field">
             <i class="fas fa-lock"></i>
             <input type="password" wire:model="password" placeholder="Mật khẩu" />
         </div>
-        @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+        @error('password')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
+        <span class="forgot-password">Bạn quên mật khẩu?</span>
         <div>
             <center>
                 <button class="btnn" type="submit">Đăng Nhập</button>
             </center>
         </div>
-        <p class="social-text" style="margin-left: 50px">Hoặc các mạng xã hội khác</p>
+        <p class="social-text text-center">Hoặc các mạng xã hội khác</p>
         <div class="social-media">
             <a href="{{ route('login-by-provider', ['provider' => 'facebook']) }}" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -36,4 +41,15 @@
             </a>
         </div>
     </form>
+    <style>
+        .forgot-password{
+            margin-left: 45%; 
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .forgot-password:hover{
+            transition: color 0.5s ease;
+            color: var(--iq-primary);
+        }
+    </style>
 </div>

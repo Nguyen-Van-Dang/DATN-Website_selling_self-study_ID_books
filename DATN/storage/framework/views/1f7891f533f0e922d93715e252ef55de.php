@@ -387,6 +387,7 @@ $__split = function ($name, $params = []) {
     return [$name, $params];
 };
 [$__name, $__params] = $__split('client.user.login-user', []);
+
 $__html = app('livewire')->mount($__name, $__params, 'lw-2095043844-0', $__slots ?? [], get_defined_vars());
 
 echo $__html;
