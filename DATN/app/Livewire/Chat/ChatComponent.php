@@ -23,11 +23,12 @@ use Illuminate\Support\Facades\Storage;
 class ChatComponent extends Component
 {
     use WithFileUploads;
-    public $groups, $selectedGroup,  $groupId, $messages, $myMessages, $otherMessages, $latestMessage, $latitude, $longitude, $members;
+    public $groups, $selectedGroup,  $groupId, $messages, $myMessages, $otherMessages, $latestMessage, $latitude, $longitude, $members, $currentUser;
     public $newMessage = '';
     public $searchTerm = '';
     public $searchMemberTerm = '';
     public $image = '';
+    public $groupChatId;
     protected $listeners = [
         'messageReceived' => 'updateMessages',
         'messageSent' => 'updateGroups',
@@ -69,17 +70,21 @@ class ChatComponent extends Component
     {
         $this->reset(['isAddPopupOpen', 'isEditPopupOpen', 'isDeletePopupOpen', 'groupName', 'groupDescription', 'deletedId', 'editingId', 'groupImage', 'groupCourse']);
     }
-    public function mount()
+    public function mount($groupChatId = null)
     {
+        $this->currentUser = Auth::user();
         $currentUserId = Auth::id();
         $isAddPopupOpen = false;
         $this->groups = ChatGroup::whereHas('participants', function ($query) use ($currentUserId) {
             $query->where('user_id', $currentUserId);
         })->get();
 
-        if ($this->groups->isNotEmpty()) {
+        if ($groupChatId) {
+            $this->selectGroup($groupChatId);
+        } else {
             $this->selectGroup($this->groups->first()->id);
         }
+
         $this->loadCourses($currentUserId);
         $this->loadGroups();
     }
@@ -143,8 +148,8 @@ class ChatComponent extends Component
 
         $participant = $this->selectedGroup->participants()->where('user_id', Auth::id())->first();
 
-        if (!$participant || $participant->status === 1) { // 1: bị chặn
-            $this->cantSend = true; // Cập nhật trạng thái
+        if (!$participant || $participant->status === 1) { 
+            $this->cantSend = true; 
             return;
         }
 

@@ -9,6 +9,7 @@ use App\Models\ChatGroup;
 use Illuminate\Support\Facades\Auth;
 use app\Events\NewMessageSent;
 use App\Models\ChatParticipant;
+use App\Models\EnrollCourse;
 
 class ChatController extends Controller
 {
@@ -17,15 +18,54 @@ class ChatController extends Controller
     {
         $this->ChatRepository = $chatRepository;
     }
-    public function index()
+    public function index($id = null)
     {
         $userId = Auth::id();
         $hasGroups = ChatParticipant::where('user_id', $userId)->exists();
         if (!$hasGroups) {
             return view('client.chat.notfound');
         }
-        return view('client.chat.chatpage');
+        return view('client.chat.chatpage', compact('id'));
     }
+    public function show($id = null)
+    {
+        // kiểm tra nhóm chat có tồn tại không
+        $chatGroup = ChatGroup::find($id);
+        if (!$chatGroup) {
+            return redirect()->back()->with('error', 'Nhóm chat không tồn tại');
+        }
+
+        $currentUserId = Auth::id();
+
+        // kiểm tra người dùng đã tham gia nhóm chat chưa
+        $participant = ChatParticipant::where('group_id', $id)
+            ->where('user_id', $currentUserId)
+            ->first();
+
+        if ($participant) {
+            // người dùng đã tham gia nhóm, cho phép truy cập
+            return view('client.chat.chatpage', compact('id'));
+        }
+
+        // kiểm tra người dùng đã đăng ký khoá học liên quan đến nhóm chat chưa
+        $hasEnrolled = EnrollCourse::where('user_id', $currentUserId)
+            ->where('course_id', $chatGroup->course_id)
+            ->exists();
+
+        if ($hasEnrolled) {
+            // tạo mới thành viên 
+            ChatParticipant::create([
+                'group_id' => $id,
+                'user_id' => $currentUserId,
+                'status' => 0,
+            ]);
+
+            return view('client.chat.chatpage', compact('id'))->with('success', 'Đã tham gia nhóm chat');
+        }
+
+        return redirect()->back()->with('error', 'Bạn không có quyền truy cập nhóm chat này');
+    }
+
     public function leaveGroup($id)
     {
         $group = ChatGroup::find($id);

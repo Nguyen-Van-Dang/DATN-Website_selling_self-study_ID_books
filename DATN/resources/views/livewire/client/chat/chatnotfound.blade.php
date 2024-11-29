@@ -67,12 +67,13 @@
                                     <div class="form-group">
                                         <label>Khoá học đại diện</label>
                                         <select class="form-control" wire:model="groupCourse">
-                                            <option value="" selected disabled>Chọn khoá học</option>
+                                            <option value="" selected>Chọn khoá học</option>
                                             @foreach ($courses as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}
-                                                </option>
+                                                <option value="{{ $item->id }}"> {{ $item->id }} /
+                                                    {{ $item->name }}</option>
                                             @endforeach
                                         </select>
+
                                         @error('groupCourse')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

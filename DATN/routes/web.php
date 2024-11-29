@@ -287,8 +287,12 @@ Route::middleware([CheckLoggedIn::class])->group(function () {
     Route::prefix('chat')->name('chat')->group(function () {
         Route::controller(ChatController::class)->group(function () {
             Route::get('/', 'index');
+            Route::get('/{groupChatId}',  'show')->name('chat.show');
         });
     });
+});
+Route::middleware([CheckLoggedIn::class])->group(function () {
+    Route::get('chat/{id}', [ChatController::class, 'show'])->name('chat.show');
 });
 Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup'])->name('leaveGroup');
 

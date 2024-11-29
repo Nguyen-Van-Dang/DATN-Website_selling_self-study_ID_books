@@ -2,7 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\ChatGroup;
 use App\Models\Course;
+use App\Models\Exam;
+use App\Models\ExamResult;
 use App\Models\PaymentMethods;
 use App\Models\User;
 use App\Models\Lecture;
@@ -71,7 +74,12 @@ class CourseRepository
         $lecturesCountByCategory = $course->lectures->groupBy('lecture_categories_id')->map(function ($lectures) {
             return $lectures->count();
         });
-
-        return view('client.course.courseDetail', compact('course', 'lecturesCountByCategory', 'user', 'paymentMethods'));
+        $chatGroup = ChatGroup::with('course')->findOrFail($course->id);
+        $exams = Exam::where('course_id', $course->id)
+            ->with(['results' => function ($query) {
+                $query->latest()->limit(1);
+            }])
+            ->get();
+        return view('client.course.courseDetail', compact('course', 'lecturesCountByCategory', 'user', 'paymentMethods', 'chatGroup', 'exams'));
     }
 }

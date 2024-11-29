@@ -22,13 +22,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/reals.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/flasher/css/flasher.css') }}">
+    <script src="{{ asset('vendor/flasher/js/flasher.js') }}"></script>
 </head>
 
 <body>
 
     <div class="wrapper">
         <div class="iq-top-navbar">
-            <x-client.header></x-client.header>
+            <livewire:component.render-header />
         </div>
         @yield('content')
 
