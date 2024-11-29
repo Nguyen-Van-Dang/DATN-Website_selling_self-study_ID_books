@@ -66,15 +66,21 @@ class CourseRepository
     //client
     public function getCourseById($id)
     {
+
         $paymentMethods = PaymentMethods::all();
         $course = Course::with(['lectures.lectureCategory'])->findOrFail($id);
+
         $userId = $course->user_id;
         $course->increment('views');
         $user = User::with('courses')->findOrFail($userId);
         $lecturesCountByCategory = $course->lectures->groupBy('lecture_categories_id')->map(function ($lectures) {
             return $lectures->count();
         });
-        $chatGroup = ChatGroup::with('course')->findOrFail($course->id);
+
+        $chatGroup = ChatGroup::where('course_id', $course->id)->first();
+        if ($chatGroup) {
+            $chatGroup = '';
+        }
         $exams = Exam::where('course_id', $course->id)
             ->with(['results' => function ($query) {
                 $query->latest()->limit(1);
