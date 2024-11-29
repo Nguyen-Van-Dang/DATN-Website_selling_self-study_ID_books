@@ -18,7 +18,6 @@ class CourseFactory extends Factory
             'price' => $this->faker->randomFloat(2, 100, 1000),
             'discount' => $this->faker->numberBetween(0, 50),
             'description' => $this->faker->paragraph(3),
-            'image_url' => $this->faker->imageUrl(),
             'status' => 0,
             'user_id' => User::inRandomOrder()->first()->id,
             'created_at' => now(),

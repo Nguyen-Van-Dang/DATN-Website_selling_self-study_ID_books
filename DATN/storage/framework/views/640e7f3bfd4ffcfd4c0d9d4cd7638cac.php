@@ -34,7 +34,7 @@
                             <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $Course; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($item->id); ?></td>
-                                    <td style="width: 10%;">
+                                    <td>
                                         <?php
                                             $firstImage = $item->images->first();
                                         ?>

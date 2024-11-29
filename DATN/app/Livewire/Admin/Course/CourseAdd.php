@@ -9,15 +9,16 @@ use App\Models\Lecture;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
-use App\Services\GoogleDriveService;
 use App\Jobs\UploadFileJob;
 use App\Models\User;
-
+use App\Models\ClassModel;
+use App\Models\Subject;
 
 class CourseAdd extends Component
 {
     use WithFileUploads;
-    public $teachers;
+    public $subject_id, $class_id;
+    public $teachers, $subjects, $classes;
     public $courseAuthor;
     public $courseId;
     public $courseName;
@@ -58,19 +59,9 @@ class CourseAdd extends Component
         } else {
             $this->teachers = [];
         }
+        $this->subjects = Subject::all();  // Lấy tất cả môn học
+    $this->classes = ClassModel::all();  // Lấy tất cả lớp
     }
-    
-    protected $rules = [
-        'courseName' => 'required',
-        'price' => 'required|numeric',
-        'description' => 'required',
-        'image_url' => 'required',
-        'discount' => 'nullable|numeric',
-        'document_url' => 'required',
-        'lectureCategories.*' => 'required',
-        'lectures.*' => 'required',
-        'lectureVideo.*' => 'required',
-    ];
     public function storeCourse()
     {
         // $this->validate();
@@ -81,6 +72,8 @@ class CourseAdd extends Component
         $course->description = $this->description;
         $course->user_id = Auth::user()->role_id == 1 ? $this->courseAuthor : Auth::id();
         $course->status = Auth::user()->role_id == 1 ? 0 : 1;
+        $course->subject_id = $this->subject_id;
+        $course->class_id = $this->class_id;
         $course->save();
 
         $document = new Documents;
@@ -135,4 +128,15 @@ class CourseAdd extends Component
             'lectures', 'lectureVideo'
         ]);
     }
+    protected $rules = [
+        'courseName' => 'required',
+        'price' => 'required|numeric',
+        'description' => 'required',
+        'image_url' => 'required',
+        'discount' => 'nullable|numeric',
+        'document_url' => 'required',
+        'lectureCategories.*' => 'required',
+        'lectures.*' => 'required',
+        'lectureVideo.*' => 'required',
+    ];
 }

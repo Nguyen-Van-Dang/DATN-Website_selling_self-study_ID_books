@@ -49,4 +49,13 @@ class Course extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class, 'class_id');
+    }
+    
 }

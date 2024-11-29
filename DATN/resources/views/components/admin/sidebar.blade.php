@@ -19,15 +19,11 @@
             <li class="{{ request()->routeIs('homeAdmin') ? 'active' : '' }}">
                 <a href="{{ route('homeAdmin') }}"><i class="ri-dashboard-line"></i> <span>Bảng Điều Khiển</span></a>
             </li>
-            @if (auth()->check() && Auth::user()->role_id != 2)
+            @if (auth()->check() && Auth::user()->role_id == 1)
                 <li class="{{ request()->routeIs('listUser') ? 'active' : '' }}">
                     <a href="{{ route('listUser') }}"><i class="ri-user-line"></i> <span>Tài Khoản</span></a>
                 </li>
             @endif
-            <li class="{{ request()->routeIs('listCategoryCourse') ? 'active' : '' }}">
-                <a href="{{ route('listCategoryCourse') }}"><i class="ri-folders-line"></i> <span>Combo Khóa
-                        Học</span></a>
-            </li>
             <li class="{{ request()->routeIs('admin.khoa-hoc.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.khoa-hoc.index') }}"><i class="ri-book-line"></i> <span>Khóa Học</span></a>
             </li>
@@ -52,20 +48,16 @@
             <li class="{{ request()->routeIs('listOrder') ? 'active' : '' }}">
                 <a href="{{ route('listOrder') }}"><i class="ri-shopping-cart-line"></i> <span>Đơn Hàng</span></a>
             </li>
-            <li class="{{ request()->routeIs('listNotificationUser') ? 'active' : '' }}">
-                <a href="{{ route('listNotificationUser') }}"><i class="ri-notification-3-line"></i> <span>Thông
-                        Báo</span></a>
-            </li>
-            @if (auth()->check() && Auth::user()->role_id != 2)
+            @if (auth()->check() && Auth::user()->role_id == 1)
                 <li class="{{ request()->routeIs('listContact') ? 'active' : '' }}">
                     <a href="{{ route('listContact') }}"><i class="ri-mail-line"></i> <span>Liên Hệ</span></a>
                 </li>
             @endif
-            @if (auth()->check() && Auth::user()->role_id = 1)
-            <li class="{{ request()->routeIs('approve') ? 'active' : '' }}">
-                <a href="{{ route('approve') }}"><i class="ri-check-line"></i> <span>Phê duyệt</span></a>
-            </li>
-        @endif
+            @if (auth()->check() && (Auth::user()->role_id == 1))
+                <li class="{{ request()->routeIs('approve') ? 'active' : '' }}">
+                    <a href="{{ route('approve') }}"><i class="ri-mail-line"></i> <span>Phê duyệt</span></a>
+                </li>
+            @endif
             <li class="{{ request()->routeIs('bin') ? 'active' : '' }}">
                 <a href="{{ route('bin') }}"><i class="ri-delete-bin-5-line"></i> <span>Thùng
                         Rác</span></a>

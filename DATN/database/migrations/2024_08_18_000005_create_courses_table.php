@@ -21,6 +21,8 @@ return new class extends Migration
             $table->boolean('status')->nullable()->default(1);
             $table->unsignedBigInteger('views')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('subject_id')->nullable()->constrained('subjects')->onDelete('set null');
+            $table->foreignId('class_id')->nullable()->constrained('classes')->onDelete('set null');            
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +33,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::table('courses', function (Blueprint $table) {
+            $table->dropForeign(['subject_id']);
+            $table->dropColumn('subject_id');
+            $table->dropForeign(['class_id']);
+            $table->dropColumn('class_id');
+        });
     }
 };

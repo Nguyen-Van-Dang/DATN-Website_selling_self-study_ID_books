@@ -27,8 +27,7 @@
                                     @if ($image_url)
                                         <img id="image-placeholder" src="{{ $image_url->temporaryUrl() }}"
                                             alt="Click to choose image" class="img-thumbnail"
-                                            style="cursor: pointer; width: 100%; max-width: 300px;"
-                                            name="image_url">
+                                            style="cursor: pointer; width: 100%; max-width: 300px;" name="image_url">
                                     @else
                                         <img id="image-placeholder"
                                             src="{{ asset('assets/images/book/user/course.jpg') }}"
@@ -47,26 +46,60 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Chọn khóa học PDF:</label>
+                                <div class="custom-file" wire:ignore>
+                                    <input wire:model="document_url" type="file" class="custom-file-input"
+                                        id="pdfInput" accept=".pdf,.doc,.docx" onchange="updateFileName()">
+                                    <label class="custom-file-label" for="pdfInput" id="pdfLabel">Chọn file</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Tác giả:</label>
+                                <select class="form-control" wire:model="courseAuthor">
+                                    @if ($teachers)
+                                    <option value="">Chọn tác giả</option>
 
-                    <div class="form-group">
-                        <label>Chọn khóa học PDF:</label>
-                        <div class="custom-file" wire:ignore>
-                            <input wire:model="document_url" type="file" class="custom-file-input" id="pdfInput" accept=".pdf,.doc,.docx" onchange="updateFileName()">
-                            <label class="custom-file-label" for="pdfInput" id="pdfLabel">Chọn file</label>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}"
+                                                {{ $teacher->id == $courseAuthor ? 'selected' : '' }}>
+                                                {{ $teacher->name }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        <option selected value="{{ Auth::id() }}">{{ Auth::user()->name }}</option>
+                                    @endif
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Tác giả:</label>
-                        <select class="form-control" wire:model="bookAuthor" name="bookAuthor">
-                            @if ($teachers)
-                                @foreach ($teachers as $teacher)
-                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}
-                                    </option>
-                                @endforeach
-                            @else
-                                <option selected value="{{ Auth::id() }}">{{ Auth::user()->name }}</option>
-                            @endif
-                        </select>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="class">Lớp học:</label>
+                                <select wire:model="class_id" class="form-control" required>
+                                    <option value="">Chọn lớp học</option>
+                                    @foreach ($classes as $class)
+                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="subject">Môn học</label>
+                                <select wire:model="subject_id" class="form-control" required>
+                                    <option value="">Chọn môn học:</option>
+                                    @foreach ($subjects as $subject)
+                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <script>
                         function updateFileName() {
@@ -76,7 +109,6 @@
                             label.textContent = fileName;
                         }
                     </script>
-                    
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label>Giá khóa học:</label>
@@ -89,7 +121,8 @@
                                 placeholder="Nhập giá giảm khóa học...">
                         </div>
                     </div>
-                    <button wire:click="storeCourse" class="btn btn-primary">{{ Auth::user()->id == 1 ? 'Thêm khóa học' : 'Gửi phê duyệt' }}</button>
+                    <button wire:click="storeCourse"
+                        class="btn btn-primary">{{ Auth::user()->id == 1 ? 'Thêm khóa học' : 'Gửi phê duyệt' }}</button>
                     <button type="reset" class="btn btn-danger">Xóa bỏ</button>
                 </div>
             </div>
@@ -114,7 +147,8 @@
                                         type="text" class="form-control" placeholder="Nhập tên bài giảng...">
                                     {{-- <input wire:model.defer="lectureVideo.{{ $chapterIndex }}.{{ $lectureIndex }}"
                                         type="file" class="form-control mt-2"> --}}
-                                        <input wire:model.lazy="lectureVideo.{{ $chapterIndex }}.{{ $lectureIndex }}" type="file" class="form-control mt-2">
+                                    <input wire:model.lazy="lectureVideo.{{ $chapterIndex }}.{{ $lectureIndex }}"
+                                        type="file" class="form-control mt-2">
 
                                     <button wire:click="removeLecture({{ $chapterIndex }}, {{ $lectureIndex }})"
                                         class="btn btn-danger mt-2">Xóa Bài Giảng</button>

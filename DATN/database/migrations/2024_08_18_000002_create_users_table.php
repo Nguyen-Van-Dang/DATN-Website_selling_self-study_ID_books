@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('cascade');
             $table->boolean('active')->default(0)->nullable();
             $table->boolean('sex')->nullable();
-            $table->boolean('status')->nullable()->default(1);
+            $table->boolean('status')->nullable()->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -15,17 +15,20 @@ use Illuminate\Support\Facades\Auth;
 class CourseUpdate extends Component
 {
     use WithFileUploads;
-
+    public $subjects, $classes;
+    public $subjectId, $classId;
     public $course, $teachers;
     public $documentFile, $lectureVideo;
     public $lectures = [], $newLectureName;
     public $lectureCategories = [], $newLectureCategoryId, $newLectureCategoryName;
     public $courseId, $name, $price, $discount, $description, $courseImage, $courseAuthor, $courseUpdate;
 
-    public function mount($course, $teachers, $lectureCategories)
+    public function mount($course, $subjects, $classes, $teachers, $lectureCategories)
     {
         $this->course = $course;
         $this->teachers = $teachers;
+        $this->subjects = $subjects;
+        $this->classes = $classes;
         $this->lectureCategories = $lectureCategories;
 
         $this->courseId = $course->id;
@@ -34,6 +37,9 @@ class CourseUpdate extends Component
         $this->discount = $course->discount;
         $this->description = $course->description;
         $this->courseAuthor = $course->user_id;
+
+        $this->subjectId = $course->subject_id;
+        $this->classId = $course->class_id;
 
         $this->getOldImage($course);
         $this->getOldFile($course);
@@ -64,18 +70,15 @@ class CourseUpdate extends Component
         if (filter_var($this->courseImage, FILTER_VALIDATE_URL)) {
             $this->courseImage = null;
         }
-
-        // Cập nhật thông tin khóa học
         $course = Course::findOrFail($this->courseId);
-        $course->update([
-            'name' => $this->name,
-            'price' => $this->price,
-            'discount' => $this->discount,
-            'description' => $this->description,
-            'user_id' => $this->courseAuthor,
-        ]);
+        $course->name = $this->name;
+        $course->price = $this->price;
+        $course->discount = $this->discount;
+        $course->description = $this->description;
+        $course->user_id = $this->courseAuthor;
+        $course->subject_id = $this->subjectId  ?: null;
+        $course->class_id = $this->classId  ?: null;
 
-        // Cập nhật hình ảnh khóa học
         if ($this->courseImage instanceof \Illuminate\Http\UploadedFile) {
             $oldImage = $course->images()->where('image_name', 'thumbnail')->first();
             $folderId = '1XrcghzBo6Y5bkV-Iasbim_ARS65ZK42R'; // Thư mục lưu hình ảnh
@@ -87,7 +90,6 @@ class CourseUpdate extends Component
                 UploadFileJob::dispatch($course, $folderId, $imagePath, 'thumbnail');
             }
         }
-
         if ($this->documentFile instanceof \Illuminate\Http\UploadedFile) {
             $oldFile = $course->images()->where('image_name', 'document')->first();
             $folderId = '1G88HQ3NeBXuoIW3QbGDFQCegS73O72g1'; // Thư mục lưu trữ file PDF
@@ -99,8 +101,6 @@ class CourseUpdate extends Component
                 UploadFileJob::dispatch($course, $folderId, $filePath, 'document');
             }
         }
-
-        // Cập nhật hoặc thêm mới danh mục bài giảng và bài giảng
         foreach ($this->lectureCategories as $chapterData) {
             // Nếu có ID, cập nhật danh mục
             if (!empty($chapterData['id'])) {
@@ -170,6 +170,8 @@ class CourseUpdate extends Component
                 }
             }
         }
+        $course->save();
+
         return redirect()->route('admin.khoa-hoc.edit', ['khoa_hoc' => $course->id])
             ->with('success', 'Cập nhật khóa học thành công!');
     }

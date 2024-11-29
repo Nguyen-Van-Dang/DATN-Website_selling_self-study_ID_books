@@ -6,6 +6,8 @@ use App\Models\Course;
 use App\Models\PaymentMethods;
 use App\Models\User;
 use App\Models\Lecture;
+use App\Models\ClassModel;
+use App\Models\Subject;
 use App\Models\LectureCategories;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,30 +23,25 @@ class CourseRepository
     // admin
     public function edit($id)
     {
-        try {
-            $course = Course::with([
-                'user',
-                'documents',
-                'lectures.LectureCategories'
-            ])->findOrFail($id);
-        
-            $user = $course->user;
-            $lectureCategories = LectureCategories::all();
-        
-            // Lấy danh sách giáo viên chỉ khi người dùng là admin (ID = 1)
-            if (Auth::user()->role_id == 1) {
-                $teachers = User::where('role_id', 2)->get();
-            } else {
-                // Nếu là giáo viên, chỉ lấy thông tin của chính người dùng
-                $teachers = User::where('id', Auth::id())->get();
-            }
-        
-            // Truyền dữ liệu vào component Livewire
-            return view('admin.course.updateCourse', compact('course', 'user', 'lectureCategories', 'teachers'));
-    
-        } catch (\Exception $e) {
-            return redirect()->route('admin.khoa-hoc.index')->with('error', 'Không thể tìm thấy khóa học.');
+        $course = Course::with([
+            'user',
+            'documents',
+            'lectures.LectureCategories'
+        ])->findOrFail($id);
+
+        $user = $course->user;
+        $lectureCategories = LectureCategories::all();
+        $subjects = Subject::all();
+        $classes = ClassModel::all();
+        // Lấy danh sách giáo viên chỉ khi người dùng là admin (ID = 1)
+        if (Auth::user()->role_id == 1) {
+            $teachers = User::where('role_id', 2)->get();
+        } else {
+            // Nếu là giáo viên, chỉ lấy thông tin của chính người dùng
+            $teachers = User::where('id', Auth::id())->get();
         }
+        // Truyền dữ liệu vào component Livewire
+        return view('admin.course.updateCourse', compact('course', 'user', 'lectureCategories', 'teachers', 'subjects', 'classes'));
     }
     public function create()
     {
@@ -77,5 +74,4 @@ class CourseRepository
 
         return view('client.course.courseDetail', compact('course', 'lecturesCountByCategory', 'user', 'paymentMethods'));
     }
-    
 }

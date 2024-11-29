@@ -19,15 +19,11 @@
             <li class="<?php echo e(request()->routeIs('homeAdmin') ? 'active' : ''); ?>">
                 <a href="<?php echo e(route('homeAdmin')); ?>"><i class="ri-dashboard-line"></i> <span>Bảng Điều Khiển</span></a>
             </li>
-            <?php if(auth()->check() && Auth::user()->role_id != 2): ?>
+            <?php if(auth()->check() && Auth::user()->role_id == 1): ?>
                 <li class="<?php echo e(request()->routeIs('listUser') ? 'active' : ''); ?>">
                     <a href="<?php echo e(route('listUser')); ?>"><i class="ri-user-line"></i> <span>Tài Khoản</span></a>
                 </li>
             <?php endif; ?>
-            <li class="<?php echo e(request()->routeIs('listCategoryCourse') ? 'active' : ''); ?>">
-                <a href="<?php echo e(route('listCategoryCourse')); ?>"><i class="ri-folders-line"></i> <span>Combo Khóa
-                        Học</span></a>
-            </li>
             <li class="<?php echo e(request()->routeIs('admin.khoa-hoc.*') ? 'active' : ''); ?>">
                 <a href="<?php echo e(route('admin.khoa-hoc.index')); ?>"><i class="ri-book-line"></i> <span>Khóa Học</span></a>
             </li>
@@ -52,20 +48,16 @@
             <li class="<?php echo e(request()->routeIs('listOrder') ? 'active' : ''); ?>">
                 <a href="<?php echo e(route('listOrder')); ?>"><i class="ri-shopping-cart-line"></i> <span>Đơn Hàng</span></a>
             </li>
-            <li class="<?php echo e(request()->routeIs('listNotificationUser') ? 'active' : ''); ?>">
-                <a href="<?php echo e(route('listNotificationUser')); ?>"><i class="ri-notification-3-line"></i> <span>Thông
-                        Báo</span></a>
-            </li>
-            <?php if(auth()->check() && Auth::user()->role_id != 2): ?>
+            <?php if(auth()->check() && Auth::user()->role_id == 1): ?>
                 <li class="<?php echo e(request()->routeIs('listContact') ? 'active' : ''); ?>">
                     <a href="<?php echo e(route('listContact')); ?>"><i class="ri-mail-line"></i> <span>Liên Hệ</span></a>
                 </li>
             <?php endif; ?>
-            <?php if(auth()->check() && Auth::user()->role_id = 1): ?>
-            <li class="<?php echo e(request()->routeIs('approve') ? 'active' : ''); ?>">
-                <a href="<?php echo e(route('approve')); ?>"><i class="ri-check-line"></i> <span>Phê duyệt</span></a>
-            </li>
-        <?php endif; ?>
+            <?php if(auth()->check() && (Auth::user()->role_id == 1)): ?>
+                <li class="<?php echo e(request()->routeIs('approve') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('approve')); ?>"><i class="ri-mail-line"></i> <span>Phê duyệt</span></a>
+                </li>
+            <?php endif; ?>
             <li class="<?php echo e(request()->routeIs('bin') ? 'active' : ''); ?>">
                 <a href="<?php echo e(route('bin')); ?>"><i class="ri-delete-bin-5-line"></i> <span>Thùng
                         Rác</span></a>

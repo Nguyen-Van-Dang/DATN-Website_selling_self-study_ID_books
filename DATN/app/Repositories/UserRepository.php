@@ -36,35 +36,38 @@ class UserRepository
         $request->session()->regenerateToken();
         return redirect('/')->with('error', 'Bạn đã đăng xuất thành công');
     }
-    //đăng nhập bằng sdt
-    public function loginUser($data)
-    {
-        $messages = [
-            'phone.required' => 'Xin vui lòng nhập số điện thoại',
-            'phone.regex' => 'Xin vui lòng nhập số điện thoại hợp lệ (10 số)',
-            'password.required' => 'Xin vui lòng nhập mật khẩu',
-        ];
+    // // đăng nhập tài khoản
+    // public function loginUser($data)
+    // {
+    //     $messages = [
+    //         'phone.required' => 'Xin vui lòng nhập số điện thoại',
+    //         'phone.regex' => 'Xin vui lòng nhập số điện thoại hợp lệ (10 số)',
+    //         'password.required' => 'Xin vui lòng nhập mật khẩu',
+    //     ];
 
-        $validator = Validator::make($data->all(), [
-            'phone' => ['required'],
-            'password' => 'required',
-        ], $messages);
+    //     $validator = Validator::make($data->all(), [
+    //         'phone' => ['required'],
+    //         'password' => 'required',
+    //     ], $messages);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    //     if ($validator->fails()) {
+    //         return back()->withErrors($validator)->withInput();
+    //     }
 
-        $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
-        
-        if (!$user || !password_verify($data->password, $user->password)) {
-            return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
-        }
+    //     $user = User::where('phone', $data->phone)->where('loginType', 1)->first();
 
-        Auth::login($user);
-        toastr()->success('<p;">Bạn đã đăng nhập thành công!</p>');
+    //     if (!$user || !password_verify($data->password, $user->password)) {
+    //         return redirect('/')->withErrors(['login' => 'Số điện thoại hoặc mật khẩu sai'])->withInput();
+    //     }
 
-        return redirect()->intended('/');
-    }
+    //     Auth::login($user);
+    //     return redirect('/')->with('success', 'Bạn đã đăng nhập thành công');
+    // }
+    // //đăng ký tài khoản
+    // public function registerUser($data)
+    // {
+    //     return view('client.user.registerUser');
+    // }
     // đăng nhập bằng Zalo
     public function handleZaloCallback(\Illuminate\Http\Request $request)
     {
@@ -166,7 +169,6 @@ class UserRepository
             return redirect('homeClient')->withErrors(['msg' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
         }
     }
-
     //hiển thịt tất cả tài khoản user bên admin
     public function getAllUser()
     {
@@ -178,7 +180,6 @@ class UserRepository
         $user = User::findOrFail($id);
         return $user->delete();
     }
-
     public function getDeletedUser()
     {
         return view('admin.user.deletedUser');

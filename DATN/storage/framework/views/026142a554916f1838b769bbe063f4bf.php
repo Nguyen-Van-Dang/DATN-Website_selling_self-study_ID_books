@@ -9,11 +9,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/typography.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/responsive.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/blur-effect.css')); ?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -105,8 +105,7 @@
     <script src="<?php echo e(asset('assets/js/style-customizer.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/js/chart-custom.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/js/custom.js')); ?>"></script>
-
-
+    <script src="<?php echo e(asset('assets/js/blur-effect.js')); ?>"></script>
 </body>
 
 </html>
