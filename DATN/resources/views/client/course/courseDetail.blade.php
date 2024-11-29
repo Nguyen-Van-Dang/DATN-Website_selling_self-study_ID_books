@@ -83,13 +83,43 @@
                                         <div class="panel-body" style="margin-left: 45px">
                                             <ul class="list-group list-group-flush">
                                                 @foreach ($lectures as $lecture)
-                                                    <li class="list-group-item py-0">                 
-                                                        <a href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
-                                                            {{ $lecture->name }}
-                                                        </a>                                                                                              
-                                                        <!-- Liên kết đến bài giảng -->
                                                     <li class="list-group-item py-0">
-                                                        <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
+                                                        @auth
+                                                            <a
+                                                                href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
+                                                                {{ $lecture->name }}
+                                                            </a>
+                                                        @else
+                                                            <!-- Trigger -->
+                                                            <a href="#" data-bs-toggle="modal"
+                                                                data-bs-target="#loginModal">
+                                                                {{ $lecture->name }}
+                                                            </a>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="loginModal" tabindex="-1"
+                                                                aria-labelledby="loginModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="loginModalLabel">Thông
+                                                                                báo</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close" style="background: none; border: none;">X</button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Bạn cần đăng nhập để xem bài giảng này.
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button id="open-popup-btn" class="btn btn-primary">Đăng
+                                                                                nhập</button>
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Đóng</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endauth
                                                     </li>
                                                 @endforeach
                                             </ul>

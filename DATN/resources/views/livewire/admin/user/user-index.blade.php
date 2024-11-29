@@ -95,10 +95,18 @@
                                                 wire:click="openPopup('edit', {{ $item->id }})">
                                                 <i class="ri-pencil-line"></i>
                                             </a>
-                                            <a class="bg-primary text-white" data-toggle="tooltip" title="Xóa"
-                                                wire:click="openPopup('delete', {{ $item->id }})">
-                                                <i class="ri-delete-bin-line"></i>
-                                            </a>
+                                            @if ($item->id == 1)
+                                                <a class="bg-primary text-white" data-toggle="tooltip"
+                                                    title="Không thể xóa người quản trị">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </a>
+                                            @else
+                                                <a class="bg-primary text-white" data-toggle="tooltip" title="Xóa"
+                                                    wire:click.prevent="openPopup('delete', {{ $item->id }})">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </a>
+                                            @endif
+
                                         </div>
                                     </td>
                                 </tr>
@@ -138,11 +146,26 @@
                                         <label>Tên tài khoản:</label>
                                         <input wire:model="name" type="text" class="form-control"
                                             placeholder="Nhập tên tài khoản...">
+                                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="form-group">
                                         <label>Mật khẩu:</label>
                                         <input wire:model="password" type="password" class="form-control"
                                             placeholder="Nhập mật khẩu...">
+                                            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Giới tính:
+                                            <a data-toggle="tooltip"
+                                                title="Nếu là tài khoản học sinh thì không cần chọn giới tính">
+                                                <i class="ri-information-line"></i>
+                                            </a>
+                                        </label>
+                                        <select class="form-control" wire:model="sex">
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="1">Thầy</option>
+                                            <option value="2">Cô</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -153,18 +176,19 @@
                                             @if ($image_url)
                                                 <img id="image-placeholder" src="{{ $image_url->temporaryUrl() }}"
                                                     alt="Click to choose image" class="img-thumbnail"
-                                                    style="cursor: pointer; width: 100%; max-width: 140px;"
+                                                    style="cursor: pointer; width: 100%;"
                                                     name="image_url">
                                             @else
                                                 <img id="image-placeholder"
                                                     src="{{ asset('assets/images/book/user/thub.jpg') }}"
                                                     alt="Click to choose image" class="img-thumbnail"
-                                                    style="cursor: pointer; width: 100%; max-width: 140px;">
+                                                    style="cursor: pointer; width: 100%;">
                                             @endif
                                             <input type="file" class="custom-file-input"
                                                 accept="image/png, image/jpeg, image/jpg" wire:model="image_url"
                                                 id="image-input" style="display: none;">
                                         </div>
+                                        @error('image_url') <span class="text-danger">{{ $message }}</span> @enderror
                                         <script>
                                             document.getElementById('image-placeholder').addEventListener('click', function() {
                                                 document.getElementById('image-input').click();
@@ -174,25 +198,21 @@
 
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Mật khẩu:</label>
-                                <input wire:model="password" type="password" class="form-control"
-                                    placeholder="Nhập mật khẩu...">
-                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Phone:</label>
-                                        <input wire:model="phone" type="text" class="form-control"
+                                        <input wire:model="phone" type="number" class="form-control"
                                             placeholder="Nhập số điện thoại...">
+                                            @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Email:</label>
-                                        <input wire:model="email" type="email" class="form-control"
+                                        <input wire:model="email" type="text" class="form-control"
                                             placeholder="Nhập email...">
+                                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +221,7 @@
                                     <div class="form-group">
                                         <label>Vai trò:</label>
                                         <select class="form-control" wire:model="role_id">
-                                            <option value="1" selected>Admin</option>
+                                            <option value="1">Admin</option>
                                             <option value="2">Giáo viên</option>
                                             <option value="3">Học sinh</option>
                                         </select>
@@ -211,14 +231,14 @@
                                     <div class="form-group">
                                         <label>Trạng thái:</label>
                                         <select class="form-control" wire:model="status">
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
+                                            <option value="0">Active</option>
+                                            <option value="1">Inactive</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Thêm tài khoản</button>
-                            <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
+                            <button type="reset" class="btn btn-danger">Xóa</button>
                         </form>
                     </div>
                 </div>
@@ -245,6 +265,7 @@
                                         <label>Tên tài khoản:</label>
                                         <input wire:model="nameAdd" type="text" class="form-control"
                                             placeholder="Nhập tên tài khoản...">
+                                            @error('nameAdd') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="form-group">
@@ -260,6 +281,8 @@
                                                         Chọn tập tin
                                                     @endif
                                                 </label>
+                                                <p></p>
+                                                @error('newImg') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -282,20 +305,46 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Mật khẩu:</label>
+                                        <input wire:model="passwordAdd" type="password" class="form-control"
+                                            placeholder="Nhập mật khẩu...">
+                                            @error('passwordAdd') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Giới tính:
+                                            <a data-toggle="tooltip"
+                                                title="Nếu là tài khoản học sinh thì không cần chọn giới tính">
+                                                <i class="ri-information-line"></i>
+                                            </a>
+                                        </label>
+                                        <select class="form-control" wire:model="sexAdd">
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="1">Thầy</option>
+                                            <option value="2">Cô</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Email:</label>
-                                        <input wire:model="emailAdd" type="email" class="form-control"
+                                        <input wire:model="emailAdd" type="text" class="form-control"
                                             placeholder="Nhập email...">
+                                            @error('emailAdd') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Phone:</label>
-                                        <input wire:model="phoneAdd" type="phone" class="form-control"
+                                        <input wire:model="phoneAdd" type="number" class="form-control"
                                             placeholder="Nhập sdt...">
+                                            @error('phoneAdd') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -303,7 +352,8 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Vai trò:</label>
-                                        <select wire:model="role_idAdd" class="form-control">
+                                        <select wire:model="role_idAdd" class="form-control"
+                                            @if ($role_idAdd == 1) disabled @endif>
                                             <option value="">Chọn vai trò</option>
                                             <option value="1">Admin</option>
                                             <option value="2">Giáo viên</option>
@@ -314,15 +364,16 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Trạng thái:</label>
-                                        <select wire:model="statusAdd" class="form-control">
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
+                                        <select wire:model="statusAdd" class="form-control"
+                                            @if ($role_idAdd == 1) disabled @endif>
+                                            <option value="0">Active</option>
+                                            <option value="1">Inactive</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Thêm</button>
-                            <button type="reset" class="btn btn-danger" wire:click="closePopup()">Hủy</button>
+                            <button type="reset" class="btn btn-danger">Hủy</button>
                         </form>
                     </div>
                 </div>

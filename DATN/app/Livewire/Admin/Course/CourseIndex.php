@@ -13,6 +13,7 @@ class CourseIndex extends Component
 
     public $deletedId, $search = '';
     public $isDeletePopupOpen = false;
+    public $isEditPopupOpen = false;
     protected $paginationTheme = 'bootstrap';
 
     public function render()

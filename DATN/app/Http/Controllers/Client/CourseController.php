@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
 use App\Models\Lecture;
+use Illuminate\Support\Facades\Auth;
+use App\Models\EnrollCourse;
 
 class CourseController extends Controller
 {
@@ -35,16 +37,9 @@ class CourseController extends Controller
             return $lectures->count();
         });
 
+        $currentUserId = auth::id();
+        $hasEnrolled = EnrollCourse::where('user_id', $currentUserId)->where('course_id', $course_id)->exists();
+
         return view('client.lecture.lecture', compact('course', 'lecture', 'lecturesCountByCategory'));
-    }
-    public function convertLink($url): mixed
-    { // truyền link vô đề đối thành link xem được 
-        if (strpos($url, 'drive.google.com') !== false) {
-            preg_match('/\/d\/(.*?)\//', $url, $matches);
-            if (!empty($matches[1])) {
-                return "https://drive.google.com/file/d/{$matches[1]}/preview";
-            }
-        }
-        return $url;
     }
 }

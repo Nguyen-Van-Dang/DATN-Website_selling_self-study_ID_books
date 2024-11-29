@@ -28,11 +28,11 @@ use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\AutoLogout;
 use App\Livewire\Client\Book\Books;
 use App\Http\Controllers\client\ApproveController;
-use App\Livewire\Client\Book\BookDetail;
-use App\Http\Controllers\Client\LectureController;
 use App\Livewire\Client\Cart\Carts;
 use App\Livewire\Client\Order\Orders;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Livewire\Client\User\LoginUser;
+use App\Livewire\Client\User\RegisterUser;
 
 /* --------------- HOME CLIENT --------------- */
 
@@ -59,14 +59,17 @@ Route::get('auth/zalo/callback', [UserController::class, 'handleZaloCallback']);
 /* -------------- LOGIN FB --------------- */
 // Route::get('auth/facebook', [UserController::class, 'redirectToFacebook'])->name('login-by-facebook');
 // Route::get('auth/facebook/callback', [UserController::class, 'handleFacebookCallback']);
-
 Route::get('auth/{provider}', [UserController::class, 'authProviderRedirect'])->name('login-by-provider');
 Route::get('auth/{provider}/callback', [UserController::class, 'socialAuthentication']);
 
-
 /* -------------- LOGIN PHONE --------------- */
-Route::post('/', [UserController::class, 'handleLogin'])->name('handleLogin');
-
+// Route::post('/', [UserController::class, 'handleLogin'])->name('handleLogin');
+Route::prefix('/dang-nhap')->group(function () {
+    Route::get('/', [LoginUser::class, 'handleLogin'])->name('handleLogin');
+});
+Route::prefix('/dang-nhap')->group(function () {
+    Route::get('/', [RegisterUser::class, 'handleRegister'])->name('handleRegister');
+});
 /* -------------- REGISTER --------------- */
 
 /* -------------- LOGOUT--------------- */

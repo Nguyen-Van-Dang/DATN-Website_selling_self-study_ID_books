@@ -33,8 +33,6 @@ class UserController extends Controller
     {
         return $this->userRepository->getAllUser();
     }
-
-
     /*-------------------Client-----------------*/
     public function changePassword(Request $request)
     {
@@ -99,10 +97,14 @@ class UserController extends Controller
     {
         return $this->userRepository->logout($request);
     }
-    public function handleLogin(Request $request)
-    {
-        return $this->userRepository->loginUser($request);
-    }
+    // public function handleLogin(Request $request)
+    // {
+    //     return $this->userRepository->loginUser($request);
+    // }
+    // public function handleRegister(Request $request)
+    // {
+    //     return $this->userRepository->registerUser($request);
+    // }
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();

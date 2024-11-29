@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('payment_status')->default(0);
             $table->string('user_name', length: 255);
             $table->string('user_phone', length: 10);
-            $table->string('address', length: 255);
+            $table->string('address', length: 255)->nullable();
             $table->foreignId('payment_methods_id')->nullable()->constrained('payment_methods')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->softDeletes();

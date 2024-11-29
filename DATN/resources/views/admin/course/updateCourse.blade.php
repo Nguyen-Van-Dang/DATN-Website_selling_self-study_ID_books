@@ -7,6 +7,8 @@
     <div class="container-fluid">
         @livewire('admin.course.course-update', [
             'course' => $course,
+            'subjects' => $subjects,
+            'classes' => $classes,
             'teachers' => $teachers,
             'lectureCategories' => $lectureCategories,
         ])

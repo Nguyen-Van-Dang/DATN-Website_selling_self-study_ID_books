@@ -44,35 +44,66 @@
                                             accept="image/png, image/jpeg, image/jpg" wire:model="courseImage"
                                             id="image-input" style="display: none;">
                                     </div>
-
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="pdfInput">Chọn khóa học PDF:
+                                        (<a href="{{ $this->documentFile }}" target="_blank">Xem file trước đó</a>)
+                                    </label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input"
+                                            accept="application/pdf, application/vnd.ms-excel" wire:model="documentFile"
+                                            name="documentFile">
+                                        <label id="pdfLabel" class="custom-file-label">Chọn file</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label>Tác giả:</label>
                                     <select class="form-control" wire:model="courseAuthor">
                                         <option selected disabled>Chọn tác giả</option>
                                         @foreach ($teachers as $teacher)
-                                            <option value="{{ $teacher->id }}" {{ $teacher->id == $courseAuthor ? 'selected' : '' }}>
+                                            <option value="{{ $teacher->id }}"
+                                                {{ $teacher->id == $courseAuthor ? 'selected' : '' }}>
                                                 {{ $teacher->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="pdfInput">Chọn khóa học PDF:
-                                (<a href="{{ $this->documentFile }}" target="_blank">Xem file trước đó</a>)
-                            </label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input"
-                                    accept="application/pdf, application/vnd.ms-excel" wire:model="documentFile"
-                                    name="documentFile">
-                                <label id="pdfLabel" class="custom-file-label">Chọn file</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="class">Chọn lớp học:</label>
+                                    <select wire:model="classId" class="form-control">
+                                        <option value="" selected>Chọn Lớp</option>
+                                        @foreach ($classes as $class)
+                                            <option value="{{ $class->id }}" {{ $class->id == $classId ? 'selected' : '' }}>
+                                                {{ $class->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="subject">Chọn môn học:</label>
+                                    <select wire:model="subjectId" class="form-control">
+                                        <option value="" selected>Chọn Môn</option>
+                                        @foreach ($subjects as $subject)
+                                            <option value="{{ $subject->id }}" {{ $subject->id == $subjectId ? 'selected' : '' }}>
+                                                {{ $subject->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label>Giá khóa học:</label>
@@ -92,7 +123,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Form thêm chương và bài giảng -->
             <div class="col-sm-5">
                 <div class="iq-card modal-content">
@@ -132,19 +162,18 @@
                                                     @endphp
                                                     @if ($image)
                                                         <a href="{{ $image->image_url }}" target="_blank"
-                                                            data-toggle="tooltip" title="Xem video" style="margin-top: 10px;"><i
-                                                                class="ri-eye-line" style="font-size: 25px;"></i></a>
+                                                            data-toggle="tooltip" title="Xem video"
+                                                            style="margin-top: 10px;"><i class="ri-eye-line"
+                                                                style="font-size: 25px;"></i></a>
                                                     @else
-                                                    <a target="_blank"
-                                                        data-toggle="tooltip" title="Không có video" style="margin-top: 10px;">
-                                                        <i class="ri-eye-off-line" style="font-size: 25px;"></i>
-                                                    </a>
+                                                        <a target="_blank" data-toggle="tooltip"
+                                                            title="Không có video" style="margin-top: 10px;">
+                                                            <i class="ri-eye-off-line" style="font-size: 25px;"></i>
+                                                        </a>
                                                     @endif
                                                 @endif
                                             </div>
                                         </div>
-
-
                                         <!-- Nút xóa bài giảng -->
                                         <button
                                             wire:click.prevent="removeLecture({{ $chapterIndex }}, {{ $lectureIndex }})"
@@ -161,7 +190,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </form>
 </div>

@@ -34,7 +34,7 @@
                             @foreach ($Course as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td style="width: 10%;">
+                                    <td>
                                         @php
                                             $firstImage = $item->images->first();
                                         @endphp

@@ -20,7 +20,7 @@ class Approve extends Component
     public function render()
     {
         return view('livewire.admin.approve.approve', [
-            'logs' => $this->logs,
+            // 'logs' => $this->logs,
         ]);
     }
 }

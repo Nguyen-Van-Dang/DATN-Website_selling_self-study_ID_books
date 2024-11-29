@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\BookCategories;
-use App\Models\CourseCategories;
 use App\Models\Contact;
 use App\Models\Course;
 use App\Models\Favorite;
@@ -15,9 +14,8 @@ use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use App\Models\Notification;
-use App\Models\NotificationUser;
 use App\Models\PaymentMethods;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,39 +31,20 @@ class DatabaseSeeder extends Seeder
         DB::statement('ALTER TABLE payment_methods AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE notifications AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE contacts AUTO_INCREMENT = 1;');
-        DB::statement('ALTER TABLE course_categories AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE courses AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE book_categories AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE books AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE lectures AUTO_INCREMENT = 1;');
         DB::statement('ALTER TABLE lecture_categories AUTO_INCREMENT = 1;');
-
-
+        // Role
         Role::create(['id' => 1, 'name' => 'Admin']);
         Role::create(['id' => 2, 'name' => 'Teacher']);
         Role::create(['id' => 3, 'name' => 'Student']);
-        $user = User::factory()->create(['role_id' => 1, 'phone' => '0123456789']);
-        Image::create([
-            'imageable_id' => $user->id,
-            'imageable_type' => User::class,
-            'image_url' => 'https://placehold.co/498x488',
-            'image_name' => 'avatar',
-        ]);
-        $user = User::factory()->create(['role_id' => 2]);
-        Image::create([
-            'imageable_id' => $user->id,
-            'imageable_type' => User::class,
-            'image_url' => 'https://placehold.co/498x488',
-            'image_name' => 'avatar',
-        ]);
-        $user = User::factory()->create(['role_id' => 3]);
-        Image::create([
-            'imageable_id' => $user->id,
-            'imageable_type' => User::class,
-            'image_url' => 'https://placehold.co/498x488',
-            'image_name' => 'avatar',
-        ]);
-        $users = User::factory(12)->create();
+        //User
+        User::factory()->create(['role_id' => 1, 'name' => 'Admin', 'phone' => '0123456789', 'password' => Hash::make('123456789'), 'email' => 'admin@gmail.com']);
+        User::factory()->create(['role_id' => 2, 'name' => 'Teacher', 'phone' => '0123456788', 'password' => Hash::make('123456789'), 'email' => 'teacher@gmail.com']);
+        User::factory()->create(['role_id' => 3, 'name' => 'Student', 'phone' => '0123456787', 'password' => Hash::make('123456789'), 'email' => 'student@gmail.com']);
+        $users = User::factory(7)->create();
         $users->each(function ($user) {
             Image::create([
                 'imageable_id' => $user->id,
@@ -74,12 +53,11 @@ class DatabaseSeeder extends Seeder
                 'image_name' => 'avatar',
             ]);
         });
-        Contact::factory(15)->create();
+        //Payment
         PaymentMethods::factory()->create(['id' => 1, 'name' => 'momo']);
         PaymentMethods::factory()->create(['id' => 2, 'name' => 'vnpay']);
+        //Oder
         Order::factory(15)->create();
-        CourseCategories::factory(15)->create();
-
         $courses = Course::factory(15)->create();
         foreach ($courses as $course) {
             Image::create([
@@ -89,6 +67,7 @@ class DatabaseSeeder extends Seeder
                 'image_name' => 'course'
             ]);
         }
+        //BookCategories
         BookCategories::factory(15)->create();
         $books = Book::factory(30)->create();
         foreach ($books as $book) {
@@ -107,22 +86,26 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
-        LectureCategories::factory(15)->create();
-        Lecture::factory(15)->create();
-
-        $Books = Book::all();
-        $BookCategories = BookCategories::all();
-        foreach ($Books as $book) {
-            $randomCategories = $BookCategories->random(rand(1, 6))->pluck('id');
-
-            foreach ($randomCategories as $categoryId) {
-                DB::table('book_categories_mapping')->insert([
-                    'book_id' => $book->id,
-                    'category_id' => $categoryId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+            //LectureCategories
+            LectureCategories::factory(15)->create();
+            //Lecture        
+            Lecture::factory(15)->create();
+            $Books = Book::all();
+            $BookCategories = BookCategories::all();
+            foreach ($Books as $book) {
+                $randomCategories = $BookCategories->random(rand(1, 6))->pluck('id');
+                foreach ($randomCategories as $categoryId) {
+                    DB::table('book_categories_mapping')->insert([
+                        'book_id' => $book->id,
+                        'category_id' => $categoryId,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
             }
+            $this->call([
+                ClassSeeder::class,
+                SubjectSeeder::class,
+            ]);
         }
     }
-}
