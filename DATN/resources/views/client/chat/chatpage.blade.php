@@ -4,7 +4,7 @@
 
 @section('content')
     @livewireStyles
-    @livewire('chat.chatcomponent')
+    <livewire:chat.chatComponent :groupChatId="$id" />
     @livewireScripts
     <script>
         function openPopup(type) {

@@ -25,13 +25,20 @@
                     </div>
                     <p class="mb-2">
                         <span class="d-block"><i class="bi bi-collection-play"></i> Số bài:
-                            {{ $course->amount_lecture }}</span>
-                        <a href="#" class="text-primary d-block mt-1"><i class="bi bi-people"></i> Nhóm Mooners</a>
+                            {{ count($course->lectures) }}</span>
+                        @if ($chatGroup)
+                            <a href="{{ route('chat.show', ['id' => $chatGroup->id]) }}"
+                                class="text-primary d-block mt-1"><i class="bi bi-people"></i>
+                                Nhóm: {{ $chatGroup->name }}</a>
+                        @else
+                            <a href="#" class="text-primary d-block mt-1"><i class="bi bi-people"></i> Nhóm chat</a>
+                        @endif
                     </p>
                     <div class="d-flex">
                         <button class="btn btn-danger btn-lg mr-2" data-toggle="modal" data-target="#payment-popup"
                             data-order-id="{{ $course->id }}">Mua ngay</button>
-                        <button class="btn btn-secondary btn-lg">Kích hoạt</button>
+
+                        <button class="btn btn-secondary btn-lg">Tham gia nhóm</button>
                     </div>
                 </div>
 
@@ -56,47 +63,130 @@
                             <button class="nav-link" id="bai-kiem-tra-tab" data-bs-toggle="tab"
                                 data-bs-target="#bai-kiem-tra" type="button" role="tab" aria-controls="bai-kiem-tra"
                                 aria-selected="false">
-                                Bài kiểm tra
+                                Bài thi
                             </button>
                         </li>
                     </ul>
-
-                    <div class="tab-pane fade show active" id="bai-giang" role="tabpanel" aria-labelledby="bai-giang-tab">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            @foreach ($course->lectures->groupBy('lecture_categories_id') as $categoryId => $lectures)
-                                <div class="course-panel panel-default">
-                                    <div class="panel-heading" role="tab" id="heading{{ $categoryId }}">
-                                        <h6 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapse{{ $categoryId }}" aria-expanded="false"
-                                                aria-controls="collapse{{ $categoryId }}">
-                                                {{ $lectures->first()->lectureCategory->name ?? 'Chương ' . $categoryId }}
-                                            </a>
-                                            <span class="badge bg-danger rounded-pill position-absolute"
-                                                style="right: 0; top: 0;">
-                                                {{ $lecturesCountByCategory[$categoryId] ?? 0 }}
-                                            </span>
-                                        </h6>
-                                    </div>
-                                    <div id="collapse{{ $categoryId }}" class="panel-collapse collapse" role="tabpanel"
-                                        aria-labelledby="heading{{ $categoryId }}">
-                                        <div class="panel-body" style="margin-left: 45px">
-                                            <ul class="list-group list-group-flush">
-                                                @foreach ($lectures as $lecture)
-                                                    <li class="list-group-item py-0">                 
-                                                        <a href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
-                                                            {{ $lecture->name }}
-                                                        </a>                                                                                              
-                                                        <!-- Liên kết đến bài giảng -->
-                                                    <li class="list-group-item py-0">
-                                                        <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="bai-giang" role="tabpanel"
+                            aria-labelledby="bai-giang-tab">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                @foreach ($course->lectures->groupBy('lecture_categories_id') as $categoryId => $lectures)
+                                    <div class="course-panel panel-default">
+                                        <div class="panel-heading" role="tab" id="heading{{ $categoryId }}">
+                                            <h6 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                                    href="#collapse{{ $categoryId }}" aria-expanded="false"
+                                                    aria-controls="collapse{{ $categoryId }}">
+                                                    {{ $lectures->first()->lectureCategory->name ?? 'Chương ' . $categoryId }}
+                                                </a>
+                                                <span class="badge bg-danger rounded-pill position-absolute"
+                                                    style="right: 0; top: 0;">
+                                                    {{ $lecturesCountByCategory[$categoryId] ?? 0 }}
+                                                </span>
+                                            </h6>
+                                        </div>
+                                        <div id="collapse{{ $categoryId }}" class="panel-collapse collapse"
+                                            role="tabpanel" aria-labelledby="heading{{ $categoryId }}">
+                                            <div class="panel-body" style="margin-left: 45px">
+                                                <ul class="list-group list-group-flush">
+                                                    @foreach ($lectures as $lecture)
+                                                        <li class="list-group-item py-0">
+                                                            <a
+                                                                href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
+                                                                {{ $lecture->name }}
+                                                            </a>
+                                                            <!-- Liên kết đến bài giảng -->
+                                                        <li class="list-group-item py-0">
+                                                            <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="bai-kiem-tra" role="tabpanel" aria-labelledby="bai-kiem-tra-tab">
+                            <table class="table align-middle mb-0 bg-white">
+                                <thead>
+                                    <tr style="width:100%">
+                                        <th style="width: 10%; border-top: none; padding-left:36px;text-align:center">STT
+                                        </th>
+                                        <th style="width: 50%;border-top: none;">Đề thi</th>
+                                        <th style="width: 20%;border-top: none;text-align:center">Lần thi gần nhất</th>
+                                        <th style="width: 10%;border-top: none;">Kết quả</th>
+                                        <th style="width: 10%;border-top: none;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach ($exams as $index => $exam)
+                                        @php
+                                            $latestResult = $exam->results
+                                                ->where('exam_id', $exam->id)
+                                                ->sortByDesc('created_at')
+                                                ->first();
+                                        @endphp
+                                        <tr>
+                                            <td style="padding-left:36px;text-align:center">
+                                                {{ $index + 1 }}
+                                            </td>
+                                            <td>
+
+                                                <p class="fw-bold mb-1">{{ $exam->name }}</p>
+                                            </td>
+                                            <td style="text-align:center">
+                                                @if ($latestResult)
+                                                    {{ $latestResult->created_at->locale('vi')->diffForHumans() }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($latestResult)
+                                                    @if ($latestResult->score >= 5)
+                                                        <span class="badge badge-primary rounded-pill d-inline">Đã
+                                                            đạt</span>
+                                                    @else
+                                                        <span class="badge badge-danger rounded-pill d-inline">Chưa
+                                                            đạt</span>
+                                                    @endif
+                                                @else
+                                                    <a href="{{ route('de-thi.doExam', ['exam_id' => $exam->id]) }}">
+                                                        <span class="badge badge-info">Vào thi</span>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($latestResult)
+                                                    <div class="dropdown">
+                                                        <i class="bi bi-three-dots dropdown-toggle p-0 text-body"
+                                                            id="dropdownMenuButton3" data-toggle="dropdown"
+                                                            aria-expanded="false"></i>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow-none"
+                                                            aria-labelledby="dropdownMenuButton3" style="">
+
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('de-thi.showExam', ['result_id' => $latestResult->id]) }}">Xem
+                                                                kết quả</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('de-thi.doExam', ['exam_id' => $exam->id]) }}">Thi
+                                                                lại</a>
+
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <style>
+                                .dropdown-toggle:empty::after {
+                                    display: none !important;
+                                }
+                            </style>
                         </div>
                     </div>
                 </div>
@@ -152,7 +242,6 @@
                         <h5 class="mb-0">Khóa học nổi bậc</h5>
 
                         <div class="iq-card-body pt-0 py-3 modal-body-scrollable">
-
                             @foreach ($user->courses as $userCourse)
                                 @php
                                     $courseImage = $userCourse->images()->where('image_name', 'course')->first();

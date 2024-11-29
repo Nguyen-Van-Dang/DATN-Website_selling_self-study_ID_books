@@ -2,7 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\ChatGroup;
 use App\Models\Course;
+use App\Models\Exam;
+use App\Models\ExamResult;
 use App\Models\PaymentMethods;
 use App\Models\User;
 use App\Models\Lecture;
@@ -27,18 +30,17 @@ class CourseRepository
                 'documents',
                 'lectures.LectureCategories'
             ])->findOrFail($id);
-        
+
             $user = $course->user;
             $lectureCategories = LectureCategories::all();
-        
+
             // Lấy danh sách giáo viên chỉ khi người dùng là admin (ID = 1)
             if (Auth::user()->id == 1) {
                 $teachers = User::where('role_id', 2)->get();
             }
-        
+
             // Truyền dữ liệu vào component Livewire
             return view('admin.course.updateCourse', compact('course', 'user', 'lectureCategories', 'teachers'));
-    
         } catch (\Exception $e) {
             return redirect()->route('admin.khoa-hoc.index')->with('error', 'Không thể tìm thấy khóa học.');
         }
@@ -68,8 +70,12 @@ class CourseRepository
         $lecturesCountByCategory = $course->lectures->groupBy('lecture_categories_id')->map(function ($lectures) {
             return $lectures->count();
         });
-
-        return view('client.course.courseDetail', compact('course', 'lecturesCountByCategory', 'user', 'paymentMethods'));
+        $chatGroup = ChatGroup::with('course')->findOrFail($course->id);
+        $exams = Exam::where('course_id', $course->id)
+            ->with(['results' => function ($query) {
+                $query->latest()->limit(1);
+            }])
+            ->get();
+        return view('client.course.courseDetail', compact('course', 'lecturesCountByCategory', 'user', 'paymentMethods', 'chatGroup', 'exams'));
     }
-    
 }

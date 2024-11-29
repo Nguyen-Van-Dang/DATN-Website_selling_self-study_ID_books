@@ -249,7 +249,7 @@ Route::prefix('khoa-hoc')->group(function () {
 //reels
 Route::prefix('tai-video')->group(function () {
     Route::get('/', [ReelsController::class, 'index'])->name('tai-video.index');
-    Route::post('/', [ReelsController::class,'submit'])->name('tai-video.submit');
+    Route::post('/', [ReelsController::class, 'submit'])->name('tai-video.submit');
 });
 
 Route::get('/reels', function () {
@@ -266,8 +266,12 @@ Route::middleware([CheckLoggedIn::class])->group(function () {
     Route::prefix('chat')->name('chat')->group(function () {
         Route::controller(ChatController::class)->group(function () {
             Route::get('/', 'index');
+            Route::get('/{groupChatId}',  'show')->name('chat.show');
         });
     });
+});
+Route::middleware([CheckLoggedIn::class])->group(function () {
+    Route::get('chat/{id}', [ChatController::class, 'show'])->name('chat.show');
 });
 Route::delete('/leave-group/{id}', [ChatController::class, 'leaveGroup'])->name('leaveGroup');
 

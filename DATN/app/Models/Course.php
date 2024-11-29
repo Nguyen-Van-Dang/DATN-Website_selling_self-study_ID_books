@@ -40,9 +40,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseActivation::class);
     }
-    public static function getAll()
+    public function enrollments()
     {
-        return self::all();
+        return $this->hasMany(EnrollCourse::class);
     }
     public function images()
     {

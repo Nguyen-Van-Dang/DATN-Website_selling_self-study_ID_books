@@ -18,7 +18,7 @@
                         wire:model.live.debounce.100ms="searchTerm" />
                 </div>
                 <!-- Blade -->
-                @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                @if ($currentUser->role_id == 1 || $currentUser->role_id == 2)
                     <div class="input-group rounded mb-3">
                         <button wire:click="openPopup('add')"
                             class="btn btn-primary d-flex align-items-center justify-content-center px-0"
@@ -214,7 +214,7 @@
                         <div class="chat-content px-2 overflow-scroll flex-grow-1" id="messagesContainer">
                             @if (count($messages) > 0)
                                 @foreach ($messages as $message)
-                                    @if ($message->user_id === Auth::id())
+                                    @if ($message->user_id === $currentUser->id)
                                         {{-- Tin nhắn của người dùng hiện tại (bên phải) --}}
                                         <div class="d-flex flex-row justify-content-end">
                                             <div>
@@ -234,25 +234,6 @@
                                             <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
                                                 alt="avatar 1" style="width: 45px; height: 100%;">
                                         </div>
-                                        @if ($cantSend)
-                                            <div class="d-flex flex-row justify-content-end">
-                                                <div>
-                                                    <p class="p-2 me-3 mb-1 rounded self-chat message border"
-                                                        style="background-color: #ff8989' }}">
-                                                        Bạn không thể gửi tin nhắn</p>
-                                                    <p class="small me-3 mb-3 rounded text-muted float-right ">
-                                                        {{ $message->created_at ? $message->created_at->locale('vi')->diffForHumans() : 'Chưa xác định' }}
-                                                </div>
-                                                @php
-                                                    $thumbnail = $message->user
-                                                        ->images()
-                                                        ->where('image_name', 'thumbnail')
-                                                        ->first();
-                                                @endphp
-                                                <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
-                                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                                            </div>
-                                        @endif
                                     @else
                                         {{-- Tin nhắn của người dùng khác  (bên trái) --}}
                                         <div class="d-flex flex-row justify-content-start">
@@ -287,12 +268,31 @@
                                 </div>
 
                             @endif
+                            @if ($cantSend)
+                                <div class="d-flex flex-row justify-content-end">
+                                    <div>
+                                        <p class="p-2 me-3 mb-1 rounded self-chat message border"
+                                            style="background-color: #ff8989' }}">
+                                            Bạn không thể gửi tin nhắn</p>
+                                        <p class="small me-3 mb-3 rounded text-muted float-right ">
+                                            {{ $message->created_at ? $message->created_at->locale('vi')->diffForHumans() : 'Chưa xác định' }}
+                                    </div>
+                                    @php
+                                        $thumbnail = $message->user
+                                            ->images()
+                                            ->where('image_name', 'thumbnail')
+                                            ->first();
+                                    @endphp
+                                    <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
+                                        alt="avatar 1" style="width: 45px; height: 100%;">
+                                </div>
+                            @endif
                         </div>
 
                         <div class="text-muted d-flex justify-content-start align-items-center p-3 mt-2 bg-white"
                             style="background: #ffffff!important">
                             @php
-                                $user = Auth::user();
+                                $user = $currentUser;
                                 $thumbnail = $user ? $user->images()->where('image_name', 'thumbnail')->first() : null;
                             @endphp
 
@@ -426,7 +426,7 @@
                                 </a>
                             </div>
                             <div class="col-3 pt-2">
-                                @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                @if ($currentUser->role_id == 1 || $currentUser->role_id == 2)
                                     <a id="editGroupButton" class="bg-primary text-white dropdown-toggle"
                                         href="#" id="dropdownMenuButton5" data-toggle="dropdown"
                                         aria-expanded="false">
@@ -506,12 +506,12 @@
                                                             </div>
                                                             <div class="media-body ml-3">
                                                                 <h6 class="mb-0">{{ $member->user->name }}</h6>
-                                                                @if (Auth::user()->user_id != 3)
+                                                                @if ($currentUser->role_id != 3)
                                                                     <small class="float-right font-size-12">
                                                                         <a id="editMember" class="dropdown-toggle   "
                                                                             href="#" data-toggle="dropdown"
                                                                             aria-expanded="false">
-                                                                            <i class="bi bi-three-dots"
+                                                                            <i class="ri-pencil-fill"
                                                                                 style="font-size: 1rem; color: gray;"
                                                                                 title="Cài Đặt"></i>
                                                                         </a>
@@ -520,7 +520,6 @@
                                                                             style="">
                                                                             <a class="dropdown-item" href="#"
                                                                                 wire:click="toggleMemberStatus({{ $member->id }})">
-                                                                                <i class="ri-pencil-fill mr-2"></i>
                                                                                 {{ $member->status === 0 ? 'Chặn thành viên' : 'Kích hoạt thành viên' }}
                                                                             </a>
                                                                         </div>
@@ -733,7 +732,7 @@
         {{-- popup xác nhận xoá --}}
         <div id="confirmPopup"
             style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); z-index: 1000;">
-            @if (Auth::id() == 1 || Auth::id() == 2)
+            @if ($currentUser->role_id == 1 || $currentUser->role_id == 2)
                 <p>Bạn có chắc chắn muốn xoá nhóm này không?</p>
             @else
                 <p>Bạn có chắc chắn muốn rời nhóm này không?</p>

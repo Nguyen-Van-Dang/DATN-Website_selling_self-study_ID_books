@@ -55,7 +55,6 @@ class Chatnotfound extends Component
 
         return redirect()->route('chat')->with('success', 'Tạo nhóm chat thành công.');
     }
-
     public function render()
     {
         return view('livewire.client.chat.chatnotfound');
