@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Phê duyệt'); ?>
 
 <?php $__env->startSection('content'); ?>

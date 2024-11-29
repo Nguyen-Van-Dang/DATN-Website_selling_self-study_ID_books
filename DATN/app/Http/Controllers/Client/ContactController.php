@@ -32,20 +32,16 @@ class ContactController extends Controller
             'email' => 'required|email',
             'message' => 'required|string|max:5000',
         ]);
-        // Kiểm tra nếu người dùng chưa đăng nhập
-        if (!auth()->check()) {
-            return redirect()->route('addContact')->with('error', 'Vui lòng đăng nhập để gửi liên hệ.');
-        }
-
+    
         // Gọi repository để lưu liên hệ
         $contact = $this->contactRepository->store($validatedData);
-
+    
         // Kiểm tra nếu email đã tồn tại
         if (!$contact) {
             session()->flash('error', 'Email này đã được sử dụng để gửi liên hệ trước đó!');
             return redirect()->route('addContact');
         }
-
+    
         // Gửi email
         try {
             Mail::to('infobookstorefpt@gmail.com')->send(new ContactUsMail($validatedData));
@@ -53,31 +49,12 @@ class ContactController extends Controller
         } catch (\Exception $e) {
             session()->flash('error', 'Đã có lỗi xảy ra, vui lòng thử lại!');
         }
-
+    
         return redirect()->route('addContact');
     }
+    
 
 
-
-    // admin
-    // public function getAllContact(Request $request)
-    // {
-    //     $query = Contact::query();
-
-    //     // Lọc theo vai trò
-    //     if ($request->filled('role')) {
-    //         $query->where('role', $request->role);
-    //     }
-
-    //     // Lọc theo ngày
-    //     if ($request->filled('date')) {
-    //         $query->whereDate('created_at', $request->date);
-    //     }
-
-    //     $contacts = $query->with('role')->orderBy('created_at', 'desc')->get();
-    //     return view('admin.contact.listContact', compact('contacts'));
-
-    // }
 
     public function getAllContact(Request $request)
     {

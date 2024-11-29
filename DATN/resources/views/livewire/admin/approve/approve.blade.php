@@ -4,7 +4,7 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Kiểm duyệt</h4>
+                        <h4 class="card-title">Phê duyệt</h4>
                     </div>
                 </div>
                 <div class="iq-card-body p-0">
@@ -12,7 +12,7 @@
                         <ul class="iq-edit-profile d-flex nav nav-pills w-100">
 
                             <li class="col-md-4 p-0">
-                                <a class="nav-link" data-toggle="pill" href="#Book">
+                                <a class="nav-link active" data-toggle="pill" href="#Book">
                                     Sách
                                 </a>
                             </li>
@@ -39,7 +39,7 @@
 
                     {{-- couse --}}
 
-                    <div class="tab-pane fade" id="Course" role="tabpanel">
+                    <div class="tab-pane fade active show" id="Course" role="tabpanel">
                         <div class="iq-card">
                             <div class="iq-card-header d-flex justify-content-between align-items-center">
                                 <h4 class="card-title">Danh sách duyệt khóa học</h4>

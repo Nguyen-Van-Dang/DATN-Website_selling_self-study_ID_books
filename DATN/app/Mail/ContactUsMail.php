@@ -38,7 +38,7 @@ class ContactUsMail extends Mailable
     public function build()
     {
         return $this->subject('New Contact Form Submission')
-                    ->markdown('mail.contact-us')
+                    ->markdown('emails.contact-us')
                     ->with('contactData', $this->contactData);
     }
 
@@ -48,7 +48,7 @@ class ContactUsMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.contact-us-mail',  // Đảm bảo view này tồn tại
+            markdown: 'emails.contact-us-mail',  // Đảm bảo view này tồn tại
             with: [
                 'contactData' => $this->contactData
             ]

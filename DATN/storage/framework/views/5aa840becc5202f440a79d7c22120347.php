@@ -53,7 +53,7 @@
 <body>
     <div class="email-container">
         <div class="header">
-            <img src="images/logo.png" alt="Logo"> <!-- Đường dẫn đến logo -->
+
             <h2>Xác nhận mã OTP của bạn</h2>
         </div>
         <div class="content">

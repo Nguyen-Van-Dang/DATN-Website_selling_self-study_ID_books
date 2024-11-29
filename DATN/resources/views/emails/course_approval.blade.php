@@ -10,42 +10,85 @@
             background-color: #f4f4f9;
             color: #333;
             padding: 20px;
+            line-height: 1.6;
         }
+
         .container {
             background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            max-width: 600px;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 650px;
             margin: 0 auto;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
+
         .header {
             text-align: center;
             background-color: #4CAF50;
             color: white;
-            padding: 10px 0;
+            padding: 20px;
             border-radius: 8px 8px 0 0;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
         .content {
-            margin-top: 20px;
+            margin-top: 25px;
         }
+
+        .content p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .content ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .content ul li {
+            padding: 8px 0;
+        }
+
+        .content ul li strong {
+            color: #333;
+        }
+
         .footer {
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
             color: #888;
-            font-size: 12px;
+            font-size: 14px;
         }
+
         .btn {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             text-decoration: none;
             border-radius: 5px;
-            display: inline-block;
-            margin-top: 20px;
+            display: block; /* Đảm bảo nút là block để căn giữa */
+            margin: 20px auto; /* Căn giữa nút */
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: max-content; /* Nút sẽ có chiều rộng phù hợp với nội dung */
         }
+
         .btn:hover {
             background-color: #45a049;
+        }
+
+        .btn:focus {
+            outline: none;
         }
     </style>
 </head>

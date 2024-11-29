@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông Báo Duyệt Sách</title>
+    <title>Thông Báo Liên Hệ Mới</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
             color: #333;
-            margin: 0;
             padding: 20px;
             line-height: 1.6;
         }
@@ -25,7 +24,7 @@
 
         .header {
             text-align: center;
-            background-color: #28a745;
+            background-color: #3498db;
             color: white;
             padding: 20px;
             border-radius: 8px 8px 0 0;
@@ -36,6 +35,7 @@
             margin: 0;
             font-size: 24px;
             font-weight: 600;
+            text-align: center;nter;
         }
 
         .content {
@@ -70,46 +70,49 @@
         }
 
         .btn {
-            background-color: #28a745;
+            background-color: #3498db;
             color: white;
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 5px;
-            display: inline-block;
-            margin-top: 20px;
+            display: block; /* Đảm bảo nút là block để căn giữa */
+            margin: 20px auto; /* Căn giữa nút */
             font-size: 16px;
             text-transform: uppercase;
             font-weight: 500;
             transition: background-color 0.3s;
-            text-align: center;
+            width: max-content; /* Nút sẽ có chiều rộng phù hợp với nội dung */
         }
 
         .btn:hover {
-            background-color: #218838;
+            background-color: #2980b9;
         }
 
         .btn:focus {
             outline: none;
+        }
+        .ten{
+            font-weight: bold;
+            font-size: 15px
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h2>Thông Báo Duyệt Sách</h2>
+            <h2>Thông Báo Liên Hệ Mới</h2>
         </div>
 
         <div class="content">
-            <p>Xin chào {{ $book->user->name }},</p>
-            <p>Sách của bạn "<strong>{{ $book->name }}</strong>" đã được duyệt thành công. Chúng tôi xin chúc mừng bạn!</p>
-            <p><strong>Thông tin sách:</strong></p>
+            <p class="ten">Xin chào Admin,</p>
+            <p>Bạn có một thông báo mới từ người dùng:</p>
+            <p><strong>Thông tin liên hệ:</strong></p>
             <ul>
-                <li><strong>Tên sách:</strong> {{ $book->name }}</li>
-                <li><strong>Giá sách:</strong> {{ number_format($book->price, 0, ',', '.') }} VNĐ</li>
-                <li><strong>Giảm giá:</strong> {{ $book->discount }}%</li>
-                <li><strong>Mô tả:</strong> {{ $book->description }}</li>
+                <li><strong>Tên:</strong> {{$contactData['name']}}</li>
+                <li><strong>Email:</strong> {{$contactData['email']}}</li>
+                <li><strong>Nội dung:</strong> {{$contactData['message']}}</li>
             </ul>
-            <p>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất về các bước tiếp theo.</p>
+            <p>Vui lòng kiểm tra và phản hồi lại người dùng trong thời gian sớm nhất.</p>
 
             <a href="{{ url('/') }}" class="btn">Quay lại trang chủ</a>
         </div>

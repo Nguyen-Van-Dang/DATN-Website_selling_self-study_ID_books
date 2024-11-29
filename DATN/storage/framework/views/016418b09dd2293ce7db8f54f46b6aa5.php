@@ -52,23 +52,19 @@
                     <div class="iq-edit-list">
                         <ul class="iq-edit-profile d-flex nav nav-pills">
                             <?php if(Auth::check() && Auth::user()->role_id == 1): ?>
-                                <li class="col-md-3 p-0">
-                                    <a class="nav-link active" data-toggle="pill" href="#personal-information">
-                                        Thông tin cá nhân
-                                    </a>
-                                </li>
-                                <li class="col-md-3 p-0">
+                                
+                                <li class="col-md-4 p-0">
                                     <a class="nav-link" data-toggle="pill" href="#chang-pwd">
                                         Đổi mật khẩu
                                     </a>
                                 </li>
 
-                                <li class="col-md-3 p-0">
+                                <li class="col-md-4 p-0">
                                     <a class="nav-link" data-toggle="pill" href="#reset-pwd">
                                         Quên mật khẩu
                                     </a>
                                 </li>
-                                <li class="col-md-3 p-0">
+                                <li class="col-md-4 p-0">
                                     <a class="nav-link" data-toggle="pill" href="#manage-contact">
                                         Lịch sử đơn hàng
                                     </a>
@@ -105,84 +101,16 @@
                 <div class="tab-content">
                     <?php if(Auth::check() && Auth::user()->role_id == 1): ?>
                         
-                        <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
-                            <div class="iq-card">
-                                <div class="iq-card-header d-flex justify-content-between">
-                                    <div class="iq-header-title">
-                                        <h4 class="card-title">Thông tin cá nhân</h4>
-                                    </div>
-                                </div>
-                                <div class="iq-card-body">
-                                    <form>
-                                        <div class="form-group row align-items-center">
-                                            <div class="col-md-12">
-                                                <div class="profile-img-edit">
-                                                    <img class="profile-pic"
-                                                        src="<?php echo e(asset('assets/images/book/user/1.jpg')); ?>"
-                                                        alt="profile-pic">
-                                                    <div class="p-image">
-                                                        <i class="ri-pencil-line upload-button"></i>
-                                                        <input class="file-upload" type="file" accept="image/*" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class=" row align-items-center">
-                                            <div class="form-group col-sm-6">
-                                                <label for="fname">Họ và tên:</label>
-                                                <input type="text" class="form-control" id="fname" value="Ông">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="lname">Số điện thoại:</label>
-                                                <input type="text" class="form-control" id="lname"
-                                                    value="Trần Thuận">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="uname">Email:</label>
-                                                <input type="text" class="form-control" id="uname"
-                                                    value="Thuangiaosu">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="cname">Ngày sinh:</label>
-                                                <input type="date" class="form-control" id="cname" value="TV Team">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="dob">Tỉnh thành:</label>
-                                                <input class="form-control" id="dob" value="1984-01-24">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="dob">Quận:</label>
-                                                <input class="form-control" id="dob" value="1984-01-24">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="dob">Huyện:</label>
-                                                <input class="form-control" id="dob" value="1984-01-24">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="dob">Xã:</label>
-                                                <input class="form-control" id="dob" value="1984-01-24">
-                                            </div>
-                                            <div class="form-group col-sm-12">
-                                                <label>Ghi chú thêm địa chỉ:</label>
-                                                <textarea class="form-control" name="address" rows="5" style="line-height: 22px;">06 Nam Thành Đà Nãng, VA 23803 Viet Nam Zip Code: 40001
-                                       </textarea>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mr-2">Xác nhận</button>
-                                        <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         
-                        <div class="tab-pane fade  show" id="chang-pwd" role="tabpanel">
+                        
+                        <div class="tab-pane fade  active show" id="chang-pwd" role="tabpanel">
                             <div class="iq-card">
                                 <div class="iq-card-header d-flex justify-content-between">
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Đổi mật khẩu</h4>
                                     </div>
                                 </div>
-                                <div class="iq-card-body">
+                                <div class="iq-card-body ">
 
                                     <form action="<?php echo e(route('userInfo')); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
@@ -208,6 +136,9 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                         <!-- Tab Reset mật khẩu -->
                         <div class="tab-pane fade" id="reset-pwd" role="tabpanel">
                             <div class="iq-card">
@@ -487,6 +418,7 @@
                 </div>
             </div>
         </div>
+
     <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.admin.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\DATN-Website_selling_self-study_ID_books\DATN\resources\views/admin/user/userInfo.blade.php ENDPATH**/ ?>

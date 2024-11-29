@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Phản hồi liên hệ'); ?>
 
 <?php $__env->startSection('content'); ?>

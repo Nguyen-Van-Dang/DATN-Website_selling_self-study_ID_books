@@ -2,12 +2,14 @@
     @foreach ($books as $book)
         <tr>
             <td>{{ $book->id }}</td>
-            <td>{{ $book->name }}</td>
+            {{-- <td>{{ $book->name }}</td> --}}
+            <td>{{ \Illuminate\Support\Str::limit($book->name, 30, '...') }}</td>
             {{-- <td>{{ $book->user->name }}</td> --}}
             <td>{{ $book->user ? $book->user->name : 'Không có thông tin' }}</td>
             <td>{{ $book->price }}</td>
             <td>{{ $book->discount }}</td>
-            <td>{{ $book->description }}</td>
+            {{-- <td>{{ $book->description }}</td> --}}
+            <td>{{ \Illuminate\Support\Str::limit($book->description, 50, '...') }}</td>
             <td>{{ $book->status == 1 ? 'Chờ xác nhận' : $user->status }}</td>
             {{-- <td>{{ $course->deleted_at }}</td> --}}
             <td>

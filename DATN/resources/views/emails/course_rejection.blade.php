@@ -41,11 +41,19 @@
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
-            display: inline-block;
-            margin-top: 20px;
+            display: block; /* Đảm bảo nút là block để căn giữa */
+            margin: 20px auto; /* Căn giữa nút */
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: max-content; /* Nút sẽ có chiều rộng phù hợp với nội dung */
         }
         .btn:hover {
             background-color: #c0392b;
+        }
+        .btn:focus {
+            outline: none;
         }
     </style>
 </head>

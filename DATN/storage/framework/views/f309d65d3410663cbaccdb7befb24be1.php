@@ -63,7 +63,7 @@
             <?php endif; ?>
             <?php if(auth()->check() && Auth::user()->role_id = 1): ?>
             <li class="<?php echo e(request()->routeIs('approve') ? 'active' : ''); ?>">
-                <a href="<?php echo e(route('approve')); ?>"><i class="ri-mail-line"></i> <span>Kiểm duyệt</span></a>
+                <a href="<?php echo e(route('approve')); ?>"><i class="ri-check-line"></i> <span>Phê duyệt</span></a>
             </li>
         <?php endif; ?>
             <li class="<?php echo e(request()->routeIs('bin') ? 'active' : ''); ?>">

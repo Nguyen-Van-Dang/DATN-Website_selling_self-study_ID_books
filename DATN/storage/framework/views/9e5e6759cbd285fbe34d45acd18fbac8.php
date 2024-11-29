@@ -48,7 +48,7 @@
         }
         .button {
             display: inline-block;
-            background-color: #0dd6b8;
+            background-color: orange;
             color: #ffffff;
             padding: 12px 20px;
             border-radius: 5px;
@@ -74,7 +74,7 @@
 
     <div class="email-container">
         <div class="header">
-            <img src="images/logo.png" alt="Logo" /> <!-- Đường dẫn đến logo -->
+    
             <h2>Mật khẩu của bạn đã được thay đổi</h2>
         </div>
 

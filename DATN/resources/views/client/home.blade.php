@@ -321,7 +321,7 @@
                                                 <div>
                                                     <h5 class="card-title course-title">{{ $item->name }}</h5>
                                                     <h7 class="card-title course-teacher" style="font-size: 13px">
-                                                        {{ $item->user->name }}</h7>
+                                                        {{-- {{ $item->user->name }}</h7> --}}
                                                 </div>
                                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap"
                                                     style="font-size: 13px">

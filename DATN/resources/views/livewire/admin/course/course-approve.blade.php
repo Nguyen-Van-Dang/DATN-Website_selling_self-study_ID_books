@@ -2,9 +2,11 @@
     @foreach ($courses as $course)
         <tr>
             <td>{{ $course->id }}</td>
-            <td>{{ $course->name }}</td>
+            {{-- <td>{{ $course->name }}</td> --}}
+            <td>{{ \Illuminate\Support\Str::limit($course->name, 30, '...') }}</td>
             <td>{{ $course->price }}</td>
-            <td>{{ $course->description }}</td>
+            {{-- <td>{{ $course->description }}</td> --}}
+            <td>{{ \Illuminate\Support\Str::limit($course->description, 50, '...') }}</td>
             <td>{{ $course->status == 1 ? 'Chờ xác nhận' : $course->status }}</td>
             {{-- <td>{{ $course->deleted_at }}</td> --}}
             <td>

@@ -169,10 +169,14 @@
                                                     <div class="col-10">
                                                         <a class="iq-sub-card">
                                                             <div class="media align-items-center">
-                                                                <div>
+                                                                <div><?php
+                                                                    $thumbnail = $item->book
+                                                                        ->images()
+                                                                        ->where('image_name', 'thumbnail')
+                                                                        ->first();
+                                                                ?>
                                                                     <img class="rounded"
-                                                                        src="<?php echo e(asset('assets/images/book/book/02.jpg')); ?>"
-                                                                        alt="">
+                                                                        src="<?php echo e($thumbnail ? $thumbnail->image_url : asset('assets/images/book/book/02.jpg')); ?>">
                                                                 </div>
                                                                 <div class="media-body ml-3">
                                                                     <h6 class="mb-0">Tên: <?php echo e($item->book->name); ?>
@@ -230,9 +234,8 @@
                                     class="img-fluid rounded-circle mr-3" alt="user">
                                 <div class="caption"
                                     <?php
-                                        $userName = Auth::user()->name;
-                                        $displayName = Str::limit($userName, 10, '...'); 
-                                    ?>>
+$userName = Auth::user()->name;
+                                        $displayName = Str::limit($userName, 10, '...'); ?>>
                                     <h6 class="mb-1 line-height"><?php echo e($displayName); ?>!</h6>
                                     <p class="mb-0 text-primary">Tài Khoản</p>
                                 </div>
@@ -337,7 +340,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="<?php echo e(route('orderList')); ?>"
+                                                class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-account-box-line"></i>
@@ -347,7 +351,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="<?php echo e(route('getAllBookFavorite')); ?>"
+                                                class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-heart-line"></i>
@@ -429,10 +434,11 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                                         hội
                                                         khác</p>
                                                     <div class="social-media">
-                                                        <a href="<?php echo e(route('login-by-provider', ['provider' => 'facebook'])); ?>" class="social-icon">
+                                                        <a href="<?php echo e(route('login-by-provider', ['provider' => 'facebook'])); ?>"
+                                                            class="social-icon">
                                                             <i class="fab fa-facebook-f"></i>
                                                         </a>
-                                                        
+
                                                         <a href="<?php echo e(route('login-by-zalo')); ?>" class="social-icon">
                                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                                 width="100" height="30px" viewBox="0 0 50 50">

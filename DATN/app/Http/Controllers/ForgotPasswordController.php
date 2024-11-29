@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OtpMail;
 use Illuminate\Http\Request;
 use App\Repositories\PasswordResetRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 class ForgotPasswordController extends Controller
 {
     protected $passwordResetRepository;
@@ -24,6 +28,14 @@ class ForgotPasswordController extends Controller
 
 
     }
+    public function showForgotPasswordForm1()
+    {
+
+        $email = session('email'); // Lấy giá trị email từ session
+        return view('client.user.userInformation', compact('email')); // Đường dẫn đầy đủ đến view
+
+
+    }
     public function showNewPasswordForm()
     {
         // Trả về view nhập mật khẩu mới với thông báo (nếu có)
@@ -37,6 +49,7 @@ class ForgotPasswordController extends Controller
         $this->passwordResetRepository->sendOtp($email);
         return redirect()->route('forgot-password')->with('email', $email)->with('message', 'OTP đã được gửi qua email!');
     }
+
 
 
 
@@ -71,6 +84,7 @@ class ForgotPasswordController extends Controller
 
 
 
+
     // Phương thức thay đổi mật khẩu
     public function changePassword(Request $request)
     {
@@ -92,4 +106,5 @@ class ForgotPasswordController extends Controller
             return redirect()->back()->with('error', 'Không thể thay đổi mật khẩu!');
         }
     }
+
 }

@@ -49,23 +49,23 @@
                     <div class="iq-edit-list">
                         <ul class="iq-edit-profile d-flex nav nav-pills">
                             @if (Auth::check() && Auth::user()->role_id == 1)
-                                <li class="col-md-3 p-0">
+                                {{-- <li class="col-md-3 p-0">
                                     <a class="nav-link active" data-toggle="pill" href="#personal-information">
                                         Thông tin cá nhân
                                     </a>
-                                </li>
-                                <li class="col-md-3 p-0">
+                                </li> --}}
+                                <li class="col-md-4 p-0">
                                     <a class="nav-link" data-toggle="pill" href="#chang-pwd">
                                         Đổi mật khẩu
                                     </a>
                                 </li>
 
-                                <li class="col-md-3 p-0">
+                                <li class="col-md-4 p-0">
                                     <a class="nav-link" data-toggle="pill" href="#reset-pwd">
                                         Quên mật khẩu
                                     </a>
                                 </li>
-                                <li class="col-md-3 p-0">
+                                <li class="col-md-4 p-0">
                                     <a class="nav-link" data-toggle="pill" href="#manage-contact">
                                         Lịch sử đơn hàng
                                     </a>
@@ -102,7 +102,7 @@
                 <div class="tab-content">
                     @if (Auth::check() && Auth::user()->role_id == 1)
                         {{-- thông tin người dùng --}}
-                        <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                        {{-- <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
                             <div class="iq-card">
                                 <div class="iq-card-header d-flex justify-content-between">
                                     <div class="iq-header-title">
@@ -170,16 +170,16 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- đổi mật khẩu --}}
-                        <div class="tab-pane fade  show" id="chang-pwd" role="tabpanel">
+                        <div class="tab-pane fade  active show" id="chang-pwd" role="tabpanel">
                             <div class="iq-card">
                                 <div class="iq-card-header d-flex justify-content-between">
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Đổi mật khẩu</h4>
                                     </div>
                                 </div>
-                                <div class="iq-card-body">
+                                <div class="iq-card-body ">
 
                                     <form action="{{ route('userInfo') }}" method="POST">
                                         @csrf
@@ -205,6 +205,9 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                         <!-- Tab Reset mật khẩu -->
                         <div class="tab-pane fade" id="reset-pwd" role="tabpanel">
                             <div class="iq-card">
@@ -484,4 +487,5 @@
                 </div>
             </div>
         </div>
+
     @endsection

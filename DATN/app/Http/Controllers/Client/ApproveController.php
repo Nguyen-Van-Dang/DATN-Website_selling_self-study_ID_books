@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\BookRejectionNotification;
 use App\Mail\CourseRejectionNotification;
 use App\Mail\RejectionNotification;
+use App\Mail\BookApprovalNotification;
+use App\Mail\CourseApprovalNotification;
+
 class ApproveController extends Controller
 {
     private ApproveRepository $approveRepository;
@@ -30,57 +33,74 @@ class ApproveController extends Controller
     public function approve($model, $id)
     {
         $modelClass = 'App\\Models\\' . ucfirst($model);
-        
+
         if (!class_exists($modelClass)) {
             return redirect()->back()->withErrors(['error' => 'Model không tồn tại!']);
         }
-    
-        $item = $modelClass::findOrFail($id);
+
+        $item = $modelClass::find($id);
+
+        if (!$item) {
+            return redirect()->back()->withErrors(['error' => 'Item không tồn tại!']);
+        }
+
         $item->status = 0; // Đã duyệt
         $item->save();
-    
+
         // Gửi email cho người dùng
         if ($model === 'user') {
             Mail::to($item->email)->send(new ApprovalNotification($item));
         } elseif ($model === 'book') {
-            // Gửi email cho người mua sách
-            Mail::to($item->user->email)->send(new ApprovalNotification($item)); // Giả sử book có quan hệ với user
+            if ($item->user) {
+                Mail::to($item->user->email)->send(new BookApprovalNotification($item));
+            } else {
+                return redirect()->back()->withErrors(['error' => 'User không tồn tại!']);
+            }
         } elseif ($model === 'course') {
-            // Gửi email cho người đăng ký khóa học
-            Mail::to($item->user->email)->send(new ApprovalNotification($item)); // Giả sử course có quan hệ với user
+            if ($item->user) {
+                Mail::to($item->user->email)->send(new CourseApprovalNotification($item));
+            } else {
+                return redirect()->back()->withErrors(['error' => 'User không tồn tại!']);
+            }
         }
-    
+
         return redirect()->back()->with('success', ucfirst($model) . ' đã được duyệt thành công!');
     }
-    
-    
+
     public function reject($model, $id)
     {
         $modelClass = 'App\\Models\\' . ucfirst($model);
-        
+
         if (!class_exists($modelClass)) {
             return redirect()->back()->withErrors(['error' => 'Model không tồn tại!']);
         }
-    
-        $item = $modelClass::findOrFail($id);
-    
+
+        $item = $modelClass::find($id);
+
+        if (!$item) {
+            return redirect()->back()->withErrors(['error' => 'Item không tồn tại!']);
+        }
+
         // Gửi email cho người dùng thông báo từ chối
         if ($model === 'user') {
             Mail::to($item->email)->send(new RejectionNotification($item));
         } elseif ($model === 'book') {
-            // Gửi email cho người mua sách
-            Mail::to($item->user->email)->send(new BookRejectionNotification($item)); // Giả sử book có quan hệ với user
+            if ($item->user) {
+                Mail::to($item->user->email)->send(new BookRejectionNotification($item));
+            } else {
+                return redirect()->back()->withErrors(['error' => 'User không tồn tại!']);
+            }
         } elseif ($model === 'course') {
-            // Gửi email cho người đăng ký khóa học
-            Mail::to($item->user->email)->send(new CourseRejectionNotification($item)); // Giả sử course có quan hệ với user
+            if ($item->user) {
+                Mail::to($item->user->email)->send(new CourseRejectionNotification($item));
+            } else {
+                return redirect()->back()->withErrors(['error' => 'User không tồn tại!']);
+            }
         }
-    
+
         // Xóa bản ghi (từ chối duyệt)
         $item->delete();
-    
+
         return redirect()->back()->with('success', ucfirst($model) . ' đã bị từ chối!');
     }
-    
-    
-    
 }

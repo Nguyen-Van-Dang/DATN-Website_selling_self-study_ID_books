@@ -183,55 +183,55 @@ class UserRepository
     {
         return view('admin.user.deletedUser');
     }
-    public function changePassword(Request $request)
-    {
-        // Validate dữ liệu nhập vào
-        $request->validate([
-            'password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
-        ]);
+    // public function changePassword(Request $request)
+    // {
+    //     // Validate dữ liệu nhập vào
+    //     // $request->validate([
+    //     //     'password' => 'required',
+    //     //     'new_password' => 'required|min:8|confirmed',
+    //     // ]);
 
-        // Kiểm tra mật khẩu hiện tại
-        if (!Hash::check($request->password, Auth::user()->password)) {
-            throw ValidationException::withMessages([
-                'password' => 'Mật khẩu hiện tại không đúng',
-            ]);
-        }
+    //     // // Kiểm tra mật khẩu hiện tại
+    //     // if (!Hash::check($request->password, Auth::user()->password)) {
+    //     //     throw ValidationException::withMessages([
+    //     //         'password' => 'Mật khẩu hiện tại không đúng',
+    //     //     ]);
+    //     // }
 
-        // Lấy người dùng hiện tại
-        $user = Auth::user();
+    //     // Lấy người dùng hiện tại
+    //     $user = Auth::user();
 
-        // Kiểm tra xem $user có phải là một thể hiện của \App\Models\User hay không
-        if ($user instanceof \App\Models\User) {
-            // Mã hóa mật khẩu mới và lưu
-            $user->password = Hash::make($request->new_password);
+    //     // Kiểm tra xem $user có phải là một thể hiện của \App\Models\User hay không
+    //     if ($user instanceof \App\Models\User) {
+    //         // Mã hóa mật khẩu mới và lưu
+    //         $user->password = Hash::make($request->new_password);
 
-            if ($request->new_password !== $request->new_password_confirmation) {
-                return back()->withErrors(['new_password' => 'Mật khẩu mới và xác nhận mật khẩu không khớp.']);
-            }
+    //         if ($request->new_password !== $request->new_password_confirmation) {
+    //             return back()->withErrors(['new_password' => 'Mật khẩu mới và xác nhận mật khẩu không khớp.']);
+    //         }
 
-            try {
-                // $user->save(); // Lưu dữ liệu người dùng
-                if ($user instanceof \App\Models\User) {
-                    // Save user
-                    $user->save();
-                } else {
-                    return back()->withErrors(['error' => 'Không thể lưu dữ liệu người dùng.']);
-                }
+    //         try {
+    //             // $user->save(); // Lưu dữ liệu người dùng
+    //             if ($user instanceof \App\Models\User) {
+    //                 // Save user
+    //                 $user->save();
+    //             } else {
+    //                 return back()->withErrors(['error' => 'Không thể lưu dữ liệu người dùng.']);
+    //             }
 
-                // Gửi email thông báo thay đổi mật khẩu
-                Mail::to($user->email)->send(new PasswordChangedNotification($user));
+    //             // Gửi email thông báo thay đổi mật khẩu
+    //             Mail::to($user->email)->send(new PasswordChangedNotification($user));
 
-                // Gửi email cho admin thông báo thay đổi mật khẩu
-                $adminEmail = 'infobookstorefpt@gmail.com'; // Thay bằng địa chỉ email của admin
-                Mail::to($adminEmail)->send(new PasswordChangedNotification($user));
+    //             // Gửi email cho admin thông báo thay đổi mật khẩu
+    //             $adminEmail = 'infobookstorefpt@gmail.com'; // Thay bằng địa chỉ email của admin
+    //             Mail::to($adminEmail)->send(new PasswordChangedNotification($user));
 
-                return back()->with('success', 'Mật khẩu đã được cập nhật thành công!');
-            } catch (\Exception $e) {
-                return back()->withErrors(['error' => 'Đã có lỗi xảy ra. Vui lòng thử lại sau.']);
-            }
-        } else {
-            return back()->withErrors(['error' => 'Không thể lưu dữ liệu người dùng.']);
-        }
-    }
+    //             return back()->with('success', 'Mật khẩu đã được cập nhật thành công!');
+    //         } catch (\Exception $e) {
+    //             return back()->withErrors(['error' => 'Đã có lỗi xảy ra. Vui lòng thử lại sau.']);
+    //         }
+    //     } else {
+    //         return back()->withErrors(['error' => 'Không thể lưu dữ liệu người dùng.']);
+    //     }
+    // }
 }

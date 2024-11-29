@@ -39,7 +39,7 @@ use App\Http\Controllers\ForgotPasswordController;
 Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
 
 /* --------------- hOME ADMIN --------------- */
-Route::middleware([CheckRole::class . ':1,2'])->group(function () {
+Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.home');
     })->name('homeAdmin');
@@ -164,7 +164,7 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::get('/admin/xoa-nguoi-dung', [UserController::class, 'getDestroyUser'])->name('deleteUser');
     // Route::get('user-list/{id}',[UserController::class, 'destroy'])->name('deleteUser');
 });
-
+/* --------------- CONTACT GROUP ---------------------------- */
 Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::get('/admin/danh-sach-lien-he', [ContactController::class, 'getAllContact'])->name('listContact');
     Route::get('phan-hoi/{id}', [ContactController::class, 'replyContactForm'])->name('replyContact');
@@ -172,30 +172,24 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
     Route::post('/contacts/bulk-delete', [ContactController::class, 'bulkDelete'])->name('contacts.bulkDelete');
 });
-
-
 // reset mail
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
-Route::post('forgot-password/send-otp', [ForgotPasswordController::class, 'sendOtp'])->name('send-otp');
+Route::post('forgot-password/send-otp', [ForgotPasswordController::class, 'se`ndOtp'])->name('send-otp');
 Route::post('verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('verify-otp');
 Route::post('change-password', [ForgotPasswordController::class, 'changePassword'])->name('change-password');
 Route::get('/new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password-form');
 Route::post('/change-password', [ForgotPasswordController::class, 'changePassword'])->name('change-password');
 
 
-/* --------------- BIN GROUP ---------------------------- */
+
+/* --------------- APPROVE GROUP ---------------------------- */
 Route::middleware([CheckRole::class . ':1'])->group(function () {
     Route::get('/admin/kiem-duyet', [ApproveController::class, 'index'])->name('approve');
-
     Route::patch('/{model}/{id}/approve', [ApproveController::class, 'approve'])->name('model.approve');
     Route::delete('/{model}/{id}/reject', [ApproveController::class, 'reject'])->name('model.reject');
-
-
-
-
-
 });
+/* --------------- reset mail client ---------------------------- */
 
 /*-------------------------------------------------CLIENT--------------------------------------------------*/
 //danh sách cuốn sách
@@ -317,14 +311,19 @@ Route::middleware([CheckLoggedIn::class])->group(function () {
 });
 
 Route::prefix('lien-he')->group(function () {
-    // Route::get('/danh-sach-lien-he', [ContactController::class, 'getAllContact'])->name('listContact');
-
     Route::get('gui-lien-he', function () {
         return view('client.contact.addContact');
     })->name('addContact');
-
-
     Route::post('gui-lien-he', [ContactController::class, 'storeContact'])->name('storeContact');
 });
 
-// history
+
+
+Route::get('/user/thong-tin-nguoi-dung', function () {
+    return view('client.user.userInformation');
+})->name('userInformation');
+Route::post('/user/thong-tin-nguoi-dung', [UserController::class, 'changePassword'])->name('userInformation');
+
+
+Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm1'])->name('forgot-password');
+Route::post('forgot-password/send-otp', [ForgotPasswordController::class, 'sendOtp'])->name('send-otp');

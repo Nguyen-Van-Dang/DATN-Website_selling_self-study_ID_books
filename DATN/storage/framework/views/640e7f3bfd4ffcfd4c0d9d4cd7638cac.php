@@ -1,7 +1,4 @@
 <div class="col-sm-12">
-    <!--[if BLOCK]><![endif]--><?php if(session()->has('message')): ?>
-        <div class=""><?php echo e(session('message')); ?></div>
-    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
     <div class="iq-card">
         <div class="iq-card-header d-flex justify-content-between">
             <div class="iq-header-title">
@@ -44,10 +41,10 @@
 
                                         <!--[if BLOCK]><![endif]--><?php if($firstImage): ?>
                                             <img src="<?php echo e($firstImage->image_url); ?>" alt="Image"
-                                                class="img-fluid avatar-100 rounded" />
+                                                class="img-fluid" style="width: 190px; height: 112px;"/>
                                         <?php else: ?>
                                             <img src="<?php echo e(asset('assets/images/book/user/course.jpg')); ?>" alt="No Image"
-                                                class="img-fluid avatar-100 rounded" />
+                                                class="img-fluid" style="width: 190px; height: 112px;"/>
                                         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                     </td>
                                     <td><?php echo e(strlen($item->name) > 100 ? substr($item->name, 0, 100) . '...' : $item->name); ?>
@@ -114,97 +111,28 @@
             </div>
         </div>
     </div>
-    <!-- Popup sửa danh mục -->
-    <div class="modal <?php echo e($isEditPopupOpen ? 'is-open' : ''); ?>" id="editCourseCateModal" wire:click="closePopup()">
-        <div class="modal-content" wire:click.stop>
-            <span class="close" wire:click="closePopup()">&times;</span>
-            <div class="col-sm-12">
-                <div class="iq-card">
-                    <div class="iq-card-header d-flex justify-content-between">
-                        <div class="iq-header-title">
-                            <h4 class="card-title">Sửa khóa học</h4>
-                        </div>
-                    </div>
-                    <div class="iq-card-body modal-body-scrollable">
-                        <form action="admin-books.html">
-                            <div class="form-group">
-                                <label>Tên khóa học:</label>
-                                <input type="text" class="form-control" placeholder="Tên khóa học">
-                            </div>
-                            <div class="form-group">
-                                <label>Danh mục khóa học:</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option selected="" disabled="">Danh mục khóa học</option>
-                                    <option>General Books</option>
-                                    <option>History Books</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Tác gải khóa học:</label>
-                                <select class="form-control" id="exampleFormControlSelect2">
-                                    <option selected="" disabled="">Tác giả khóa học</option>
-                                    <option>Jhone Steben</option>
-                                    <option>John Klok</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Hình ảnh:</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" accept="image/png, image/jpeg">
-                                    <label class="custom-file-label">Choose file</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>khóa học pdf:</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input"
-                                        accept="application/pdf, application/vnd.ms-excel">
-                                    <label class="custom-file-label">Chọn file</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Giá khóa học:</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Mô tả khóa học:</label>
-                                <textarea class="form-control" rows="4"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Tên bài giảng:</label>
-                                <input type="text" class="form-control" placeholder="Tên khóa học">
-                            </div>
-                            <div class="form-group">
-                                <label>Video khóa học:</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" accept="image/png, image/jpeg">
-                                    <label class="custom-file-label">Choose file</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Gửi</button>
-                            <button type="reset" class="btn btn-danger">Trở lại</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Popup xóa danh mục -->
     <div class="modal <?php echo e($isDeletePopupOpen ? 'is-open' : ''); ?>" id="deletedCourseModal" wire:click="closePopup()">
-        <div class="modal-content text-center" style="width: 30%;" wire:click.stop>
-            <div class="iq-card-header">
-                <div class="iq-header-title">
-                    <h4 class="card-title">Bạn có chắc chắn xóa hay không?</h4>
+        <div class="modal-content" style="width: 30%;" wire:click.stop>
+            <div class="col-12 text-center">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Bạn có chắc chắn xóa hay không?</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <form wire:submit.prevent="deleted" style="padding: 25px;">
+                                <button type="submit" class="btn btn-primary"
+                                    style="width: 100px; height: 40px;">Xác Nhận</button>
+                                <button type="reset" class="btn btn-danger" wire:click="closePopup()"
+                                    style="width: 100px; height: 40px;">Hủy</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="iq-card-body">
-                <form wire:submit.prevent="deleted" style="padding: 15px;">
-                    <button type="submit" class="btn btn-primary" style="width: 100px; height: 40px;">Xác
-                        Nhận</button>
-                    <button type="reset" class="btn btn-danger" wire:click="closePopup()"
-                        style="width: 100px; height: 40px;">Hủy</button>
-                </form>
             </div>
         </div>
     </div>

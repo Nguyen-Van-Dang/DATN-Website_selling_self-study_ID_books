@@ -42,13 +42,15 @@ class UserController extends Controller
         $request->validate([
             'password' => 'required',
             'new_password' => 'required|min:8|confirmed',
+
         ]);
 
         $user = Auth::user();
 
         // Kiểm tra mật khẩu hiện tại bằng Bcrypt
         if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Mật khẩu hiện tại không đúng.']);
+
+            return back()->with('error', 'Mật khẩu hiện tại không đúng. Vui lòng nhập lại');
         }
 
         // Đổi mật khẩu
@@ -61,7 +63,7 @@ class UserController extends Controller
             Mail::to($user->email)->send(new PasswordChangedNotification($user));
 
             // Gửi email cho admin thông báo thay đổi mật khẩu của người dùng
-            $adminEmail = 'infobookstorefpt@gmail.com'; // Thay bằng địa chỉ email của admin
+            $adminEmail = 'infobookstorefpt@gmail.com';
             Mail::to($adminEmail)->send(new PasswordChangedNotification($user));
         } catch (\Exception $e) {
             return back()->with('error', 'Mật khẩu đã được thay đổi, nhưng không thể gửi email thông báo.');
@@ -170,10 +172,4 @@ class UserController extends Controller
         $user = auth::user();
         return view('client.user.userInformation', compact('user'));
     }
-
-
-
-
-    
-
 }
