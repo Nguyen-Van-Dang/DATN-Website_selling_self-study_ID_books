@@ -49,4 +49,15 @@
         text-decoration: none;
         object-fit: cover;
     }
+    .BookImage {
+        width: 30px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: rgb(127, 130, 227);
+        color: white;
+        font-size: 20px;
+        text-decoration: none;
+        object-fit: cover;
+    }
 </style>

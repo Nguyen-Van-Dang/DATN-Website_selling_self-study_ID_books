@@ -42,7 +42,7 @@ class Books extends Component
     public function mount()
     {
         $this->categories = BookCategories::all();
-        $this->teachers = User::where('role_id', 2)->where('status', 0)->get();
+        $this->teachers = User::where('role_id', 2)->where('active', 0)->get();
         $this->loadBooks();
         $this->fav_books = $this->getFavouriteBooks();
         $this->popular_books = $this->getPopularBooks();
@@ -129,7 +129,7 @@ class Books extends Component
      */
     private function getFavouriteBooks()
     {
-        return Book::withCount('favorites')
+        return Book::withCount('favorites')->where('status', 0)
             ->orderByDesc('favorites_count')
             ->limit(6)
             ->get();
@@ -140,13 +140,13 @@ class Books extends Component
      */
     private function getPopularBooks()
     {
-        return Book::orderBy('views', 'desc')
+        return Book::orderBy('views', 'desc')->where('status', 0)
             ->take(6)
             ->get();
     }
     private function getSaleBooks()
     {
-        return Book::where('discount', '>', 0)
+        return Book::where('discount', '>', 0)->where('status', 0)
             ->orderBy('discount', 'desc')
             ->take(8)
             ->get();

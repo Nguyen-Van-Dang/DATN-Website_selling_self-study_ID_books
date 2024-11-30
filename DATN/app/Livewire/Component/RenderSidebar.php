@@ -5,13 +5,14 @@ namespace App\Livewire\Component;
 use App\Models\ChatGroup;
 use App\Models\Course;
 use App\Models\EnrollCourse;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class RenderSidebar extends Component
 {
-    public $courses, $allTeacher, $teachers, $chatGroups;
+    public $books, $courses, $allTeacher, $teachers, $chatGroups;
     public $limit = 5;
 
     public function mount()
@@ -35,7 +36,16 @@ class RenderSidebar extends Component
             $this->courses = null;
         }
 
+        $this->books = Favorite::where('user_id', Auth::id())
+            ->with('book')
+            ->get()
+            ->map(function ($favorite) {
+                return $favorite->book;
+            });
+
         $this->loadTeachers();
+        // $this->books = Favorite::
+
         $this->chatGroups = ChatGroup::whereHas('participants', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();

@@ -26,7 +26,7 @@ class BookController extends Controller
     }
     public function getBookDetailClient($id)
     {
-        return $this->bookRepository->getBookDetailClient($id);
+        return view('client.book.bookDetail', compact('id'));
     }
     public function getAllBookFavorite()
     {
