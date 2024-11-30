@@ -328,16 +328,10 @@
                             </div>
                         </div>
                         {{-- lịch sử đơn hàng --}}
-                        <div class="tab-pane fade" id="manage-contact" role="tabpanel">
-                            <div class="iq-card">
-                                <div class="iq-card-header d-flex justify-content-between">
-                                    <div class="iq-header-title">
-                                        <h4 class="card-title">Lịch Sử Đơn Hàng</h4>
-                                    </div>
-                                </div>
-                                <div class="iq-card-body">
 
-                                </div>
+                        <div class="tab-pane fade" id="manage-contact" role="tabpanel">
+                            <div class="container-fluid">
+                                <livewire:client.order.PaidOrders />
                             </div>
                         </div>
                     @endif

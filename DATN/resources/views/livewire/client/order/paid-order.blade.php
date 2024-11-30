@@ -4,21 +4,11 @@
         <div class="row">
             <div id="cart" class="card-block show p-0 col-12">
                 <div class="row align-item-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="iq-card">
                             <div class="iq-card-header d-flex iq-border-bottom mb-0">
                                 <div class="iq-header-title">
-                                    <h4 class="card-title">Bạn không có đơn hàng chưa thanh toán</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="iq-card">
-                            <div class="iq-card-body">
-                                <div class="d-flex justify-content-between">
-                                    <span><b>Tổng</b></span>
-                                    <span><b>0 đ</b></span>
+                                    <h4 class="card-title">Bạn không có đơn hàng nào</h4>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +27,6 @@
                                     <h4 class="card-title">Đơn Hàng</h4>
                                 </div>
                             </div>
-
                             <div class="iq-card-body">
                                 <ul class="list-inline p-0 m-0">
                                     @php
@@ -68,19 +57,17 @@
                                                                             style="font-weight: 500">#{{ $order->id }}</span>
                                                                     </div>
                                                                     <div class="text-center" style="width: 100%;">
-                                                                        @if ($order->payment_status == 0)
-                                                                            <p class="text-danger mb-0"><strong>Chưa
+                                                                        @if ($order->payment_status == 1)
+                                                                            <p class="text-success mb-0"><strong>Đã
                                                                                     Thanh Toán</strong></p>
-                                                                        @elseif ($order->payment_status == 2)
-                                                                            <p class="text-warning mb-0">
-                                                                                <strong>Đang Giao</strong>
-                                                                            </p>
+                                                                        @elseif ($order->payment_status == 3)
+                                                                            <p class="text-success mb-0"><strong>Đã
+                                                                                    Giao</strong></p>
                                                                         @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col-sm-5">
                                                             <div class="row">
                                                                 <div class="col-sm-6 text-right">
@@ -89,14 +76,6 @@
                                                                         wire:click="openDetailPopup({{ $order->id }})">
                                                                         Chi Tiết Đơn Hàng
                                                                     </button>
-                                                                </div>
-                                                                <div class="col-sm-6 text-left">
-                                                                    @if ($order->payment_status == 0)
-                                                                        <button type="button" class="btn btn-primary"
-                                                                            wire:click="openPaymentPopup({{ $order->id }})">
-                                                                            Thanh Toán
-                                                                        </button>
-                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -117,41 +96,9 @@
                             <div class="iq-card-body">
                                 <div class="d-flex justify-content-between">
                                     <span><b>Tổng</b></span>
-                                    <span><b>{{ number_format($totalPrice) }}đ</b></span>
+                                    <span><b>{{ number_format($totalPricePaid) }}đ</b></span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="backdrop-filter: blur(1px);" class="modal fade {{ $isPaymentPopupOpen ? 'show d-block' : '' }}"
-                tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Lựa chọn thanh toán </h5>
-                            <button type="button" class="close" wire:click="closePaymentPopup">
-                                <span>&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('orderCheckout') }}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    @foreach ($paymentMethods as $method)
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="payment_method_{{ $method->id }}"
-                                                name="payment_method" value="{{ $method->id }}"
-                                                class="custom-control-input" wire:model="selectedPaymentMethod"
-                                                value="{{ $method->id }}">
-                                            <label class="custom-control-label"
-                                                for="payment_method_{{ $method->id }}">{{ $method->name }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <button type="submit" class="btn btn-primary" name="redirect">Thanh
-                                    toán</button>
-                            </form>
                         </div>
                     </div>
                 </div>
