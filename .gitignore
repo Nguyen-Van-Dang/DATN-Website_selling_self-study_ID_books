@@ -51,3 +51,7 @@ auth.json
 /DATN/storage/framework/views
 /DATN/storage/logs
 DATN/storage/logs/laravel.log
+DATN/storage/logs/laravel.log
+*.log
+*.log
+/DATN/storage/logs
