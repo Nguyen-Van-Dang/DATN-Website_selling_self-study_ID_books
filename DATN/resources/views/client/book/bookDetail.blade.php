@@ -6,6 +6,19 @@
     <div class="container-fluid">
         <livewire:client.book.bookdetail :id="$id" />
     </div>
+
+    <style>
+        .book-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.5em;
+            height: 3em;
+        }
+    </style>
     <script>
         function toggleFavorite(bookId) {
             fetch(`/sach/${bookId}/toggle-favorite`, {

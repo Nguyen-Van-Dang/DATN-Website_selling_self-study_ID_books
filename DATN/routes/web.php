@@ -221,7 +221,13 @@ Route::post('/user-information', [UserController::class, 'updateUser'])->name('u
 // })->name('userInformation');
 // Route::pots('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
 // thông tin chi tiết người dùng
-Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
+Route::prefix('thong-tin-tai-khoan')->group(
+    function () {
+        Route::get('/', [UserController::class, 'showUserDetail'])->name('userDetail');
+        Route::post('/', [UserController::class, 'updateDescription'])->name('updateDescription');
+    }
+);
+
 
 //giỏ hàng
 Route::prefix('/gio-hang')->group(function () {

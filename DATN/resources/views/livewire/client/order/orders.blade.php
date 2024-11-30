@@ -16,29 +16,18 @@
                     <div class="col-lg-4">
                         <div class="iq-card">
                             <div class="iq-card-body">
-                                <p>Tùy chọn</p>
-                                <hr>
-                                <p><b>Chi tiết</b></p>
-                                <div class="d-flex justify-content-between mb-1">
-                                    <span>Tổng</span>
+                                <div class="d-flex justify-content-between">
+                                    <span><b>Tổng</b></span>
+                                    <span><b>0 đ</b></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Đã Thanh Toán</span>
                                     <span>0 đ</span>
                                 </div>
-                                <div class="d-flex justify-content-between mb-1">
-                                    <span>Giảm giá</span>
-                                    <span class="text-success">0 đ</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-1">
-                                    <span>Thuế VAT</span>
-                                    <span>0 đ<span>
-                                </div>
-                                <hr>
                                 <div class="d-flex justify-content-between">
-                                    <span class="text-dark"><strong>Tổng</strong></span>
-                                    <span class="text-dark"><strong>0
-                                            đ</strong></span>
+                                    <span>Chưa Thanh Toán</span>
+                                    <span>0 đ</span>
                                 </div>
-                                <a id="place-order" href="javascript:void();" class="btn btn-primary d-block mt-3 next"
-                                    disabled>Đặt hàng</a>
                             </div>
                         </div>
                         <div class="iq-card ">
@@ -80,6 +69,7 @@
                                     <h4 class="card-title">Đơn Hàng</h4>
                                 </div>
                             </div>
+
                             <div class="iq-card-body">
                                 <ul class="list-inline p-0 m-0">
                                     @php
@@ -90,43 +80,55 @@
                                             @if (!in_array($order->id, $displayedOrderIds))
                                                 <li class="checkout-product">
                                                     <div class="row align-items-center">
-                                                        <div class="col-sm-4">
+                                                        <div class="col-sm-7">
                                                             <div class="checkout-product-details">
-                                                                @if ($detail->book)
-                                                                    <h6>Đơn Sách</h6>
-                                                                    <h5>{{ $order->id }}</h5>
-                                                                @elseif ($detail->course)
-                                                                    <h6>Đơn Khóa Học</h6>
-                                                                    <h5>{{ $order->id }}</h5>
-                                                                @endif
-
-                                                                @if ($order->payment_status == 0)
-                                                                    <p class="text-danger">Chưa Thanh Toán</p>
-                                                                @else
-                                                                    <p class="text-success">Đã Thanh Toán</p>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-8">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <div class="row align-items-center mt-2">
-                                                                        <div class="col-sm-12">
-                                                                            <span class="product-price text-white">
-                                                                                {{ number_format($order->price) }}
-                                                                                đ
-                                                                            </span>
-                                                                        </div>
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center">
+                                                                    <div class="d-flex align-items-center"
+                                                                        style="width: 100%;">
+                                                                        @if ($detail->book)
+                                                                            <h6 class="text-black mb-0 me-2"><strong>Đơn
+                                                                                    Sách</strong></h6>
+                                                                        @elseif ($detail->course)
+                                                                            <h6 class="text-black mb-0 me-2"><strong>Đơn
+                                                                                    Khóa Học</strong></h6>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="flex-grow-1 text-center"
+                                                                        style="width: 100%;">
+                                                                        <span
+                                                                            style="font-weight: 500">#{{ $order->id }}</span>
+                                                                    </div>
+                                                                    <div class="text-center" style="width: 100%;">
+                                                                        @if ($order->payment_status == 0)
+                                                                            <p class="text-danger mb-0"><strong>Chưa
+                                                                                    Thanh Toán</strong></p>
+                                                                        @elseif ($order->payment_status == 1)
+                                                                            <p class="text-success mb-0"><strong>Đã
+                                                                                    Thanh Toán</strong></p>
+                                                                        @elseif ($order->payment_status == 2)
+                                                                            <p class="text-danger mb-0">
+                                                                                <strong>Đang Giao</strong>
+                                                                            </p>
+                                                                        @else
+                                                                            <p class="text-success mb-0"><strong>Đã
+                                                                                    Giao</strong></p>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-4 text-right">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-5">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 text-right">
                                                                     <button type="button" class="btn btn-primary"
                                                                         id="orderId {{ $order->id }}"
                                                                         wire:click="openDetailPopup({{ $order->id }})">
                                                                         Chi Tiết Đơn Hàng
                                                                     </button>
                                                                 </div>
-                                                                <div class="col-sm-4 text-left">
+                                                                <div class="col-sm-6 text-left">
                                                                     @if ($order->payment_status == 0)
                                                                         <button type="button" class="btn btn-primary"
                                                                             wire:click="openPaymentPopup({{ $order->id }})">
@@ -152,8 +154,16 @@
                         <div class="iq-card">
                             <div class="iq-card-body">
                                 <div class="d-flex justify-content-between">
-                                    <span class="text-dark"><strong>Tổng</strong></span>
-                                    <span class="text-dark"><strong>{{ number_format($totalPrice) }}đ</strong></span>
+                                    <span><b>Tổng</b></span>
+                                    <span><b>{{ number_format($totalPrice) }}đ</b></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Đã Thanh Toán</span>
+                                    <span>{{ number_format($totalPricePaid) }}đ</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Chưa Thanh Toán</span>
+                                    <span>{{ number_format($totalPriceUnpaid) }}đ</span>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +194,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade {{ $isPaymentPopupOpen ? 'show d-block' : '' }}" tabindex="-1" role="dialog">
+            <div style="backdrop-filter: blur(1px);" class="modal fade {{ $isPaymentPopupOpen ? 'show d-block' : '' }}"
+                tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -201,8 +212,8 @@
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="payment_method_{{ $method->id }}"
                                                 name="payment_method" value="{{ $method->id }}"
-                                                wire:model="selectedPaymentMethod" value="{{ $method->id }}"
-                                                class="custom-control-input">
+                                                class="custom-control-input" wire:model="selectedPaymentMethod"
+                                                value="{{ $method->id }}">
                                             <label class="custom-control-label"
                                                 for="payment_method_{{ $method->id }}">{{ $method->name }}</label>
                                         </div>
@@ -215,7 +226,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade {{ $isDetailPopupOpen ? 'show d-block' : '' }}" tabindex="-1" role="dialog">
+            <div style="backdrop-filter: blur(1px);"
+                class="modal fade {{ $isDetailPopupOpen ? 'show d-block' : '' }}" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -257,12 +269,22 @@
                                                         </span>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <div class="checkout-product-details">
-                                                            <h5>{{ $detail->book->name }}</h5>
-                                                            <div class="price">
-                                                                <h5>{{ number_format($detail->book->price) }}đ</h5>
+                                                        @if ($detail->book)
+                                                            <div class="checkout-product-details">
+                                                                <h5>{{ $detail->book->name }}</h5>
+                                                                <div class="price">
+                                                                    <h5>{{ number_format($detail->book->price) }}đ</h5>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        @else
+                                                            <div class="checkout-product-details">
+                                                                <h5>{{ $detail->course->name }}</h5>
+                                                                <div class="price">
+                                                                    <h5>{{ number_format($detail->course->price) }}đ
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="row">
@@ -275,10 +297,15 @@
                                                                             style=" width: 30px; height: 28px;"
                                                                             value="{{ $detail->quantity }}">
                                                                     </div>
-                                                                    <div class="col-md-7">
+                                                                    <div class="col-md-7 text-center">
                                                                         <h5>Tổng Tiền</h5>
-                                                                        <span
-                                                                            class="product-price pl-2">{{ number_format($detail->book->price * $detail->quantity) }}đ</span>
+                                                                        @if ($detail->book)
+                                                                            <span class="product-price">
+                                                                                {{ number_format($detail->book->price * $detail->quantity) }}đ</span>
+                                                                        @else
+                                                                            <span class="product-price">
+                                                                                {{ number_format($detail->course->price) }}đ</span>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>

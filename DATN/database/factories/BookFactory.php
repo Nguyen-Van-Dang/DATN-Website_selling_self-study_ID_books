@@ -14,7 +14,7 @@ class BookFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(3),
-            'price' => $this->faker->numberBetween(100000, 300000),
+            'price' => floor($this->faker->numberBetween(100000, 300000) / 1000) * 1000,
             'page_number' => $this->faker->numberBetween(1, 50),
             'description' => $this->faker->paragraph(3),
             'quantity' => $this->faker->numberBetween(1000, 2000),

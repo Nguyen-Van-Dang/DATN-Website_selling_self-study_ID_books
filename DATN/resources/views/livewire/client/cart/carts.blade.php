@@ -92,7 +92,7 @@
                                                     <span class="checkout-product-img">
                                                         <a href="javascript:void();">
                                                             @php
-                                                                $thumbnail = $Book
+                                                                $thumbnail = $item->book
                                                                     ->images()
                                                                     ->where('image_name', 'thumbnail')
                                                                     ->first();
@@ -107,7 +107,7 @@
                                                         <h5>{{ $item->book->name }}</h5>
                                                         <p class="text-success">Còn hàng</p>
                                                         <div class="price">
-                                                            <h5>{{ $item->book->price }} đ</h5>
+                                                            <h5>{{ number_format($item->book->price) }} đ</h5>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,7 +130,7 @@
                                                                 </div>
                                                                 <div class="col-sm-5 col-md-6">
                                                                     <span
-                                                                        class="product-price">{{ $item->book->price * $item->quantity }}
+                                                                        class="product-price">{{ number_format($item->book->price * $item->quantity) }}
                                                                         đ</span>
                                                                 </div>
                                                             </div>
@@ -157,15 +157,16 @@
                                 <p><b>Chi tiết</b></p>
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Tổng</span>
-                                    <span>{{ $totalPrice }} đ</span>
+                                    <span>{{ number_format($totalPrice) }} đ</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Giảm giá</span>
-                                    <span class="text-success">{{ $voucher = ($totalPrice * 1) / 100 }} đ</span>
+                                    <span class="text-success">{{ number_format($voucher = ($totalPrice * 1) / 100) }}
+                                        đ</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Thuế VAT</span>
-                                    <span>{{ $total = ($totalPrice * 5) / 100 }} đ<span>
+                                    <span>{{ number_format($total = ($totalPrice * 5) / 100) }} đ<span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span>Phí vận chuyển</span>
@@ -174,7 +175,7 @@
                                 <hr>
                                 <div class="d-flex justify-content-between">
                                     <span class="text-dark"><strong>Tổng</strong></span>
-                                    <span class="text-dark"><strong>{{ $finalTotal = $total + $totalPrice - $voucher }}
+                                    <span class="text-dark"><strong>{{ number_format($finalTotal = $total + $totalPrice - $voucher) }}
                                             đ</strong></span>
                                 </div>
                                 <a id="place-order" href="javascript:void();" class="btn btn-primary d-block mt-3 next"
@@ -309,7 +310,7 @@
                     </div>
                 </div>
             </div>
-            <div id="payment" wire:ignore class="card-block p-0 col-12">
+            <div id="payment" class="card-block p-0 col-12">
                 <div class="row align-item-center">
                     <div class="col-lg-8">
                         <div class="iq-card">

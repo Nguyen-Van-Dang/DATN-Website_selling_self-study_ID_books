@@ -7,6 +7,19 @@
         <livewire:client.homepage />
     </div>
     <style>
+        .course-title,
+        .book-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.5em;
+            height: 3em;
+        }
+
+
         .trendy-course {
             transition: transform 0.3s ease;
         }

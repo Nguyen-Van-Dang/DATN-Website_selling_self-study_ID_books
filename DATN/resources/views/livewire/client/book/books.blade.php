@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="mb-2">
-                                            <h6 class="mb-1">{{ $item->name }}</h6>
+                                            <h6 class="mb-1 book-title">{{ $item->name }}</h6>
                                             @php
                                                 $user = $item->user;
                                             @endphp
@@ -202,7 +202,7 @@
                                 </div>
                                 <div class="col-7">
                                     <div class="mb-2">
-                                        <h6 class="mb-1">{{ $item->name }}</h6>
+                                        <h6 class="mb-1 book-title">{{ $item->name }}</h6>
                                         <p class="font-size-13 line-height mb-1">{{ $item->user->name }}</p>
                                         <div class="d-block">
                                             <span class="font-size-13 text-warning">
@@ -410,6 +410,17 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             animation: bounce 2s infinite;
             transition: box-shadow 0.3s ease;
+
+        }
+        .book-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.5em;
+            height: 3em;
         }
     </style>
 </div>

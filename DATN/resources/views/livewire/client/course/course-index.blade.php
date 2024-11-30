@@ -90,7 +90,7 @@
                             <div class="card-body">
                                 <div class="" wire:click="goToCourseDetail({{ $course->id }})"
                                     style="cursor: pointer;">
-                                    <h5 class="card-title course-title">{{ $course->name }}
+                                    <h5 class="card-title course-top-title">{{ $course->name }}
                                     </h5>
                                     @if ($course->discount && $course->price > $course->discount)
                                     @php
@@ -200,6 +200,28 @@
         </div>
     </div>
     <style>
+        .course-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.5em;
+            height: 3em;
+        }
+
+        .course-top-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.5em;
+            height: 1.5em;
+        }
+
         .card:hover .course-title {
             color: blue;
         }

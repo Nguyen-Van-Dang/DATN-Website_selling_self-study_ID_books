@@ -14,7 +14,12 @@
                                 <div class="row">
 
                                     <div class="col-3 text-center">
-                                        <img src="{{ asset($user->image_url ?? 'assets/images/book/user/avatar.jpg') }}"
+
+                                        @php
+                                            $avatar = auth()->user()->images()->where('image_name', 'avatar')->first();
+                                        @endphp
+
+                                        <img src="{{ asset($avatar->image_url ?? 'assets/images/book/user/avatar.jpg') }}"
                                             alt="profile-bg" class="rounded-circle img-fluid"
                                             style="width: 60%; box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.50);">
 
@@ -51,11 +56,29 @@
                                         <div class="profile-detail mt-3">
                                             <h3>{{ auth()->user()->name }}</h3>
                                             <p class="text-primary">chuyên môn: Toán </p>
-                                            <p>-Giáo viên với 15 năm kinh nghiệm giảng dạy online và offline môn Toán. <br>
-                                                -Tác giả của hơn 30 đầu sách ID luyện thi THPT. <br>
-                                                - Phương pháp giảng dạy hay, lạ, độc đáo giúp học sinh tiếp cận các bài toán
-                                                nhanh, dễ hiểu.
-                                            </p>
+                                            @if (auth()->user()->description == '')
+                                                <p id="description-text">
+                                                    - Giảng viên chưa cập nhật thông tin
+                                                    <a class="ml-2" style="cursor: pointer;"
+                                                        onclick="editDescription()"><i class="fa fa-pen"></i></a>
+                                                </p>
+                                            @else
+                                                <p id="description-text">
+                                                    {!! auth()->user()->description !!}
+                                                    <a class="ml-2" style="cursor: pointer;"
+                                                        onclick="editDescription()"><i class="fa fa-pen"></i></a>
+                                                </p>
+                                            @endif
+                                            <div id="description-edit" style="display: none;">
+                                                <form action="{{ route('updateDescription') }}" method="POST">
+                                                    @csrf
+                                                    <textarea id="description-input" class="form-control" name="user_description" rows="4"></textarea>
+                                                    <button type="submit" class="btn btn-primary btn-sm mt-2"
+                                                        onclick="saveDescription()">Lưu</button>
+                                                    <button class="btn btn-secondary btn-sm mt-2"
+                                                        onclick="cancelEdit()">Hủy</button>
+                                                </form>
+                                            </div>
                                             <div class="pt-3" style="font-size: 14px; color: #444; margin-left: 1rem">
                                                 <div class="row">
                                                     <div class="text-center" style="padding-right: 3rem">
@@ -102,8 +125,8 @@
                                         <div class="col-6 pb-3">
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <img src="{{ asset('assets/images/book/user/4.jpg') }}" alt="profile-bg"
-                                                        class="w-100"
+                                                    <img src="{{ asset('assets/images/book/user/4.jpg') }}"
+                                                        alt="profile-bg" class="w-100"
                                                         style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
                                                 </div>
                                                 <div class="col-6">
@@ -237,7 +260,50 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+    <style>
+        textarea.form-control {
+            width: 100%;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        button {
+            margin-right: 5px;
+        }
+    </style>
+    <script>
+        function editDescription() {
+            const descriptionText = document.getElementById("description-text");
+            const descriptionEdit = document.getElementById("description-edit");
+            const descriptionInput = document.getElementById("description-input");
+
+            descriptionInput.value = descriptionText.innerText.trim();
+            descriptionText.style.display = "none";
+            descriptionEdit.style.display = "block";
+        }
+
+        function saveDescription(event) {
+            event.preventDefault();
+
+            const descriptionText = document.getElementById("description-text");
+            const descriptionInput = document.getElementById("description-input");
+            const trimmedValue = descriptionInput.value.trim();
+
+            descriptionText.innerHTML = trimmedValue.replace(/\n/g, '<br>') +
+                ' <a class="ml-2" style="cursor: pointer;" onclick="editDescription()"><i class="fa fa-pen"></i></a>';
+            descriptionText.style.display = "block";
+            document.getElementById("description-edit").style.display = "none";
+
+        }
+
+        function cancelEdit() {
+            const descriptionText = document.getElementById("description-text");
+            const descriptionEdit = document.getElementById("description-edit");
+
+            descriptionText.style.display = "block";
+            descriptionEdit.style.display = "none";
+        }
+    </script>
 @endsection
