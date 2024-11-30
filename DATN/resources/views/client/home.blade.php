@@ -105,7 +105,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mb-2">
-                                                        <h6 class="mb-1">{{ $item->name }}</h6>
+                                                        <h6 class="mb-1 book-title">{{ $item->name }}</h6>
                                                         <p class="font-size-13 line-height mb-1">{{ $item->user->name }}
                                                         </p>
                                                         <div class="d-block line-height">
@@ -119,7 +119,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="price d-flex align-items-center">
-                                                        <h6><b>{{ $item->price }}đ</b></h6>
+                                                        <h6><b>{{ number_format($item->price) }}đ</b></h6>
                                                     </div>
                                                     <div class="iq-product-action">
                                                         <a href="javascript:void(0);"
@@ -271,7 +271,7 @@
                                             </a>
                                         </div>
                                         <div class="col-7">
-                                            <h5 class="mb-2">{{ $item->name }}</h5>
+                                            <h5 class="mb-2 book-title">{{ $item->name }}</h5>
                                             <p class="mb-2">Tác giả : {{ $item->user->name }}</p>
                                             <div
                                                 class="d-flex justify-content-between align-items-center text-dark font-size-13">
@@ -319,13 +319,15 @@
                                                 class="card-img-top img-fluid rounded course-image" alt="Product 3">
                                             <div class="card-body border pt-1">
                                                 <div>
-                                                    <h5 class="card-title course-title">{{ $item->name }}</h5>
+                                                    <h5 class="card-title course-title" style=" text-overflow: ellipsis;">
+                                                        {{ $item->name }}</h5>
                                                     <h7 class="card-title course-teacher" style="font-size: 13px">
                                                         {{ $item->user->name }}</h7>
                                                 </div>
                                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap"
                                                     style="font-size: 13px">
-                                                    <span class="text-danger font-weight-bold">{{ $item->price }}đ</span>
+                                                    <span
+                                                        class="text-danger font-weight-bold">{{ number_format($item->price) }}đ</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -339,6 +341,19 @@
         </div>
     </div>
     <style>
+        .course-title,
+        .book-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.5em;
+            height: 3em;
+        }
+
+
         .trendy-course {
             transition: transform 0.3s ease;
         }

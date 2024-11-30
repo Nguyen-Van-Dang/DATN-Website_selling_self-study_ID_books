@@ -90,7 +90,7 @@
                             <div class="card-body">
                                 <div class="" wire:click="goToCourseDetail({{ $course->id }})"
                                     style="cursor: pointer;">
-                                    <h5 class="card-title course-title">{{ $course->name }}
+                                    <h5 class="card-title course-top-title">{{ $course->name }}
                                     </h5>
                                     <img class="card-img-top img-fluid rounded course-image"
                                         style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;"
@@ -185,6 +185,28 @@
         </div>
     </div>
     <style>
+        .course-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.5em;
+            height: 3em;
+        }
+
+        .course-top-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.5em;
+            height: 1.5em;
+        }
+
         .card:hover .course-title {
             color: blue;
         }

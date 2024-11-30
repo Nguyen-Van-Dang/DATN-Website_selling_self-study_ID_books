@@ -19,7 +19,6 @@ class Carts extends Component
     {
         $paymentMethods = PaymentMethods::all();
         $user = Auth::user();
-        $Book = Book::where('user_id', Auth::id())->first();
         $cart = CartDetail::where('user_id', Auth::id())->with('book')->get();
         $totalPrice = $cart->sum(function ($item) {
             return $item->book->price * $item->quantity;
@@ -28,7 +27,6 @@ class Carts extends Component
             return $item->quantity;
         });
         return view('livewire.client.cart.carts', [
-            'Book' => $Book,
             'user' => $user,
             'cart' => $cart,
             'totalQuantity' => $totalQuantity,

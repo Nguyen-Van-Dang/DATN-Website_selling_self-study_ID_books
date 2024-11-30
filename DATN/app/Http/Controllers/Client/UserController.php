@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Course;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Laravel\Socialite\Facades\Socialite;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 
@@ -51,6 +54,135 @@ class UserController extends Controller
 
         return view('client.home', compact('teachers', 'popularBooks', 'popularCourses', 'favBook', 'Book'));
     }
+
+    public function HomeAdmin()
+    {
+        $user = auth()->user();
+
+        if ($user->role_id == 2) {
+            $userCount = 1;
+            $bookCount = Book::where('user_id', $user->id)->count();
+            $orderCount = Order::where('user_id', $user->id)->count();
+            $courseCount = course::where('user_id', $user->id)->count();
+
+            $orders = Order::with('user')->where('user_id', $user->id)
+                ->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->get();
+
+            $monthlyIncome = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->leftJoin('books', 'order_details.book_id', '=', 'books.id')
+                ->leftJoin('courses', 'order_details.course_id', '=', 'courses.id')
+                ->where('orders.payment_status', 1)
+                ->whereMonth('orders.created_at', now()->month)
+                ->whereYear('orders.created_at', now()->year)
+                ->where(function ($query) use ($user) {
+                    $query->where('books.user_id', $user->id)
+                        ->orWhere('courses.user_id', $user->id);
+                })
+                ->sum(DB::raw('
+                    (COALESCE(books.price, 0) * COALESCE(order_details.quantity, 0)) 
+                    + 
+                    (COALESCE(courses.price, 0) * COALESCE(order_details.quantity, 0))
+                '));
+
+
+            $bookSold = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->join('books', 'order_details.book_id', '=', 'books.id')
+                ->where('orders.payment_status', 1)
+                ->whereMonth('orders.created_at', now()->month)
+                ->whereYear('orders.created_at', now()->year)
+                ->whereNotNull('order_details.book_id')
+                ->where('books.user_id', $user->id)
+                ->sum('order_details.quantity');
+
+            $courseSold = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->join('courses', 'order_details.course_id', '=', 'courses.id')
+                ->where('orders.payment_status', 1)
+                ->whereMonth('orders.created_at', now()->month)
+                ->whereYear('orders.created_at', now()->year)
+                ->whereNotNull('order_details.course_id')
+                ->where('courses.user_id', $user->id)
+                ->sum('order_details.quantity');
+
+            $sales = DB::table('orders')
+                ->select(
+                    DB::raw('DAYOFWEEK(orders.created_at) as day_of_week'),
+                    DB::raw('SUM(order_details.quantity * books.price) as total_sales_books'),
+                    DB::raw('SUM(order_details.quantity * courses.price) as total_sales_courses')
+                )
+                ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+                ->leftJoin('books', 'order_details.book_id', '=', 'books.id')
+                ->leftJoin('courses', 'order_details.course_id', '=', 'courses.id')
+                ->where('orders.payment_status', 1)
+                ->whereMonth('orders.created_at', now()->month)
+                ->where(function ($query) {
+                    $query->whereNotNull('order_details.book_id')
+                        ->orWhereNotNull('order_details.course_id');
+                })
+                ->where(function ($query) {
+                    $query->where('books.user_id', auth()->user()->id)
+                        ->orWhere('courses.user_id', auth()->user()->id);
+                })
+                ->groupBy(DB::raw('DAYOFWEEK(orders.created_at)'))
+                ->get();
+
+            $dailySales = [0, 0, 0, 0, 0, 0, 0];
+            foreach ($sales as $sale) {
+                $dailySales[$sale->day_of_week - 1] = $sale->total_sales_books + $sale->total_sales_courses;
+            }
+        } else {
+            $userCount = User::count();
+            $bookCount = Book::count();
+            $orderCount = Order::count();
+            $courseCount = course::count();
+
+            $orders = Order::with('user')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->get();
+
+            $sales = DB::table('orders')->select(DB::raw('DAYOFWEEK(created_at) as day_of_week'), DB::raw('SUM(price) as total_sales'))
+                ->whereMonth('created_at', now()->month)
+                ->where('payment_status', 1)
+                ->groupBy(DB::raw('DAYOFWEEK(created_at)'))
+                ->get();
+
+            $dailySales = [0, 0, 0, 0, 0, 0, 0];
+            foreach ($sales as $sale) {
+                $dailySales[$sale->day_of_week - 1] = $sale->total_sales;
+            }
+
+            $monthlyIncome = Order::where('payment_status', 1)
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->sum('price');
+
+            $bookSold = DB::table('order_details')->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->where('orders.payment_status', 1)
+                ->whereMonth('orders.created_at', now()->month)
+                ->whereYear('orders.created_at', now()->year)
+                ->whereNotNull('order_details.book_id')
+                ->sum('order_details.quantity');
+
+            $courseSold = DB::table('order_details')->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->where('orders.payment_status', 1)
+                ->whereMonth('orders.created_at', now()->month)
+                ->whereYear('orders.created_at', now()->year)
+                ->whereNotNull('order_details.course_id')
+                ->sum('order_details.quantity');
+        }
+        return view('admin.home', compact(
+            'userCount',
+            'bookCount',
+            'orders',
+            'orderCount',
+            'courseCount',
+            'monthlyIncome',
+            'bookSold',
+            'courseSold',
+            'dailySales',
+        ));
+    }
+
     //render course, book, reel
     public function showUserDetail()
     {
@@ -62,6 +194,18 @@ class UserController extends Controller
 
         return view('client.user.userDetail', compact('user', 'books', 'courses', 'reels'));
     }
+    public function updateDescription(Request $request)
+    {
+        $data = $request->all();
+
+
+        $user = auth()->user();
+        $user->description = nl2br(e($data['user_description']));
+        $user->save();
+
+        return redirect('/thong-tin-tai-khoan')->with('success', 'Mô tả đã được cập nhật thành công');
+    }
+
     public function logout(Request $request)
     {
         return $this->userRepository->logout($request);

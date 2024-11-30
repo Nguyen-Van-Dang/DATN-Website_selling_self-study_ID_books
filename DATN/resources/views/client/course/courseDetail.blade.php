@@ -83,10 +83,11 @@
                                         <div class="panel-body" style="margin-left: 45px">
                                             <ul class="list-group list-group-flush">
                                                 @foreach ($lectures as $lecture)
-                                                    <li class="list-group-item py-0">                 
-                                                        <a href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
+                                                    <li class="list-group-item py-0">
+                                                        <a
+                                                            href="{{ route('khoa-hoc.chitiet', ['course_id' => $course->id, 'lecture_id' => $lecture->id]) }}">
                                                             {{ $lecture->name }}
-                                                        </a>                                                                                              
+                                                        </a>
                                                         <!-- Liên kết đến bài giảng -->
                                                     <li class="list-group-item py-0">
                                                         <a href="{{ $lecture->id }}">{{ $lecture->name }}</a>
@@ -141,11 +142,7 @@
                     </div>
                     <div>
                         <p>
-                            - Hơn 15 năm kinh nghiệm giảng dạy và luyện thi: 10 năm luyện thi THPT và 5 năm luyện thi ĐGNL
-                            ĐHQG TP.HCM<br>
-                            - Thạc sĩ ngành Di truyền học, Cử nhân ngành Công nghệ Sinh học, trường Đại học KHTN, ĐHQG
-                            TP.HCM<br>
-                            - Tham gia học văn bằng 2 ngành Ngôn ngữ Anh, trường Đại học KHXH&NV, ĐHQG TP.HCM
+                            {{ $course->user->description }}
                         </p>
                     </div>
                     <div class="modal-content">

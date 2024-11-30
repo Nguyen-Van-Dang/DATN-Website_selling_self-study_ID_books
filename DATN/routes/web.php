@@ -38,9 +38,13 @@ Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
 
 /* --------------- hOME ADMIN --------------- */
 Route::middleware([CheckRole::class . ':1,2'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.home');
-    })->name('homeAdmin');
+    // Route::get('/admin', function () {
+    //     return view('admin.home');
+    // })->name('homeAdmin');
+
+    Route::get('/admin', [UserController::class, 'HomeAdmin'])->name('homeAdmin');
+
+
     Route::get('/admin/thong-tin-nguoi-dung', function () {
         return view('admin.user.userInfo');
     })->name('userInfo');
@@ -200,7 +204,13 @@ Route::post('/user-information', [UserController::class, 'updateUser'])->name('u
 // })->name('userInformation');
 // Route::pots('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
 // thông tin chi tiết người dùng
-Route::get('/user-detail', [UserController::class, 'showUserDetail'])->name('userDetail');
+Route::prefix('thong-tin-tai-khoan')->group(
+    function () {
+        Route::get('/', [UserController::class, 'showUserDetail'])->name('userDetail');
+        Route::post('/', [UserController::class, 'updateDescription'])->name('updateDescription');
+    }
+);
+
 
 //giỏ hàng
 Route::prefix('/gio-hang')->group(function () {
@@ -249,7 +259,7 @@ Route::prefix('khoa-hoc')->group(function () {
 //reels
 Route::prefix('tai-video')->group(function () {
     Route::get('/', [ReelsController::class, 'index'])->name('tai-video.index');
-    Route::post('/', [ReelsController::class,'submit'])->name('tai-video.submit');
+    Route::post('/', [ReelsController::class, 'submit'])->name('tai-video.submit');
 });
 
 Route::get('/reels', function () {

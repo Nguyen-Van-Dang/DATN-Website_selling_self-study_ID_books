@@ -51,11 +51,15 @@ class Orders extends Component
             ])
             ->get();
 
-        $totalPrice = $Order->where('payment_status', 0)->sum('price');
+        $totalPrice = $Order->sum('price');
+        $totalPriceUnpaid = $Order->where('payment_status', 0)->sum('price');
+        $totalPricePaid = $Order->where('payment_status', 1)->sum('price');
 
         return view('livewire.client.order.orders', [
             'Order' => $Order,
             'totalPrice' => $totalPrice,
+            'totalPriceUnpaid' => $totalPriceUnpaid,
+            'totalPricePaid' => $totalPricePaid,
         ]);
     }
 
@@ -169,7 +173,7 @@ class Orders extends Component
 
         error_log(print_r($jsonResult, true));
 
-
+        // dd($jsonResult);
         if (isset($jsonResult['payUrl'])) {
             return redirect()->to($jsonResult['payUrl']);
         }

@@ -230,8 +230,12 @@
                     @if (auth()->check())
                         <li class="line-height pt-3">
                             <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                                <img src="{{ asset('assets/images/book/user/1.jpg') }}"
-                                    class="img-fluid rounded-circle mr-3" alt="user">
+                                @php
+                                    $avatar = auth()->user()->images()->where('image_name', 'avatar')->first();
+                                @endphp
+                                <img class="img-fluid rounded-circle mr-3"
+                                    src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg') }}">
+
                                 <div class="caption"
                                     @php
 $userName = Auth::user()->name;

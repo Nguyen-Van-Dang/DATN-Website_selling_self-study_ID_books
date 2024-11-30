@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('set null');
             $table->foreignId('book_id')->nullable()->constrained('books')->onDelete('set null');
+            $table->foreignId('course_id')->nullable()->constrained('courses')->onDelete('set null');
             $table->integer('quantity');
 
             $table->timestamps();

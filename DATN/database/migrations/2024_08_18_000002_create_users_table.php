@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('active')->default(0)->nullable();
             $table->boolean('sex')->nullable();
             $table->boolean('status')->nullable()->default(1);
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
