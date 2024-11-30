@@ -219,7 +219,7 @@ class UserIndex extends Component
                 $firstImage->delete();
             }
             $filePath = $this->newImg->store('temp');
-            UploadFileJob::dispatch($user, $folderId, $filePath, 'avatar');
+            UploadFileJob::dispatch($user, $folderId, $filePath, 'thumbnail');
         }
         $user->save();
         $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'newImg', 'passwordAdd']);

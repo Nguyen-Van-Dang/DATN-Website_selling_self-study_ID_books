@@ -55,7 +55,7 @@
             @endif
             @if (auth()->check() && (Auth::user()->role_id == 1))
                 <li class="{{ request()->routeIs('approve') ? 'active' : '' }}">
-                    <a href="{{ route('approve') }}"><i class="ri-mail-line"></i> <span>Phê duyệt</span></a>
+                    <a href="{{ route('approve') }}"><i class="ri-checkbox-circle-line"></i><span>Phê duyệt</span></a>
                 </li>
             @endif
             <li class="{{ request()->routeIs('bin') ? 'active' : '' }}">

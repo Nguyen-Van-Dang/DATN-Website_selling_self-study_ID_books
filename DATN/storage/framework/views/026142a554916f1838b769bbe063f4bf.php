@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/typography.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/responsive.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/blur-effect.css')); ?>">
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">

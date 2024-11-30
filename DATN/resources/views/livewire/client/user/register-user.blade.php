@@ -4,28 +4,33 @@
         <div class="input-field">
             <i class="fas fa-user"></i>
             <input type="text" wire:model="name" placeholder="Họ và tên" />
-            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+
         <div class="input-field">
             <i class="fas fa-phone"></i>
             <input type="text" wire:model="phone" placeholder="Số điện thoại" />
-            @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+        @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+
         <div class="input-field">
             <i class="ri-mail-line" style="font-weight: bold"></i>
             <input type="email" wire:model="email" placeholder="Email" />
-            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+        @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+
         <div class="input-field">
             <i class="fas fa-lock"></i>
             <input type="password" wire:model="password" placeholder="Mật khẩu" />
-            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+        @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+
         <div class="input-field">
             <i class="fas fa-lock"></i>
             <input type="password" wire:model="password_confirmation" placeholder="Nhập lại mật khẩu" />
-            @error('password_confirmation') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+        @error('password_confirmation') <span class="text-danger">{{ $message }}</span> @enderror
+
         <div class="">
             <center>
                 <button class="btnn" type="submit">Đăng Ký</button>

@@ -92,11 +92,26 @@
                                     style="cursor: pointer;">
                                     <h5 class="card-title course-title">{{ $course->name }}
                                     </h5>
+                                    @if ($course->discount && $course->price > $course->discount)
+                                    @php
+                                        $price = $course->price;
+                                        $discount = $course->discount;
+                                        if ($price > 0 && $discount > 0 && $discount < $price) {
+                                            $discountPercentage = round(($discount / $price) * 100);
+                                        } else {
+                                            $discountPercentage = 0;
+                                        }
+                                    @endphp
+                                    @if ($discountPercentage > 0)
+                                        <span class="discount-badge">
+                                            -{{ $discountPercentage }}%
+                                        </span>
+                                    @endif
+                                @endif
                                     <img class="card-img-top img-fluid rounded course-image"
                                         style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;"
                                         src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                                 </div>
-
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
                                     <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
                                         đ</span>
@@ -130,7 +145,7 @@
         </div>
     </div>
 
-    <div class="iq-card iq-card-block iq-card-stretch iq-card-height mt-4">
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height mt-4" wire:ignore>
         <div class="iq-card-body trendy-contens">
             <ul id="trendy-slider" class="row">
                 @foreach ($teachers as $teacher)
@@ -218,5 +233,20 @@
             width: 100%;
             height: auto;
         }
+        .discount-badge {
+                position: absolute;
+                top: 70px;
+                right: 40px;
+                background-color: #f44336;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                animation: bounce 2s infinite;
+                transition: box-shadow 0.3s ease;
+                z-index: 10;
+            }
     </style>
 </div>

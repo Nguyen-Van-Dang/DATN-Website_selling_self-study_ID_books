@@ -40,6 +40,10 @@
                     @endif
                 </div>
                 <div class="p-2 d-flex align-items-center" style="margin-left: 30px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <img class="rounded-circle me-3"style="width: 100px; height: 100px;"
+                            src="{{ $course->user->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/user_thumbnail.png') }}">
+                    </div>
                     <div class="font-weight-bold mr-3">
                         <div class="text-truncate" style="font-weight: bolder; color: rgb(0, 0, 0)">
                             {{ $course->user->name }}
@@ -57,16 +61,10 @@
                     <div class="card-header">
                         <h5 class="mb-0">
                                 <div class="d-flex align-items-center bg-light osahan-post-header">
-                                    @php
-                                     $User = auth()->user();
-                                        $thumbnail = $User->images()->where('image_name', 'avatar')->first();
-                                        $thumbnailUrl = $thumbnail
-                                            ? $thumbnail->image_url
-                                            : asset('assets/images/book/book/01.jpg');
-                                    @endphp
-                                    <a href="javascript:void(0);">
-                                        <img src="{{ $thumbnailUrl }}" class="rounded-circle w-50" alt="avatar">
-                                    </a>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img class="rounded-circle me-3"style="width: 100px; height: 100px;"
+                                            src="{{ $course->user->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/user_thumbnail.png') }}">
+                                    </div>
                                     <div class="pe-2"></div>
                                     <div class="font-weight-bold mr-3">
                                         <div class="text-truncate" style="font-weight: bolder;">{{ $course->user->name }}

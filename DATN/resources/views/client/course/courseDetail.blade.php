@@ -136,6 +136,7 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -227,11 +228,8 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="d-flex align-items-center mb-3">
-                                @php
-                                    $avatar = $course->user->images()->where('image_name', 'avatar')->first();
-                                @endphp
                                 <img class="rounded-circle me-3"style="width: 100px; height: 100px;"
-                                    src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg') }}">
+                                    src="{{ $course->user->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/user_thumbnail.png') }}">
                             </div>
                         </div>
                         <div class="col-9">
