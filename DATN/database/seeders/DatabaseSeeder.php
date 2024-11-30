@@ -41,9 +41,9 @@ class DatabaseSeeder extends Seeder
         Role::create(['id' => 2, 'name' => 'Teacher']);
         Role::create(['id' => 3, 'name' => 'Student']);
         //User
-        User::factory()->create(['role_id' => 1, 'name' => 'Admin', 'phone' => 'Admin123', 'password' => Hash::make('123456789'), 'email' => 'admin@gmail.com']);
-        User::factory()->create(['role_id' => 2, 'name' => 'Teacher', 'phone' => 'Teacher123', 'password' => Hash::make('123456789'), 'email' => 'teacher@gmail.com']);
-        User::factory()->create(['role_id' => 3, 'name' => 'Student', 'phone' => 'Student123', 'password' => Hash::make('123456789'), 'email' => 'student@gmail.com']);
+        User::factory()->create(['role_id' => 1, 'name' => 'Admin', 'phone' => '0123456789', 'password' => Hash::make('Admin123'), 'email' => 'admin@gmail.com']);
+        User::factory()->create(['role_id' => 2, 'name' => 'Teacher', 'phone' => '0123456788', 'password' => Hash::make('Teacher123'), 'email' => 'teacher@gmail.com']);
+        User::factory()->create(['role_id' => 3, 'name' => 'Student', 'phone' => '0123456787', 'password' => Hash::make('Student123'), 'email' => 'student@gmail.com']);
         $users = User::factory(7)->create();
         $users->each(function ($user) {
             Image::create([

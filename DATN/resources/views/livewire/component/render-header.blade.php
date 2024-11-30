@@ -77,7 +77,7 @@
                     </form>
                 </li> --}}
                     {{-- notification --}}
-                    <li class="nav-item nav-icon">
+                    {{-- <li class="nav-item nav-icon">
                         <a href="notification-list" class="search-toggle iq-waves-effect text-gray rounded">
                             <i class="ri-notification-2-line"></i>
                             <span class="bg-primary dots"></span>
@@ -113,9 +113,9 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
                     {{-- mess --}}
-                    <li class="nav-item nav-icon dropdown">
+                    {{-- <li class="nav-item nav-icon dropdown">
                         <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                             <i class="ri-mail-line"></i>
                             <span class="bg-primary dots"></span>
@@ -142,14 +142,13 @@
                                     </a>
                                     <div class="text-center ">
                                         <p>
-                                            {{-- <a href="{{ route('messageList') }}">Tất cả tin nhắn</a> --}}
                                             <a href="">Tất cả tin nhắn</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
                     {{-- cart --}}
                     <li class="nav-item nav-icon dropdown">
                         <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
@@ -313,7 +312,7 @@
                                                 </div>
                                             </a>
                                         @else
-                                            <a href="{{ route('userDetail') }}"
+                                            {{-- <a href="{{ route('userDetail') }}"
                                                 class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
@@ -323,7 +322,7 @@
                                                         <h6 class="mb-0">Tài khoản của tôi</h6>
                                                     </div>
                                                 </div>
-                                            </a>
+                                            </a> --}}
                                             <a href="{{ route('userInformation') }}"
                                                 class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">

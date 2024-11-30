@@ -40,9 +40,7 @@ Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
 
 /* --------------- hOME ADMIN --------------- */
 Route::middleware([CheckRole::class . ':1'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.home');
-    })->name('homeAdmin');
+    Route::get('/admin', [UserController::class, 'HomeAdmin'])->name('homeAdmin');
     Route::get('/admin/thong-tin-nguoi-dung', function () {
         return view('admin.user.userInfo');
     })->name('userInfo');
