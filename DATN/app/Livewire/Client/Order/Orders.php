@@ -41,6 +41,7 @@ class Orders extends Component
         }
 
         $Order = Order::where('user_id', Auth::id())
+            ->whereIn('payment_status', [0, 2])
             ->with([
                 'orderDetails.book.images' => function ($query) {
                     $query->where('image_name', 'thumbnail');
@@ -52,14 +53,10 @@ class Orders extends Component
             ->get();
 
         $totalPrice = $Order->sum('price');
-        $totalPriceUnpaid = $Order->where('payment_status', 0)->sum('price');
-        $totalPricePaid = $Order->where('payment_status', 1)->sum('price');
 
         return view('livewire.client.order.orders', [
             'Order' => $Order,
             'totalPrice' => $totalPrice,
-            'totalPriceUnpaid' => $totalPriceUnpaid,
-            'totalPricePaid' => $totalPricePaid,
         ]);
     }
 

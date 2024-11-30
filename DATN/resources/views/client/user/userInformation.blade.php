@@ -191,8 +191,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="npass">Mật khẩu mới:</label>
-                                            <input type="password" class="form-control" id="npass"
-                                                name="new_password" required>
+                                            <input type="password" class="form-control" id="npass" name="new_password"
+                                                required>
                                         </div>
                                         <div class="form-group">
                                             <label for="vpass">Xác nhận lại mật khẩu:</label>
@@ -378,18 +378,17 @@
                                         <div class="form-group">
                                             <label for="cpass">Mật khẩu hiện tại:</label>
                                             {{-- <a href="javascript:void(0);" class="float-right">Quên mật khẩu</a> --}}
-                                            <input type="password" class="form-control" id="cpass" name="password"
-                                                >
+                                            <input type="password" class="form-control" id="cpass" name="password">
                                         </div>
                                         <div class="form-group">
                                             <label for="npass">Mật khẩu mới:</label>
                                             <input type="password" class="form-control" id="npass"
-                                                name="new_password" >
+                                                name="new_password">
                                         </div>
                                         <div class="form-group">
                                             <label for="vpass">Xác nhận lại mật khẩu:</label>
                                             <input type="password" class="form-control" id="vpass"
-                                                name="new_password_confirmation" >
+                                                name="new_password_confirmation">
                                         </div>
                                         <button type="submit" class="btn btn-primary mr-2">Gửi</button>
                                         <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
@@ -468,16 +467,10 @@
                             </div>
                         </div>
                         {{-- lịch sử đơn hàng --}}
-                        <div class="tab-pane fade" id="manage-contact" role="tabpanel">
-                            <div class="iq-card">
-                                <div class="iq-card-header d-flex justify-content-between">
-                                    <div class="iq-header-title">
-                                        <h4 class="card-title">Lịch Sử Đơn Hàng</h4>
-                                    </div>
-                                </div>
-                                <div class="iq-card-body">
 
-                                </div>
+                        <div class="tab-pane fade" id="manage-contact" role="tabpanel">
+                            <div class="container-fluid">
+                                <livewire:client.order.PaidOrders />
                             </div>
                         </div>
                     @endif
