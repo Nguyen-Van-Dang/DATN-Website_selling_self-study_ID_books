@@ -3,29 +3,31 @@
         <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
             <div class="newrealease-contens">
                 <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
-                    @for ($i = 0; $i < 10; $i++)
-                        @php
-                            $index = $i % count($saleBook);
-                            $item = $saleBook[$index];
-                        @endphp
+                    @if (count($saleBook) > 0)
+                        @for ($i = 0; $i < 10; $i++)
+                            @php
+                                $index = $i % count($saleBook);
+                                $item = $saleBook[$index];
+                            @endphp
 
-                        <li class="item">
-                            <div class="image-overlap-shadow">
-                                <img src="{{ $item->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/book_placeholder.png') }}"
-                                    class="img-fluid w-100 rounded" alt="{{ $item->title ?? 'Book' }}">
+                            <li class="item">
+                                <div class="image-overlap-shadow">
+                                    <img src="{{ $item->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/book_placeholder.png') }}"
+                                        class="img-fluid w-100 rounded" alt="{{ $item->title ?? 'Book' }}">
 
-                                <div class="view-book">
-                                    <a href="{{ route('bookDetail', $item->id) }}" class="btn btn-sm btn-white">Xem
-                                        Sách</a>
+                                    <div class="view-book">
+                                        <a href="{{ route('bookDetail', $item->id) }}" class="btn btn-sm btn-white">Xem
+                                            Sách</a>
+                                    </div>
+                                    @if ($item->discount)
+                                        <span class="discount-badge">
+                                            -{{ $item->discount }}%
+                                        </span>
+                                    @endif
                                 </div>
-                                @if ($item->discount)
-                                    <span class="discount-badge">
-                                        -{{ $item->discount }}%
-                                    </span>
-                                @endif
-                            </div>
-                        </li>
-                    @endfor
+                            </li>
+                        @endfor
+                    @endif
                 </ul>
             </div>
         </div>

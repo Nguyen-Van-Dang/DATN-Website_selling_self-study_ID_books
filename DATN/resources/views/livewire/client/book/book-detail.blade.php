@@ -12,7 +12,7 @@
                     <div class="col-md-6" wire:loading.remove>
                         <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
                             <div class="iq-card-body p-0">
-                                <div class="row align-items-center">
+                                <div class="row">
                                     <div class="col-3">
                                         <ul id="description-slider-nav"
                                             class="list-inline p-0 m-0  d-flex align-items-center">
@@ -37,13 +37,13 @@
                                             class="list-inline p-0 m-0  d-flex align-items-center">
                                             <li style="width:100%">
                                                 <a href="javascript:void(0);">
-                                                    <img style="height:730px" src="{{ $thumbnail }}"
+                                                    <img style="height:700px" src="{{ $thumbnail }}"
                                                         class="img-thumbnail rounded img-fluid" alt="Thumbnail">
                                                 </a>
                                             </li>
                                             @foreach ($gallery1 as $item)
                                                 <li style="width:100%"> <a href="javascript:void(0);">
-                                                        <img style="height:730px" src="{{ $item->image_url }}"
+                                                        <img style="height:700px" src="{{ $item->image_url }}"
                                                             class="img-thumbnail rounded img-fluid" alt="Gallery 1">
                                                     </a>
                                                 </li>
@@ -77,7 +77,14 @@
                                 <span
                                     class="text-dark mb-4 pb-4 iq-border-bottom d-block">{{ $book->description }}</span>
                                 <div class="text-primary mb-4">Tác giả: <span
-                                        class="text-body">{{ $book->user->name }}</span>
+                                        class="text-body">{{ $book->user->sex == 0 ? 'Thầy' : 'Cô' }}
+                                        {{ $book->user->name }}</span>
+                                </div>
+                                <div class="iq-social d-flex flex-wrap align-items-center mb-4">
+                                    <h5 class="mr-2">Danh mục:</h5>
+                                    @foreach ($book->categories as $item)
+                                        <span class="badge badge-secondary m-1">{{ $item->name }}</span>
+                                    @endforeach
                                 </div>
                                 <div class="mb-4 d-flex align-items-center">
                                     <a href="javascript:void(0);" onclick="addToCart({{ $book->id }})"
@@ -93,7 +100,7 @@
                                             vào danh sách yêu
                                             thích</span></a>
                                 </div>
-                                <div class="iq-social d-flex align-items-center">
+                                {{-- <div class="iq-social d-flex align-items-center">
                                     <h5 class="mr-2">Chia sẻ:</h5>
                                     <ul class="list-inline d-flex p-0 mb-0 align-items-center">
                                         <li>
@@ -116,7 +123,7 @@
                                                     class="fa fa-pinterest-p" aria-hidden="true"></i></a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

@@ -48,6 +48,6 @@ auth.json
 # MacOS specific
 .DS_Store
 
-/DATN/storage/framework/views
-/DATN/storage/logs
 DATN/storage/logs/laravel.log
+*.log
+/DATN/storage/logs

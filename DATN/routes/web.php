@@ -328,7 +328,13 @@ Route::prefix('lien-he')->group(function () {
     Route::post('gui-lien-he', [ContactController::class, 'storeContact'])->name('storeContact');
 });
 
-
+//hồ sơ người dùng
+Route::prefix('ho-so')->group(function () {
+    Route::get('gui-lien-he', function () {
+        return view('client.contact.addContact');
+    })->name('addContact');
+    Route::post('gui-lien-he', [ContactController::class, 'storeContact'])->name('storeContact');
+});
 
 Route::get('/user/thong-tin-nguoi-dung', function () {
     return view('client.user.userInformation');
