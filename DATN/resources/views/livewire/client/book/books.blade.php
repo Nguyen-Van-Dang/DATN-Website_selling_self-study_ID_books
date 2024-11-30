@@ -303,7 +303,7 @@
             <div
                 class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
                 <div class="iq-header-title">
-                    <h4 class="card-title mb-0">Sách giảm giá</h4>
+                    <h4 class="card-title mb-0">Sách khuyến mãi</h4>
                 </div>
             </div>
             <div class="iq-card-body">

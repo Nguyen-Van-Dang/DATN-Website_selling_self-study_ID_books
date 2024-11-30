@@ -1,12 +1,36 @@
 <nav class="iq-sidebar-menu">
     <ul id="iq-sidebar-toggle" class="iq-menu">
         <li>
-            <a href="{{ route('bookList') }}" class="iq-waves-effect" aria-expanded="false">
+            <a href="#ui-element" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
                 <span class="ripple rippleEffect"></span>
                 <img class="sidebar-icon me-2" src="{{ asset('assets/images/book/icon/book_icon.png') }}" alt="">
-                <span class="px-2">Sách</span>
+                <span class="px-2">Sách yêu thích</span>
+                <i class="ri-arrow-right-s-line iq-arrow-right"></i>
             </a>
-            <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
+            <ul id="ui-element" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                @if ($books && count($books) > 0)
+                    @foreach ($books as $book)
+                        <li class="elements">
+                            <a href="{{ route('bookDetail', $book->id) }}" class="iq-waves-effect collapsed py-1"
+                                title="{{ $book->name }}">
+                                <div class="d-flex align-items-center">
+                                    <img class="BookImage"
+                                        src="{{ $book->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/book_placeholder.png') }}">
+                                    <span class="px-2">{{ Str::limit($book->name, 20, '...') }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                @else
+                    <li class="elements">
+                        <a href="#" class="iq-waves-effect collapsed  py-1">
+                            <div class="d-flex align-items-center">
+                                <img class="BookImage" src="{{ asset('assets/images/book/book_placeholder.png') }}">
+                                <span class="px-2">Không có</span>
+                            </div>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
         <hr class="custom">
@@ -98,12 +122,13 @@
             @if ($teachers->count() < $allTeacher->count())
                 <ul>
                     <li class="text-center">
-                        <a href="#" wire:click.prevent="loadMore" id="show-more-btn" class="iq-waves-class=px-2">
+                        <a href="#" wire:click.prevent="loadMore" id="show-more-btn"
+                            class="iq-waves-class=px-2">
                             <small>
                                 <i class="bi bi-arrow-down-circle"></i>
                                 <span>Xem thêm</span>
                             </small>
-                            
+
                         </a>
                     </li>
                 </ul>

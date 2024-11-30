@@ -46,9 +46,11 @@
                                                 title="Xem chi tiết" href="#"><i class="ri-eye-line"></i></a>
                                             <a class="bg-primary edit-category" data-toggle="tooltip"
                                                 data-placement="top" title="Sửa"
-                                                href="{{ route('admin.danh-muc-sach.edit', $item->id) }}">
+                                                data-url="{{ route('admin.danh-muc-sach.edit', $item->id) }}"
+                                                href="javascript:void(0);">
                                                 <i class="ri-pencil-line"></i>
                                             </a>
+
                                             <a class="bg-primary" data-toggle="tooltip" data-placement="top"
                                                 title="Xóa"
                                                 onclick="confirmDelete(this, {{ $item->id }}, '{{ $item->name }}')"
@@ -125,7 +127,7 @@
                 button.addEventListener('click', function(event) {
                     event.preventDefault();
 
-                    let url = this.getAttribute('href');
+                    let url = this.getAttribute('data-url');
 
                     fetch(url)
                         .then(response => response.text())
@@ -140,6 +142,7 @@
                 });
             });
         });
+
 
         function confirmDelete(element, id, name) {
             const url = element.getAttribute('data-url').replace(':id', id);

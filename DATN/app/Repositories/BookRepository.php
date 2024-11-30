@@ -31,16 +31,5 @@ class BookRepository
         return view('client.book.bookFavorite');
     }
 
-    public function getBookDetailClient($id)
-    {
-        $Book = Book::with(['user'])->findOrFail($id);
-        $user = $Book->user;
-        $Book->increment('views');
-        $popularBooks = Book::orderBy('views', 'desc')->take(6)->get();
-        $favBook = Book::withCount('favorites')->orderByDesc('favorites_count')->limit(6)->get();
-        $relatedBooks = Book::whereHas('categories', function ($query) use ($Book) {
-            $query->whereIn('id', $Book->categories->pluck('id'));
-        })->where('id', '!=', $Book->id)->take(6)->get();
-        return view('client.book.bookDetail', compact('Book', 'user', 'relatedBooks', 'favBook', 'popularBooks'));
-    }
+    public function getBookDetailClient($id) {}
 }
