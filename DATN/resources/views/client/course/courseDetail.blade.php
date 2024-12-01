@@ -9,12 +9,28 @@
             <div class="row">
                 <div class="col-12 col-md-4 order-1 order-md-1">
                     @php
-                        $courseImage = $course->images()->where('image_name', 'course')->first();
+                        $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
                     @endphp
-                    <img class="img-fluid rounded" style="object-fit: cover;aspect-ratio: 2/1; height: 250px;"
-                        src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
+                    <img class="rounded" style="width: 480px; height: 220px;"
+                        src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/course_thumbnail.png') }}">
                 </div>
                 <div class="col-12 col-md-8 order-2 order-md-2"style="border-right: 0.5px solid #8080804f;">
+                    @if ($course->discount && $course->price > $course->discount)
+                        @php
+                            $price = $course->price;
+                            $discount = $course->discount;
+                            if ($price > 0 && $discount > 0 && $discount < $price) {
+                                $discountPercentage = round(($discount / $price) * 100);
+                            } else {
+                                $discountPercentage = 0;
+                            }
+                        @endphp
+                        @if ($discountPercentage > 0)
+                            <span class="discount-badge">
+                                -{{ $discountPercentage }}%
+                            </span>
+                        @endif
+                    @endif
                     <h5 class="mb-0">{{ $course->name }}</h5>
                     <p class="text-muted mb-1">Thầy {{ $course->user->name }}</p>
                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
@@ -42,9 +58,9 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-12 order-2 order-md-2">
+                {{-- <div class="col-12 col-md-12 order-2 order-md-2">
                     <p class="mb-2 fw-bold">{{ $course->description }}</p>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -269,13 +285,12 @@
                         <div class="iq-card-body pt-0 py-3 modal-body-scrollable">
                             @foreach ($user->courses as $userCourse)
                                 @php
-                                    $courseImage = $userCourse->images()->where('image_name', 'course')->first();
+                                    $courseImage = $userCourse->images()->where('image_name', 'thumbnail')->first();
                                 @endphp
                                 <div class="row pb-2">
                                     <div class="col-3">
-                                        <img class="card-img-top img-fluid rounded course-image"
-                                            style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease;"
-                                            src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
+                                        <img class="hover-enlarge-img" style="width: 100px; height: 55px;"
+                                            src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/course_thumbnail.png') }}">
                                     </div>
                                     <div class="col-9">
                                         <a href="{{ route('khoa-hoc.show', $userCourse->id) }}"
@@ -344,6 +359,22 @@
             </div>
         </div>
         <style>
+            .discount-badge {
+                position: absolute;
+                top: 10px;
+                left: -90px;
+                background-color: #f44336;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                animation: bounce 2s infinite;
+                transition: box-shadow 0.3s ease;
+                z-index: 10;
+            }
+
             .modal-content {
                 max-height: 50vh;
                 overflow-y: auto;
@@ -355,8 +386,20 @@
                 max-height: calc(45vh - 100px);
                 overflow-y: auto;
             }
-        </style>
-        <style>
+
+            .hover-enlarge-img {
+                width: 100px;
+                height: 55px;
+                transition: transform 0.3s ease;
+                /* Hiệu ứng phóng to mượt mà trong 0.3 giây */
+            }
+
+            /* Khi hover vào hình ảnh, sẽ phóng to */
+            .hover-enlarge-img:hover {
+                transform: scale(1.1);
+                /* Phóng to hình ảnh lên 20% */
+            }
+
             #accordion .course-panel {
                 border: none;
                 border-radius: 0;

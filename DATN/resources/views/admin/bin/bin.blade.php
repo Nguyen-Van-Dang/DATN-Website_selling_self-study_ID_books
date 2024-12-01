@@ -23,11 +23,6 @@
                                         </a>
                                     </li>
                                     <li class="col-md-2 p-0">
-                                        <a class="nav-link" data-toggle="pill" href="#Book">
-                                            Sách
-                                        </a>
-                                    </li>
-                                    <li class="col-md-2 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#Course">
                                             Khóa Học
                                         </a>
@@ -38,34 +33,34 @@
                                         </a>
                                     </li>
                                     <li class="col-md-2 p-0">
+                                        <a class="nav-link" data-toggle="pill" href="#Book">
+                                            Sách
+                                        </a>
+                                    </li>
+                                    <li class="col-md-2 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#Contact">
                                             Liên Hệ
                                         </a>
                                     </li>
                                     <li class="col-md-2 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#Test">
-                                            Bài Kiểm Tra
+                                            Đơn hàng
                                         </a>
                                     </li>
                                 @elseif ($role_id == 2)
-                                    <li class="col-md-3 p-0">
+                                    <li class="col-md-4 p-0">
                                         <a class="nav-link active" data-toggle="pill" href="#Course">
                                             Khóa Học
                                         </a>
                                     </li>
-                                    <li class="col-md-3 p-0">
+                                    <li class="col-md-4 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#CateBook">
                                             Danh Mục Sách
                                         </a>
                                     </li>
-                                    <li class="col-md-3 p-0">
+                                    <li class="col-md-4 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#Book">
                                             Sách
-                                        </a>
-                                    </li>
-                                    <li class="col-md-3 p-0">
-                                        <a class="nav-link" data-toggle="pill" href="#Test">
-                                            Bài Kiểm Tra
                                         </a>
                                     </li>
                                 @endif
@@ -79,6 +74,7 @@
                 <div class="iq-edit-list-data">
                     <div class="tab-content">
                         @if ($role_id == 1)
+                            {{-- tk --}}
                             <div class="tab-pane fade active show" id="User" role="tabpanel">
                                 <div class="iq-card">
                                     <div class="iq-card-header d-flex justify-content-between align-items-center">
@@ -114,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {{-- kh --}}
                             <div class="tab-pane fade" id="Course" role="tabpanel">
                                 <div class="iq-card">
                                     <div class="iq-card-header d-flex justify-content-between align-items-center">
@@ -151,7 +147,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {{-- dms --}}
                             <div class="tab-pane fade" id="CourseCate" role="tabpanel">
                                 <div class="iq-card">
                                     <div class="iq-card-header d-flex justify-content-between align-items-center">
@@ -178,14 +174,14 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-center">
-
+                                                    @livewire('admin.book-category.delete-bookcate')
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+                            {{-- s --}}
                             <div class="tab-pane fade" id="Book" role="tabpanel">
                                 <div class="iq-card">
                                     <div class="iq-card-header d-flex justify-content-between align-items-center">
@@ -221,7 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {{-- lh --}}
                             <div class="tab-pane fade" id="Contact" role="tabpanel">
                                 <div class="iq-card-header d-flex justify-content-between align-items-center">
                                     <h4 class="card-title">Liên hệ đã xóa</h4>
@@ -246,7 +242,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
-
+                                                @livewire('contact.delete-contact')
                                             </tbody>
                                         </table>
                                     </div>
@@ -255,7 +251,7 @@
 
                             <div class="tab-pane fade" id="Test" role="tabpanel">
                                 <div class="iq-card-header d-flex justify-content-between align-items-center">
-                                    <h4 class="card-title">Bài kiểm tra đã xóa</h4>
+                                    <h4 class="card-title">Đơn hàng đã xóa</h4>
                                     <div class="iq-search-bar">
                                         <form class="searchbox">
                                             <input type="text" class="text search-input"
@@ -271,14 +267,14 @@
                                             <thead class="text-center">
                                                 <tr>
                                                     <th style="width: 5%;">STT</th>
-                                                    <th style="width: 20%;">Tên bài kiểm tra</th>
-                                                    <th style="width: 20%;">Tên khóa học</th>
+                                                    <th style="width: 20%;">Mã số đơn hàng</th>
+                                                    <th style="width: 20%;">số lượng sản phẩm</th>
                                                     <th style="width: 10%;">Ngày xóa</th>
                                                     <th style="width: 7%;">Hành động</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
-
+                                                @livewire('order.delete-order')
                                             </tbody>
                                         </table>
                                     </div>
@@ -303,22 +299,22 @@
                                             <table class="data-tables table table-striped table-bordered"
                                                 style="width:100%">
                                                 <table class="data-tables table table-striped table-bordered"
-                                                style="width:100%">
-                                                <thead class="text-center">
-                                                    <tr>
-                                                        <th style="width: 1%;">STT</th>
-                                                        <th style="width: 5%;">Ảnh</th>
-                                                        <th style="width: 10%;">Tên khóa học</th>
-                                                        <th style="width: 7%;">Giá</th>
-                                                        <th style="width: 7%;">Người tạo</th>
-                                                        <th style="width: 7%;">Ngày xóa</th>
-                                                        <th style="width: 8%;">Hành động</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    @livewire('admin.course.course-deleted')
-                                                </tbody>
-                                            </table>
+                                                    style="width:100%">
+                                                    <thead class="text-center">
+                                                        <tr>
+                                                            <th style="width: 1%;">STT</th>
+                                                            <th style="width: 5%;">Ảnh</th>
+                                                            <th style="width: 10%;">Tên khóa học</th>
+                                                            <th style="width: 7%;">Giá</th>
+                                                            <th style="width: 7%;">Người tạo</th>
+                                                            <th style="width: 7%;">Ngày xóa</th>
+                                                            <th style="width: 8%;">Hành động</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="text-center">
+                                                        @livewire('admin.course.course-deleted')
+                                                    </tbody>
+                                                </table>
                                             </table>
                                         </div>
                                     </div>
@@ -391,38 +387,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="Test" role="tabpanel">
-                                <div class="iq-card-header d-flex justify-content-between align-items-center">
-                                    <h4 class="card-title">Bài kiểm tra đã xóa</h4>
-                                    <div class="iq-search-bar">
-                                        <form class="searchbox">
-                                            <input type="text" class="text search-input"
-                                                placeholder="Tìm bài kiểm tra..."
-                                                wire:model.live.debounce.100ms="searchTests">
-                                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="iq-card-body">
-                                    <div class="table-responsive">
-                                        <table class="data-tables table table-striped table-bordered" style="width:100%">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th style="width: 5%;">STT</th>
-                                                    <th style="width: 20%;">Tên bài kiểm tra</th>
-                                                    <th style="width: 20%;">Tên khóa học</th>
-                                                    <th style="width: 10%;">Ngày xóa</th>
-                                                    <th style="width: 7%;">Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
                             </div>

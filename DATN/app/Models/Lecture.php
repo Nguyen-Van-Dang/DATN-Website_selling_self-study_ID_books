@@ -15,7 +15,10 @@ class Lecture extends Model
         'course_id',
         'lecture_categories_id',
     ];
-
+    public function histories()
+    {
+        return $this->hasMany(LectureHistory::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -38,9 +41,4 @@ class Lecture extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
-    public function histories()
-    {
-        return $this->hasMany(LectureHistory::class);
-    }
-    
 }

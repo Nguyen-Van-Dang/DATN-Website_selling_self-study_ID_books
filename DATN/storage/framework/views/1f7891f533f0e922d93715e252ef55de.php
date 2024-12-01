@@ -69,79 +69,9 @@
                 <ul class="navbar-nav ml-auto navbar-list">
                     
                     
-                    <li class="nav-item nav-icon">
-                        <a href="notification-list" class="search-toggle iq-waves-effect text-gray rounded">
-                            <i class="ri-notification-2-line"></i>
-                            <span class="bg-primary dots"></span>
-                        </a>
-                        <div class="iq-sub-dropdown">
-                            <div class="iq-card shadow-none m-0">
-                                <div class="iq-card-body p-0">
-                                    <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white">Thông Báo<small
-                                                class="badge  badge-light float-right pt-1">4</small></h5>
-                                    </div>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="media align-items-center">
-                                            <div class="">
-                                                <img class="avatar-40 rounded"
-                                                    src="<?php echo e(asset('assets/images/book/user/3.jpg')); ?>" alt="">
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0">Đơn hàng giao thành công</h6>
-                                                <small class="float-right font-size-12">Ngay bây giờ</small>
-                                                <p class="mb-0">95.000đ</p>
-
-                                            </div>
-
-                                        </div>
-                                    </a>
-                                    <div class="text-center ">
-                                        <p>
-                                            <a href="<?php echo e(route('notificationList')); ?>">Tất cả thông báo</a>
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </li>
                     
-                    <li class="nav-item nav-icon dropdown">
-                        <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
-                            <i class="ri-mail-line"></i>
-                            <span class="bg-primary dots"></span>
-                        </a>
-                        <div class="iq-sub-dropdown">
-                            <div class="iq-card shadow-none m-0">
-                                <div class="iq-card-body p-0 ">
-                                    <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white">Tin Nhắn<small
-                                                class="badge  badge-light float-right pt-1">5</small></h5>
-                                    </div>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="media align-items-center">
-                                            <div class="">
-                                                <img class="avatar-40 rounded"
-                                                    src="<?php echo e(asset('assets/images/book/user/4.jpg')); ?>"
-                                                    alt="">
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">QT Shop</h6>
-                                                <small class="float-left font-size-12">9/9/2024</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="text-center ">
-                                        <p>
-                                            
-                                            <a href="">Tất cả tin nhắn</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    
+                    
                     
                     <li class="nav-item nav-icon dropdown">
                         <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
@@ -228,8 +158,12 @@
                     <?php if(auth()->check()): ?>
                         <li class="line-height pt-3">
                             <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                                <img src="<?php echo e(asset('assets/images/book/user/1.jpg')); ?>"
-                                    class="img-fluid rounded-circle mr-3" alt="user">
+                                <?php
+                                    $avatar = auth()->user()->images()->where('image_name', 'avatar')->first();
+                                ?>
+                                <img class="img-fluid rounded-circle mr-3"
+                                    src="<?php echo e($avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg')); ?>">
+
                                 <div class="caption"
                                     <?php
                                         $userName = Auth::user()->name;
@@ -305,17 +239,7 @@
                                                 </div>
                                             </a>
                                         <?php else: ?>
-                                            <a href="<?php echo e(route('userDetail')); ?>"
-                                                class="iq-sub-card iq-bg-primary-hover">
-                                                <div class="media align-items-center">
-                                                    <div class="rounded iq-card-icon iq-bg-primary">
-                                                        <i class="ri-file-user-line"></i>
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <h6 class="mb-0">Tài khoản của tôi</h6>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                            
                                             <a href="<?php echo e(route('userInformation')); ?>"
                                                 class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">

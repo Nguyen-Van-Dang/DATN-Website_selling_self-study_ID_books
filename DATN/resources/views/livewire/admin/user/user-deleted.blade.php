@@ -1,4 +1,6 @@
 <div>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @forelse ($deletedUsers as $user)
         <tr>
             <td>{{ $user->id }}</td>
@@ -32,11 +34,13 @@
             </td>
             <td>{{ $user->deleted_at }}</td>
             <td>
-                <a href="" class="btn btn-success">Khôi phục</a>
-                <a href="" class="btn btn-danger">Xóa vĩnh viễn</a>
+                <button wire:click.prevent="restore({{ $user->id }})" class="btn btn-success">Khôi phục</button>
+                <button wire:click.prevent="forceDelete({{ $user->id }})" class="btn btn-danger">Xóa vĩnh viễn</button>
+                
             </td>
+
         </tr>
-        @empty
+    @empty
         <tr>
             <td colspan="7" class="text-center">Không có tài khoản nào bị xóa</td>
         </tr>

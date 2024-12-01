@@ -69,11 +69,6 @@ class CourseIndex extends Component
 
     public function render()
     {
-        return view('livewire.client.course.course-index', [
-            'courses' => $this->courseList,
-            'teachers' => $this->teachers,
-            'courseTrending' => $this->courseTrending,
-            'popularCourses' => $this->popularCourses,
-        ]);
+        return view('livewire.client.course.course-index');
     }
 }

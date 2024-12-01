@@ -148,7 +148,7 @@ class UserIndex extends Component
         return redirect('/admin/danh-sach-nguoi-dung')->with('success', 'Thêm tài khoản thành công');
     }
 }
-    public function updateUser()
+    public function updateUser()        
     {
         $rules = [
             'nameAdd' => 'required|max:50',
@@ -167,7 +167,6 @@ class UserIndex extends Component
                 'max:25',
             ],
             'newImg' => [
-                'required',
                 'max:2048',
             ],
         ];

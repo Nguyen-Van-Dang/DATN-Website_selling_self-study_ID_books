@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Lecture;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EnrollCourse;
-
+use App\Http\Controllers\Client\LectureHistoryController;
 class CourseController extends Controller
 {
     private CourseRepository $courseRepository;
@@ -38,7 +38,10 @@ class CourseController extends Controller
         });
 
         $currentUserId = auth::id();
+
         $hasEnrolled = EnrollCourse::where('user_id', $currentUserId)->where('course_id', $course_id)->exists();
+        
+        LectureHistoryController::updateHistory($lecture_id);
 
         return view('client.lecture.lecture', compact('course', 'lecture', 'lecturesCountByCategory'));
     }
