@@ -60,7 +60,7 @@ class CourseAdd extends Component
             $this->teachers = [];
         }
         $this->subjects = Subject::all();  // Lấy tất cả môn học
-    $this->classes = ClassModel::all();  // Lấy tất cả lớp
+        $this->classes = ClassModel::all();  // Lấy tất cả lớp
     }
     public function storeCourse()
     {
@@ -120,13 +120,19 @@ class CourseAdd extends Component
                 }
             }
         }
-
-        toastr()->success('<p>Thêm khóa học và các danh mục bài giảng thành công!</p>');
         $this->reset([
-            'courseName', 'description', 'price', 'discount', 
-            'image_url', 'document_url', 'lectureCategories', 
-            'lectures', 'lectureVideo'
+            'courseName',
+            'description',
+            'price',
+            'discount',
+            'image_url',
+            'document_url',
+            'lectureCategories',
+            'lectures',
+            'lectureVideo'
         ]);
+        return redirect()->route('admin.khoa-hoc.index', ['khoa_hoc' => $course->id])
+            ->with('success', 'Thêm khóa học và các danh mục bài giảng thành công!');
     }
     protected $rules = [
         'courseName' => 'required',

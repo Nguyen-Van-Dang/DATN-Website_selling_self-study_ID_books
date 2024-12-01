@@ -1,33 +1,6 @@
-<div class="container-fluid">
-    <div class="slider">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100 h-50"
-                        src="https://mshoagiaotiep.com/uploads/images/resize/900x900/2020/08/lotrinhkhtructuyen.png"
-                        alt="First slide" style="width:100%; height:400px!important">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100 h-50"
-                        src="https://hoctot.hocmai.vn/wp-content/uploads/2021/09/188771577_171199578338164_5563194315142148917_n-8.png"
-                        alt="Second slide" style="width:100%; height:400px!important">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100 h-50" src="https://i.ytimg.com/vi/0yE64-0U1IE/maxresdefault.jpg"
-                        alt="Third slide" style="width:100%; height:400px!important">
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-
+<div>
+    {{-- @livewire('client.course.carousel-image-upload') --}}
+    
     <div class="d-flex justify-content-between align-items-center position-relative mt-3">
         <div class="w-100 iq-search-filter mb-0">
             <ul class="list-inline p-0 m-0 row justify-content-center search-menu-options">
@@ -83,7 +56,7 @@
             <div class="row">
                 @foreach ($courseList as $course)
                     @php
-                        $courseImage = $course->images()->where('image_name', 'course')->first();
+                        $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
                     @endphp
                     <div class="col-6 col-lg-3">
                         <div class="card card-filter h-50">
@@ -93,23 +66,23 @@
                                     <h5 class="card-title course-top-title">{{ $course->name }}
                                     </h5>
                                     @if ($course->discount && $course->price > $course->discount)
-                                    @php
-                                        $price = $course->price;
-                                        $discount = $course->discount;
-                                        if ($price > 0 && $discount > 0 && $discount < $price) {
-                                            $discountPercentage = round(($discount / $price) * 100);
-                                        } else {
-                                            $discountPercentage = 0;
-                                        }
-                                    @endphp
-                                    @if ($discountPercentage > 0)
-                                        <span class="discount-badge">
-                                            -{{ $discountPercentage }}%
-                                        </span>
+                                        @php
+                                            $price = $course->price;
+                                            $discount = $course->discount;
+                                            if ($price > 0 && $discount > 0 && $discount < $price) {
+                                                $discountPercentage = round(($discount / $price) * 100);
+                                            } else {
+                                                $discountPercentage = 0;
+                                            }
+                                        @endphp
+                                        @if ($discountPercentage > 0)
+                                            <span class="discount-badge">
+                                                -{{ $discountPercentage }}%
+                                            </span>
+                                        @endif
                                     @endif
-                                @endif
                                     <img class="card-img-top img-fluid rounded course-image"
-                                        style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;"
+                                        style="width: 770px; ;height: 200px;"
                                         src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                                 </div>
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
@@ -156,7 +129,7 @@
                         <div class="d-flex flex-column align-items-center teacher-card">
                             <div class="avatar-container">=
                                 <img class="carousel-img"
-                                    src="{{ $teachetImage ? $teachetImage->image_url : asset('assets/images/book/book/01.jpg') }}">
+                                    src="{{ $teachetImage ? $teachetImage->image_url : asset('assets/images/book/user/avatar.jpg') }}">
                             </div>
                             <div class="text-center mt-1 p-0">
                                 <p class="m-0">Thầy</p>
@@ -171,14 +144,14 @@
 
     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
         <div class="iq-card-body similar-contens">
-            <h5 class="card-title mb-2">KHOÁ HỌC Thịnh Hành</h5>
+            <h5 class="card-title mb-2">Khóa Học Thịnh Hành</h5>
             <div class="row">
                 @foreach ($popularCourses as $course)
                     <div class="col-2 col-lg-2 px-2 mb-3" wire:click="goToCourseDetail({{ $course->id }})"
                         style="cursor: pointer;">
                         <div class="trendy-course card h-100 " style=" transition: transform 0.3s ease;">
                             @php
-                                $courseImage = $course->images()->where('image_name', 'course')->first();
+                                $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
                             @endphp
                             <img class="card-img-top img-fluid rounded course-image"
                                 style="aspect-ratio: 1.5/1; object-fit: cover;"
@@ -255,20 +228,21 @@
             width: 100%;
             height: auto;
         }
+
         .discount-badge {
-                position: absolute;
-                top: 70px;
-                right: 40px;
-                background-color: #f44336;
-                color: white;
-                padding: 5px 10px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: bold;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                animation: bounce 2s infinite;
-                transition: box-shadow 0.3s ease;
-                z-index: 10;
-            }
+            position: absolute;
+            top: 70px;
+            right: 40px;
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+            transition: box-shadow 0.3s ease;
+            z-index: 10;
+        }
     </style>
 </div>

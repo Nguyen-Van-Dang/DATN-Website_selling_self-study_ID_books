@@ -172,7 +172,7 @@ class CourseUpdate extends Component
         }
         $course->save();
 
-        return redirect()->route('admin.khoa-hoc.edit', ['khoa_hoc' => $course->id])
+        return redirect()->route('admin.khoa-hoc.index', ['khoa_hoc' => $course->id])
             ->with('success', 'Cập nhật khóa học thành công!');
     }
 

@@ -94,19 +94,23 @@
                     @foreach ($courses as $enroll)
                         <div class="col-6">
                             <div class="course-item border mb-4 rounded">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" src="{{ $enroll->course->images()->where('image_name', 'thumbnail')
-                                        ->first()->image_url ?? asset('assets/images/book/course_thumbnail.png') }}">
+                                <a href="{{ route('khoa-hoc.show', ['id' => $enroll->course->id]) }}">
+                                    <div class="row hover-enlarge">
+                                        <div class="col-md-4">
+                                            <img class="img-fluid"
+                                                src="{{ $enroll->course->images()->where('image_name', 'thumbnail')->first()->image_url ??
+                                                    asset('assets/images/book/course_thumbnail.png') }}">
+                                        </div>
+                                        <div class="col-md-8 d-flex flex-column justify-content-center">
+                                            <h5 class="mb-2">{{ $enroll->course->name ?? 'không có tên khóa học' }}
+                                            </h5>
+                                            <p class="mb-1"><strong>Giáo viên:</strong>
+                                                {{ $enroll->course->user->name ?? 'không có tên giáo viên' }}</p>
+                                            <p class="mb-1"><strong>Số video bài giảng:</strong>
+                                                {{ $enroll->course->lectures_count ?? 0 }} video</p>
+                                        </div>
                                     </div>
-                                    <div class="col-md-8 d-flex flex-column justify-content-center">
-                                        <h5 class="mb-2">{{ $enroll->course->name ?? 'không có tên khóa học' }}</h5>
-                                        <p class="mb-1"><strong>Giáo viên:</strong>
-                                            {{ $enroll->course->user->name ?? 'không có tên giáo viên' }}</p>
-                                        <p class="mb-1"><strong>Số video bài giảng:</strong>
-                                            {{ $enroll->course->lectures_count ?? 0 }} video</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     @endforeach
@@ -115,86 +119,26 @@
         </div>
         {{--  --}}
         <div class="col-lg-4">
-            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                <h5 class="p-3">
-                    Khoá học mới nhất
-                </h5>
-                <ul class="iq-edit-profile d-flex nav nav-pills">
-                    <li class="col-md-3 py-3">
-                        <div class="text-center">
-                            <h6 class="mb-0 border-right"><a href="">Tất cả</a></h6>
-                        </div>
-                    </li>
-                    <li class="col-md-3 py-3">
-                        <div class="text-center">
-                            <h6 class="mb-0 border-right"><a href="">Lớp 10</a></h6>
-                        </div>
-                    </li>
-                    <li class="col-md-3 py-3">
-                        <div class="text-center">
-                            <h6 class="mb-0 border-right"><a href="">Lớp 11</a>
-                            </h6>
-                        </div>
-                    </li>
-                    <li class="col-md-3 py-3">
-                        <div class="text-center">
-                            <h6 class="mb-0"><a href="">Lớp 12</a></h6>
-                        </div>
-                    </li>
-                </ul>
-                <div class="border-top p-3">
-                    <div class="row">
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt="" class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt="" class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt="" class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt="" class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                        <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUSR8wzALo8_3wasTTj33smoTrvzpN3SctsQ&s"
-                                alt=""class="img-fluid">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <x-client.lecture-history />
         </div>
     </div>
+    <style>
+        .mb-1 {
+            color: var(--iq-body-text);
+        }
+        .col-md-8 .mb-2:hover {
+            color: var(--iq-primary);
+            transition: color 0.8s ease;
+        }
+        .hover-enlarge .col-md-4 img {
+            transition: transform 0.3s ease;
+        }
+        .hover-enlarge:hover .col-md-4 img {
+            transform: scale(1.1);
+        }
+        .img-fluid{
+            max-width: 160px;
+            max-height: 102px;
+        }
+    </style>
 </div>

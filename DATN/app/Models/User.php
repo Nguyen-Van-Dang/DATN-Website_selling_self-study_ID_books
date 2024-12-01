@@ -102,6 +102,10 @@ class User extends Authenticatable
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function lectureHistories()
+    {
+        return $this->hasMany(LectureHistory::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -11,10 +11,10 @@ class UserDeleted extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    public $restoreUserModal = false;
-    public $isDeletePopupOpen = false;
+
     public $deletedId, $restoreId;
     protected $paginationTheme = 'bootstrap';
+    protected $listeners = ['restore', 'forceDelete'];
 
     public function render()
     {
@@ -22,41 +22,17 @@ class UserDeleted extends Component
         return view('livewire.admin.user.user-deleted', ['deletedUsers' => $deletedUsers]);
     }
 
-    public function openPopup($type, $id = null)
+    public function restore($id)
     {
-        $this->deletedId = null;
-        if ($type === 'delete' && $id) {
-            $this->deletedId = $id;
-            $this->isDeletePopupOpen = true;
-        }
-    }
-    public function closePopup()
-    {
-        $this->isDeletePopupOpen = false;
-    }
-
-    public function deleted()
-    {
-        $user = User::find($this->deletedId);
-
-        if ($user) {
-            $user->delete();
-            toastr()->success('<p>Xóa khóa học thành công!</p>');
-        } else {
-            session()->flash('error', 'Danh mục không tồn tại.');
-        }
-
-        $this->closePopup();
-    }
-
-    // Hàm khôi phục người dùng
-    public function restore()
-    {
-        $user = User::onlyTrashed()->find($this->deletedId);
-
+        $user = User::onlyTrashed()->findOrFail($id);
         $user->restore();
-        toastr()->success('Người dùng đã được khôi phục thành công.');
+        session()->flash('success', 'Người dùng đã được khôi phục.');
+    }
 
-        $this->restoreUserModal = false;
+    public function forceDelete($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->forceDelete();
+        session()->flash('success', 'Người dùng đã bị xóa vĩnh viễn.');
     }
 }

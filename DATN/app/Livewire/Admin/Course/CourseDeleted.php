@@ -13,7 +13,7 @@ class CourseDeleted extends Component
     {
         // Lấy thông tin người dùng hiện tại
         $user = Auth::user();
-    
+
         if ($user->role_id == 1) {
             // Nếu là quản trị viên (role_id == 1), hiển thị tất cả các khóa học đã bị xóa
             $courseDeleted = Course::onlyTrashed()->get();
