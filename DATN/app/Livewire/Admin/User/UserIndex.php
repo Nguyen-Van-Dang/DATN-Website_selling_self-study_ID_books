@@ -129,7 +129,7 @@ class UserIndex extends Component
         $user->name = $this->name;
         $user->phone = $this->phone;
         $user->email = $this->email;
-        $user->role_id = $this->role_id = 1;
+        $user->role_id = $this->role_id;
         $user->status = 0;
         $user->sex = $this->sex;
         $user->password = bcrypt($this->password);

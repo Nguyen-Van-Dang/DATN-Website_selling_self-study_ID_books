@@ -65,6 +65,7 @@ class RegisterUser extends Component
             'phone' => $this->phone,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'role_id' => 2,
         ]);
 
         // Automatically log in the user

@@ -123,7 +123,7 @@
             <ul id="trendy-slider" class="row">
                 @foreach ($teachers as $teacher)
                     @php
-                        $teachetImage = $teacher->images()->where('image_name', 'avatar')->first();
+                        $teachetImage = $teacher->images()->where('image_name', 'thumbnail')->first();
                     @endphp
                     <li>
                         <div class="d-flex flex-column align-items-center teacher-card">
@@ -160,12 +160,15 @@
                                 <div>
                                     <h5 class="card-title course-title">{{ $course->name }}</h5>
                                     <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
+                                    <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
+                                        <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                            đ</span>
+                                        <span class="text-muted ml-3"
+                                            style="text-decoration:line-through">{{ number_format($course->discount) }}
+                                            đ</span>
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                                    <span class="text-danger font-weight-bold">500.000đ</span>
-                                    <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span>
-                                </div>
-                            </div>
+                        </div>
                         </div>
                     </div>
                 @endforeach

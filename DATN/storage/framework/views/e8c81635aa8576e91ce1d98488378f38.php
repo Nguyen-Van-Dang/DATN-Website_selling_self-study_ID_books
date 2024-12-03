@@ -101,6 +101,7 @@
                             $userName = Auth::user()->name;
                             $displayName = Str::limit($userName, 10, '...');
                         ?>
+                        <h6 class="mb-1 line-height"><?php echo e($displayName); ?>!</h6>
                     </a>
                     <div class="iq-sub-dropdown iq-user-dropdown">
                         <div class="iq-card shadow-none m-0">

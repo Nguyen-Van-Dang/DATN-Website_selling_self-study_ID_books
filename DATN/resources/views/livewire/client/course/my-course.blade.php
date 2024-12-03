@@ -102,7 +102,7 @@
                                                     asset('assets/images/book/course_thumbnail.png') }}">
                                         </div>
                                         <div class="col-md-8 d-flex flex-column justify-content-center">
-                                            <h5 class="mb-2">{{ $enroll->course->name ?? 'không có tên khóa học' }}
+                                            <h5 class="mb-2">{{ mb_strimwidth($enroll->course->name ?? 'không có tên khóa học', 0, 30, '...') }}</h5>
                                             </h5>
                                             <p class="mb-1"><strong>Giáo viên:</strong>
                                                 {{ $enroll->course->user->name ?? 'không có tên giáo viên' }}</p>

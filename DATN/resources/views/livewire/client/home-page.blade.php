@@ -195,7 +195,7 @@
                 <ul class="list-inline row mb-0 iq-scrollable-block">
                     @foreach ($teachers as $teacher)
                         @php
-                            $avatar = $teacher->images()->where('image_name', 'avatar')->first();
+                            $avatar = $teacher->images()->where('image_name', 'thumbnail')->first();
                         @endphp
                         <li class="col-sm-6 d-flex mb-3">
                             <div class="icon iq-icon-box mr-3">
@@ -287,7 +287,7 @@
                 <ul id="favorites-slider" class="list-inline p-0 mb-0 row">
                     @foreach ($popularCourses as $item)
                         @php
-                            $courseImage = $item->images()->where('image_name', 'course')->first();
+                            $courseImage = $item->images()->where('image_name', 'thumbnail')->first();
                         @endphp
                         <li class="col-md-2">
                             <a href="{{ route('khoa-hoc.show', $item->id) }}">

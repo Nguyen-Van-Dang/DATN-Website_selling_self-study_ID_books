@@ -39,7 +39,7 @@
 
                     {{-- couse --}}
 
-                    <div class="tab-pane fade active show" id="Course" role="tabpanel">
+                    <div class="tab-pane fade" id="Course" role="tabpanel">
                         <div class="iq-card">
                             <div class="iq-card-header d-flex justify-content-between align-items-center">
                                 <h4 class="card-title">Danh sách duyệt khóa học</h4>
@@ -81,7 +81,7 @@
 
                     {{-- sách --}}
 
-                    <div class="tab-pane fade" id="Book" role="tabpanel">
+                    <div class="tab-pane fade active show" id="Book" role="tabpanel">
                         <div class="iq-card">
                             <div class="iq-card-header d-flex justify-content-between align-items-center">
                                 <h4 class="card-title">Danh sách duyệt sách</h4>
