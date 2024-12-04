@@ -121,8 +121,7 @@
                                                             </div>
                                                         </a>
                                                     </div>
-                                                    <div
-                                                        class="col-2 d-flex justify-content-center align-items-center">
+                                                    <div class="col-2 d-flex justify-content-center align-items-center">
                                                         <a style="padding-right: 20px">
                                                             <div class="font-size-24 text-danger"
                                                                 style="cursor: pointer;">
@@ -159,14 +158,14 @@
                         <li class="line-height pt-3">
                             <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                 <?php
-                                    $avatar = auth()->user()->images()->where('image_name', 'avatar')->first();
+                                    $avatar = auth()->user()->images()->where('image_name', 'thumbnail')->first();
                                 ?>
                                 <img class="img-fluid rounded-circle mr-3"
                                     src="<?php echo e($avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg')); ?>">
 
                                 <div class="caption"
                                     <?php
-                                        $userName = Auth::user()->name;
+$userName = Auth::user()->name;
                                         $displayName = Str::limit($userName, 10, '...'); ?>>
                                     <h6 class="mb-1 line-height"><?php echo e($displayName); ?>!</h6>
                                     <p class="mb-0 text-primary">Tài Khoản</p>
@@ -182,14 +181,14 @@
                                             </h5>
                                         </div>
                                         <!--[if BLOCK]><![endif]--><?php if(Auth::user()->role_id == 1): ?>
-                                            <a href="<?php echo e(route('userDetail')); ?>"
+                                            <a href="<?php echo e(route('userInformation')); ?>"
                                                 class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-file-user-line"></i>
                                                     </div>
                                                     <div class="media-body ml-3">
-                                                        <h6 class="mb-0">Tài khoản của tôi</h6>
+                                                        <h6 class="mb-0">Sửa thông tin</h6>
                                                     </div>
                                                 </div>
                                             </a>

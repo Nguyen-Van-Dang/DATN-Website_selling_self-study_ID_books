@@ -25,7 +25,7 @@
                     <li class="elements">
                         <a href="#" class="iq-waves-effect collapsed  py-1">
                             <div class="d-flex align-items-center">
-                                <img class="BookImage" src="{{ asset('assets/images/book/book_placeholder.png') }}">
+                                <img class="CourseImage" src="{{ asset('assets/images/book/book_placeholder.png') }}">
                                 <span class="px-2">Không có</span>
                             </div>
                         </a>
