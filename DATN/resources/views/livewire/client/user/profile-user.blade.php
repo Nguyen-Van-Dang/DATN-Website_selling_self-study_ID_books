@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" row align-items-center">
+            <div class=" row align-items-center" >
                 <div class="form-group col-sm-6">
                     <label for="fname">Họ và tên:</label>
                     <input wire:model="name" type="text" class="form-control">

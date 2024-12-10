@@ -287,7 +287,7 @@
                 <ul id="favorites-slider" class="list-inline p-0 mb-0 row">
                     @foreach ($popularCourses as $item)
                         @php
-                            $courseImage = $item->images()->where('image_name', 'course')->first();
+                            $courseImage = $item->images()->where('image_name', 'thumbnail')->first();
                         @endphp
                         <li class="col-md-2">
                             <a href="{{ route('khoa-hoc.show', $item->id) }}">

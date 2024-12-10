@@ -53,7 +53,7 @@ class BookController extends Controller
         try {
             $book = Book::findOrFail($id);
             $categories = BookCategories::where('status', 0)->get();
-            if (Auth::user()->id == 1) {
+            if (Auth::user()->role_id == 1) {
                 $teachers = User::where('role_id', 2)->get();
             }
             return view('admin.book.editBook', compact('book', 'teachers', 'categories'));
