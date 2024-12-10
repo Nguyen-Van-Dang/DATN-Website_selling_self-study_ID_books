@@ -29,7 +29,6 @@ class CourseController extends Controller
     }
     public function detail($course_id, $lecture_id)
     {
-
         $course = Course::with(['lectures.lectureCategory'])->findOrFail($course_id);
         $lecture = $course->lectures()->findOrFail($lecture_id);
 

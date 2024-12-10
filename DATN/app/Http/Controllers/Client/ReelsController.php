@@ -59,4 +59,28 @@ class ReelsController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Reel not found'], 404);
     }
+
+    public function destroy($id)
+    {
+        $reel = Reels::findOrFail($id);
+        if ($reel->video_url) {
+        }
+        $reel->delete();
+
+        return redirect()->back()->with('success', 'Video đã được xóa thành công!');
+    }
+
+    public function show($id)
+    {
+        $reel = Reels::findOrFail($id);
+    
+        // Lấy khóa học của giảng viên liên kết với reel
+        $userCourses = $reel->user->courses;
+    
+        // Lấy ảnh của reel
+        $reelsImage = $reel->images()->where('image_name', 'reelsImg')->first();
+    
+        return view('client.reels.reelsDetail', compact('reel', 'reelsImage', 'userCourses'));
+    }
+    
 }

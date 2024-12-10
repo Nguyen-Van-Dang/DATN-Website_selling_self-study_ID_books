@@ -85,7 +85,7 @@ class CourseIndex extends Component
 
         if ($Course) {
             $Course->delete();
-            toastr()->success('<p>Xóa khóa học thành công!</p>');
+            return redirect('admin/khoa-hoc')->with('success', 'Xóa khóa học thành công!');
         } else {
             session()->flash('error', 'Danh mục không tồn tại.');
         }

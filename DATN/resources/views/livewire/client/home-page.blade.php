@@ -65,7 +65,11 @@
                                         <div class="col-6">
                                             <div class="mb-2">
                                                 <h6 class="mb-1">{{ $item->name }}</h6>
-                                                <p class="font-size-13 line-height mb-1">{{ $item->user->name }}
+                                                {{-- <p class="font-size-13 line-height mb-1">{{ $item->user->name }} --}}
+                                                <p class="font-size-13 line-height mb-1">
+                                                    {{ $item->user ? $item->user->name : 'No User' }}
+                                                </p>
+
                                                 </p>
                                                 <div class="d-block line-height">
                                                     <span class="font-size-11 text-warning">
@@ -250,7 +254,8 @@
                                 </div>
                                 <div class="col-7">
                                     <h5 class="mb-2">{{ $item->name }}</h5>
-                                    <p class="mb-2">Tác giả : {{ $item->user->name }}</p>
+                                    {{-- <p class="mb-2">Tác giả : {{ $item->user->name }}</p> --}}
+                                    <p class="mb-2">Tác giả : {{ $item->user ? $item->user->name : 'No User' }}</p>
                                     <div
                                         class="d-flex justify-content-between align-items-center text-dark font-size-13">
                                         <span>Lượt Thích</span>

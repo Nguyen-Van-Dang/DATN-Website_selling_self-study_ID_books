@@ -17,34 +17,24 @@
                         <div class="iq-edit-list">
                             <ul class="iq-edit-profile d-flex nav nav-pills w-100">
                                 @if ($role_id == 1)
-                                    <li class="col-md-2 p-0">
+                                    <li class="col-md-3 p-0">
                                         <a class="nav-link active" data-toggle="pill" href="#User">
                                             Tài Khoản
                                         </a>
                                     </li>
-                                    <li class="col-md-2 p-0">
+                                    <li class="col-md-3 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#Course">
                                             Khóa Học
                                         </a>
                                     </li>
-                                    <li class="col-md-2 p-0">
+                                    <li class="col-md-3 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#CourseCate">
                                             Danh Mục Sách
                                         </a>
                                     </li>
-                                    <li class="col-md-2 p-0">
+                                    <li class="col-md-3 p-0">
                                         <a class="nav-link" data-toggle="pill" href="#Book">
                                             Sách
-                                        </a>
-                                    </li>
-                                    <li class="col-md-2 p-0">
-                                        <a class="nav-link" data-toggle="pill" href="#Contact">
-                                            Liên Hệ
-                                        </a>
-                                    </li>
-                                    <li class="col-md-2 p-0">
-                                        <a class="nav-link" data-toggle="pill" href="#Test">
-                                            Đơn hàng
                                         </a>
                                     </li>
                                 @elseif ($role_id == 2)
@@ -217,69 +207,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- lh --}}
-                            <div class="tab-pane fade" id="Contact" role="tabpanel">
-                                <div class="iq-card-header d-flex justify-content-between align-items-center">
-                                    <h4 class="card-title">Liên hệ đã xóa</h4>
-                                    <div class="iq-search-bar">
-                                        <form class="searchbox">
-                                            <input type="text" class="text search-input" placeholder="Tìm liên hệ..."
-                                                wire:model.live.debounce.100ms="searchContacts">
-                                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="iq-card-body">
-                                    <div class="table-responsive">
-                                        <table class="data-tables table table-striped table-bordered" style="width:100%">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th style="width: 5%;">STT</th>
-                                                    <th style="width: 10%;">Tên người gửi</th>
-                                                    <th style="width: 40%;">Nội dung</th>
-                                                    <th style="width: 10%;">Ngày xóa</th>
-                                                    <th style="width: 7%;">Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-                                                @livewire('contact.delete-contact')
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="Test" role="tabpanel">
-                                <div class="iq-card-header d-flex justify-content-between align-items-center">
-                                    <h4 class="card-title">Đơn hàng đã xóa</h4>
-                                    <div class="iq-search-bar">
-                                        <form class="searchbox">
-                                            <input type="text" class="text search-input"
-                                                placeholder="Tìm bài kiểm tra..."
-                                                wire:model.live.debounce.100ms="searchTests">
-                                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="iq-card-body">
-                                    <div class="table-responsive">
-                                        <table class="data-tables table table-striped table-bordered" style="width:100%">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th style="width: 5%;">STT</th>
-                                                    <th style="width: 20%;">Mã số đơn hàng</th>
-                                                    <th style="width: 20%;">số lượng sản phẩm</th>
-                                                    <th style="width: 10%;">Ngày xóa</th>
-                                                    <th style="width: 7%;">Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-                                                @livewire('order.delete-order')
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         @elseif ($role_id == 2)
                             <div class="tab-pane fade active show" id="Course" role="tabpanel">
                                 <div class="iq-card">
@@ -396,4 +323,11 @@
             </div>
         </div>
     </div>
+    
+    <style>
+        .btn-success{
+            color: var(--iq-white);
+            background: var(--iq-primary);
+        }
+    </style>
 @endsection

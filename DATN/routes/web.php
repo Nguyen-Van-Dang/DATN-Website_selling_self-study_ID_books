@@ -213,19 +213,16 @@ Route::prefix('khoa-hoc')->group(function () {
 Route::get('/user-information', [UserController::class, 'showUser'])->name('userInformation');
 Route::post('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
 
-
-// Route::get('/user-information', function () {
-//     return view('client.user.userInformation');
-// })->name('userInformation');
-// Route::pots('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
 // thông tin chi tiết người dùng
 Route::prefix('thong-tin-tai-khoan')->group(
     function () {
         Route::get('/', [UserController::class, 'showUserDetail'])->name('userDetail');
         Route::post('/', [UserController::class, 'updateDescription'])->name('updateDescription');
+        Route::delete('/xoa-video/{id}', [ReelsController::class, 'destroy'])->name('deleteVideo');
+        Route::get('/reel/{id}', [ReelsController::class, 'show'])->name('client.reels.reelsDetail');
+
     }
 );
-
 
 //giỏ hàng
 Route::prefix('/gio-hang')->group(function () {
@@ -246,12 +243,6 @@ Route::prefix('/don-hang')->group(
         Route::match(['get', 'post'], '/momo-callback', [Carts::class, 'momoCallback'])->name('momoCallback');
     }
 );
-
-
-// tất cả thông báo
-Route::get('/notification-list', function () {
-    return view('client.notification.notification');
-})->name('notificationList');
 
 //kích hoạt sách
 Route::middleware([CheckLoggedIn::class])->group(function () {

@@ -142,13 +142,13 @@ class UserIndex extends Component
             UploadFileJob::dispatch($user, $folderId, $filePath, 'thumbnail');
             $user->save();
 
-        // Reset form sau khi xử lý
-        $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
-        $this->isAddPopupOpen = false;
-        return redirect('/admin/danh-sach-nguoi-dung')->with('success', 'Thêm tài khoản thành công');
+            // Reset form sau khi xử lý
+            $this->reset(['name', 'phone', 'email', 'role_id', 'status', 'password', 'image_url']);
+            $this->isAddPopupOpen = false;
+            return redirect('/admin/danh-sach-nguoi-dung')->with('success', 'Thêm tài khoản thành công');
+        }
     }
-}
-    public function updateUser()        
+    public function updateUser()
     {
         $rules = [
             'nameAdd' => 'required|max:50',
@@ -223,7 +223,7 @@ class UserIndex extends Component
         $user->save();
         $this->reset(['editingId', 'nameAdd', 'emailAdd', 'phoneAdd', 'role_idAdd', 'statusAdd', 'newImg', 'passwordAdd']);
         $this->isEditPopupOpen = false;
-        return redirect('/admin/danh-sach-nguoi-dung')->with('success', 'Sửa tài khoản thành công');
+        return redirect('admin/danh-sach-nguoi-dung')->with('success', 'Sửa tài khoản thành công');
     }
     public function deleted()
     {
@@ -232,10 +232,10 @@ class UserIndex extends Component
             session()->flash('error', 'Người dùng không tồn tại.');
         } else {
             if ($user->role_id == 1) {
-                toastr()->error('Không thể xóa quản trị viên.');
+                return redirect()->with('error', 'Không thể xóa quản trị viên.');
             } else {
                 $user->delete();
-                toastr()->success('Người dùng đã được xóa thành công.');
+                return redirect('admin/danh-sach-nguoi-dung')->with('success', 'Xóa tài khoản thành công!');
             }
         }
         $this->reset(['search']);

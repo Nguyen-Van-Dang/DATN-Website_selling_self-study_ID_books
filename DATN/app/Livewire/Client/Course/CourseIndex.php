@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Course;
 use App\Models\User;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
+
 
 class CourseIndex extends Component
 {
@@ -14,6 +16,7 @@ class CourseIndex extends Component
     public $courseList;
     public $courseTrending;
     public $popularCourses;
+    public $MostPurChasedCourses;
     public $teachers;
     public $date_filter = 'latest';
     public $price_filter = null;
@@ -28,6 +31,12 @@ class CourseIndex extends Component
     public function mount()
     {
         $this->popularCourses = Course::orderBy('views', 'desc')->take(6)->get();
+        $this->MostPurChasedCourses = Course::select('courses.*', DB::raw('COUNT(enroll_courses.id) as enroll_count'))
+            ->join('enroll_courses', 'courses.id', '=', 'enroll_courses.course_id')
+            ->groupBy('courses.id')
+            ->orderBy('enroll_count', 'desc')
+            ->take(6)
+            ->get();
         $this->teachers = User::where('role_id', 2)->get();
         $this->courseTrending = Course::limit(12)->get();
         $this->loadCourses();

@@ -21,13 +21,14 @@ unset($__params);
 unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
+
             <script>
                 function openPopup(type) {
                     if (type === 'add') {
                         document.getElementById("addCourseCateModal").classList.add("is-open");
                     } else if (type === 'edit') {
                         document.getElementById("isEditPopupOpen").classList.add("is-open");
-                    } else (type === 'delete') {
+                    } else(type === 'delete') {
                         document.getElementById("deletedCourseCateModal").classList.add("is-open");
                     }
                     document.getElementById("overlay").style.display = "block";
@@ -40,25 +41,75 @@ if (isset($__slots)) unset($__slots);
                     document.getElementById("overlay").style.display = "none";
                 }
             </script>
-
             <style>
-                .modal {
-                    display: none;
-                    opacity: 0;
-                    transition: opacity 0.5s ease;
+                td a {
+                    color: black;
+                    text-decoration: none;
+                }
+
+                td a:hover {
+                    color: var(--iq-primary) !important;
+                }
+
+                .zoom-img {
+                    transition: transform 0.3s ease;
+                    cursor: pointer;
+                }
+
+                .zoom-img:hover {
+                    transform: scale(2.4);
+                }
+
+                .modal-overlay {
                     position: fixed;
                     top: 0;
                     left: 0;
                     width: 100%;
                     height: 100%;
                     background-color: rgba(0, 0, 0, 0.5);
-                    justify-content: center;
-                    align-items: center;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: opacity 0.5s ease, visibility 0.5s ease;
                 }
 
-                .modal.is-open {
+                .modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                     display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    visibility: hidden;
+                }
+
+                .modal-content {
+                    opacity: 0;
+                    transform: translateY(-33%);
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+                }
+
+                .modal.is-open .modal-overlay {
                     opacity: 1;
+                    visibility: visible;
+                }
+
+                .modal.is-open .modal-content {
+                    opacity: 1;
+                    transform: translateY(0);
+                    visibility: visible;
+                }
+
+                .modal:not(.is-open) .modal-overlay {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                .modal:not(.is-open) .modal-content {
+                    opacity: 0;
+                    transform: translateY(-33%);
+                    visibility: hidden;
                 }
 
                 .modal-content {
@@ -67,6 +118,14 @@ if (isset($__slots)) unset($__slots);
                     border-radius: 5px;
                     width: 50%;
                     position: relative;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    padding-right: 15px;
+                }
+
+                .modal-body-scrollable {
+                    max-height: calc(85vh - 100px);
+                    overflow-y: auto;
                 }
 
                 .close {

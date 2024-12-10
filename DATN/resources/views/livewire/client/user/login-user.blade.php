@@ -16,7 +16,16 @@
         @error('password')
             <span class="text-danger">{{ $message }}</span>
         @enderror
-        <span class="forgot-password">Bạn quên mật khẩu?</span>
+        <div>
+            @error('loginError')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        
+        <div>
+            <span class="forgot-password">Bạn quên mật khẩu?</span>
+        </div>
+        
         <div>
             <center>
                 <button class="btnn" type="submit">Đăng Nhập</button>
@@ -42,12 +51,13 @@
         </div>
     </form>
     <style>
-        .forgot-password{
-            margin-left: 45%; 
+        .forgot-password {
+            margin-left: 45%;
             font-size: 13px;
             cursor: pointer;
         }
-        .forgot-password:hover{
+
+        .forgot-password:hover {
             transition: color 0.5s ease;
             color: var(--iq-primary);
         }

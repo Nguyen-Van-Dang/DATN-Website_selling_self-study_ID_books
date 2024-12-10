@@ -146,7 +146,7 @@
                                                     <img id="image-placeholder"
                                                         src="{{ asset('assets/images/book/reel_thumbnail.png') }}"
                                                         alt="Click to choose image" class="img-thumbnail img-fluid"
-                                                        style="cursor: pointer; max-width: 100%; height: 300px;">
+                                                        style="cursor: pointer; max-width: 100%; height: 520px;">
                                                 @endif
                                                 <input type="file" class="custom-file-input"
                                                     accept="image/png, image/jpeg, image/jpg" name="reelsImg"

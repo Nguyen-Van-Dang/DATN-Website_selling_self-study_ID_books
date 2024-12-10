@@ -34,7 +34,7 @@ class UserRepository
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->with('error', 'Bạn đã đăng xuất thành công');
+        return redirect('/')->with('success', 'Bạn đã đăng xuất thành công');
     }
     // // đăng nhập tài khoản
     // public function loginUser($data)

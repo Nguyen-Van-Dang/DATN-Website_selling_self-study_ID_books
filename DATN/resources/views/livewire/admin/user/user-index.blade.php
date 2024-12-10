@@ -35,7 +35,7 @@
                             @foreach ($users as $item)
                                 <tr>
                                     <td style="width: 3%;">{{ $item->id }}</td>
-                                    <td style="width: 10%;">
+                                    {{-- <td style="width: 10%;">
                                         @php
                                             $firstImage = $item->images->first();
                                         @endphp
@@ -47,10 +47,25 @@
                                             <img src="{{ asset('assets/images/book/user/thub.jpg') }}" alt="No Image"
                                                 class="img-fluid avatar-100 rounded" />
                                         @endif
-                                    </td>
+                                    </td> --}}
+                                    <td style="width: 10%;">
+                                        @php
+                                            $firstImage = $item->images->first();
+                                        @endphp
+                                    
+                                        @if ($firstImage)
+                                            <img src="{{ $firstImage->image_url }}" alt="Image" class="img-fluid avatar-100 rounded zoom-img" />
+                                        @else
+                                            <img src="{{ asset('assets/images/book/user/thub.jpg') }}" alt="No Image" class="img-fluid avatar-100 rounded" />
+                                        @endif
+                                    </td>                                 
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->phone }}</td>
-                                    <td>{{ $item->email }}</td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="window.open('https://mail.google.com/mail/u/0/?view=cm&fs=1&to={{ $item->email }}', '_blank');" title="Gửi email" class="text-black">
+                                            {{ $item->email }}
+                                        </a>
+                                    </td>
                                     <td>
                                         @if ($item->role_id == 1)
                                             <span
@@ -95,7 +110,7 @@
                                                 wire:click="openPopup('edit', {{ $item->id }})">
                                                 <i class="ri-pencil-line"></i>
                                             </a>
-                                            @if ($item->id == 1)
+                                            @if ($item->role->id == 1)
                                                 <a class="bg-primary text-white" data-toggle="tooltip"
                                                     title="Không thể xóa người quản trị">
                                                     <i class="ri-delete-bin-line"></i>
@@ -129,6 +144,7 @@
 
     {{-- them nguoi dung --}}
     <div class="modal {{ $isAddPopupOpen ? 'is-open' : '' }}" id="addCourseCateModal" wire:click="closePopup()">
+        <div class="modal-overlay"></div>
         <div class="modal-content" wire:click.stop>
             <span class="close" wire:click="closePopup()">&times;</span>
             <div class="col-sm-12">
@@ -248,6 +264,7 @@
 
     {{-- sua nguoi dung --}}
     <div class="modal {{ $isEditPopupOpen ? 'is-open' : '' }}" id="isEditPopupOpen" wire:click="closePopup()">
+        <div class="modal-overlay"></div>
         <div class="modal-content" wire:click.stop>
             <span class="close" wire:click="closePopup()">&times;</span>
             <div class="col-sm-12">
@@ -384,13 +401,14 @@
     <!-- Popup xóa danh mục -->
     <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseCateModal"
         wire:click="closePopup()">
+        <div class="modal-overlay"></div>
         <div class="modal-content" style="width: 30%;" wire:click.stop>
-            <div class="col-12 text-center">
-                <div class="col-sm-12">
-                    <div class="iq-card">
-                        <div class="iq-card-header">
+            <div class="col-12 text-center p-0">
+                <div class="col-sm-12 p-0">
+                    <div class="iq-card mb-0">
+                        <div class="iq-card-header p-0">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Bạn có chắc chắn xóa hay không?</h4>
+                                <h4 class="card-title">Bạn có chắc chắn xóa tài khoản này hay không?</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -406,17 +424,4 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .modal-content {
-            max-height: 90vh;
-            overflow-y: auto;
-            padding-right: 15px;
-        }
-
-        .modal-body-scrollable {
-            max-height: calc(85vh - 100px);
-            overflow-y: auto;
-        }
-    </style>
 </div>

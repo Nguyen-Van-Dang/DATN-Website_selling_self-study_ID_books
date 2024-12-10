@@ -14,7 +14,7 @@
                     </li>
                     <span class="span">{{ $history->last_accessed_at }}</span>
                 @empty
-                    <li>Chưa có lịch sử xem nào.</li>
+                    <li class="li">Chưa có lịch sử xem nào...</li>
                 @endforelse
             </div>
         </div>
@@ -35,11 +35,20 @@
             font-weight: bold;
         }
 
+        .h5 {
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+
         .h5:hover {
             color: var(--iq-primary) !important;
+            font-size: 18px;
+            transition: .6s;
         }
-        .span{
-            margin-left: 65%
+
+        .span {
+            margin-left: 72%;
+            font-size: 12px;
         }
     </style>
 </div>

@@ -106,8 +106,8 @@
                                             </h5>
                                             <p class="mb-1"><strong>Giáo viên:</strong>
                                                 {{ $enroll->course->user->name ?? 'không có tên giáo viên' }}</p>
-                                            <p class="mb-1"><strong>Số video bài giảng:</strong>
-                                                {{ $enroll->course->lectures_count ?? 0 }} video</p>
+                                            <p class="mb-1"><strong>Số bài giảng:</strong>
+                                                {{ $enroll->course->lectures_count ?? 0 }}</p>
                                         </div>
                                     </div>
                                 </a>

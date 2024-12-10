@@ -18,6 +18,7 @@ use App\Mail\PasswordChangedNotification;
 use Exception;
 use App\Mail\UserApprovedMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Reels;
 
 class UserController extends Controller
 {
@@ -80,7 +81,7 @@ class UserController extends Controller
 
     public function HomeAdmin()
     {
-        $user = auth()->user();
+        $user = auth::user();
 
         if ($user->role_id == 2) {
             $userCount = 1;
@@ -210,19 +211,19 @@ class UserController extends Controller
     public function showUserDetail()
     {
         $user = auth::user();
-
-        $courses = $user->courses ?: [];
-        $books = $user->books ?: [];
-        $reels = $user->reels ?: [];
-
+        $courses = Course::where('user_id', $user->id)->get();
+        $books = Book::where('user_id', $user->id)->where('status', 0)->get();
+        $reels = Reels::where('user_id', $user->id)->get();
+    
         return view('client.user.userDetail', compact('user', 'books', 'courses', 'reels'));
     }
+    
     public function updateDescription(Request $request)
     {
         $data = $request->all();
 
 
-        $user = auth()->user();
+        $user = auth::user();
         $user->description = nl2br(e($data['user_description']));
         $user->save();
 

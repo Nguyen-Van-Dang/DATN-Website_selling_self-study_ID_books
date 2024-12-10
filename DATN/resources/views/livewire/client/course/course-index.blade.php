@@ -1,6 +1,4 @@
 <div>
-    {{-- @livewire('client.course.carousel-image-upload') --}}
-    
     <div class="d-flex justify-content-between align-items-center position-relative mt-3">
         <div class="w-100 iq-search-filter mb-0">
             <ul class="list-inline p-0 m-0 row justify-content-center search-menu-options">
@@ -42,9 +40,11 @@
                 </li>
                 <li class="search-menu-opt">
                     <div class="iq-search-bar search-book">
-                        <input type="text" class="text search-input" wire:model.live.debounce.100ms="name_filter"
-                            placeholder="Tên khóa học...">
-
+                        <div class="input-container">
+                            <i class="ri-search-line"></i>
+                            <input type="text" class="text search-input" wire:model.live.debounce.100ms="name_filter"
+                                placeholder="Tên khóa học...">
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -63,7 +63,8 @@
                             <div class="card-body">
                                 <div class="" wire:click="goToCourseDetail({{ $course->id }})"
                                     style="cursor: pointer;">
-                                    <h5 class="card-title course-top-title">{{ $course->name }}
+                                    <h5 class="card-title course-top-title" title="{{ $course->name }}">
+                                        {{ Str::limit($course->name, 30, '...') }}
                                     </h5>
                                     @if ($course->discount && $course->price > $course->discount)
                                         @php
@@ -86,11 +87,14 @@
                                         src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                                 </div>
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                                    <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
-                                        đ</span>
-                                    <span class="text-muted ml-3"
-                                        style="text-decoration:line-through">{{ number_format($course->discount) }}
-                                        đ</span>
+                                    <span class="text-danger font-weight-bold">
+                                        {{ number_format($course->price - ($course->discount ?? 0)) }} đ
+                                    </span>
+                                    @if ($course->discount ?? 0)
+                                        <span class="text-muted ml-3" style="text-decoration:line-through">
+                                            {{ number_format($course->price) }} đ
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -98,6 +102,13 @@
                 @endforeach
             </div>
         </div>
+        @if ($courseList->isEmpty())
+            <div class="col-12">
+                <div class="d-flex justify-content-center my-4" style="z-index: 1">
+                    <p>Không có kết quả</p>
+                </div>
+            </div>
+        @endif
     </div>
 
     <div class="row">
@@ -146,13 +157,29 @@
         <div class="iq-card-body similar-contens">
             <h5 class="card-title mb-2">Khóa Học Thịnh Hành</h5>
             <div class="row">
-                @foreach ($popularCourses as $course)
+                @foreach ($MostPurChasedCourses as $course)
                     <div class="col-2 col-lg-2 px-2 mb-3" wire:click="goToCourseDetail({{ $course->id }})"
                         style="cursor: pointer;">
                         <div class="trendy-course card h-100 " style=" transition: transform 0.3s ease;">
                             @php
                                 $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
                             @endphp
+                            @if ($course->discount && $course->price > $course->discount)
+                                @php
+                                    $price = $course->price;
+                                    $discount = $course->discount;
+                                    if ($price > 0 && $discount > 0 && $discount < $price) {
+                                        $discountPercentage = round(($discount / $price) * 100);
+                                    } else {
+                                        $discountPercentage = 0;
+                                    }
+                                @endphp
+                                @if ($discountPercentage > 0)
+                                    <span class="discount-badge1">
+                                        -{{ $discountPercentage }}%
+                                    </span>
+                                @endif
+                            @endif
                             <img class="card-img-top img-fluid rounded course-image"
                                 style="aspect-ratio: 1.5/1; object-fit: cover;"
                                 src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
@@ -161,14 +188,70 @@
                                     <h5 class="card-title course-title">{{ $course->name }}</h5>
                                     <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
                                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                                        <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
-                                            đ</span>
-                                        <span class="text-muted ml-3"
-                                            style="text-decoration:line-through">{{ number_format($course->discount) }}
-                                            đ</span>
+                                        <span class="text-danger font-weight-bold">
+                                            {{ number_format($course->price - ($course->discount ?? 0)) }} đ
+                                        </span>
+                                        @if ($course->discount ?? 0)
+                                            <span class="text-muted ml-3" style="text-decoration:line-through">
+                                                {{ number_format($course->price) }} đ
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
+                            </div>
                         </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+        <div class="iq-card-body similar-contens">
+            <h5 class="card-title mb-2">Khóa Học Mới Nhất</h5>
+            <div class="row">
+                @foreach ($popularCourses as $course)
+                    <div class="col-2 col-lg-2 px-2 mb-3" wire:click="goToCourseDetail({{ $course->id }})"
+                        style="cursor: pointer;">
+                        <div class="trendy-course card h-100 " style=" transition: transform 0.3s ease;">
+                            @php
+                                $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
+                            @endphp
+                            @if ($course->discount && $course->price > $course->discount)
+                                @php
+                                    $price = $course->price;
+                                    $discount = $course->discount;
+                                    if ($price > 0 && $discount > 0 && $discount < $price) {
+                                        $discountPercentage = round(($discount / $price) * 100);
+                                    } else {
+                                        $discountPercentage = 0;
+                                    }
+                                @endphp
+                                @if ($discountPercentage > 0)
+                                    <span class="discount-badge1">
+                                        -{{ $discountPercentage }}%
+                                    </span>
+                                @endif
+                            @endif
+                            <img class="card-img-top img-fluid rounded course-image"
+                                style="aspect-ratio: 1.5/1; object-fit: cover;"
+                                src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
+                            <div class="card-body border pt-1">
+                                <div>
+                                    <h5 class="card-title course-title">{{ $course->name }}</h5>
+                                    <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
+                                    <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
+                                        <span class="text-danger font-weight-bold">
+                                            {{ number_format($course->price - ($course->discount ?? 0)) }} đ
+                                        </span>
+                                        @if ($course->discount ?? 0)
+                                            <span class="text-muted ml-3" style="text-decoration:line-through">
+                                                {{ number_format($course->price) }} đ
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -176,6 +259,27 @@
         </div>
     </div>
     <style>
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 10px;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .input-container .search-input {
+            padding-left: 35px;
+            width: 100%;
+            height: 40px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
         .course-title {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -235,7 +339,23 @@
         .discount-badge {
             position: absolute;
             top: 70px;
-            right: 40px;
+            right: 25px;
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+            transition: box-shadow 0.3s ease;
+            z-index: 10;
+        }
+
+        .discount-badge1 {
+            position: absolute;
+            top: 5px;
+            right: 5px;
             background-color: #f44336;
             color: white;
             padding: 5px 10px;

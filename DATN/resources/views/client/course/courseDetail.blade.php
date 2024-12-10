@@ -476,6 +476,10 @@
                 line-height: 28px;
                 letter-spacing: 1px;
             }
+
+            .modal-body-scrollable::-webkit-scrollbar {
+                display: none;
+            }
         </style>
     </div>
 @endsection

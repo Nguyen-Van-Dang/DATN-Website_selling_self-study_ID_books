@@ -1,6 +1,4 @@
 <div>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     @forelse ($deletedUsers as $user)
         <tr>
             <td>{{ $user->id }}</td>
@@ -36,9 +34,7 @@
             <td>
                 <button wire:click.prevent="restore({{ $user->id }})" class="btn btn-success">Khôi phục</button>
                 <button wire:click.prevent="forceDelete({{ $user->id }})" class="btn btn-danger">Xóa vĩnh viễn</button>
-                
             </td>
-
         </tr>
     @empty
         <tr>

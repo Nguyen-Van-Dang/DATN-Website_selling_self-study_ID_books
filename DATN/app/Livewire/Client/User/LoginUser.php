@@ -48,7 +48,6 @@ class LoginUser extends Component
         if (Auth::attempt(['phone' => $this->phone, 'password' => $this->password])) {
             return redirect()->route('homeClient')->with('success', 'Đăng nhập thành công!');
         }
-
-        session()->flash('error', 'Số điện thoại hoặc mật khẩu không đúng.');
+        $this->addError('loginError', 'Số điện thoại hoặc mật khẩu không đúng.');
     }
 }

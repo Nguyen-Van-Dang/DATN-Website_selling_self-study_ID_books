@@ -41,10 +41,10 @@
 
                                         @if ($firstImage)
                                             <img src="{{ $firstImage->image_url }}" alt="Image"
-                                                class="img-fluid" style="width: 190px; height: 112px;"/>
+                                                class="img-fluid rounded zoom-img" style="width: 190px; height: 112px; border: 1px solid #dee2e6;"/>
                                         @else
                                             <img src="{{ asset('assets/images/book/user/course.jpg') }}" alt="No Image"
-                                                class="img-fluid" style="width: 190px; height: 112px;"/>
+                                                class="img-fluid rounded" style="width: 190px; height: 112px; border: 1px solid #dee2e6;"/>
                                         @endif
                                     </td>
                                     <td>{{ strlen($item->name) > 100 ? substr($item->name, 0, 100) . '...' : $item->name }}
@@ -111,13 +111,14 @@
 
     <!-- Popup xóa danh mục -->
     <div class="modal {{ $isDeletePopupOpen ? 'is-open' : '' }}" id="deletedCourseModal" wire:click="closePopup()">
+        <div class="modal-overlay"></div>
         <div class="modal-content" style="width: 30%;" wire:click.stop>
-            <div class="col-12 text-center">
-                <div class="col-sm-12">
-                    <div class="iq-card">
-                        <div class="iq-card-header">
+            <div class="col-12 text-center p-0">
+                <div class="col-sm-12 p-0">
+                    <div class="iq-card mb-0">
+                        <div class="iq-card-header p-0">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Bạn có chắc chắn xóa hay không?</h4>
+                                <h4 class="card-title">Bạn có chắc chắn xóa khóa học này hay không?</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
