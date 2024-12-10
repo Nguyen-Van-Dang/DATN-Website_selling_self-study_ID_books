@@ -232,7 +232,7 @@
                                                     ->first();
                                             @endphp
                                             <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
-                                                alt="avatar 1" style="width: 45px; height: 100%;">
+                                                alt="avatar 1" style="width: 45px; height: 45px;border-radius:50%">
                                         </div>
                                     @else
                                         {{-- Tin nhắn của người dùng khác  (bên trái) --}}
@@ -244,7 +244,7 @@
                                                     ->first();
                                             @endphp
                                             <img src="{{ $thumbnail->image_url ?? asset('assets/images/book/user_thumbnail.png') }}"
-                                                alt="avatar 1" style="width: 45px; height: 100%;">
+                                                alt="avatar 1" style="width: 45px; height: 45px;border-radius:50%">
                                             <div>
                                                 <p class="p-2 me-3 mb-1 rounded self-chat message border"
                                                     style="background-color: {{ in_array($message->user->role_id, [1, 2]) ? '#ffebeb' : 'hsl(0, 0%, 92%)' }}">

@@ -38,4 +38,8 @@ class Reels extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function likes()
+    {
+        return $this->hasMany(ReelLike::class);
+    }
 }

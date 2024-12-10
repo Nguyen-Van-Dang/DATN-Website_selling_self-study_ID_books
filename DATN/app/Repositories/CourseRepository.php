@@ -78,7 +78,7 @@ class CourseRepository
         });
 
         $chatGroup = ChatGroup::where('course_id', $course->id)->first();
-        if ($chatGroup) {
+        if (!$chatGroup) {
             $chatGroup = '';
         }
         $exams = Exam::where('course_id', $course->id)

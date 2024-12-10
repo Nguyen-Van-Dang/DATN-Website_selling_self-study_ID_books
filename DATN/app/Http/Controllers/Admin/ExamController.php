@@ -13,7 +13,7 @@ class ExamController extends Controller
 {
     public function index()
     {
-        if (Auth::id() == 1) {
+        if (Auth::user()->role_id == 1) {
             $exams = Exam::all();
         } else {
             $exams = Exam::whereIn('course_id', function ($query) {
