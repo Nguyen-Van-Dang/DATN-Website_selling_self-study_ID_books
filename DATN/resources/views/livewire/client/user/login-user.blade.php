@@ -16,7 +16,7 @@
         @error('password')
             <span class="text-danger">{{ $message }}</span>
         @enderror
-        <span class="forgot-password">Bạn quên mật khẩu?</span>
+        <a href="{{route('forgot-passwordLogin')}}"><span class="forgot-password">Bạn quên mật khẩu?</span></a>
         <div>
             <center>
                 <button class="btnn" type="submit">Đăng Nhập</button>

@@ -11,21 +11,17 @@
                     <div class="iq-edit-list">
                         <ul class="iq-edit-profile d-flex nav nav-pills w-100">
 
-                            <li class="col-md-4 p-0">
+                            <li class="col-md-6 p-0">
                                 <a class="nav-link active" data-toggle="pill" href="#Book">
                                     Sách
                                 </a>
                             </li>
-                            <li class="col-md-4 p-0">
+                            <li class="col-md-6 p-0">
                                 <a class="nav-link" data-toggle="pill" href="#Course">
                                     Khóa Học
                                 </a>
                             </li>
-                            <li class="col-md-4 p-0">
-                                <a class="nav-link" data-toggle="pill" href="#User">
-                                    Người dùng
-                                </a>
-                            </li>
+                            
 
                         </ul>
                     </div>
@@ -151,56 +147,7 @@ if (isset($__slots)) unset($__slots);
 
 
                     
-                    <div class="tab-pane fade" id="User" role="tabpanel">
-                        <div class="iq-card">
-                            <div class="iq-card-header d-flex justify-content-between align-items-center">
-                                <h4 class="card-title">Danh sách duyệt người dùng</h4>
-                                <div class="iq-search-bar">
-                                    <form class="searchbox">
-                                        <input type="text" class="text search-input" placeholder="Tìm sách..."
-                                            wire:model.live.debounce.100ms="searchBooks">
-                                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="iq-card-body">
-                                <div class="table-responsive">
-                                    <table class="data-tables table table-striped table-bordered" style="width:100%">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th style="width: 5%;">STT</th>
-                                                <th style="width: 10%;">Tên người dùng</th>
-                                                <th style="width: 10%;">Số điện thoại</th>
-                                                <th style="width: 10%;">Email</th>
-                                                <th style="width: 10%;">Yêu cầu</th>
-                                                
-                                                <th style="width: 10%;">Hành động</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-center">
-                                            <?php
-$__split = function ($name, $params = []) {
-    return [$name, $params];
-};
-[$__name, $__params] = $__split('admin.user.user-approve');
-
-$__html = app('livewire')->mount($__name, $__params, 'lw-2484027222-2', $__slots ?? [], get_defined_vars());
-
-echo $__html;
-
-unset($__html);
-unset($__name);
-unset($__params);
-unset($__split);
-if (isset($__slots)) unset($__slots);
-?>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 </div>
             </div>

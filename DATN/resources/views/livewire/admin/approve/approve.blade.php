@@ -11,21 +11,21 @@
                     <div class="iq-edit-list">
                         <ul class="iq-edit-profile d-flex nav nav-pills w-100">
 
-                            <li class="col-md-4 p-0">
+                            <li class="col-md-6 p-0">
                                 <a class="nav-link active" data-toggle="pill" href="#Book">
                                     Sách
                                 </a>
                             </li>
-                            <li class="col-md-4 p-0">
+                            <li class="col-md-6 p-0">
                                 <a class="nav-link" data-toggle="pill" href="#Course">
                                     Khóa Học
                                 </a>
                             </li>
-                            <li class="col-md-4 p-0">
+                            {{-- <li class="col-md-4 p-0">
                                 <a class="nav-link" data-toggle="pill" href="#User">
                                     Người dùng
                                 </a>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </div>
@@ -121,7 +121,7 @@
 
 
                     {{-- người dùng --}}
-                    <div class="tab-pane fade" id="User" role="tabpanel">
+                    {{-- <div class="tab-pane fade" id="User" role="tabpanel">
                         <div class="iq-card">
                             <div class="iq-card-header d-flex justify-content-between align-items-center">
                                 <h4 class="card-title">Danh sách duyệt người dùng</h4>
@@ -143,19 +143,19 @@
                                                 <th style="width: 10%;">Số điện thoại</th>
                                                 <th style="width: 10%;">Email</th>
                                                 <th style="width: 10%;">Yêu cầu</th>
-                                                {{-- <th style="width: 10%;">Trạng thái</th> --}}
+                                                <th style="width: 10%;">Trạng thái</th>
                                                 <th style="width: 10%;">Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">
                                             @livewire('admin.user.user-approve')
-                                            {{-- @livewire('admin.course.course-approve') --}}
+                                            @livewire('admin.course.course-approve')
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

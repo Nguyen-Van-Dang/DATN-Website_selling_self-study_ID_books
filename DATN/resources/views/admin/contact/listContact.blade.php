@@ -67,47 +67,49 @@
                                                     </button>
                                                 </form>
                                                 <!-- Xóa liên hệ -->
-                                                <form action="{{ route('contacts.destroy', $contact->id) }}" 
-                                                    method="POST" 
-                                                    style="display:inline;" 
-                                                    onsubmit="return confirmDelete(event, this)">
-                                                  @csrf
-                                                  @method('DELETE')
-                                                  <button type="submit" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Xóa liên hệ">
-                                                      <i class="ri-delete-bin-line"></i>
-                                                  </button>
-                                              </form>
-                                              
-                                              <script>
-                                                  function confirmDelete(event, form) {
-                                                      event.preventDefault(); // Chặn hành động mặc định của form
-                                                      Swal.fire({
-                                                          title: 'Bạn có chắc chắn?',
-                                                          text: "Hành động này không thể hoàn tác!",
-                                                          icon: 'warning',
-                                                          showCancelButton: true,
-                                                          confirmButtonColor: '#3085d6',
-                                                          cancelButtonColor: '#d33',
-                                                          confirmButtonText: 'Xóa',
-                                                          cancelButtonText: 'Hủy'
-                                                      }).then((result) => {
-                                                          if (result.isConfirmed) {
-                                                              form.submit(); // Gửi form nếu người dùng xác nhận
-                                                          }
-                                                      });
-                                                      return false; // Chặn gửi form ban đầu
-                                                  }
-                                              </script>
-                                              
+                                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST"
+                                                    style="display:inline;" onsubmit="return confirmDelete(event, this)">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        data-toggle="tooltip" title="Xóa liên hệ">
+                                                        <i class="ri-delete-bin-line"></i>
+                                                    </button>
+                                                </form>
+
+                                                <script>
+                                                    function confirmDelete(event, form) {
+                                                        event.preventDefault(); // Chặn hành động mặc định của form
+                                                        Swal.fire({
+                                                            title: 'Bạn có chắc chắn?',
+                                                            text: "Hành động này không thể hoàn tác!",
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#3085d6',
+                                                            cancelButtonColor: '#d33',
+                                                            confirmButtonText: 'Xóa',
+                                                            cancelButtonText: 'Hủy'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                form.submit(); // Gửi form nếu người dùng xác nhận
+                                                            }
+                                                        });
+                                                        return false; // Chặn gửi form ban đầu
+                                                    }
+                                                </script>
+
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 @endsection

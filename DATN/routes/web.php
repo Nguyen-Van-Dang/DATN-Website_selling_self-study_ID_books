@@ -34,6 +34,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Livewire\Client\User\LoginUser;
 use App\Livewire\Client\User\RegisterUser;
 
+
 /* --------------- HOME CLIENT --------------- */
 
 Route::get('/', [UserController::class, 'HomeClient'])->name('homeClient');
@@ -176,7 +177,7 @@ Route::middleware([CheckRole::class . ':1'])->group(function () {
 // reset mail
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
-Route::post('forgot-password/send-otp', [ForgotPasswordController::class, 'se`ndOtp'])->name('send-otp');
+Route::post('forgot-password/send-otp', [ForgotPasswordController::class, 'sendOtp'])->name('send-otp');
 Route::post('verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('verify-otp');
 Route::post('change-password', [ForgotPasswordController::class, 'changePassword'])->name('change-password');
 Route::get('/new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password-form');
@@ -213,12 +214,6 @@ Route::prefix('khoa-hoc')->group(function () {
 Route::get('/user-information', [UserController::class, 'showUser'])->name('userInformation');
 Route::post('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
 
-
-// Route::get('/user-information', function () {
-//     return view('client.user.userInformation');
-// })->name('userInformation');
-// Route::pots('/user-information', [UserController::class, 'updateUser'])->name('userInformation');
-// thông tin chi tiết người dùng
 Route::prefix('thong-tin-tai-khoan')->group(
     function () {
         Route::get('/', [UserController::class, 'showUserDetail'])->name('userDetail');
@@ -342,5 +337,13 @@ Route::get('/user/thong-tin-nguoi-dung', function () {
 Route::post('/user/thong-tin-nguoi-dung', [UserController::class, 'changePassword'])->name('userInformation');
 
 
-Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm1'])->name('forgot-password');
+
+Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordFormLogin'])->name('forgot-passwordLogin');
 Route::post('forgot-password/send-otp', [ForgotPasswordController::class, 'sendOtp'])->name('send-otp');
+// Route::post('verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('verify-otp');
+Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('verify-otp');
+Route::post('/forgot-password/send-otp', [ForgotPasswordController::class, 'sendOtp'])->name('send-otp');
+
+
+
+

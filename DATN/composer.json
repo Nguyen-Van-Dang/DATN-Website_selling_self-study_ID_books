@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "google/apiclient": "^2.18",
+        "illuminate/mail": "*",
         "kreait/laravel-firebase": "^5.9",
         "laravel/framework": "^11.9",
         "laravel/reverb": "^1.0",

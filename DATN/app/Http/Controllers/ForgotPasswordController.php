@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 class ForgotPasswordController extends Controller
 {
     protected $passwordResetRepository;
@@ -20,91 +23,107 @@ class ForgotPasswordController extends Controller
     }
 
     // Phương thức hiển thị form quên mật khẩu
-    public function showForgotPasswordForm()
+    // public function showForgotPasswordForm()
+    // {
+
+    //     $email = session('email'); // Lấy giá trị email từ session
+    //     return view('admin.user.userInfo', compact('email')); // Đường dẫn đầy đủ đến view
+
+
+    // }
+    // public function showForgotPasswordForm1()
+    // {
+
+    //     $email = session('email'); // Lấy giá trị email từ session
+    //     return view('client.user.userInformation', compact('email')); // Đường dẫn đầy đủ đến view
+
+
+    // }
+    public function showForgotPasswordFormLogin()
     {
+        $email = session('email');
+        // Lưu email vào session trước khi gửi OTP
+        // session(['email' => $request->email]);
 
-        $email = session('email'); // Lấy giá trị email từ session
-        return view('admin.user.userInfo', compact('email')); // Đường dẫn đầy đủ đến view
-
-
+        return view('client.user.pagePassword', compact('email')); // Đường dẫn đầy đủ đến view
     }
-    public function showForgotPasswordForm1()
-    {
 
-        $email = session('email'); // Lấy giá trị email từ session
-        return view('client.user.userInformation', compact('email')); // Đường dẫn đầy đủ đến view
-
-
-    }
     public function showNewPasswordForm()
     {
         // Trả về view nhập mật khẩu mới với thông báo (nếu có)
         return view('new-password');
     }
     // Phương thức gửi mã OTP
-    public function sendOtp(Request $request)
-    {
-        $request->validate(['email' => 'required|email|exists:users,email']);
-        $email = $request->email;
-        $this->passwordResetRepository->sendOtp($email);
-        return redirect()->route('forgot-password')->with('email', $email)->with('message', 'OTP đã được gửi qua email!');
-    }
-
-
-
-
-    public function verifyOtp(Request $request)
-    {
-        // Validate input
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'otp' => 'required|digits:6',
-        ]);
-
-        $email = $request->email;
-        $otp = $request->otp;
-
-        // Tìm OTP từ cơ sở dữ liệu
-        $otpRecord = DB::table('password_resets')->where('email', $email)->where('token', $otp)->first();
-
-        if (!$otpRecord) {
-            return redirect()->back()->with('error', 'OTP không hợp lệ hoặc đã hết hạn!');
-        }
-
-        // Kiểm tra thời gian hết hạn của OTP
-        if (now()->greaterThan($otpRecord->expires_at)) {
-            return redirect()->back()->with('error', 'OTP đã hết hạn!');
-        }
-
-        // OTP hợp lệ và chưa hết hạn
-        return redirect()->route('new-password-form')->with('message', 'OTP hợp lệ, bạn có thể đổi mật khẩu!');
-    }
-
-
-
-
-
-
-    // Phương thức thay đổi mật khẩu
-    public function changePassword(Request $request)
+    public function sendOtp(Request $request, PasswordResetRepository $repository)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'new_password' => 'required|min:8|confirmed',
+            'email' => 'required|email',
         ]);
 
-        $email = $request->email;
-        $newPassword = $request->new_password;
-
-        if ($this->passwordResetRepository->changePassword($email, $newPassword)) {
-            // Đăng xuất người dùng sau khi thay đổi mật khẩu
-            auth()->logout();
-
-            return redirect()->back()->with('success', 'Mật khẩu đã được cập nhật thành công.');
-        } else {
-
-            return redirect()->back()->with('error', 'Không thể thay đổi mật khẩu!');
+        // Lưu email vào session để dùng trong các bước tiếp theo
+        session(['email' => $request->email]);
+        try {
+            $repository->sendOtp($request->email);  // pass $request->email here
+            return redirect()->route('forgot-passwordLogin')->with([
+                'success' => 'Mã OTP đã được gửi tới email của bạn!',
+                'step' => 'otp'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
+
+
+    public function verifyOtp(Request $request, PasswordResetRepository $repository)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|numeric', // Kiểm tra OTP là số
+        ]);
+
+        if (empty($request->email) || empty($request->otp)) {
+            return redirect()->back()->with('error', 'Vui lòng nhập đầy đủ thông tin.');
+        }
+
+        $isOtpValid = $repository->verifyOtp($request->email, $request->otp);
+
+        if ($isOtpValid) {
+            session(['email' => $request->email]);
+            return redirect()->route('forgot-passwordLogin')->with([
+                'success' => 'Xác minh thành công, hãy đặt lại mật khẩu.',
+                'step' => 'password',
+            ]);
+        }
+
+        return redirect()->back()->with('error', 'Mã OTP không hợp lệ hoặc đã hết hạn.');
+    }
+
+
+
+
+
+
+
+    public function changePassword(Request $request, PasswordResetRepository $repository)
+    {
+        // Lấy email từ session
+        $email = session('email');
+
+        if (!$email) {
+            return redirect()->route('forgot-passwordLogin')->with('error', 'Email không hợp lệ hoặc đã hết hạn.');
+        }
+
+        // Cập nhật mật khẩu người dùng
+        $isPasswordChanged = $repository->changePassword($email, $request->new_password);
+
+        if ($isPasswordChanged) {
+            // Xóa email khỏi session sau khi đổi mật khẩu
+            session()->forget('email');
+
+            return redirect()->route('homeClient')->with('success', 'Mật khẩu của bạn đã được thay đổi thành công.');
+        }
+
+        return redirect()->route('forgot-passwordLogin')->with('error', 'Có lỗi xảy ra khi thay đổi mật khẩu.');
+    }
 }

@@ -30,6 +30,10 @@
             border-radius: 8px 8px 0 0;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
+        .header img {
+            max-width: 80px;
+            margin-bottom: 10px;
+        }
 
         .header h2 {
             margin: 0;
@@ -100,6 +104,8 @@
 <body>
     <div class="container">
         <div class="header">
+
+         
             <h2>Thông Báo Liên Hệ Mới</h2>
         </div>
 
