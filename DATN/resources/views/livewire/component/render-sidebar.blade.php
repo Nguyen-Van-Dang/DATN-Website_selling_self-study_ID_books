@@ -108,13 +108,11 @@
         <div class="overflow-scroll" style="max-height: 35vh; overflow-y: auto; overflow-x: hidden;">
             @foreach ($teachers as $teacher)
                 <li>
-                    <a href="" class="iq-waves-effect py-1" data-toggle="collapse" aria-expanded="false">
+                    <a href="{{ route('userDetail', $teacher->id) }}" class="iq-waves-effect py-1"
+                        aria-expanded="false">
                         <span class="ripple rippleEffect"></span>
-
                         <img class="sidebar-icon me-2" style="border-radius: 50%"
                             src="{{ $teacher->images()->where('image_name', 'thumbnail')->first()->image_url ?? asset('assets/images/book/user_thumbnail.png') }}">
-
-
                         <span class="px-2">{{ $teacher->name }}</span>
                     </a>
                 </li>
@@ -122,8 +120,8 @@
             @if ($teachers->count() < $allTeacher->count())
                 <ul>
                     <li class="text-center">
-                        <a href="#" wire:click.prevent="loadMore" id="show-more-btn"
-                            class="iq-waves-class=px-2">
+                        <a href="{{ route('userDetail', $teacher->id) }}" wire:click.prevent="loadMore"
+                            id="show-more-btn" class="iq-waves-class=px-2">
                             <small>
                                 <i class="bi bi-arrow-down-circle"></i>
                                 <span>Xem thêm</span>

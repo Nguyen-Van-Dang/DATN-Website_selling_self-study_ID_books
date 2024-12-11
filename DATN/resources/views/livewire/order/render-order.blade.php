@@ -58,7 +58,7 @@
                                             wire:click="openDetailPopup({{ $item->id }})">
                                             <i class="ri-eye-line"></i>
                                         </a>
-                                        @if ($item->user->role_id == 1)
+                                        @if (auth()->user()->role_id == 1)
                                             <a class="bg-primary" data-toggle="tooltip" title="Sửa Trạng Thái"
                                                 style="cursor: pointer"
                                                 wire:click="openPaymentPopup({{ $item->id }})">
@@ -146,7 +146,9 @@
                                                     <a href="javascript:void();">
                                                         @if ($detail->book)
                                                             @php
-                                                                $bookImage = $detail->book->images->first();
+                                                                $bookImage = $detail->book->images
+                                                                    ->where('image_name', 'thumbnail')
+                                                                    ->first();
                                                             @endphp
                                                             @if ($bookImage)
                                                                 <img src="{{ $bookImage->image_url }}"
@@ -154,8 +156,11 @@
                                                             @endif
                                                         @elseif ($detail->course)
                                                             @php
-                                                                $courseImage = $detail->course->images->first();
+                                                                $courseImage = $detail->course->images
+                                                                    ->where('image_name', 'thumbnail')
+                                                                    ->first();
                                                             @endphp
+
                                                             @if ($courseImage)
                                                                 <img src="{{ $courseImage->image_url }}"
                                                                     class="img-thumbnail">

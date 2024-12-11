@@ -32,7 +32,9 @@
                         @endif
                     @endif
                     <h5 class="mb-0">{{ $course->name }}</h5>
-                    <p class="text-muted mb-1">Thầy {{ $course->user->name }}</p>
+                    <a href="{{ route('userDetail', $course->user->id) }}">
+                        <p class="text-muted mb-1 text-primary">Thầy {{ $course->user->name }}</p>
+                    </a>
                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
                         <span name="course_price"
                             class="text-danger font-weight-bold">{{ number_format($course->price) }}đ</span>
@@ -250,9 +252,11 @@
                         </div>
                         <div class="col-9">
                             <div>
-                                <h5 class="mb-0">Thầy {{ $course->user->name }} <i
-                                        class="bi bi-check-circle-fill text-success"></i>
-                                </h5>
+                                <a href="{{ route('userDetail', $course->user->id) }}">
+                                    <h5 class="mb-0 text-primary">Thầy {{ $course->user->name }} <i
+                                            class="bi bi-check-circle-fill text-success"></i>
+                                    </h5>
+                                </a>
                             </div>
                             <div class="d-flex justify-content-between border-top pt-2 pb-3">
                                 <div class="text-center">

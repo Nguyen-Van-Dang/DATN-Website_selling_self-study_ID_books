@@ -81,7 +81,7 @@ class UserController extends Controller
 
     public function HomeAdmin()
     {
-        $user = auth::user();
+        $user = Auth::user();
 
         if ($user->role_id == 2) {
             $userCount = 1;
@@ -96,7 +96,7 @@ class UserController extends Controller
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->leftJoin('books', 'order_details.book_id', '=', 'books.id')
                 ->leftJoin('courses', 'order_details.course_id', '=', 'courses.id')
-                ->where('orders.payment_status', 1)
+                ->where('orders.payment_status', 3)
                 ->whereMonth('orders.created_at', now()->month)
                 ->whereYear('orders.created_at', now()->year)
                 ->where(function ($query) use ($user) {
@@ -113,7 +113,7 @@ class UserController extends Controller
             $bookSold = DB::table('order_details')
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->join('books', 'order_details.book_id', '=', 'books.id')
-                ->where('orders.payment_status', 1)
+                ->where('orders.payment_status', 3)
                 ->whereMonth('orders.created_at', now()->month)
                 ->whereYear('orders.created_at', now()->year)
                 ->whereNotNull('order_details.book_id')
@@ -123,7 +123,7 @@ class UserController extends Controller
             $courseSold = DB::table('order_details')
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->join('courses', 'order_details.course_id', '=', 'courses.id')
-                ->where('orders.payment_status', 1)
+                ->where('orders.payment_status', 3)
                 ->whereMonth('orders.created_at', now()->month)
                 ->whereYear('orders.created_at', now()->year)
                 ->whereNotNull('order_details.course_id')
@@ -139,15 +139,15 @@ class UserController extends Controller
                 ->join('order_details', 'orders.id', '=', 'order_details.order_id')
                 ->leftJoin('books', 'order_details.book_id', '=', 'books.id')
                 ->leftJoin('courses', 'order_details.course_id', '=', 'courses.id')
-                ->where('orders.payment_status', 1)
+                ->where('orders.payment_status', 3)
                 ->whereMonth('orders.created_at', now()->month)
                 ->where(function ($query) {
                     $query->whereNotNull('order_details.book_id')
                         ->orWhereNotNull('order_details.course_id');
                 })
                 ->where(function ($query) {
-                    $query->where('books.user_id', auth()->user()->id)
-                        ->orWhere('courses.user_id', auth()->user()->id);
+                    $query->where('books.user_id', Auth::user()->id)
+                        ->orWhere('courses.user_id', Auth::user()->id);
                 })
                 ->groupBy(DB::raw('DAYOFWEEK(orders.created_at)'))
                 ->get();
@@ -166,7 +166,7 @@ class UserController extends Controller
 
             $sales = DB::table('orders')->select(DB::raw('DAYOFWEEK(created_at) as day_of_week'), DB::raw('SUM(price) as total_sales'))
                 ->whereMonth('created_at', now()->month)
-                ->where('payment_status', 1)
+                ->where('payment_status', 3)
                 ->groupBy(DB::raw('DAYOFWEEK(created_at)'))
                 ->get();
 
@@ -175,20 +175,20 @@ class UserController extends Controller
                 $dailySales[$sale->day_of_week - 1] = $sale->total_sales;
             }
 
-            $monthlyIncome = Order::where('payment_status', 1)
+            $monthlyIncome = Order::where('payment_status', 3)
                 ->whereMonth('created_at', now()->month)
                 ->whereYear('created_at', now()->year)
                 ->sum('price');
 
             $bookSold = DB::table('order_details')->join('orders', 'order_details.order_id', '=', 'orders.id')
-                ->where('orders.payment_status', 1)
+                ->where('orders.payment_status', 3)
                 ->whereMonth('orders.created_at', now()->month)
                 ->whereYear('orders.created_at', now()->year)
                 ->whereNotNull('order_details.book_id')
                 ->sum('order_details.quantity');
 
             $courseSold = DB::table('order_details')->join('orders', 'order_details.order_id', '=', 'orders.id')
-                ->where('orders.payment_status', 1)
+                ->where('orders.payment_status', 3)
                 ->whereMonth('orders.created_at', now()->month)
                 ->whereYear('orders.created_at', now()->year)
                 ->whereNotNull('order_details.course_id')
@@ -208,26 +208,54 @@ class UserController extends Controller
     }
 
     //render course, book, reel
-    public function showUserDetail()
+    public function showUserDetail($userId)
     {
         $user = auth::user();
         $courses = Course::where('user_id', $user->id)->get();
         $books = Book::where('user_id', $user->id)->where('status', 0)->get();
         $reels = Reels::where('user_id', $user->id)->get();
-    
-        return view('client.user.userDetail', compact('user', 'books', 'courses', 'reels'));
+
+        $users = User::with(['books', 'courses', 'reels'])->findOrFail($userId);
+        $totalFollowers = $users->followers->count();
+        $totalViews =
+            $users->books->sum('views') +
+            $users->courses->sum('views') +
+            $users->reels->sum('views_count');
+        $isFollowing = $user ? $user->followings()->where('following_id', $users->id)->exists() : false;
+
+        return view('client.user.userDetail', compact('user', 'books', 'courses', 'reels', 'users', 'totalViews', 'totalFollowers', 'isFollowing'));
     }
     
     public function updateDescription(Request $request)
     {
         $data = $request->all();
-
-
         $user = auth::user();
         $user->description = nl2br(e($data['user_description']));
+        $userId = $request->input('userId');
+        $user = User::findOrFail($userId);
+        $user->description = nl2br(e($request->input('user_description')));
         $user->save();
 
-        return redirect('/thong-tin-tai-khoan')->with('success', 'Mô tả đã được cập nhật thành công');
+        return redirect()->route('userDetail', ['userId' => $user->id])->with('success', 'Mô tả đã được cập nhật thành công');
+    }
+    public function toggleFollow($userId)
+    {
+        $followingUser  = User::findOrFail($userId);
+        $follower = Auth::user();
+        if (!$follower) {
+            return response()->json(['success' => false, 'message' => 'Vui lòng đăng nhập!'], 401);
+        }
+
+        $follow = $follower->followings()->where('following_id', $followingUser->id)->first();
+            $is_following = true;
+
+        $new_follower_count = $followingUser->followers()->count();
+
+        return response()->json([
+            'success' => true,
+            'is_following' => $is_following,
+            'new_follower_count' => $new_follower_count,
+        ]);
     }
 
     public function logout(Request $request)
