@@ -76,9 +76,10 @@
                                 </div>
                                 <span
                                     class="text-dark mb-4 pb-4 iq-border-bottom d-block">{{ $book->description }}</span>
-                                <div class="text-primary mb-4">Tác giả: <span
+                                <div class="text-primary mb-4">Tác giả:
+                                    <a href="{{ route('userDetail', $book->user->id) }}"
                                         class="text-body">{{ $book->user->sex == 0 ? 'Thầy' : 'Cô' }}
-                                        {{ $book->user->name }}</span>
+                                        {{ $book->user->name }}</a>
                                 </div>
                                 <div class="iq-social d-flex flex-wrap align-items-center mb-4">
                                     <h5 class="mr-2">Danh mục:</h5>

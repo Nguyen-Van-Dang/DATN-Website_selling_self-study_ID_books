@@ -180,7 +180,9 @@
                                                             <a href="javascript:void();">
                                                                 @if ($detail->book)
                                                                     @php
-                                                                        $bookImage = $detail->book->images->first();
+                                                                        $bookImage = $detail->book->images
+                                                                            ->where('image_name', 'thumbnail')
+                                                                            ->first();
                                                                     @endphp
                                                                     @if ($bookImage)
                                                                         <img src="{{ $bookImage->image_url }}"
@@ -188,10 +190,13 @@
                                                                     @endif
                                                                 @elseif ($detail->course)
                                                                     @php
-                                                                        $courseImage = $detail->course->images->first();
+                                                                        $courseImage = $detail->course->images
+                                                                            ->where('image_name', 'thumbnail')
+                                                                            ->first();
                                                                     @endphp
                                                                     @if ($courseImage)
                                                                         <img src="{{ $courseImage->image_url }}"
+                                                                            style="height:70px;"
                                                                             class="img-thumbnail">
                                                                     @endif
                                                                 @endif

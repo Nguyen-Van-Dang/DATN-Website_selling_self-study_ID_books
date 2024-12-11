@@ -42,5 +42,8 @@ class Lecture extends Model
     {
         return $this->hasMany(LectureHistory::class);
     }
-    
+    public function comments()
+    {
+        return $this->hasMany(LectureComment::class);
+    }
 }

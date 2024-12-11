@@ -16,7 +16,7 @@
         .card-body {
             transition: max-height 0.3s ease-in-out;
             overflow: hidden;
-            max-height: 70vh;
+            /* max-height: 70vh; */
             /* Chiều cao mặc định */
         }
 

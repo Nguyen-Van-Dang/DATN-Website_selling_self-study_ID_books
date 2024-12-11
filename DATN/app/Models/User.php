@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\ReelComment;
 use App\Models\BookCategories;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;

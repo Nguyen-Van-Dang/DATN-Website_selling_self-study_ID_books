@@ -238,8 +238,7 @@
                                     src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg') }}">
 
                                 <div class="caption"
-                                    @php
-$userName = Auth::user()->name;
+                                    @php $userName = Auth::user()->name;
                                         $displayName = Str::limit($userName, 10, '...'); @endphp>
                                     <h6 class="mb-1 line-height">{{ $displayName }}!</h6>
                                     <p class="mb-0 text-primary">Tài Khoản</p>
@@ -277,7 +276,7 @@ $userName = Auth::user()->name;
                                                 </div>
                                             </a>
                                         @elseif (Auth::user()->role_id == 2)
-                                            <a href="{{ route('userDetail') }}"
+                                            <a href="{{ route('userDetail', ['userId' => Auth::id()]) }}"
                                                 class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">

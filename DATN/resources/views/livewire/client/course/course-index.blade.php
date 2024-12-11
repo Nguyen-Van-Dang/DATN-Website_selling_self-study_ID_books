@@ -83,7 +83,7 @@
             <div class="row">
                 @foreach ($courseList as $course)
                     @php
-                        $courseImage = $course->images()->where('image_name', 'course')->first();
+                        $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
                     @endphp
                     <div class="col-6 col-lg-3">
                         <div class="card card-filter h-50">
@@ -93,31 +93,33 @@
                                     <h5 class="card-title course-top-title">{{ $course->name }}
                                     </h5>
                                     @if ($course->discount && $course->price > $course->discount)
-                                    @php
-                                        $price = $course->price;
-                                        $discount = $course->discount;
-                                        if ($price > 0 && $discount > 0 && $discount < $price) {
-                                            $discountPercentage = round(($discount / $price) * 100);
-                                        } else {
-                                            $discountPercentage = 0;
-                                        }
-                                    @endphp
-                                    @if ($discountPercentage > 0)
-                                        <span class="discount-badge">
-                                            -{{ $discountPercentage }}%
-                                        </span>
+                                        @php
+                                            $price = $course->price;
+                                            $discount = $course->discount;
+                                            if ($price > 0 && $discount > 0 && $discount < $price) {
+                                                $discountPercentage = round(($discount / $price) * 100);
+                                            } else {
+                                                $discountPercentage = 0;
+                                            }
+                                        @endphp
+                                        @if ($discountPercentage > 0)
+                                            <span class="discount-badge">
+                                                -{{ $discountPercentage }}%
+                                            </span>
+                                        @endif
                                     @endif
-                                @endif
                                     <img class="card-img-top img-fluid rounded course-image"
                                         style="aspect-ratio: 1/1; object-fit: cover; transition: transform 0.3s ease; height: 250px;"
                                         src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
                                 </div>
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                                    <span class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                    <span class="text-danger font-weight-bold">{{ number_format($course->discount) }}
                                         đ</span>
-                                    <span class="text-muted ml-3"
-                                        style="text-decoration:line-through">{{ number_format($course->discount) }}
-                                        đ</span>
+                                    @if ($course->discount < $course->price)
+                                        <span class="text-muted ml-3"
+                                            style="text-decoration:line-through">{{ number_format($course->price) }}
+                                            đ</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -150,18 +152,21 @@
             <ul id="trendy-slider" class="row">
                 @foreach ($teachers as $teacher)
                     @php
-                        $teachetImage = $teacher->images()->where('image_name', 'avatar')->first();
+                        $teachetImage = $teacher->images()->where('image_name', 'thumbnail  ')->first();
                     @endphp
                     <li>
                         <div class="d-flex flex-column align-items-center teacher-card">
-                            <div class="avatar-container">=
-                                <img class="carousel-img"
-                                    src="{{ $teachetImage ? $teachetImage->image_url : asset('assets/images/book/book/01.jpg') }}">
-                            </div>
-                            <div class="text-center mt-1 p-0">
-                                <p class="m-0">Thầy</p>
-                                <h6 class="teacher-name">{{ $teacher->name }}</h6>
-                            </div>
+                            <a href="{{ route('userDetail', $teacher->id) }}">
+                                <div class="avatar-container">
+                                    <img class="carousel-img"
+                                        src="{{ $teachetImage ? $teachetImage->image_url : asset('assets/images/book/book/01.jpg') }}">
+                                </div>
+                                <div class="text-center mt-1 p-0">
+                                    <p class="m-0">Thầy</p>
+                                    <h6 class="teacher-name">{{ $teacher->name }}
+                                    </h6>
+                                </div>
+                            </a>
                         </div>
                     </li>
                 @endforeach
@@ -178,7 +183,7 @@
                         style="cursor: pointer;">
                         <div class="trendy-course card h-100 " style=" transition: transform 0.3s ease;">
                             @php
-                                $courseImage = $course->images()->where('image_name', 'course')->first();
+                                $courseImage = $course->images()->where('image_name', 'thumbnail')->first();
                             @endphp
                             <img class="card-img-top img-fluid rounded course-image"
                                 style="aspect-ratio: 1.5/1; object-fit: cover;"
@@ -189,8 +194,11 @@
                                     <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
                                 </div>
                                 <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
-                                    <span class="text-danger font-weight-bold">500.000đ</span>
-                                    <span class="text-muted ml-3" style="text-decoration:line-through">600.000đ</span>
+                                    <span class="text-danger font-weight-bold">{{ $course->discount }}</span>
+                                    @if ($course->discount < $course->price)
+                                        <span class="text-muted ml-3"
+                                            style="text-decoration:line-through">{{ $course->price }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -255,20 +263,21 @@
             width: 100%;
             height: auto;
         }
+
         .discount-badge {
-                position: absolute;
-                top: 70px;
-                right: 40px;
-                background-color: #f44336;
-                color: white;
-                padding: 5px 10px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: bold;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                animation: bounce 2s infinite;
-                transition: box-shadow 0.3s ease;
-                z-index: 10;
-            }
+            position: absolute;
+            top: 70px;
+            right: 40px;
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+            transition: box-shadow 0.3s ease;
+            z-index: 10;
+        }
     </style>
 </div>

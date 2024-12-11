@@ -221,8 +221,9 @@ Route::post('/user-information', [UserController::class, 'updateUser'])->name('u
 // thông tin chi tiết người dùng
 Route::prefix('thong-tin-tai-khoan')->group(
     function () {
-        Route::get('/', [UserController::class, 'showUserDetail'])->name('userDetail');
-        Route::post('/', [UserController::class, 'updateDescription'])->name('updateDescription');
+        Route::get('/{userId}', [UserController::class, 'showUserDetail'])->name('userDetail');
+        Route::post('/update', [UserController::class, 'updateDescription'])->name('updateDescription');
+        Route::post('/{userId}/toggle-follow', [UserController::class, 'toggleFollow'])->name('toggleFollow');
     }
 );
 
@@ -268,7 +269,9 @@ Route::prefix('khoa-hoc')->group(function () {
     Route::get('/', [CourseController::class, 'index'])->name('khoa-hoc.index');
     Route::get('/{id}', [CourseController::class, 'show'])->name('khoa-hoc.show');
     Route::get('/{course_id}/bai-giang/{lecture_id}', [CourseController::class, 'detail'])->name('khoa-hoc.chitiet');
+    // Route::get('/comments/load-more', [CourseController::class, 'loadMore']);
     Route::post('/', [Orders::class, 'courseCheckout'])->name('courseCheckout');
+    Route::post('/comment/store', [CourseController::class, 'store'])->name('store');
 });
 
 //reels
