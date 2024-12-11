@@ -297,18 +297,39 @@
                         <li class="col-md-2">
                             <a href="{{ route('khoa-hoc.show', $item->id) }}">
                                 <div class="trendy-course card h-100 pt-3" style=" transition: transform 0.3s ease;">
-                                    <img src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/course_thumbnail.png') }}"
-                                        class="card-img-top img-fluid rounded course-image img-thumbnail"
-                                        alt="Product 3">
-                                    <div class="card-body border pt-1">
-                                        <div>
+                                    @if ($item->discount && $item->price > $item->discount)
+                                        @php
+                                            $price = $item->price;
+                                            $discount = $item->discount;
+                                            if ($price > 0 && $discount > 0 && $discount < $price) {
+                                                $discountPercentage = round(($discount / $price) * 100);
+                                            } else {
+                                                $discountPercentage = 0;
+                                            }
+                                        @endphp
+                                        @if ($discountPercentage > 0)
+                                            <span class="discount-badge1">
+                                                -{{ $discountPercentage }}%
+                                            </span>
+                                        @endif
+                                    @endif
+                                    <div class="border">
+                                        <img src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/course_thumbnail.png') }}"
+                                            class="card-img-top img-fluid rounded course-image" alt="Product 3">
+                                        <div class="card-body pt-1">
                                             <h5 class="card-title course-title">{{ $item->name }}</h5>
                                             <h7 class="card-title course-teacher" style="font-size: 13px">
-                                                {{-- {{ $item->user->name }}</h7> --}}
-                                        </div>
-                                        <div class="d-flex justify-content-evenly mt-3 flex-nowrap"
-                                            style="font-size: 13px">
-                                            <span class="text-danger font-weight-bold">{{ $item->price }}đ</span>
+                                                <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
+                                                    <span class="text-danger font-weight-bold">
+                                                        {{ number_format($item->price - ($item->discount ?? 0)) }} đ
+                                                    </span>
+                                                    @if ($item->discount ?? 0)
+                                                        <span class="text-muted ml-3"
+                                                            style="text-decoration:line-through">
+                                                            {{ number_format($item->price) }} đ
+                                                        </span>
+                                                    @endif
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -333,6 +354,22 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             animation: bounce 2s infinite;
             transition: box-shadow 0.3s ease;
+        }
+
+        .discount-badge1 {
+            position: absolute;
+            top: 20px;
+            right: 5px;
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+            transition: box-shadow 0.3s ease;
+            z-index: 10;
         }
 
         .topbuy-badge {

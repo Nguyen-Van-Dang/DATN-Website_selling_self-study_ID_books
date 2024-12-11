@@ -44,10 +44,19 @@ class LoginUser extends Component
         ];
 
         $this->validate($rules, $messages);
+        $user = \App\Models\User::where('phone', $this->phone)->first();
 
-        if (Auth::attempt(['phone' => $this->phone, 'password' => $this->password])) {
-            return redirect()->route('homeClient')->with('success', 'Đăng nhập thành công!');
+        if ($user) {
+            if ($user->active == 1) {
+                $this->addError('loginError', 'Tài khoản của bạn đang bị khóa.');
+                return;
+            }
+        
+            if (Auth::attempt(['phone' => $this->phone, 'password' => $this->password])) {
+                return redirect()->route('homeClient')->with('success', 'Đăng nhập thành công!');
+            }
         }
+        
         $this->addError('loginError', 'Số điện thoại hoặc mật khẩu không đúng.');
     }
 }

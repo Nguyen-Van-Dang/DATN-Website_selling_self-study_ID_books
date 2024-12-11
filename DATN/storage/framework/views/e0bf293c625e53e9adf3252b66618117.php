@@ -1,4 +1,53 @@
 <div class="container-fluid">
+    <style>
+        .hpolicy-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hpolicy-item img {
+            margin-right: 10px;
+            max-width: 50px;
+            height: auto;
+        }
+
+        .hpolicy-item h5 {
+            font-size: 16px;
+            margin: 0;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="hpolicy-item text-center">
+                <img src="//theme.hstatic.net/1000363117/1000911694/14/hpolicy_img1.jpg?v=606" alt="Dịch vụ tận tâm">
+                <h5 class="text-uppercase">Dịch vụ tận tâm</h5>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="hpolicy-item text-center">
+                <img src="//theme.hstatic.net/1000363117/1000911694/14/hpolicy_img2.jpg?v=606" alt="Sản phẩm đa dạng">
+                <h5 class="text-uppercase">Sản phẩm đa dạng</h5>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="hpolicy-item text-center">
+                <img src="//theme.hstatic.net/1000363117/1000911694/14/hpolicy_img3.jpg?v=606" alt="Vận chuyển chu đáo">
+                <h5 class="text-uppercase">Vận chuyển chu đáo</h5>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="hpolicy-item text-center">
+                <img src="//theme.hstatic.net/1000363117/1000911694/14/hpolicy_img4.jpg?v=606" alt="Giá cả hợp lý">
+                <h5 class="text-uppercase">Giá cả hợp lý</h5>
+            </div>
+        </div>
+    </div>
+
+    <hr>
     <div class="p-4" style="margin-left: 4%">
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
@@ -34,10 +83,13 @@
                         <a href="#" style="font-size: 15px">Trang Chủ</a>
                     </li>
                     <li>
-                        <a href="#" style="font-size: 15px">Sách ID</a>
+                        <a href="#" style="font-size: 15px">Sách</a>
                     </li>
                     <li>
                         <a href="#" style="font-size: 15px">Khóa Học</a>
+                    </li>
+                    <li>
+                        <a href="#" style="font-size: 15px">Học Tập</a>
                     </li>
                     <li>
                         <a href="#" style="font-size: 15px">Nhắn Tin</a>
@@ -46,7 +98,10 @@
                         <a href="#" style="font-size: 15px">Reels</a>
                     </li>
                     <li>
-                        <a href="#" style="font-size: 15px">Dề Thi</a>
+                        <a href="#" style="font-size: 15px">Đề Thi</a>
+                    </li>
+                    <li>
+                        <a href="#" style="font-size: 15px">Liên Hệ</a>
                     </li>
                 </ul>
             </div>
@@ -58,9 +113,18 @@
                         <a href="#" style="font-size: 15px">Chính sách bảo mật</a>
                     </li>
                     <li>
-                        <a href="#" style="font-size: 15px">Điều khoản dịch vụ</a>
+                        <a href="#" style="font-size: 15px">Chính sách bảo hành</a>
                     </li>
-
+                    <li>
+                        <a href="#" style="font-size: 15px">Phương thức vận chuyển</a>
+                    </li>
+                    <li>
+                        <a href="#" style="font-size: 15px">Phương thức thanh toán</a>
+                    </li>
+                    <li>
+                        <a href="#" style="font-size: 15px">Hướng dẫn mua hàng</a>
+                    </li>
+                    
                     <h5 class="text-uppercase mt-3" style="font-size: 16px">Đối Tác Liên Hệ</h5>
                     <li class="mt-1">
                         <a style="font-size: 15px"><i class="fa fa-user" style="margin-right: 2%"></i>Mr.
@@ -99,8 +163,8 @@
     <div class="row">
         <div class="col-lg-6">
             <ul class="list-inline mb-0">
-                <li class="list-inline-item"><a href="privacy-policy.html">Chính sách bảo mật</a></li>
-                <li class="list-inline-item"><a href="terms-of-service.html">Điều khoản sử dụng</a></li>
+                <li class="list-inline-item"><a href="<?php echo e(route('privacy_policy')); ?>">Chính sách bảo mật</a></li>
+                <li class="list-inline-item"><a href="<?php echo e(route('maintenance')); ?>">Điều khoản sử dụng</a></li>
             </ul>
         </div>
         <div class="col-lg-6 text-right">

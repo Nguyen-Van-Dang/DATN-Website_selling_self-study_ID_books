@@ -85,6 +85,18 @@ Route::get('/500', function () {
 Route::get('/maintenance', function () {
     return view('error.maintenance');
 })->name('maintenance');
+/* --------------- PROFILE --------------- */
+Route::get('/chinh-sach-bao-mat', function () {
+    return view('profile.privacy_policy');
+})->name('privacy_policy');
+
+Route::get('/chinh-sach-bao-hanh', function () {
+    return view('profile.warranty_policy');
+})->name('warranty_policy');
+
+Route::get('/dieu-khoan-su-dung', function () {
+    return view('profile.terms_of_use');
+})->name('terms_of_use');
 /*-------------------------------------------------ADMIN--------------------------------------------------*/
 
 /* --------------- ORDER GROUP ------------------------- */

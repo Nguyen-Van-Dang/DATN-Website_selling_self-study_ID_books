@@ -3,12 +3,6 @@
         <div class="navbar-breadcrumb">
             <h5 class="mb-0">Dashboard</h5>
         </div>
-        {{-- <div class="iq-search-bar">
-            <form action="#" class="searchbox">
-                <input type="text" class="text search-input" placeholder="Tìm kiếm sản phẩm...">
-                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-            </form>
-        </div> --}}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
             <i class="ri-menu-3-line"></i>
@@ -24,81 +18,144 @@
                         <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                     </form>
                 </li>
+                @php
+                    $courseNotifications = \App\Models\Course::where('status', 1)
+                        ->orderBy('created_at', 'desc')
+                        ->limit(4)
+                        ->get();
+
+                    $bookNotifications = \App\Models\Book::where('status', 1)
+                        ->orderBy('created_at', 'desc')
+                        ->limit(4)
+                        ->get();
+                    $notifications = $courseNotifications->merge($bookNotifications)->sortByDesc('created_at')->take(4);
+                    $hasNotifications = $notifications->isNotEmpty();
+                @endphp
+
                 <li class="nav-item nav-icon">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                         <i class="ri-notification-2-line"></i>
-                        <span class="bg-primary dots"></span>
+                        @if ($hasNotifications)
+                            <span class="bg-primary dots"></span>
+                        @endif
                     </a>
                     <div class="iq-sub-dropdown">
                         <div class="iq-card shadow-none m-0">
                             <div class="iq-card-body p-0">
                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white">Thông Báo<small
-                                            class="badge  badge-light float-right pt-1">4</small></h5>
+                                    <h5 class="mb-0 text-white">Thông Báo
+                                        <small
+                                            class="badge badge-light float-right pt-1">{{ $notifications->count() }}</small>
+                                    </h5>
                                 </div>
-                                <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                        <div class="">
-                                            @php
-                                                $avatar = auth()
-                                                    ->user()
-                                                    ->images()
-                                                    ->where('image_name', 'avatar')
-                                                    ->first();
-                                            @endphp
-                                            <img class="avatar-40 rounded"
-                                                src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg') }}">
+                                @forelse ($notifications as $notification)
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                @php
+                                                    $avatar = auth()
+                                                        ->user()
+                                                        ->images()
+                                                        ->where('image_name', 'thumbnail')
+                                                        ->first();
+                                                @endphp
+                                                <img class="avatar-40 rounded"
+                                                    src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/avatar.jpg') }}">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0">
+                                                    {{ isset($notification->title) ? $notification->title : $notification->name }}
+                                                </h6>
+                                                <small
+                                                    class="float-right font-size-12">{{ $notification->created_at->diffForHumans() }}</small>
+                                                <p class="mb-0">
+                                                    {{ isset($notification->price) ? number_format($notification->price, 0, ',', '.') . 'đ' : '' }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">Đơn hàng giao thành công</h6>
-                                            <small class="float-right font-size-12">Just Now</small>
-                                            <p class="mb-0">95.000đ</p>
+                                    </a>
+                                @empty
+                                    <div class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0">Không có sản phẩm nào cần duyệt</h6>
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
+                                @endforelse
                             </div>
                         </div>
                     </div>
                 </li>
+                @php
+                    $unrepliedMessages = \App\Models\Contact::where('is_replied', 0)
+                        ->orderBy('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+                @endphp
+
                 <li class="nav-item nav-icon dropdown">
                     <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                         <i class="ri-mail-line"></i>
-                        <span class="bg-primary dots"></span>
+                        @if ($unrepliedMessages->count() > 0)
+                            <span class="bg-primary dots"></span>
+                        @endif
                     </a>
                     <div class="iq-sub-dropdown">
                         <div class="iq-card shadow-none m-0">
-                            <div class="iq-card-body p-0 ">
+                            <div class="iq-card-body p-0">
                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white">Tin Nhắn<small
-                                            class="badge  badge-light float-right pt-1">5</small></h5>
+                                    <h5 class="mb-0 text-white">Tin Nhắn
+                                        <small
+                                            class="badge badge-light float-right pt-1">{{ $unrepliedMessages->count() }}</small>
+                                    </h5>
                                 </div>
-                                <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                        <div class="">
-                                            @php
-                                                $avatar = auth()
-                                                    ->user()
-                                                    ->images()
-                                                    ->where('image_name', 'avatar')
-                                                    ->first();
-                                            @endphp
-                                            <img class="avatar-40 rounded"
-                                                src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg') }}">
+                                @forelse ($unrepliedMessages as $message)
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                @php
+                                                    $avatar = auth()
+                                                        ->user()
+                                                        ->images()
+                                                        ->where('image_name', 'thumbnail')
+                                                        ->first();
+                                                @endphp
+                                                <img class="avatar-40 rounded"
+                                                    src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/avatar.jpg') }}">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0">{{ $message->name }}</h6>
+                                                <small
+                                                    class="float-right font-size-12">{{ $message->created_at->diffForHumans() }}</small>
+                                            </div>
                                         </div>
-                                        <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">QT Shop</h6>
-                                            <small class="float-left font-size-12">13 Jun</small>
+                                    </a>
+                                    @empty
+                                    <div class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0">Không có liên hệ nào cần duyệt</h6>
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
+                                @endforelse
+
+                                <!-- Hiển thị liên kết "Xem thêm" nếu có nhiều hơn 5 tin nhắn -->
+                                @if ($unrepliedMessages->count() > 5)
+                                    <div class="text-center">
+                                        <a href="{{ route('contact') }}" class="btn btn-link">Xem thêm</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </li>
+
                 <li class="line-height pt-3">
                     <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                         @php
-                            $avatar = auth()->user()->images()->where('image_name', 'avatar')->first();
+                            $avatar = auth()->user()->images()->where('image_name', 'thumbnail')->first();
                         @endphp
                         <img class="img-fluid rounded-circle mr-3"
                             src="{{ $avatar ? $avatar->image_url : asset('assets/images/book/user/avatar.jpg') }}">
@@ -113,9 +170,9 @@
                             <div class="iq-card-body p-0 ">
                                 <div class="bg-primary p-3">
                                     @php
-                                    $userName = Auth::user()->name;
-                                    $displayName1 = Str::limit($userName, 25, '...');
-                                @endphp
+                                        $userName = Auth::user()->name;
+                                        $displayName1 = Str::limit($userName, 25, '...');
+                                    @endphp
                                     <h5 class="mb-0 text-white line-height">Xin Chào <br>
                                         {{ $displayName1 }}</h5>
                                 </div>

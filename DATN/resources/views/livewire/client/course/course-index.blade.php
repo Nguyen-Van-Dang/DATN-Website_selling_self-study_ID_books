@@ -180,11 +180,12 @@
                                     </span>
                                 @endif
                             @endif
-                            <img class="card-img-top img-fluid rounded course-image"
+                            
+                            <div class="border">
+                                <img class="card-img-top img-fluid rounded course-image"
                                 style="aspect-ratio: 1.5/1; object-fit: cover;"
                                 src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
-                            <div class="card-body border pt-1">
-                                <div>
+                                <div class="card-body pt-1">
                                     <h5 class="card-title course-title">{{ $course->name }}</h5>
                                     <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
                                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
@@ -233,11 +234,12 @@
                                     </span>
                                 @endif
                             @endif
-                            <img class="card-img-top img-fluid rounded course-image"
+                            
+                            <div class="border">
+                                <img class="card-img-top img-fluid rounded course-image"
                                 style="aspect-ratio: 1.5/1; object-fit: cover;"
                                 src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}">
-                            <div class="card-body border pt-1">
-                                <div>
+                                <div class="card-body pt-1">
                                     <h5 class="card-title course-title">{{ $course->name }}</h5>
                                     <h7 class="card-title course-teacher">Thầy {{ $course->user->name }}</h7>
                                     <div class="d-flex justify-content-evenly mt-3 flex-nowrap">
