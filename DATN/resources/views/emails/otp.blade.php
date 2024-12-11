@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,26 +15,33 @@
             border-radius: 8px;
             overflow: hidden;
         }
+
         .header {
             background-color: #0dd6b8;
             text-align: center;
             padding: 20px;
         }
+
         .header img {
-            max-width: 100px;
+            max-width: 80px;
+            margin-bottom: 10px;
         }
+
         .header h2 {
-            color: #333;
+            color: white;
             margin-top: 10px;
         }
+
         .content {
             padding: 20px;
             color: #555;
         }
+
         .greeting {
             font-size: 16px;
             margin-bottom: 10px;
         }
+
         .otp-code {
             font-size: 24px;
             font-weight: bold;
@@ -41,6 +49,7 @@
             text-align: center;
             margin: 20px 0;
         }
+
         .footer {
             background-color: #f1f1f1;
             text-align: center;
@@ -50,22 +59,29 @@
         }
     </style>
 </head>
+
 <body>
     <div class="email-container">
         <div class="header">
+            <div class="header">
+                <img src="{{ $message->embed(public_path('assets/images/book/icon/small_logo_with_bg.png')) }}" alt="Logo" />
 
+            </div>
             <h2>Xác nhận mã OTP của bạn</h2>
         </div>
         <div class="content">
             <p class="greeting">Chào bạn,</p>
             <p>Để tiếp tục thay đổi mật khẩu, vui lòng sử dụng mã OTP bên dưới:</p>
             <div class="otp-code">{{ $otp }}</div>
-            <p>Mã OTP này sẽ hết hạn sau <span>1 phút</span> . Vui lòng không chia sẻ mã này với bất kỳ ai vì lý do bảo mật.</p>
-            <p>Nếu bạn không yêu cầu thay đổi mật khẩu, vui lòng bỏ qua email này hoặc liên hệ với chúng tôi để được hỗ trợ.</p>
+            <p>Mã OTP này sẽ hết hạn sau <span>1 phút</span> . Vui lòng không chia sẻ mã này với bất kỳ ai vì lý do bảo
+                mật.</p>
+            <p>Nếu bạn không yêu cầu thay đổi mật khẩu, vui lòng bỏ qua email này hoặc liên hệ với chúng tôi để được hỗ
+                trợ.</p>
         </div>
         <div class="footer">
             <p>Trân trọng,<br>Đội ngũ hỗ trợ BookStore</p>
         </div>
     </div>
 </body>
+
 </html>

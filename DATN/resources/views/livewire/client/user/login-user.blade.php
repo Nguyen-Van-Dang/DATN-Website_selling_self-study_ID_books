@@ -21,11 +21,7 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        
-        <div>
-            <span class="forgot-password">Bạn quên mật khẩu?</span>
-        </div>
-        
+        <a href="{{route('forgot-passwordLogin')}}"><span class="forgot-password">Bạn quên mật khẩu?</span></a>
         <div>
             <center>
                 <button class="btnn" type="submit">Đăng Nhập</button>

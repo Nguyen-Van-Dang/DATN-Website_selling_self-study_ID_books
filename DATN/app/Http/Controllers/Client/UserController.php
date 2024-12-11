@@ -41,39 +41,42 @@ class UserController extends Controller
     public function changePassword(Request $request)
     {
         // Xác thực dữ liệu nhập vào
-        $request->validate([
-            'password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
-
-        ]);
+        $validatedData = $request->validate(
+            [
+                'password' => 'required',
+                'new_password' => [
+                    'required',
+                    'min:6',
+                    'confirmed',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+                ],
+            ],
+            [
+                'password.required' => 'Vui lòng nhập mật khẩu hiện tại.',
+                'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
+                'new_password_confirmation.required' => 'Vui lòng nhập lại mật khẩu mới.',
+                'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
+                'new_password.confirmed' => 'Mật khẩu mới và xác nhận mật khẩu không khớp.',
+                'new_password.regex' => 'Mật khẩu mới phải chứa ít nhất 1 chữ cái in hoa, 1 chữ cái thường và 1 chữ số.',
+            ]
+        );
 
         $user = Auth::user();
 
-        // Kiểm tra mật khẩu hiện tại bằng Bcrypt
         if (!Hash::check($request->password, $user->password)) {
-
-            return back()->with('error', 'Mật khẩu hiện tại không đúng. Vui lòng nhập lại');
+            return back()->with(['error' => 'Mật khẩu hiện tại không đúng. Vui lòng thử lại.']);
         }
 
         // Đổi mật khẩu
         $user->password = Hash::make($request->new_password);
         $user->save();
-
-        // Gửi email thông báo thay đổi mật khẩu cho người dùng
-        try {
-            // Gửi email cho người dùng
-            Mail::to($user->email)->send(new PasswordChangedNotification($user));
-
-            // Gửi email cho admin thông báo thay đổi mật khẩu của người dùng
-            $adminEmail = 'infobookstorefpt@gmail.com';
-            Mail::to($adminEmail)->send(new PasswordChangedNotification($user));
-        } catch (\Exception $e) {
-            return back()->with('error', 'Mật khẩu đã được thay đổi, nhưng không thể gửi email thông báo.');
-        }
-
-        Auth::logout();
-        return redirect()->route('handleLogin')->with('success', 'Mật khẩu đã được thay đổi thành công. Vui lòng đăng nhập lại với mật khẩu mới.');
+        return back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
     }
+
+
+
+
+
     public function HomeClient()
     {
         return view('client.home');

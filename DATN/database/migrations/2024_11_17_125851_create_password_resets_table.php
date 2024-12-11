@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->index(); // Đánh index để tăng tốc tìm kiếm email
-            $table->string('token');
+            // $table->string('token');
+            $table->string('token')->index();
             $table->timestamp('expires_at')->nullable(); // Thời gian hết hạn của OTP
             $table->timestamps(); // Tự động thêm created_at và updated_at
         });

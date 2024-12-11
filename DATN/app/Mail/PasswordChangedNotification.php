@@ -29,10 +29,10 @@ class PasswordChangedNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mật khẩu của bạn đã được thay đổi')
-                    ->view('emails.password_changed')
+        return $this->view('emails.password_changed')
+                    ->subject('Mật khẩu của bạn đã được thay đổi')
                     ->with([
-                        'name' => $this->user->name,
-                    ]);
+                'name' => $this->user->name,
+            ]);
     }
 }

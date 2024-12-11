@@ -27,7 +27,7 @@
     <div class="col-lg-12">
         <div class="iq-edit-list-data">
             <div class="tab-content">
-                
+
                 <div class="tab-pane fade" id="Course" role="tabpanel">
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between align-items-center">
@@ -55,21 +55,21 @@
                                     </thead>
                                     <tbody class="text-center">
                                         <?php
-$__split = function ($name, $params = []) {
-    return [$name, $params];
-};
-[$__name, $__params] = $__split('admin.course.course-approve');
+                                        $__split = function ($name, $params = []) {
+                                            return [$name, $params];
+                                        };
+                                        [$__name, $__params] = $__split('admin.course.course-approve');
 
-$__html = app('livewire')->mount($__name, $__params, 'lw-2484027222-0', $__slots ?? [], get_defined_vars());
+                                        $__html = app('livewire')->mount($__name, $__params, 'lw-2484027222-0', $__slots ?? [], get_defined_vars());
 
-echo $__html;
+                                        echo $__html;
 
-unset($__html);
-unset($__name);
-unset($__params);
-unset($__split);
-if (isset($__slots)) unset($__slots);
-?>
+                                        unset($__html);
+                                        unset($__name);
+                                        unset($__params);
+                                        unset($__split);
+                                        if (isset($__slots)) unset($__slots);
+                                        ?>
 
                                     </tbody>
                                 </table>
@@ -77,7 +77,7 @@ if (isset($__slots)) unset($__slots);
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="tab-pane fade active show" id="Book" role="tabpanel">
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between align-items-center">
@@ -107,21 +107,18 @@ if (isset($__slots)) unset($__slots);
                                     </thead>
                                     <tbody class="text-center">
                                         <?php
-$__split = function ($name, $params = []) {
-    return [$name, $params];
-};
-[$__name, $__params] = $__split('admin.book.book-approve');
-
-$__html = app('livewire')->mount($__name, $__params, 'lw-2484027222-1', $__slots ?? [], get_defined_vars());
-
-echo $__html;
-
-unset($__html);
-unset($__name);
-unset($__params);
-unset($__split);
-if (isset($__slots)) unset($__slots);
-?>
+                                        $__split = function ($name, $params = []) {
+                                            return [$name, $params];
+                                        };
+                                        [$__name, $__params] = $__split('admin.book.book-approve');
+                                        $__html = app('livewire')->mount($__name, $__params, 'lw-2484027222-1', $__slots ?? [], get_defined_vars());
+                                        echo $__html;
+                                        unset($__html);
+                                        unset($__name);
+                                        unset($__params);
+                                        unset($__split);
+                                        if (isset($__slots)) unset($__slots);
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

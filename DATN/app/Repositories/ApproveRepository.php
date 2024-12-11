@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\Auth;
 use  App\Models\Request;
 use App\Models\Book;
+
 class ApproveRepository
 {
     /**
@@ -20,7 +21,10 @@ class ApproveRepository
     {
         $user = auth::user();
         $role_id = $user->role_id;
+        if ($role_id == 1) {
+            return view('admin.approve.approve', compact('role_id'));
+        }
 
-        return view('admin.approve.approve', compact('role_id'));
+        // return view('admin.approve.approve', compact('role_id'));
     }
 }

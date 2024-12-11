@@ -188,7 +188,7 @@
                                         </div>
                                     </a>
                                 @else
-                                    <a href="{{ route('userInfo') }}" class="iq-sub-card iq-bg-primary-hover">
+                                    <a href="{{ route('userInformation') }}" class="iq-sub-card iq-bg-primary-hover">
                                         <div class="media align-items-center">
                                             <div class="rounded iq-card-icon iq-bg-primary">
                                                 <i class="ri-file-user-line"></i>
