@@ -126,20 +126,9 @@
             <div class="col-md-4">
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-body">
-                        <h4 class="text-uppercase text-black mb-0">Phiên (Bây giờ)</h4>
+                        <h4 class="text-uppercase text-black mb-0">Tổng Doanh Thu</h4>
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="font-size-80 text-black">12</div>
-                            <div class="text-left">
-                                <p class="m-0 text-uppercase font-size-12">1 giờ</p>
-                                <div class="mb-1 text-black">1500<span class="text-danger"><i
-                                            class="ri-arrow-down-s-fill"></i>3.25%</span></div>
-                                <p class="m-0 text-uppercase font-size-12">1 ngày</p>
-                                <div class="mb-1 text-black">1890<span class="text-success"><i
-                                            class="ri-arrow-down-s-fill"></i>1.00%</span></div>
-                                <p class="m-0 text-uppercase font-size-12">1 tuần</p>
-                                <div class="text-black">1260<span class="text-danger"><i
-                                            class="ri-arrow-down-s-fill"></i>9.87%</span></div>
-                            </div>
+                            <div class="font-size-80 text-black"><?php echo e(number_format($monthlyIncome)); ?>đ</div>
                         </div>
                         <div id="wave-chart-7"></div>
                     </div>
@@ -227,9 +216,7 @@
                         colors: ['transparent']
                     },
                     xaxis: {
-                        categories: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7',
-                            'Chủ Nhật'
-                        ],
+                        categories: ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', ],
                     },
                     yaxis: {
                         title: {

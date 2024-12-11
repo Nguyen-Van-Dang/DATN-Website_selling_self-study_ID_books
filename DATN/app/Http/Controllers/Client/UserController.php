@@ -112,6 +112,21 @@ class UserController extends Controller
                     (COALESCE(courses.price, 0) * COALESCE(order_details.quantity, 0))
                 '));
 
+                $totalIncome = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->leftJoin('books', 'order_details.book_id', '=', 'books.id')
+                ->leftJoin('courses', 'order_details.course_id', '=', 'courses.id')
+                ->where('orders.payment_status', 3)  // chỉ tính các đơn hàng đã thanh toán
+                ->where(function ($query) use ($user) {
+                    $query->where('books.user_id', $user->id)
+                        ->orWhere('courses.user_id', $user->id);
+                })
+                ->sum(DB::raw('
+                    (COALESCE(books.price, 0) * COALESCE(order_details.quantity, 0)) 
+                    + 
+                    (COALESCE(courses.price, 0) * COALESCE(order_details.quantity, 0))
+                '));
+            
 
             $bookSold = DB::table('order_details')
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
@@ -182,6 +197,9 @@ class UserController extends Controller
                 ->whereMonth('created_at', now()->month)
                 ->whereYear('created_at', now()->year)
                 ->sum('price');
+                
+                $totalIncome = Order::where('payment_status', 3)
+                ->sum('price');  // Tính tổng doanh thu của tất cả đơn hàng đã thanh toán
 
             $bookSold = DB::table('order_details')->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->where('orders.payment_status', 3)
@@ -204,6 +222,7 @@ class UserController extends Controller
             'orderCount',
             'courseCount',
             'monthlyIncome',
+            'totalIncome',
             'bookSold',
             'courseSold',
             'dailySales',

@@ -164,8 +164,7 @@
                                     src="<?php echo e($avatar ? $avatar->image_url : asset('assets/images/book/user/1.jpg')); ?>">
 
                                 <div class="caption"
-                                    <?php
-$userName = Auth::user()->name;
+                                    <?php $userName = Auth::user()->name;
                                         $displayName = Str::limit($userName, 10, '...'); ?>>
                                     <h6 class="mb-1 line-height"><?php echo e($displayName); ?>!</h6>
                                     <p class="mb-0 text-primary">Tài Khoản</p>
@@ -204,7 +203,7 @@ $userName = Auth::user()->name;
                                                 </div>
                                             </a>
                                         <?php elseif(Auth::user()->role_id == 2): ?>
-                                            <a href="<?php echo e(route('userDetail')); ?>"
+                                            <a href="<?php echo e(route('userDetail', ['userId' => Auth::id()])); ?>"
                                                 class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">

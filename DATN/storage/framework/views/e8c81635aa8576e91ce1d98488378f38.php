@@ -21,14 +21,14 @@
                 <?php
                     $courseNotifications = \App\Models\Course::where('status', 1)
                         ->orderBy('created_at', 'desc')
-                        ->limit(4)
+                        ->limit(5)
                         ->get();
 
                     $bookNotifications = \App\Models\Book::where('status', 1)
                         ->orderBy('created_at', 'desc')
-                        ->limit(4)
+                        ->limit(5)
                         ->get();
-                    $notifications = $courseNotifications->merge($bookNotifications)->sortByDesc('created_at')->take(4);
+                    $notifications = $courseNotifications->merge($bookNotifications)->sortByDesc('created_at')->take(5);
                     $hasNotifications = $notifications->isNotEmpty();
                 ?>
 
@@ -85,6 +85,12 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
+                                 <!-- Hiển thị liên kết "Xem thêm" nếu có nhiều hơn 5 sản phẩm -->
+                                 <?php if($notification->count() > 5): ?>
+                                 <div class="text-center">
+                                     <a href="<?php echo e(route('listNotificationUser')); ?>" class="btn btn-link">Xem thêm</a>
+                                 </div>
+                             <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -146,7 +152,7 @@
                                 <!-- Hiển thị liên kết "Xem thêm" nếu có nhiều hơn 5 tin nhắn -->
                                 <?php if($unrepliedMessages->count() > 5): ?>
                                     <div class="text-center">
-                                        <a href="<?php echo e(route('contact')); ?>" class="btn btn-link">Xem thêm</a>
+                                        <a href="<?php echo e(route('listContact')); ?>" class="btn btn-link">Xem thêm</a>
                                     </div>
                                 <?php endif; ?>
                             </div>

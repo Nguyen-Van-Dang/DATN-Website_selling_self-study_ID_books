@@ -56,43 +56,44 @@
                                         <div class="profile-detail mt-3">
                                             <h3>{{ auth()->user()->name }}</h3>
                                             @if (auth()->user()->description == '')
-                                                @if ($users->description == '')
-                                                    <p id="description-text">
-                                                        - Giảng viên chưa cập nhật thông tin
-                                                        <a class="ml-2" style="cursor: pointer;"
-                                                            onclick="editDescription()"><i class="fa fa-pen"></i></a>
-                                                    </p>
-                                                @else
-                                                    <p id="description-text">
-                                                        {!! $users->description !!}
-                                                        <a class="ml-2" style="cursor: pointer;"
-                                                            onclick="editDescription()"><i class="fa fa-pen"></i></a>
-                                                    </p>
-                                                @endif
-                                                <div id="description-edit" style="display: none;">
-                                                    <form action="{{ route('updateDescription') }}" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" value="{{ $users->id }}" name="userId">
-                                                        <textarea id="description-input" class="form-control" name="user_description" rows="4"></textarea>
-                                                        <button type="submit" class="btn btn-primary btn-sm mt-2"
-                                                            onclick="saveDescription()">Lưu</button>
-                                                        <button class="btn btn-secondary btn-sm mt-2"
-                                                            onclick="cancelEdit()">Hủy</button>
-                                                    </form>
-                                                </div>
-                                                <div class="pt-3" style="font-size: 14px; color: #444; margin-left: 1rem">
-                                                    <div class="row">
-                                                        <div class="text-center" style="padding-right: 3rem">
-                                                            <h3 style="font-weight: bold;">{{ $totalViews }}</h3>
-                                                            <div style="color: #777; margin-top: -10px;">Views</div>
-                                                        </div>
-                                                        <div class="text-center" style="padding-right: 3rem">
-                                                            <h3 style="font-weight: bold;" id="followerCount">
-                                                                {{ $totalFollowers }}</h3>
-                                                            <div style="color: #777; margin-top: -10px;">Followers</div>
-                                                        </div>
+                                            @if ($users->description == '')
+                                                <p id="description-text">
+                                                    - Giảng viên chưa cập nhật thông tin
+                                                    <a class="ml-2" style="cursor: pointer;"
+                                                        onclick="editDescription()"><i class="fa fa-pen"></i></a>
+                                                </p>
+                                            @else
+                                                <p id="description-text">
+                                                    {!! $users->description !!}
+                                                    <a class="ml-2" style="cursor: pointer;"
+                                                        onclick="editDescription()"><i class="fa fa-pen"></i></a>
+                                                </p>
+                                            @endif
+                                            @endif
+                                            <div id="description-edit" style="display: none;">
+                                                <form action="{{ route('updateDescription') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" value="{{ $users->id }}" name="userId">
+                                                    <textarea id="description-input" class="form-control" name="user_description" rows="4"></textarea>
+                                                    <button type="submit" class="btn btn-primary btn-sm mt-2"
+                                                        onclick="saveDescription()">Lưu</button>
+                                                    <button class="btn btn-secondary btn-sm mt-2"
+                                                        onclick="cancelEdit()">Hủy</button>
+                                                </form>
+                                            </div>
+                                            <div class="pt-3" style="font-size: 14px; color: #444; margin-left: 1rem">
+                                                <div class="row">
+                                                    <div class="text-center" style="padding-right: 3rem">
+                                                        <h3 style="font-weight: bold;">{{ $totalViews }}</h3>
+                                                        <div style="color: #777; margin-top: -10px;">Views</div>
+                                                    </div>
+                                                    <div class="text-center" style="padding-right: 3rem">
+                                                        <h3 style="font-weight: bold;" id="followerCount">
+                                                            {{ $totalFollowers }}</h3>
+                                                        <div style="color: #777; margin-top: -10px;">Followers</div>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
                                         <div class="pt-4">
                                             <button id="yesButton" type="button"
@@ -134,146 +135,146 @@
                                                         src="{{ $courseImage ? $courseImage->image_url : asset('assets/images/book/book/01.jpg') }}"
                                                         alt="Course Image">
                                                 </div>
-                                            </div>
-                                            <script>
-                                                function goToCourseDetail(courseId) {
-                                                    window.location.href = '/khoa-hoc/' + courseId;
-                                                }
-                                            </script>
-                                            <div class="col-6">
-                                                <span
-                                                    style="font-weight: bold; display: block;">{{ $course->name }}</span>
-                                                <p>
-                                                    Số bài giảng: {{ $course->lectures->count() }}
-                                                    <br>
+                                                <script>
+                                                    function goToCourseDetail(courseId) {
+                                                        window.location.href = '/khoa-hoc/' + courseId;
+                                                    }
+                                                </script>
+                                                <div class="col-6">
                                                     <span
-                                                        class="d-inline-flex justify-content-center align-items-center rounded-circle bg-success text-white"
-                                                        style="width: 30px; height: 30px;">
-                                                        <i class="ri-book-open-line" style="font-size: 20px;"></i>
-                                                    </span>
-                                                </p>
-                                                <span
-                                                    class="text-danger font-weight-bold">{{ number_format($course->price) }}
-                                                    đ</span>
-                                                <span class="text-muted ml-3"
-                                                    style="text-decoration:line-through">{{ number_format($course->discount) }}
-                                                    đ</span>
+                                                        style="font-weight: bold; display: block;">{{ $course->name }}</span>
+                                                    <p>
+                                                        Số bài giảng: {{ $course->lectures->count() }}
+                                                        <br>
+                                                        <span
+                                                            class="d-inline-flex justify-content-center align-items-center rounded-circle bg-success text-white"
+                                                            style="width: 30px; height: 30px;">
+                                                            <i class="ri-book-open-line" style="font-size: 20px;"></i>
+                                                        </span>
+                                                    </p>
+                                                    <span
+                                                        class="text-danger font-weight-bold">{{ number_format($course->price) }}
+                                                        đ</span>
+                                                    <span class="text-muted ml-3"
+                                                        style="text-decoration:line-through">{{ number_format($course->discount) }}
+                                                        đ</span>
+                                                </div>
                                             </div>
                                         </div>
-                                </div>
-                            @empty
-                                <div class="col-12 pb-1">
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <p>Hiện tại chưa có Khóa Học nào...</p>
+                                    @empty
+                                        <div class="col-12 pb-1">
+                                            <div class="row text-center">
+                                                <div class="col-12">
+                                                    <p>Hiện tại chưa có Khóa Học nào...</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endforelse
                                 </div>
-                                @endforelse
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Display Books -->
-        <div class="col-12">
-            <div class="iq-card">
-                <div class="iq-card-body profile-page">
-                    <div class="profile-header">
-                        <div class="cover-container">
-                            <h4 class="pb-4">Sách</h4>
-                            <div class="row px-2">
-                                @forelse ($books as $book)
-                                    @php
-                                        $bookImage = $book->images()->where('image_name', 'thumbnail')->first();
-                                    @endphp
-                                    <div class="col-2 pb-3">
-                                        <div class="row">
-                                            <div style="width: 210px;">
-                                                <div style="border: 2px solid rgba(128, 128, 128, 0.214);">
-                                                    <div style="cursor: pointer;"
-                                                        onclick="goToBookDetail({{ $book->id }})">
-                                                        <img src="{{ $bookImage ? $bookImage->image_url : asset('assets/images/book/book_placeholder.png') }}"
-                                                            alt="profile-bg" style="height: 300px; width: 206px;"
-                                                            class="course-image">
-                                                    </div>
-                                                    <script>
-                                                        function goToBookDetail(bookId) {
-                                                            window.location.href = '/sach/' + bookId;
-                                                        }
-                                                    </script>
-
-                                                    <div class="px-3 pb-4 pt-3">
-                                                        <span class="book-title" style="font-weight: 600;">
-                                                            {{ $book->name }}
-                                                        </span>
-                                                        <div class="pb-1">
-                                                            <button id="yesButton" type="submit"
-                                                                style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
-                                                            @if ($book->discount > 0)
-                                                                <button id="noButton"
-                                                                    style="background-color: #ffb5b5; color: #ca0909; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">
-                                                                    {{ $book->discount }}%
-                                                                </button>
-                                                            @endif
+            <!-- Display Books -->
+            <div class="col-12">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container">
+                                <h4 class="pb-4">Sách</h4>
+                                <div class="row px-2">
+                                    @forelse ($books as $book)
+                                        @php
+                                            $bookImage = $book->images()->where('image_name', 'thumbnail')->first();
+                                        @endphp
+                                        <div class="col-2 pb-3">
+                                            <div class="row">
+                                                <div style="width: 210px;">
+                                                    <div style="border: 2px solid rgba(128, 128, 128, 0.214);">
+                                                        <div style="cursor: pointer;"
+                                                            onclick="goToBookDetail({{ $book->id }})">
+                                                            <img src="{{ $bookImage ? $bookImage->image_url : asset('assets/images/book/book_placeholder.png') }}"
+                                                                alt="profile-bg" style="height: 300px; width: 206px;"
+                                                                class="course-image">
                                                         </div>
+                                                        <script>
+                                                            function goToBookDetail(bookId) {
+                                                                window.location.href = '/sach/' + bookId;
+                                                            }
+                                                        </script>
+                                                        <div class="px-3 pb-4 pt-3">
+                                                            <span class="book-title" style="font-weight: 600;">
+                                                                {{ $book->name }}
+                                                            </span>
+                                                            <div class="pb-1">
+                                                                <button id="yesButton" type="submit"
+                                                                    style="background-color: #c9f1f2; color: #0e9f6e; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: bolder;">Freeship</button>
+                                                                @if ($book->discount > 0)
+                                                                    <button id="noButton"
+                                                                        style="background-color: #ffb5b5; color: #ca0909; border: none; padding: 5px 5px; font-size: 10px; border-radius: 5px; cursor: pointer; font-weight: 500">
+                                                                        {{ $book->discount }}%
+                                                                    </button>
+                                                                @endif
+                                                            </div>
 
-                                                        <span>
-                                                            <a style="font-weight: bolder; color:#ff2a00;">
-                                                                {{ number_format($book->price - $book->price * ($book->discount / 100), 0, '.', ',') }}đ
-                                                            </a>
-                                                            @if ($book->discount > 0)
-                                                                <b class="px-2"></b>
-                                                                <del
-                                                                    style="font-size: 12px;">{{ number_format($book->price, 0, '.', ',') }}đ</del>
-                                                            @endif
-                                                        </span>
+                                                            <span>
+                                                                <a style="font-weight: bolder; color:#ff2a00;">
+                                                                    {{ number_format($book->price - $book->price * ($book->discount / 100), 0, '.', ',') }}đ
+                                                                </a>
+                                                                @if ($book->discount > 0)
+                                                                    <b class="px-2"></b>
+                                                                    <del
+                                                                        style="font-size: 12px;">{{ number_format($book->price, 0, '.', ',') }}đ</del>
+                                                                @endif
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @empty
-                                    <div class="col-12 pb-1">
-                                        <div class="row text-center">
-                                            <div class="col-12">
-                                                <p>Hiện tại chưa có Sách nào...</p>
+                                    @empty
+                                        <div class="col-12 pb-1">
+                                            <div class="row text-center">
+                                                <div class="col-12">
+                                                    <p>Hiện tại chưa có Sách nào...</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforelse
+                                    @endforelse
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Display Reels -->
-        <div class="col-12">
-            <div class="iq-card">
-                <div class="iq-card-body profile-page">
-                    <div class="profile-header">
-                        <div class="cover-container">
-                            <h4 class="pb-4">Reels</h4>
-                            <div class="row">
-                                @forelse ($reels as $reel)
-                                    @php
-                                        $reelsImage = $reel->images()->where('image_name', 'reelsImg')->first();
-                                    @endphp
-                                    <div class="col-6 col-md-3 mb-4">
-                                        <div class="card" style="position: relative; cursor: pointer;" onclick="">
-                                            <a href="{{ route('client.reels.reelsDetail', $reel->id) }}">
+            <!-- Display Reels -->
+            <div class="col-12">
+                <div class="iq-card">
+                    <div class="iq-card-body profile-page">
+                        <div class="profile-header">
+                            <div class="cover-container">
+                                <h4 class="pb-4">Reels</h4>
+                                <div class="row">
+                                    @forelse ($reels as $reel)
+                                        @php
+                                            $reelsImage = $reel->images()->where('image_name', 'reelsImg')->first();
+                                        @endphp
+                                        <div class="col-6 col-md-3 mb-4">
+                                            <div class="card" style="position: relative; cursor: pointer;"
+                                                onclick="">
+                                                <a href="{{ route('client.reels.reelsDetail', $reel->id) }}">
                                                 <img src="{{ $reelsImage ? $reelsImage->image_url : asset('assets/images/book/book/01.jpg') }}"
                                                     alt="profile-bg" class="card-img-top"
                                                     style="height: 550px; object-fit: cover; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
                                                 <div
-                                                    class="position-absolute bottom-0 start-0 p-2 text-white bg-opacity-50 rounded-end">
+                                                    class="position-absolute bottom-0 start-0 p-2 text-white bg-opacity-50 rounded-end" style="margin-top: -155%;">
                                                     <i class="fas fa-eye"></i> {{ $reel->views_count }} Views
                                                 </div>
-                                                <div style="margin-top: -35px; margin-left: 90%;">
+                                            </a>
+                                                <div style="margin-top: -35px; margin-left: 90%; z-index: 20;">
                                                     @if (auth()->user()->id === $reel->user_id)
                                                         <button class="btn" data-bs-toggle="modal"
                                                             data-bs-target="#deleteConfirmationModal"
@@ -282,42 +283,42 @@
                                                         </button>
                                                     @endif
                                                 </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="col-12 pb-1">
-                                        <div class="row text-center">
-                                            <div class="col-12">
-                                                <p>Hiện tại chưa có Reels nào...</p>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforelse
-                            </div>
-                            <!-- Modal Xác Nhận -->
-                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1"
-                                aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteConfirmationModalLabel">Xác nhận
-                                                xóa video này hay không</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close">X</button>
+                                    @empty
+                                        <div class="col-12 pb-1">
+                                            <div class="row text-center">
+                                                <div class="col-12">
+                                                    <p>Hiện tại chưa có Reels nào...</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                            Bạn có chắc chắn muốn xóa video này? Hành động này không thể hoàn
-                                            tác.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <form id="deleteForm" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Xóa</button>
-                                                <button type="button" class="btn btn-secondary me-2"
-                                                    data-bs-dismiss="modal">Hủy</button>
-                                            </form>
+                                    @endforelse
+                                </div>
+                                <!-- Modal Xác Nhận -->
+                                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1"
+                                    aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteConfirmationModalLabel">Xác nhận
+                                                    xóa video này hay không</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close">X</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có chắc chắn muốn xóa video này? Hành động này không thể hoàn
+                                                tác.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form id="deleteForm" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Xóa</button>
+                                                    <button type="button" class="btn btn-secondary me-2"
+                                                        data-bs-dismiss="modal">Hủy</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -327,50 +328,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Display Reels -->
-        <div class="col-12">
-            <div class="iq-card">
-                <div class="iq-card-body profile-page">
-                    <div class="profile-header">
-                        <div class="cover-container">
-                            <h4 class="pb-4">Reels</h4>
-                            <div class="row">
-                                @forelse ($reels as $reel)
-                                    <div class="col-6 pb-1">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <img src="{{ asset('assets/images/book/user/4.jpg') }}" alt="profile-bg"
-                                                    class="w-100"
-                                                    style="height: 150px; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
-                                            </div>
-                                            <div class="col-12">
-                                                <span
-                                                    style="font-weight: bold; display: block;">{{ $reel->title }}</span>
-                                                <p>{{ $reel->description }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="col-12 pb-1">
-                                        <div class="row text-center">
-                                            <div class="col-12">
-                                                <p>Hiện tại chưa có Reels nào...</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforelse
-                            </div>
-                            {{-- <div class="text-center pt-5" style="color: black">
-                                    <a href=""><span style="font-size: 20px"><i
-                                                class="ri-arrow-down-s-line"></i></span> Xem thêm</a>
-                                </div> --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
     <style>
         #deleteForm {

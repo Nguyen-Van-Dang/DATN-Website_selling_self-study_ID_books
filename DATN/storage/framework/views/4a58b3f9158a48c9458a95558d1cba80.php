@@ -58,7 +58,7 @@
                                             wire:click="openDetailPopup(<?php echo e($item->id); ?>)">
                                             <i class="ri-eye-line"></i>
                                         </a>
-                                        <!--[if BLOCK]><![endif]--><?php if($item->user->role_id == 1): ?>
+                                        <!--[if BLOCK]><![endif]--><?php if(auth()->user()->role_id == 1): ?>
                                             <a class="bg-primary" data-toggle="tooltip" title="Sửa Trạng Thái"
                                                 style="cursor: pointer"
                                                 wire:click="openPaymentPopup(<?php echo e($item->id); ?>)">
@@ -147,7 +147,9 @@
                                                     <a href="javascript:void();">
                                                         <!--[if BLOCK]><![endif]--><?php if($detail->book): ?>
                                                             <?php
-                                                                $bookImage = $detail->book->images->first();
+                                                                $bookImage = $detail->book->images
+                                                                    ->where('image_name', 'thumbnail')
+                                                                    ->first();
                                                             ?>
                                                             <!--[if BLOCK]><![endif]--><?php if($bookImage): ?>
                                                                 <img src="<?php echo e($bookImage->image_url); ?>"
@@ -155,8 +157,11 @@
                                                             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                                         <?php elseif($detail->course): ?>
                                                             <?php
-                                                                $courseImage = $detail->course->images->first();
+                                                                $courseImage = $detail->course->images
+                                                                    ->where('image_name', 'thumbnail')
+                                                                    ->first();
                                                             ?>
+
                                                             <!--[if BLOCK]><![endif]--><?php if($courseImage): ?>
                                                                 <img src="<?php echo e($courseImage->image_url); ?>"
                                                                     class="img-thumbnail">
