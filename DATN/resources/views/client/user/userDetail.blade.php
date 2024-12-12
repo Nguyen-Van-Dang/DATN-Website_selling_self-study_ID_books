@@ -21,7 +21,7 @@
 
                                         <img src="{{ asset($avatar->image_url ?? 'assets/images/book/user/avatar.jpg') }}"
                                             alt="profile-bg" class="rounded-circle img-fluid"
-                                            style="width: 60%; box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.50);">
+                                            style="width: 60%;height: 200px;; box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.50);">
 
                                         <div class="iq-social d-inline-block align-items-center pt-5">
                                             <ul class="list-inline d-flex p-0 mb-0 align-items-center">
@@ -54,21 +54,21 @@
                                     </div>
                                     <div class="col-9">
                                         <div class="profile-detail mt-3">
-                                            <h3>{{ auth()->user()->name }}</h3>
-                                            @if (auth()->user()->description == '')
+                                            <h3>{{ $users->name }}</h3>
                                             @if ($users->description == '')
-                                                <p id="description-text">
-                                                    - Giảng viên chưa cập nhật thông tin
-                                                    <a class="ml-2" style="cursor: pointer;"
-                                                        onclick="editDescription()"><i class="fa fa-pen"></i></a>
-                                                </p>
-                                            @else
-                                                <p id="description-text">
-                                                    {!! $users->description !!}
-                                                    <a class="ml-2" style="cursor: pointer;"
-                                                        onclick="editDescription()"><i class="fa fa-pen"></i></a>
-                                                </p>
-                                            @endif
+                                                @if ($users->description == '')
+                                                    <p id="description-text">
+                                                        - Giảng viên chưa cập nhật thông tin
+                                                        <a class="ml-2" style="cursor: pointer;"
+                                                            onclick="editDescription()"><i class="fa fa-pen"></i></a>
+                                                    </p>
+                                                @else
+                                                    <p id="description-text">
+                                                        {!! $users->description !!}
+                                                        <a class="ml-2" style="cursor: pointer;"
+                                                            onclick="editDescription()"><i class="fa fa-pen"></i></a>
+                                                    </p>
+                                                @endif
                                             @endif
                                             <div id="description-edit" style="display: none;">
                                                 <form action="{{ route('updateDescription') }}" method="POST">
@@ -266,14 +266,14 @@
                                             <div class="card" style="position: relative; cursor: pointer;"
                                                 onclick="">
                                                 <a href="{{ route('client.reels.reelsDetail', $reel->id) }}">
-                                                <img src="{{ $reelsImage ? $reelsImage->image_url : asset('assets/images/book/book/01.jpg') }}"
-                                                    alt="profile-bg" class="card-img-top"
-                                                    style="height: 550px; object-fit: cover; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
-                                                <div
-                                                    class="position-absolute bottom-0 start-0 p-2 text-white bg-opacity-50 rounded-end" style="margin-top: -155%;">
-                                                    <i class="fas fa-eye"></i> {{ $reel->views_count }} Views
-                                                </div>
-                                            </a>
+                                                    <img src="{{ $reelsImage ? $reelsImage->image_url : asset('assets/images/book/book/01.jpg') }}"
+                                                        alt="profile-bg" class="card-img-top"
+                                                        style="height: 550px; object-fit: cover; box-shadow: 0px 4px 20px rgba(44, 101, 144, 0.5); border-radius: 10px">
+                                                    <div class="position-absolute bottom-0 start-0 p-2 text-white bg-opacity-50 rounded-end"
+                                                        style="margin-top: -155%;">
+                                                        <i class="fas fa-eye"></i> {{ $reel->views_count }} Views
+                                                    </div>
+                                                </a>
                                                 <div style="margin-top: -35px; margin-left: 90%; z-index: 20;">
                                                     @if (auth()->user()->id === $reel->user_id)
                                                         <button class="btn" data-bs-toggle="modal"

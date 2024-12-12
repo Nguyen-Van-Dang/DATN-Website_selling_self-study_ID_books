@@ -48,6 +48,7 @@ class RegisterUser extends Component
             'email.email' => 'Email không đúng định dạng',
             'email.unique' => 'Email đã tồn tại',
             'phone.required' => 'Số điện thoại không được để trống',
+            'phone.numeric' => 'Số điện thoại gồm dãy số từ 0 tới 9',
             'password.regex' => 'Mật khẩu ít nhất 1 chữ cái in hoa, 1 chữ cái thường, và có 1 số.',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',

@@ -131,6 +131,12 @@
                     </li>
                 </ul>
             @endif
+            <style>
+                .overflow-scroll{
+                    overflow: auto;
+      scrollbar-width: none;
+                }
+            </style>
         </div>
 
 

@@ -232,19 +232,36 @@ class UserController extends Controller
     //render course, book, reel
     public function showUserDetail($userId)
     {
-        $user = auth::user();
-        $courses = Course::where('user_id', $user->id)->get();
-        $books = Book::where('user_id', $user->id)->where('status', 0)->get();
-        $reels = Reels::where('user_id', $user->id)->get();
-
+        $user = auth::user(); // Đảm bảo sử dụng `auth()` thay vì `auth`
+        
+        if ($user) {
+            // Lấy danh sách khóa học, sách và reels của user đăng nhập
+            $courses = Course::where('user_id', $userId)->get(); 
+            $books = Book::where('user_id', $userId)->where('status', 0)->get();
+            $reels = Reels::where('user_id', $userId)->get();
+        } else {
+            // Nếu user chưa đăng nhập, trả về collection rỗng
+            $courses = collect();
+            $books = collect();
+            $reels = collect();
+        }
+    
+        // Lấy thông tin user chi tiết
         $users = User::with(['books', 'courses', 'reels'])->findOrFail($userId);
+    
+        // Tính tổng số followers
         $totalFollowers = $users->followers->count();
+    
+        // Tính tổng lượt xem từ books, courses, reels
         $totalViews =
             $users->books->sum('views') +
             $users->courses->sum('views') +
             $users->reels->sum('views_count');
+    
+        // Kiểm tra nếu người dùng đã theo dõi user này
         $isFollowing = $user ? $user->followings()->where('following_id', $users->id)->exists() : false;
-
+    
+        // Trả về view với các biến đã tính
         return view('client.user.userDetail', compact('user', 'books', 'courses', 'reels', 'users', 'totalViews', 'totalFollowers', 'isFollowing'));
     }
     

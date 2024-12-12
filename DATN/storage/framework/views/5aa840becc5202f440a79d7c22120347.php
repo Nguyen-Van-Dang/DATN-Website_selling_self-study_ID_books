@@ -64,7 +64,8 @@
     <div class="email-container">
         <div class="header">
             <div class="header">
-               
+                <img src="<?php echo e($message->embed(public_path('assets/images/book/icon/small_logo_with_bg.png'))); ?>" alt="Logo" />
+
             </div>
             <h2>Xác nhận mã OTP của bạn</h2>
         </div>

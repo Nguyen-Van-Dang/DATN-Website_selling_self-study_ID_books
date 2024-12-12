@@ -222,7 +222,12 @@
                             </div>
                         </li>
                     @endforeach
-
+                    <style>
+                        .iq-scrollable-block {
+                            overflow: auto;
+                            scrollbar-width: none;
+                        }
+                    </style>
                 </ul>
             </div>
         </div>

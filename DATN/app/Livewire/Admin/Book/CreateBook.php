@@ -20,6 +20,10 @@ class CreateBook extends Component
     {
         $this->teachers = $teachers;
         $this->categories = $categories;
+        
+        if(Auth::user()->role_id === 2){
+            $this->bookAuthor = Auth::user()->id;
+        }
     }
 
     public function submit()

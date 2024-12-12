@@ -36,6 +36,7 @@ class LoginUser extends Component
             'phone.required' => 'Số điện thoại không được để trống',
             'phone.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có đúng 10 chữ số.',
             'phone.digits' => 'Số điện thoại phải có đúng 10 chữ số.',
+            'phone.numeric' => 'Số điện thoại gồm dãy số từ 0 tới 9',
             'password.regex' => 'Mật khẩu ít nhất 1 chữ cái in hoa, 1 chữ cái thường, và có 1 số.',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
